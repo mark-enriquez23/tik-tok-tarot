@@ -22,5 +22,18 @@ npm install
 ```sh
 npm run dev
 ```
+## Project Details
+
+For Project Description please see this document. [Description][description]
+
+For Project Specifications please see this document. [Specifications][link]
+
+For Project Flow Chart please see this document. [Flow Chart][flowchart]
+
+For Project Process and Rules please see this document. [Process and Rules][rules]
 
 <!-- Markdown link & img dfn's -->
+[link]: https://docs.google.com/document/d/1yqiiCBbh9_vJLe4zHz2Oht07Kw_gRNE75OM1tlPb-Xo/edit
+[rules]: https://docs.google.com/document/d/19iAhflZ51-87aobwmWMr2puzq9Ac45QVOBzR86aTsdY/edit
+[flowchart]: https://docs.google.com/document/d/1Dtvwonefoy76mORi7fkVwsTgfcd353aI_HZ_Qw8rdds/edit
+[description]: https://docs.google.com/document/d/1gNFYfdJIXq_8yYP7KEBTJN1R-ResAZXxwfLTJa1nZMU/edit
