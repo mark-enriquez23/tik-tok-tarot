@@ -35,6 +35,7 @@ For Project Process and Rules please see this document. [Process and Rules][rule
 ## UI Kits
 
 Possible UI Kits to be used on the app
+- [Element UI][element]
 - [Semantic UI][semantic]
 - [Material UI][material]
 - [Buefy][buefy]
@@ -47,3 +48,4 @@ Possible UI Kits to be used on the app
 [buefy]: https://buefy.org/
 [semantic]: https://semantic-ui-vue.github.io/#/
 [material]: https://vuematerial.io/
+[element]: https://element.eleme.io/#/en-US
