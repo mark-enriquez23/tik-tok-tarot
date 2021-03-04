@@ -31,7 +31,6 @@
               <has-error :form="form" field="password_confirmation" />
             </div>
           </div>
-
           <!-- Submit Button -->
           <div class="form-group row">
             <div class="col-md-9 ml-md-auto">
@@ -49,6 +48,16 @@
 <script>
 import Form from 'vform'
 
+const initializeData = () => ({
+    status: '',
+    form: new Form({
+      token: '',
+      email: '',
+      password: '',
+      password_confirmation: ''
+    }),
+    token: null
+  })
 export default {
   middleware: 'guest',
 
@@ -56,15 +65,9 @@ export default {
     return { title: this.$t('reset_password') }
   },
 
-  data: () => ({
-    status: '',
-    form: new Form({
-      token: '',
-      email: '',
-      password: '',
-      password_confirmation: ''
-    })
-  }),
+  data: () => {
+    return initializeData();
+  },
 
   created () {
     this.form.email = this.$route.query.email

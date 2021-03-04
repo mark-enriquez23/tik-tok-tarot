@@ -58,7 +58,7 @@ class LoginController extends Controller
         $userData = User::where($fieldType, $input['email'])->first();
 
         if ($userData) {
-            
+
             $loginAttempt = LoginAttempt::where('user_id', $userData->id)->first();
 
             if ($loginAttempt) {
@@ -85,7 +85,7 @@ class LoginController extends Controller
 
         $user = $this->guard()->user();
 
-        
+
         if ($user instanceof MustVerifyEmail && ! $user->hasVerifiedEmail()) {
 
             return false;
@@ -115,7 +115,7 @@ class LoginController extends Controller
         $user = $this->guard()->user();
 
         $loginAttempt = LoginAttempt::where('user_id', $user->id)->first();
-    
+
         if ($loginAttempt) {
 
             $loginAttempt->attempt = 0;
@@ -164,7 +164,7 @@ class LoginController extends Controller
 
                 // check attempts
                 if ($loginAttempt->attempt >= 5) {
-                    
+
                     $errorMessage = ['email' => 'Your account is locked due to inavalid login'];
 
                 }
@@ -178,15 +178,15 @@ class LoginController extends Controller
                 $data = [
 
                     "user_id" => $userData->id,
-    
+
                     "attempt" => 1
-    
+
                 ]; // parse data
 
                 LoginAttempt::create($data); // create new data
 
             }
-            
+
         }
 
         $user = $this->guard()->user();
