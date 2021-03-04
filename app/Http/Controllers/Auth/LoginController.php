@@ -8,14 +8,15 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
-use Illuminate\Foundation\Auth\ThrottlesLogins;
+// use Illuminate\Foundation\Auth\ThrottlesLogins;
 
 use App\User;
 use App\LoginAttempt;
 
 class LoginController extends Controller
 {
-    use AuthenticatesUsers, ThrottlesLogins;
+    // use AuthenticatesUsers, ThrottlesLogins;
+    use AuthenticatesUsers;
 
     protected $maxAttempts = 3;
 
