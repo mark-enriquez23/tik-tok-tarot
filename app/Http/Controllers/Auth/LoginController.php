@@ -8,10 +8,18 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Foundation\Auth\ThrottlesLogins;
+
+use App\User;
+use App\LoginAttempt;
 
 class LoginController extends Controller
 {
-    use AuthenticatesUsers;
+    use AuthenticatesUsers, ThrottlesLogins;
+
+    protected $maxAttempts = 3;
+
+    protected $decayMinutes = 3;
 
     /**
      * Create a new controller instance.
@@ -31,15 +39,57 @@ class LoginController extends Controller
      */
     protected function attemptLogin(Request $request)
     {
-        $token = $this->guard()->attempt($this->credentials($request));
+
+        $input = $request->all();
+
+        $this->validate($request, [
+
+            'email' => 'required',
+
+            'password' => 'required',
+
+        ]);
+
+        $fieldType = filter_var($request->email, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+
+        $token = $this->guard()->attempt(array($fieldType => $input['email'], 'password' => $input['password'], 'is_active' => 1));
+
+        // get user
+        $userData = User::where($fieldType, $input['email'])->first();
+
+        if ($userData) {
+            
+            $loginAttempt = LoginAttempt::where('user_id', $userData->id)->first();
+
+            if ($loginAttempt) {
+
+                // check if reach the max limit of failed login
+
+                if ($loginAttempt->attempt >= 5 ) {
+
+                    $this->clearLoginAttempts($request);
+
+                    return false;
+
+                }
+
+            }
+
+        }
 
         if (! $token) {
+
             return false;
+
         }
 
         $user = $this->guard()->user();
+
+        
         if ($user instanceof MustVerifyEmail && ! $user->hasVerifiedEmail()) {
+
             return false;
+
         }
 
         $this->guard()->setToken($token);
@@ -55,16 +105,35 @@ class LoginController extends Controller
      */
     protected function sendLoginResponse(Request $request)
     {
+
         $this->clearLoginAttempts($request);
 
         $token = (string) $this->guard()->getToken();
+
         $expiration = $this->guard()->getPayload()->get('exp');
 
+        $user = $this->guard()->user();
+
+        $loginAttempt = LoginAttempt::where('user_id', $user->id)->first();
+    
+        if ($loginAttempt) {
+
+            $loginAttempt->attempt = 0;
+
+            $loginAttempt->save();
+
+        }
+
         return response()->json([
+
             'token' => $token,
+
             'token_type' => 'bearer',
-            'expires_in' => $expiration - time(),
+
+            'expires_in' => $expiration - time()
+
         ]);
+
     }
 
     /**
@@ -77,14 +146,65 @@ class LoginController extends Controller
      */
     protected function sendFailedLoginResponse(Request $request)
     {
+        $input = $request->all(); // get all request
+
+        $attempt = $this->limiter()->attempts($this->throttleKey($request)); // count attempts
+
+        $fieldType = filter_var($request->email, FILTER_VALIDATE_EMAIL) ? 'email' : 'username'; // filter type
+
+        $userData = User::where($fieldType, $input['email'])->first(); // get user data using email
+
+        $errorMessage = [trans('auth.failed')];
+
+        if ($userData) { // if user found
+
+            $loginAttempt = LoginAttempt::where('user_id', $userData->id)->first(); // get login attempt data
+
+            if ($loginAttempt) {
+
+                // check attempts
+                if ($loginAttempt->attempt >= 5) {
+                    
+                    $errorMessage = ['email' => 'Your account is locked due to inavalid login'];
+
+                }
+
+                $loginAttempt->attempt = $loginAttempt->attempt + 1; // update attempt data
+
+                $loginAttempt->save(); // update data
+
+            }else{
+
+                $data = [
+
+                    "user_id" => $userData->id,
+    
+                    "attempt" => 1
+    
+                ]; // parse data
+
+                LoginAttempt::create($data); // create new data
+
+            }
+            
+        }
+
         $user = $this->guard()->user();
+
         if ($user instanceof MustVerifyEmail && ! $user->hasVerifiedEmail()) {
+
             throw VerifyEmailException::forUser($user);
+
         }
 
         throw ValidationException::withMessages([
-            $this->username() => [trans('auth.failed')],
+
+            $this->username() => $errorMessage,
+
+            'attempts' => $this->limiter()->attempts($this->throttleKey($request))
+
         ]);
+
     }
 
     /**
@@ -95,6 +215,8 @@ class LoginController extends Controller
      */
     public function logout(Request $request)
     {
+
         $this->guard()->logout();
+
     }
 }
