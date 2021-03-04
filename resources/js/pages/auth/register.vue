@@ -43,11 +43,15 @@
               <has-error :form="form" field="password_confirmation" />
             </div>
           </div>
-
+          <div class="form-group row">
+            <div class="col-md-7 offset-md-3 d-flex">
+              <vue-hcaptcha sitekey="3f7f821f-05b7-486b-a3d9-21395609a73e" @verify="isVerified"></vue-hcaptcha>
+            </div>
+          </div>
           <div class="form-group row">
             <div class="col-md-7 offset-md-3 d-flex">
               <!-- Submit Button -->
-              <v-button :loading="form.busy">
+              <v-button :loading="form.busy" :disabled="!token">
                 {{ $t('register') }}
               </v-button>
 
@@ -64,27 +68,35 @@
 <script>
 import Form from 'vform'
 import LoginWithGithub from '~/components/LoginWithGithub'
+import Vue from 'vue'
+import VueHcaptcha from '@hcaptcha/vue-hcaptcha';
 
-export default {
-  middleware: 'guest',
-
-  components: {
-    LoginWithGithub
-  },
-
-  metaInfo () {
-    return { title: this.$t('register') }
-  },
-
-  data: () => ({
+const initializeData = () => ({
     form: new Form({
       name: '',
       email: '',
       password: '',
       password_confirmation: ''
     }),
-    mustVerifyEmail: false
-  }),
+    mustVerifyEmail: false,
+    token: null
+  })
+
+export default {
+  middleware: 'guest',
+
+  components: {
+    LoginWithGithub,
+    VueHcaptcha
+  },
+
+  metaInfo () {
+    return { title: this.$t('register') }
+  },
+
+  data:() => {
+    return initializeData();
+  },
 
   methods: {
     async register () {
@@ -107,6 +119,9 @@ export default {
         // Redirect home.
         this.$router.push({ name: 'home' })
       }
+    },
+    isVerified(e) {
+      this.token = e;
     }
   }
 }

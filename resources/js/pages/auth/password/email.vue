@@ -14,10 +14,16 @@
             </div>
           </div>
 
+
+          <div class="form-group row">
+            <div class="col-md-7 offset-md-3 d-flex">
+              <vue-hcaptcha sitekey="3f7f821f-05b7-486b-a3d9-21395609a73e" @verify="isVerified"></vue-hcaptcha>
+            </div>
+          </div>
           <!-- Submit Button -->
           <div class="form-group row">
             <div class="col-md-9 ml-md-auto">
-              <v-button :loading="form.busy">
+              <v-button :loading="form.busy" :disabled="!token">
                 {{ $t('send_password_reset_link') }}
               </v-button>
             </div>
@@ -30,7 +36,15 @@
 
 <script>
 import Form from 'vform'
+import VueHcaptcha from '@hcaptcha/vue-hcaptcha';
 
+const initializeData = () => ({
+    status: '',
+    form: new Form({
+      email: ''
+    }),
+    token: null
+  })
 export default {
   middleware: 'guest',
 
@@ -38,12 +52,13 @@ export default {
     return { title: this.$t('reset_password') }
   },
 
-  data: () => ({
-    status: '',
-    form: new Form({
-      email: ''
-    })
-  }),
+  components: {
+    VueHcaptcha
+  },
+
+  data: () => {
+    return initializeData();
+  },
 
   methods: {
     async send () {
@@ -52,6 +67,9 @@ export default {
       this.status = data.status
 
       this.form.reset()
+    },
+    isVerified(e) {
+      this.token = e;
     }
   }
 }
