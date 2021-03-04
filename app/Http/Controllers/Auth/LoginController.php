@@ -13,13 +13,13 @@ use Illuminate\Foundation\Auth\ThrottlesLogins;
 use App\User;
 use App\LoginAttempt;
 
-
 class LoginController extends Controller
 {
     use AuthenticatesUsers, ThrottlesLogins;
 
     protected $maxAttempts = 3;
-    protected $decayMinutes = 1;
+
+    protected $decayMinutes = 3;
 
     /**
      * Create a new controller instance.
@@ -78,14 +78,18 @@ class LoginController extends Controller
         }
 
         if (! $token) {
+
             return false;
+
         }
 
         $user = $this->guard()->user();
 
         
         if ($user instanceof MustVerifyEmail && ! $user->hasVerifiedEmail()) {
+
             return false;
+
         }
 
         $this->guard()->setToken($token);
@@ -101,10 +105,13 @@ class LoginController extends Controller
      */
     protected function sendLoginResponse(Request $request)
     {
+
         $this->clearLoginAttempts($request);
 
         $token = (string) $this->guard()->getToken();
+
         $expiration = $this->guard()->getPayload()->get('exp');
+
         $user = $this->guard()->user();
 
         $loginAttempt = LoginAttempt::where('user_id', $user->id)->first();
@@ -118,10 +125,15 @@ class LoginController extends Controller
         }
 
         return response()->json([
+
             'token' => $token,
+
             'token_type' => 'bearer',
+
             'expires_in' => $expiration - time()
+
         ]);
+
     }
 
     /**
@@ -156,6 +168,7 @@ class LoginController extends Controller
                     $errorMessage = ['email' => 'Your account is locked due to inavalid login'];
 
                 }
+
                 $loginAttempt->attempt = $loginAttempt->attempt + 1; // update attempt data
 
                 $loginAttempt->save(); // update data
@@ -177,14 +190,21 @@ class LoginController extends Controller
         }
 
         $user = $this->guard()->user();
+
         if ($user instanceof MustVerifyEmail && ! $user->hasVerifiedEmail()) {
+
             throw VerifyEmailException::forUser($user);
+
         }
 
         throw ValidationException::withMessages([
+
             $this->username() => $errorMessage,
+
             'attempts' => $this->limiter()->attempts($this->throttleKey($request))
+
         ]);
+
     }
 
     /**
@@ -195,6 +215,8 @@ class LoginController extends Controller
      */
     public function logout(Request $request)
     {
+
         $this->guard()->logout();
+
     }
 }
