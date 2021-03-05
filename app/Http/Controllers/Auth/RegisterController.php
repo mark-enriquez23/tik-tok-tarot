@@ -49,11 +49,19 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
+
+        $validatorCustomMessage = array(
+            'username.unique' => "The username has already been taken. try to add letters or numbers",
+            'username.regex' => "Only letters and numbers are allowed in username",
+            'password.regex' => "Password must contain the following: lowercase letter, capital (uppercase) letter, number, minimum 6 characters"
+        );
+
         return Validator::make($data, [
+            'username' => 'required|unique:users|regex:/^[a-zA-Z0-9_.-]*$/',
             'name' => 'required|max:255',
             'email' => 'required|email|max:255|unique:users',
-            'password' => 'required|min:6|confirmed',
-        ]);
+            'password' => 'required|min:6|confirmed|regex:/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/',
+        ], $validatorCustomMessage);
     }
 
     /**
@@ -65,6 +73,7 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         return User::create([
+            'username' => $data['username'],
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),

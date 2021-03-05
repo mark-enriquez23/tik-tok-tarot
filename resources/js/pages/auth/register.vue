@@ -8,6 +8,15 @@
       </card>
       <card v-else :title="$t('register')">
         <form @submit.prevent="register" @keydown="form.onKeydown($event)">
+          <!-- UserName -->
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label text-md-right">{{ $t('username') }}</label>
+            <div class="col-md-7">
+              <input v-model="form.username" :class="{ 'is-invalid': form.errors.has('username') }" class="form-control" type="text" name="username">
+              <has-error :form="form" field="username" />
+            </div>
+          </div>
+
           <!-- Name -->
           <div class="form-group row">
             <label class="col-md-3 col-form-label text-md-right">{{ $t('name') }}</label>
@@ -51,7 +60,8 @@
           <div class="form-group row">
             <div class="col-md-7 offset-md-3 d-flex">
               <!-- Submit Button -->
-              <v-button :loading="form.busy" :disabled="!token">
+              <!-- <v-button :loading="form.busy" :disabled="!token"> -->
+              <v-button :loading="form.busy">
                 {{ $t('register') }}
               </v-button>
 
@@ -73,6 +83,7 @@ import VueHcaptcha from '@hcaptcha/vue-hcaptcha';
 
 const initializeData = () => ({
     form: new Form({
+      username: '',
       name: '',
       email: '',
       password: '',
