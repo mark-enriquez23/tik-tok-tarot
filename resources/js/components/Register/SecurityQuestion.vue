@@ -22,7 +22,6 @@
                     <input class="form-control" type="text" name="answer_1" v-model="userSecurityQuestionForm.answer_1">
                 </div>
             </div>
-
             <!-- Second Question -->
             <div class="form-group row">
                 <div class="col-md-12">
@@ -44,7 +43,6 @@
                 <input class="form-control" type="text" name="answer_2" v-model="userSecurityQuestionForm.answer_2">
                 </div>
             </div>
-
             <!-- Third Question -->
             <div class="form-group row">
                 <div class="col-md-12">
@@ -69,7 +67,6 @@
             <div class="form-group row">
                 <div class="col-md-12 offset-md-12 d-flex justify-content-end">
                 <!-- Submit Button -->
-                <!-- <v-button :loading="form.busy" :disabled="!token"> -->
                 <v-button :loading="userSecurityQuestionForm.busy">
                     Submit
                 </v-button>
@@ -95,23 +92,15 @@ export default {
   },
 
   computed: mapGetters({
-
     userSecurityQuestions: "user-security-question/userSecurityQuestions",
-
     userSecurityQuestionForm: "user-security-question/userSecurityQuestionForm",
-
   }),
 
   methods: {
-
-
-
   },
 
   beforeMount(){
-
     this.$store.dispatch('user-security-question/fetchUserSecurityQuestions')
-
   }
 }
 </script>

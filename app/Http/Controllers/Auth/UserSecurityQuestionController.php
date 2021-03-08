@@ -19,7 +19,6 @@ class UserSecurityQuestionController extends Controller
 
     public function save(Request $request) {
         $userSecurityQuestion = UserSecurityQuestion::where('id', $request->id)->first();
-
         $data = $request->all();
 
         if ( isset($userSecurityQuestion) ) {
@@ -40,7 +39,6 @@ class UserSecurityQuestionController extends Controller
     public function delete(Request $request) {
 
         $unableToDelete = 0;
-
         $deletedIds = [];
 
         foreach ($request->userSecurityQuestionIds as $userSecurityQuestionId) {
