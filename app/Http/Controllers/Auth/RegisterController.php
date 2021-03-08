@@ -61,6 +61,7 @@ class RegisterController extends Controller
             'name' => 'required|max:255',
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|min:6|confirmed|regex:/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/',
+            'validate' => 'required'
         ], $validatorCustomMessage);
     }
 
@@ -72,11 +73,14 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+
         return User::create([
             'username' => $data['username'],
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);
+
     }
+
 }

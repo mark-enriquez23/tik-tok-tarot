@@ -26,6 +26,20 @@ Route::group(['middleware' => 'guest:api'], function () {
     Route::post('login', 'Auth\LoginController@login');
     Route::post('register', 'Auth\RegisterController@register');
 
+    // SecurityQuestion api 
+    Route::group(['prefix' => 'security-question'], function () {
+        Route::get('/', 'Auth\SecurityQuestionController@index');
+        Route::post('/save', 'Auth\SecurityQuestionController@save');
+        Route::post('/delete', 'Auth\SecurityQuestionController@delete');
+    });
+
+    // UserSecurityQuestion api 
+    Route::group(['prefix' => 'user-security-question'], function () {
+        Route::get('/', 'Auth\UserSecurityQuestionController@index');
+        Route::post('/save', 'Auth\UserSecurityQuestionController@save');
+        Route::post('/delete', 'Auth\UserSecurityQuestionController@delete');
+    });
+
     Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail');
     Route::post('password/reset', 'Auth\ResetPasswordController@reset');
 

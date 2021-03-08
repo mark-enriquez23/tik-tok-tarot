@@ -1,6 +1,6 @@
 <template>
   <div class="row">
-    <div class="col-lg-8 m-auto">
+    <div class="col-lg-8 m-auto" v-if="!onSecurity">
       <card v-if="mustVerifyEmail" :title="$t('register')">
         <div class="alert alert-success" role="alert">
           {{ $t('verify_email_address') }}
@@ -60,8 +60,8 @@
           <div class="form-group row">
             <div class="col-md-7 offset-md-3 d-flex">
               <!-- Submit Button -->
-              <!-- <v-button :loading="form.busy" :disabled="!token"> -->
-              <v-button :loading="form.busy">
+              <v-button :loading="form.busy" :disabled="!token">
+              <!-- <v-button :loading="form.busy"> -->
                 {{ $t('register') }}
               </v-button>
 
@@ -72,12 +72,21 @@
         </form>
       </card>
     </div>
+    <div class="col-lg-6 m-auto" v-if="onSecurity">
+      <card title="Security Questions">
+        <SecurityQuestion
+          :submit = "register"
+        />
+      </card>
+    </div>
+    
   </div>
 </template>
 
 <script>
 import Form from 'vform'
 import LoginWithGithub from '~/components/LoginWithGithub'
+import SecurityQuestion from '~/components/Register/SecurityQuestion'
 import Vue from 'vue'
 import VueHcaptcha from '@hcaptcha/vue-hcaptcha';
 
@@ -87,9 +96,11 @@ const initializeData = () => ({
       name: '',
       email: '',
       password: '',
-      password_confirmation: ''
+      password_confirmation: '',
+      validate: null
     }),
     mustVerifyEmail: false,
+    onSecurity: false,
     token: null
   })
 
@@ -98,7 +109,8 @@ export default {
 
   components: {
     LoginWithGithub,
-    VueHcaptcha
+    SecurityQuestion,
+    VueHcaptcha,
   },
 
   metaInfo () {
@@ -112,28 +124,54 @@ export default {
   methods: {
     async register () {
       // Register the user.
-      const { data } = await this.form.post('/api/register')
+        const { data } = await this.form.post('/api/register').catch((err) => {
 
-      // Must verify email fist.
-      if (data.status) {
-        this.mustVerifyEmail = true
-      } else {
-        // Log in the user.
-        const { data: { token } } = await this.form.post('/api/login')
+          const size = Object.keys(err.response.data.errors).length
 
-        // Save the token.
-        this.$store.dispatch('auth/saveToken', { token })
+          if (size == 1) {
 
-        // Update the user.
-        await this.$store.dispatch('auth/updateUser', { user: data })
+            this.onSecurity = true
 
-        // Redirect home.
-        this.$router.push({ name: 'home' })
-      }
+            this.form.validate = true
+            // console.log(err.response.data.errors.validate)
+
+          }
+          
+        })
+
+        // Must verify email fist.
+        if (data.status) {
+          
+          this.mustVerifyEmail = true
+
+        } else {
+
+          // Save Security Questions
+          this.$store.dispatch('user-security-question/saveUserSecurityQuestion', data.id)
+
+          // Log in the user.
+          const { data: { token } } = await this.form.post('/api/login')
+
+          // Save the token.
+          this.$store.dispatch('auth/saveToken', { token })
+
+          // Update the user.
+          this.$store.dispatch('auth/updateUser', { user: data })
+
+          // Redirect home.
+          this.$router.push({ name: 'home' })
+
+        }
+  
     },
+
     isVerified(e) {
+
       this.token = e;
+
     }
+
   }
+
 }
 </script>
