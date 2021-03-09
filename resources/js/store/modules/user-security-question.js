@@ -92,7 +92,25 @@ export const actions = {
 
       state.userSecurityQuestionForm.user_id = user_id;
 
-      const { data } = await state.userSecurityQuestionForm.post("/api/user-security-question/save");
+      const questionData = [
+        {
+          user_id: user_id,
+          question_id: state.userSecurityQuestionForm.question_1,
+          answer: state.userSecurityQuestionForm.answer_1,
+        },
+        {
+          user_id: user_id,
+          question_id: state.userSecurityQuestionForm.question_2,
+          answer: state.userSecurityQuestionForm.answer_2,
+        },
+        {
+          user_id: user_id,
+          question_id: state.userSecurityQuestionForm.question_3,
+          answer: state.userSecurityQuestionForm.answer_3,
+        }
+      ]
+
+      const { data } = await axios.post("/api/user-security-question/save", { questionData });
 
       commit(types.SAVE_USER_SECURITY_QUESTION, { securityQuestion: data.data });
 
