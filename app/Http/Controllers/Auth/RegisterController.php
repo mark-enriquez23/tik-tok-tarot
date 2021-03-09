@@ -34,7 +34,6 @@ class RegisterController extends Controller
     {
         if ($user instanceof MustVerifyEmail) {
             $user->sendEmailVerificationNotification();
-
             return response()->json(['status' => trans('verification.sent')]);
         }
 
@@ -49,13 +48,14 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
-
+        // Custom Message
         $validatorCustomMessage = array(
             'username.unique' => "The username has already been taken. try to add letters or numbers",
             'username.regex' => "Only letters and numbers are allowed in username",
             'password.regex' => "Password must contain the following: lowercase letter, capital (uppercase) letter, number, minimum 6 characters"
         );
 
+        // Validator of Fields
         return Validator::make($data, [
             'username' => 'required|unique:users|regex:/^[a-zA-Z0-9_.-]*$/',
             'name' => 'required|max:255',

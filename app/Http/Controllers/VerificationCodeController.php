@@ -15,12 +15,12 @@ class VerificationCodeController extends Controller
      */
     private function sendMessage($message, $recipients)
     {
-        $account_sid = getenv("TWILIO_SID");
-        $auth_token = getenv("TWILIO_AUTH_TOKEN");
-        $twilio_number = getenv("TWILIO_NUMBER");
+        $account_sid = getenv("TWILIO_SID"); // Twilio Secret ID from .env
+        $auth_token = getenv("TWILIO_AUTH_TOKEN"); // Twilio Auth Token from .env
+        $twilio_number = getenv("TWILIO_NUMBER"); // Twilio Number from .env
         $client = new Client($account_sid, $auth_token);
         $client->messages->create($recipients, 
-                ['from' => $twilio_number, 'body' => $message] );
+                ['from' => $twilio_number, 'body' => $message] ); // Send SMS
     }
 
     /**
@@ -30,7 +30,6 @@ class VerificationCodeController extends Controller
     {
 
         // Request fields user_id, recipient
-
         $validatedData = $request->validate([
             'recipient' => 'required',
         ]);
@@ -54,6 +53,7 @@ class VerificationCodeController extends Controller
             "code" => $generatedCode
         ];
 
+        // save data to database
         UserVerification::create($userVerificationData);
 
         // return a response

@@ -46,6 +46,11 @@ Route::group(['middleware' => 'guest:api'], function () {
         Route::post('/send-message', 'VerificationCodeController@sendCustomMessage');
     });
 
+    // SendEmail api 
+    Route::group(['prefix' => 'email'], function () {
+        Route::post('/send-email', 'SendEmailController@sendEmail');
+    });
+
     Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail');
     Route::post('password/reset', 'Auth\ResetPasswordController@reset');
 
