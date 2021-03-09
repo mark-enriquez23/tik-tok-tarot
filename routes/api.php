@@ -22,6 +22,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::patch('settings/password', 'Settings\PasswordController@update');
 });
 
+// Public
 Route::group(['middleware' => 'guest:api'], function () {
     Route::post('login', 'Auth\LoginController@login');
     Route::post('register', 'Auth\RegisterController@register');
@@ -38,6 +39,11 @@ Route::group(['middleware' => 'guest:api'], function () {
         Route::get('/', 'Auth\UserSecurityQuestionController@index');
         Route::post('/save', 'Auth\UserSecurityQuestionController@save');
         Route::post('/delete', 'Auth\UserSecurityQuestionController@delete');
+    });
+
+    // Verification api 
+    Route::group(['prefix' => 'verification'], function () {
+        Route::post('/send-message', 'VerificationCodeController@sendCustomMessage');
     });
 
     Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail');
