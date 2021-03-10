@@ -7,6 +7,9 @@
         </div>
       </card>
       <card v-else :title="$t('register')">
+        <div class="w-100 text-center mt-2 mb-4">
+          <img :src="srcLogoOnly" alt="" srcset="" class="img-fluid col-4">
+        </div>
         <form @submit.prevent="register" @keydown="form.onKeydown($event)">
           <!-- UserName -->
           <div class="form-group row">
@@ -79,7 +82,7 @@
         />
       </card>
     </div>
-    
+
   </div>
 </template>
 
@@ -102,6 +105,7 @@ const initializeData = () => ({
     }),
     mustVerifyEmail: false,
     onSecurity: false,
+    srcLogoOnly: window.config.assetURL + 'images/sample-logo.png',
     token: null
   })
 
@@ -137,17 +141,17 @@ export default {
             // console.log(err.response.data.errors.validate)
 
           }
-          
+
         })
 
         // Must verify email fist.
         if (data.status) {
-          
+
           this.mustVerifyEmail = true
 
         } else {
 
-           
+
 
           // Save Security Questions
           this.$store.dispatch('user-security-question/saveUserSecurityQuestion', data.id)
@@ -179,7 +183,7 @@ export default {
           this.$router.push({ name: 'home' })
 
         }
-  
+
     },
 
     isVerified(e) {

@@ -2,6 +2,9 @@
   <div class="row">
     <div class="col-lg-8 m-auto">
       <card :title="$t('login')">
+        <div class="w-100 text-center mt-2 mb-4">
+          <img :src="srcLogoOnly" alt="" srcset="" class="img-fluid col-4">
+        </div>
         <form @submit.prevent="login" @keydown="form.onKeydown($event)">
           <!-- Email -->
           <div class="form-group row">
@@ -34,11 +37,17 @@
               </router-link>
             </div>
           </div>
+          <!-- HCaptcha -->
+          <div class="form-group row" v-if="!captchaDisabled">
+            <div class="col-md-7 offset-md-3 d-flex">
+              <vue-hcaptcha sitekey="3f7f821f-05b7-486b-a3d9-21395609a73e" @verify="isVerified"></vue-hcaptcha>
+            </div>
+          </div>
 
           <div class="form-group row">
             <div class="col-md-7 offset-md-3 d-flex">
               <!-- Submit Button -->
-              <v-button :loading="form.busy">
+              <v-button :disabled="!captchaDisabled && !token" :loading="form.busy">
                 {{ $t('login') }}
               </v-button>
 
@@ -55,30 +64,53 @@
 <script>
 import Form from 'vform'
 import LoginWithGithub from '~/components/LoginWithGithub'
+import VueHcaptcha from '@hcaptcha/vue-hcaptcha';
+
+const initializeData = () => ({
+    form: new Form({
+      email: '',
+      password: ''
+    }),
+    token: '',
+    captchaDisabled: true,
+    srcLogoOnly: window.config.assetURL + 'images/sample-logo.png',
+    remember: false
+  })
 
 export default {
   middleware: 'guest',
 
   components: {
-    LoginWithGithub
+    LoginWithGithub,
+    VueHcaptcha
   },
 
   metaInfo () {
     return { title: this.$t('login') }
   },
 
-  data: () => ({
-    form: new Form({
-      email: '',
-      password: ''
-    }),
-    remember: false
-  }),
+  data: () => { return initializeData() },
 
   methods: {
     async login () {
+      console.log('test')
       // Submit the form.
-      const { data } = await this.form.post('/api/login')
+      await this.form.post('/api/login').then(res => {
+        console.log(res)
+      }).catch((e) => {
+        console.log()
+        switch (e.response.status) {
+          case 429:
+            this.captchaDisabled = false;
+            break;
+
+          default:
+            this.token = ''
+            this.captchaDisabled = true;
+            break;
+        }
+      })
+
 
       // Save the token.
       this.$store.dispatch('auth/saveToken', {
@@ -91,6 +123,9 @@ export default {
 
       // Redirect home.
       this.$router.push({ name: 'home' })
+    },
+    isVerified(e) {
+      this.token = e;
     }
   }
 }

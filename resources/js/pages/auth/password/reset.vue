@@ -2,6 +2,9 @@
   <div class="row">
     <div class="col-lg-8 m-auto">
       <card :title="$t('reset_password')">
+        <div class="w-100 text-center mt-2 mb-4">
+          <img :src="srcLogoOnly" alt="" srcset="" class="img-fluid col-4">
+        </div>
         <form @submit.prevent="reset" @keydown="form.onKeydown($event)">
           <alert-success :form="form" :message="status" />
 
@@ -57,6 +60,7 @@ const initializeData = () => ({
       password_confirmation: ''
     }),
     custom: false,
+    srcLogoOnly: window.config.assetURL + 'images/sample-logo.png',
     token: null
   })
 export default {
@@ -90,7 +94,7 @@ export default {
         const { data } = await this.form.post('/api/password/custom-reset')
         console.log(data);
       }
-      
+
     }
   }
 }

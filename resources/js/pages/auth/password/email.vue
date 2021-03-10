@@ -2,6 +2,9 @@
   <div class="row">
     <div class="col-lg-8 m-auto" v-if="statusAction == 'enter-email'">
       <card :title="$t('reset_password')">
+        <div class="w-100 text-center mt-2 mb-4">
+          <img :src="srcLogoOnly" alt="" srcset="" class="img-fluid col-4">
+        </div>
         <form @submit.prevent="send" @keydown="form.onKeydown($event)">
           <alert-success :form="form" :message="status" />
 
@@ -26,7 +29,7 @@
               <has-error :form="form" field="option" />
             </div>
           </div>
-          
+
           <!-- ReCaptcha -->
           <div class="form-group row">
             <div class="col-md-7 offset-md-3 d-flex">
@@ -43,7 +46,7 @@
             </div>
           </div>
         </form>
-        
+
       </card>
     </div>
     <div class="col-lg-8 m-auto" v-if="statusAction == 'security-question'">
@@ -53,7 +56,7 @@
         />
       </card>
     </div>
-    
+
   </div>
 </template>
 
@@ -70,6 +73,7 @@ const initializeData = () => ({
       option: ''
     }),
     token: null,
+    srcLogoOnly: window.config.assetURL + 'images/sample-logo.png',
     statusAction: 'enter-email'
   })
 export default {
@@ -97,7 +101,7 @@ export default {
 
       // check the selected option
       if (this.form.option === "send-email") {
-        
+
         const { data } = await this.form.post('/api/password/email')
 
         this.status = data.status
@@ -115,12 +119,12 @@ export default {
         this.$store.dispatch('forgot-pass-security-question/fetchUserSecurityQuestions')
 
       }
-      
+
     },
     isVerified(e) {
 
       this.token = e;
-      
+
     }
   }
 }
