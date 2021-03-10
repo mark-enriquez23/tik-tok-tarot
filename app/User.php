@@ -96,7 +96,7 @@ class User extends Authenticatable implements JWTSubject //, MustVerifyEmail
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function security_questions() {
-        return $this->hasMany('App\Models\UserSecurityQuestion');
+        return $this->hasMany('App\UserSecurityQuestion');
     }
 
     /**
@@ -105,7 +105,7 @@ class User extends Authenticatable implements JWTSubject //, MustVerifyEmail
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function verifications() {
-        return $this->hasMany('App\Models\UserVerification');
+        return $this->hasMany('App\UserVerification');
     }
 
     /**

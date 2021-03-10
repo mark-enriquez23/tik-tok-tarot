@@ -18,21 +18,24 @@ class UserSecurityQuestionController extends Controller
     }
 
     public function save(Request $request) {
-        $userSecurityQuestion = UserSecurityQuestion::where('id', $request->id)->first();
-        $data = $request->all();
 
-        if ( isset($userSecurityQuestion) ) {
-            $userSecurityQuestion->update($data);
-        } else {
+        foreach ($request->questionData as $question) {
+            
+            $data = [
+                "id" => '',
+                "user_id" => $question['user_id'],
+                "question_id" => $question['question_id'],
+                "answer" => $question['answer'],
+            ];
+
             $userSecurityQuestion = UserSecurityQuestion::create($data);
+           
         }
 
         return response()->json([
             'success' => true,
-            'data' => $userSecurityQuestion,
-            'message' => isset($userSecurityQuestion) ?
-                __('messages.userSecurityQuestion_updated_successfully'):
-                __('messages.userSecurityQuestion_save_successfully')
+            'message' => __('messages.userSecurityQuestion_save_successfully'),
+            'data' => $request->questionData
         ]);
     }
 

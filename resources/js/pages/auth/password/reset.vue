@@ -56,6 +56,7 @@ const initializeData = () => ({
       password: '',
       password_confirmation: ''
     }),
+    custom: false,
     token: null
   })
 export default {
@@ -72,15 +73,24 @@ export default {
   created () {
     this.form.email = this.$route.query.email
     this.form.token = this.$route.params.token
+    this.custom = this.$route.query.custom
   },
 
   methods: {
     async reset () {
-      const { data } = await this.form.post('/api/password/reset')
 
-      this.status = data.status
+      if (!this.custom) {
+        const { data } = await this.form.post('/api/password/reset')
 
-      this.form.reset()
+        this.status = data.status
+
+        this.form.reset()
+      }else{
+
+        const { data } = await this.form.post('/api/password/custom-reset')
+        console.log(data);
+      }
+      
     }
   }
 }
