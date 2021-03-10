@@ -1,6 +1,6 @@
 <template>
   <div class="row">
-    <div class="col-lg-8 m-auto" v-if="status == 'enter-email'">
+    <div class="col-lg-8 m-auto" v-if="statusAction == 'enter-email'">
       <card :title="$t('reset_password')">
         <form @submit.prevent="send" @keydown="form.onKeydown($event)">
           <alert-success :form="form" :message="status" />
@@ -46,7 +46,7 @@
         
       </card>
     </div>
-    <div class="col-lg-8 m-auto" v-if="status == 'security-question'">
+    <div class="col-lg-8 m-auto" v-if="statusAction == 'security-question'">
       <card title="Security Question">
         <SecurityQuestion
           :status = status
@@ -70,7 +70,7 @@ const initializeData = () => ({
       option: ''
     }),
     token: null,
-    status: 'enter-email'
+    statusAction: 'enter-email'
   })
 export default {
   middleware: 'guest',
@@ -110,7 +110,7 @@ export default {
 
         this.forgotPassSecurityQuestionForm.email = this.form.email
 
-        this.status = 'security-question'
+        this.statusAction = 'security-question'
 
         this.$store.dispatch('forgot-pass-security-question/fetchUserSecurityQuestions')
 
