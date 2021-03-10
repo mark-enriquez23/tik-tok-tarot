@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use App\UserSecurityQuestion;
 use App\User;
+use App\PasswordReset;
 
 class ForgotPasswordController extends Controller
 {
@@ -55,7 +57,7 @@ class ForgotPasswordController extends Controller
      */
     public function getUserSecurityQuestion(Request $request){
 
-        $securityQuestion = User::where('email', $request->email)->with(['security_questions'])->first();
+        $securityQuestion = User::where('email', $request->email)->with(['security_questions.security_question'])->first();
 
         return response()->json([
             "success" => true,
@@ -72,21 +74,47 @@ class ForgotPasswordController extends Controller
      * @return Object
      */
     public function checkUserSecurityQuestion(Request $request){
-
+  
+        $email = $request->email;
         $questionId = $request->question_id;
         $answer = $request->answer;
-
+        
         $securityQuestion = UserSecurityQuestion::where('id', $questionId)->first();
 
         $status = 'not validated';
 
+        $success = false;
+
+        $token = '';
+
         if ($securityQuestion->answer === $answer) {
+            $success = true;
             $status = 'validated';
+
+            // generate token and save reset password to database
+            $token = Str::random(60);
+
+            $resetData = [
+                "email" => $email,
+                "token" => $token
+            ];
+
+            $user = PasswordReset::create($resetData);
+
         }
 
+        $data = [
+            'email' => $email,
+            'token' => $token
+        ];
+
         return response()->json([
-            "success" => true,
-            "status" => $status
+            "success" => $success,
+            "status" => $status,
+            "data" => $data,
+            "message" => $success ? 
+                __("forgot_password.correct_answer") : 
+                __("forgot_password.incorrect_answer")
         ]);
 
     }
