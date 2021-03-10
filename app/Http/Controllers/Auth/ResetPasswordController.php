@@ -50,6 +50,14 @@ class ResetPasswordController extends Controller
 
         $data = $request->all();
 
+        // check if the two password match
+        if ($data['password'] !== $data['password_confirmation']) {
+            return response()->json([
+                "success" => false,
+                "message" => __("reset_password.password_not_match")
+            ]);
+        }
+
         $passwordReset = PasswordReset::where('email', $data['email'])->orderBy('created_at', 'desc')->first();
 
         // check token
@@ -61,7 +69,10 @@ class ResetPasswordController extends Controller
             return response()->json($user);
         }
 
-        return response()->json($passwordReset);
+        return response()->json([
+            "success" => true,
+            "message" => __("reset_password.password_has_been_changed")
+        ]);
 
     }
 }
