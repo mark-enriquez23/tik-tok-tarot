@@ -73,20 +73,20 @@ class ForgotPasswordController extends Controller
      */
     public function checkUserSecurityQuestion(Request $request){
 
-        // $questionId = $request->question_id;
-        // $answer = $request->answer;
+        $questionId = $request->question_id;
+        $answer = $request->answer;
 
-        // $securityQuestion = UserSecurityQuestion::where('id', $questionId)->first();
+        $securityQuestion = UserSecurityQuestion::where('id', $questionId)->first();
 
-        // $status = 'not validated';
+        $status = 'not validated';
 
-        // if ($securityQuestion->question === $answer) {
-        //     $status = 'alidated';
-        // }
+        if ($securityQuestion->answer === $answer) {
+            $status = 'validated';
+        }
 
         return response()->json([
             "success" => true,
-            // "status" => $status
+            "status" => $status
         ]);
 
     }

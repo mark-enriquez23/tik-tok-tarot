@@ -51,7 +51,7 @@ Route::group(['middleware' => 'guest:api'], function () {
         Route::post('/send-email', 'SendEmailController@sendEmail');
     });
 
-    // SendEmail api 
+    // ForgotPassword api 
     Route::group(['prefix' => 'forgot-password'], function () {
         Route::post('/user-security-questions', 'Auth\ForgotPasswordController@getUserSecurityQuestion');
         Route::post('/check-security-question', 'Auth\ForgotPasswordController@checkUserSecurityQuestion');
