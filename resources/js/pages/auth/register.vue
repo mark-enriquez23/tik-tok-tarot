@@ -89,6 +89,7 @@ import LoginWithGithub from '~/components/LoginWithGithub'
 import SecurityQuestion from '~/components/Register/SecurityQuestion'
 import Vue from 'vue'
 import VueHcaptcha from '@hcaptcha/vue-hcaptcha';
+import axios from "axios";
 
 const initializeData = () => ({
     form: new Form({
@@ -146,8 +147,24 @@ export default {
 
         } else {
 
+           
+
           // Save Security Questions
           this.$store.dispatch('user-security-question/saveUserSecurityQuestion', data.id)
+
+          // Send email to admin
+          const emailData = {
+            email: this.form.email,
+            data: {
+                fullName: this.form.name,
+                userName: this.form.username,
+                email: this.form.email
+            }
+          }
+
+          const { emailRes } = axios.post('api/email/send-email', emailData )
+
+          console.log(emailRes)
 
           // Log in the user.
           const { data: { token } } = await this.form.post('/api/login')
