@@ -35,6 +35,11 @@ export default {
         },
         {
           icon: 'lock',
+          name: 'Security Question',
+          route: 'settings.security'
+        },
+        {
+          icon: 'lock',
           name: this.$t('password'),
           route: 'settings.password'
         }

@@ -20,6 +20,17 @@ Route::group(['middleware' => 'auth:api'], function () {
 
     Route::patch('settings/profile', 'Settings\ProfileController@update');
     Route::patch('settings/password', 'Settings\PasswordController@update');
+
+    // SecurityQuestion api 
+    Route::group(['prefix' => 'authenticated-security-question'], function () {
+        Route::get('/', 'Auth\SecurityQuestionController@authenticated');
+    });
+
+    // UserSecurityQuestion api 
+    Route::group(['prefix' => 'authenticated-user-security-question'], function () {
+        Route::get('/', 'Auth\UserSecurityQuestionController@authenticated');
+        Route::post('/save', 'Auth\UserSecurityQuestionController@saveAuthenticated');
+    });
 });
 
 // Public
