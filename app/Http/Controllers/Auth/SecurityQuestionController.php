@@ -19,6 +19,16 @@ class SecurityQuestionController extends Controller
         ]);
     }
 
+    public function authenticated() {
+        $securityQuestions = SecurityQuestion::all(); // fetch all Security questions from database
+
+        // return response
+        return response()->json([
+            'success' => true,
+            'data' => $securityQuestions
+        ]);
+    }
+
     public function save(Request $request) {
 
         // fetch security question by id

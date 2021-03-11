@@ -16,7 +16,7 @@ class CreateUserSecurityQuestionsTable extends Migration
         Schema::create('user_security_questions', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('user_id')->unsigned();
-            $table->bigInteger('question_Id')->unsigned();
+            $table->bigInteger('question_id')->unsigned();
             $table->string('answer')->nullable();
             $table->json('metadata')->nullable();
             $table->timestamps();

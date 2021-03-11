@@ -9,7 +9,20 @@ use App\UserSecurityQuestion;
 class UserSecurityQuestionController extends Controller
 {
     public function index() {
-        $userSecurityQuestions = UserSecurityQuestion::all();
+        $current = auth()->user();
+
+        $userSecurityQuestions = UserSecurityQuestion::where('user_id', $current->id)->get();
+
+        return response()->json([
+            'success' => true,
+            'data' => $userSecurityQuestions
+        ]);
+    }
+
+    public function authenticated() {
+        $current = auth()->user();
+
+        $userSecurityQuestions = UserSecurityQuestion::where('user_id', $current->id)->get();
 
         return response()->json([
             'success' => true,
@@ -29,6 +42,30 @@ class UserSecurityQuestionController extends Controller
             ];
 
             $userSecurityQuestion = UserSecurityQuestion::create($data);
+           
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => __('messages.userSecurityQuestion_save_successfully'),
+            'data' => $request->questionData
+        ]);
+    }
+
+    public function saveAuthenticated(Request $request) {
+
+        foreach ($request->questionData as $question) {
+
+            $userSecurityQuestion = UserSecurityQuestion::where('id', $question['security_id'])->first();
+            
+            $data = [
+                "id" => $question['security_id'],
+                "user_id" => $question['user_id'],
+                "question_id" => $question['question_id'],
+                "answer" => $question['answer'],
+            ];
+
+            $userSecurityQuestion->update($data);
            
         }
 
