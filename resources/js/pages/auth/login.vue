@@ -97,6 +97,7 @@ export default {
       // Submit the form.
       await this.form.post('/api/login').then(res => {
         console.log(res)
+        this.token = res.data.token
       }).catch((e) => {
         console.log()
         switch (e.response.status) {
@@ -114,7 +115,7 @@ export default {
 
       // Save the token.
       this.$store.dispatch('auth/saveToken', {
-        token: data.token,
+        token: this.token,
         remember: this.remember
       })
 
