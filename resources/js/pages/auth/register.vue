@@ -1,69 +1,64 @@
 <template>
-  <div class="row">
-    <div class="col-lg-8 m-auto" v-if="!onSecurity">
-      <card v-if="mustVerifyEmail" :title="$t('register')">
+  <div class="row h-100">
+    <div class="col-lg-12 my-auto" v-if="!onSecurity">
+      <div v-if="mustVerifyEmail" :title="$t('register')">
         <div class="alert alert-success" role="alert">
           {{ $t('verify_email_address') }}
         </div>
-      </card>
-      <card v-else :title="$t('register')">
+      </div>
+      <div v-else :title="$t('register')">
         <div class="w-100 text-center mt-2 mb-4">
-          <img :src="srcLogoOnly" alt="" srcset="" class="img-fluid col-4">
+          <img :src="srcLogoOnly" style="mix-blend-mode: luminosity;" srcset="" class="img-fluid col-12 col-lg-4">
+          <hr class="mx-auto line-form-break">
+          <h4 >Register</h4>
         </div>
         <form @submit.prevent="register" @keydown="form.onKeydown($event)">
           <!-- UserName -->
-          <div class="form-group row">
-            <label class="col-md-3 col-form-label text-md-right">{{ $t('username') }}</label>
-            <div class="col-md-7">
-              <input v-model="form.username" :class="{ 'is-invalid': form.errors.has('username') }" class="form-control" type="text" name="username">
-              <has-error :form="form" field="username" />
-            </div>
+           <div class="form-group col-md-7 mx-auto">
+            <label>{{ $t('username') }}</label>
+            <input  v-model="form.username" :class="{ 'is-invalid': form.errors.has('username') }" class="form-control" type="text" name="username">
+            <has-error :form="form" field="username" />
           </div>
 
           <!-- Name -->
-          <div class="form-group row">
-            <label class="col-md-3 col-form-label text-md-right">{{ $t('name') }}</label>
-            <div class="col-md-7">
-              <input v-model="form.name" :class="{ 'is-invalid': form.errors.has('name') }" class="form-control" type="text" name="name">
-              <has-error :form="form" field="name" />
-            </div>
+           <div class="form-group col-md-7 mx-auto">
+            <label>{{ $t('name') }}</label>
+            <input  v-model="form.name" :class="{ 'is-invalid': form.errors.has('name') }" class="form-control" type="text" name="name">
+            <has-error :form="form" field="name" />
           </div>
 
           <!-- Email -->
-          <div class="form-group row">
-            <label class="col-md-3 col-form-label text-md-right">{{ $t('email') }}</label>
-            <div class="col-md-7">
-              <input v-model="form.email" :class="{ 'is-invalid': form.errors.has('email') }" class="form-control" type="email" name="email">
-              <has-error :form="form" field="email" />
-            </div>
+          <div class="form-group col-md-7 mx-auto">
+            <label>{{ $t('email') }}</label>
+            <input  v-model="form.email" :class="{ 'is-invalid': form.errors.has('email') }" class="form-control" type="text" name="email">
+            <has-error :form="form" field="email" />
           </div>
 
           <!-- Password -->
-          <div class="form-group row">
-            <label class="col-md-3 col-form-label text-md-right">{{ $t('password') }}</label>
-            <div class="col-md-7">
-              <input v-model="form.password" :class="{ 'is-invalid': form.errors.has('password') }" class="form-control" type="password" name="password">
-              <has-error :form="form" field="password" />
-            </div>
+          <div class="form-group col-md-7 mx-auto">
+            <label>{{ $t('password') }}</label>
+            <input  v-model="form.password" :class="{ 'is-invalid': form.errors.has('password') }" class="form-control" type="text" name="password">
+            <has-error :form="form" field="password" />
           </div>
 
           <!-- Password Confirmation -->
-          <div class="form-group row">
-            <label class="col-md-3 col-form-label text-md-right">{{ $t('confirm_password') }}</label>
-            <div class="col-md-7">
-              <input v-model="form.password_confirmation" :class="{ 'is-invalid': form.errors.has('password_confirmation') }" class="form-control" type="password" name="password_confirmation">
-              <has-error :form="form" field="password_confirmation" />
+          <div class="form-group col-md-7 mx-auto">
+            <label>{{ $t('password_confirmation') }}</label>
+            <input  v-model="form.password_confirmation" :class="{ 'is-invalid': form.errors.has('password_confirmation') }" class="form-control" type="text" name="password_confirmation">
+            <has-error :form="form" field="password_confirmation" />
+          </div>
+
+          <!-- HCaptcha -->
+          <div class="form-group row col-md-7 mx-auto">
+            <div class="col-md-12 px-0">
+              <vue-hcaptcha class="w-100" sitekey="3f7f821f-05b7-486b-a3d9-21395609a73e" @verify="isVerified"></vue-hcaptcha>
             </div>
           </div>
-          <div class="form-group row">
-            <div class="col-md-7 offset-md-3 d-flex">
-              <vue-hcaptcha sitekey="3f7f821f-05b7-486b-a3d9-21395609a73e" @verify="isVerified"></vue-hcaptcha>
-            </div>
-          </div>
-          <div class="form-group row">
-            <div class="col-md-7 offset-md-3 d-flex">
+
+          <div class="form-group row col-md-7 mx-auto mt-3">
+            <div class="col-md-12 px-0">
               <!-- Submit Button -->
-              <v-button :loading="form.busy" :disabled="!token">
+              <v-button class="btn btn-primary w-100" :loading="form.busy" :disabled="!token">
               <!-- <v-button :loading="form.busy"> -->
                 {{ $t('register') }}
               </v-button>
@@ -73,14 +68,14 @@
             </div>
           </div>
         </form>
-      </card>
+      </div>
     </div>
     <div class="col-lg-6 m-auto" v-if="onSecurity">
-      <card title="Security Questions">
+      <div title="Security Questions">
         <SecurityQuestion
           :submit = "register"
         />
-      </card>
+      </div>
     </div>
 
   </div>

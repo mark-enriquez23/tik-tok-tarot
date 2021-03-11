@@ -1,33 +1,30 @@
 <template>
-  <div class="row">
-    <div class="col-lg-8 m-auto">
-      <card :title="$t('login')">
+  <div class="row h-100">
+    <div class="col-lg-12 m-auto">
+      <div>
         <div class="w-100 text-center mt-2 mb-4">
-          <img :src="srcLogoOnly" alt="" srcset="" class="img-fluid col-4">
+          <img :src="srcLogoOnly" style="mix-blend-mode: luminosity;" srcset="" class="img-fluid col-12 col-lg-4">
+          <hr class="mx-auto line-form-break">
+          <h4 >Log in</h4>
         </div>
         <form @submit.prevent="login" @keydown="form.onKeydown($event)">
           <!-- Email -->
-          <div class="form-group row">
-            <label class="col-md-3 col-form-label text-md-right">Username or Email</label>
-            <div class="col-md-7">
-              <input v-model="form.email" :class="{ 'is-invalid': form.errors.has('email') }" class="form-control" type="text" name="email">
-              <has-error :form="form" field="email" />
-            </div>
+          <div class="form-group col-md-7 mx-auto">
+            <label>Username</label>
+            <input v-model="form.email" :class="{ 'is-invalid': form.errors.has('email') }" class="form-control" type="text" name="email">
+            <has-error :form="form" field="email" />
           </div>
 
           <!-- Password -->
-          <div class="form-group row">
-            <label class="col-md-3 col-form-label text-md-right">{{ $t('password') }}</label>
-            <div class="col-md-7">
-              <input v-model="form.password" :class="{ 'is-invalid': form.errors.has('password') }" class="form-control" type="password" name="password">
+          <div class="form-group col-md-7 mx-auto">
+            <label for="exampleInputEmail1">{{ $t('password') }}</label>
+            <input  v-model="form.password" :class="{ 'is-invalid': form.errors.has('password') }" class="form-control" type="password" name="password">
               <has-error :form="form" field="password" />
-            </div>
           </div>
 
           <!-- Remember Me -->
-          <div class="form-group row">
-            <div class="col-md-3" />
-            <div class="col-md-7 d-flex">
+          <div class="form-group row no-gutters col-md-7 mx-auto">
+            <div class="col-md-12 d-flex">
               <checkbox v-model="remember" name="remember">
                 {{ $t('remember_me') }}
               </checkbox>
@@ -38,16 +35,16 @@
             </div>
           </div>
           <!-- HCaptcha -->
-          <div class="form-group row" v-if="!captchaDisabled">
-            <div class="col-md-7 offset-md-3 d-flex">
+          <div class="form-group row col-md-7 mx-auto" v-if="!captchaDisabled">
+            <div class="col-md-12 px-0">
               <vue-hcaptcha sitekey="3f7f821f-05b7-486b-a3d9-21395609a73e" @verify="isVerified"></vue-hcaptcha>
             </div>
           </div>
 
-          <div class="form-group row">
-            <div class="col-md-7 offset-md-3 d-flex">
+          <div class="form-group row col-md-7 mx-auto mt-3">
+            <div class="col-md-12 px-0">
               <!-- Submit Button -->
-              <v-button :disabled="!captchaDisabled && !token" :loading="form.busy">
+              <v-button class="btn btn-primary w-100" :disabled="!captchaDisabled && !token" :loading="form.busy">
                 {{ $t('login') }}
               </v-button>
 
@@ -56,7 +53,7 @@
             </div>
           </div>
         </form>
-      </card>
+      </div>
     </div>
   </div>
 </template>
