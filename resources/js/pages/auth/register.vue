@@ -1,12 +1,12 @@
 <template>
   <div class="row h-100">
     <div class="col-lg-12 my-auto" v-if="!onSecurity">
-      <div v-if="mustVerifyEmail" :title="$t('register')">
+      <div v-if="mustVerifyEmail">
         <div class="alert alert-success" role="alert">
           {{ $t('verify_email_address') }}
         </div>
       </div>
-      <div v-else :title="$t('register')">
+      <div v-else>
         <div class="w-100 text-center mt-2 mb-4">
           <img :src="srcLogoOnly" style="mix-blend-mode: luminosity;" srcset="" class="img-fluid col-12 col-lg-4">
           <hr class="mx-auto line-form-break">
@@ -112,7 +112,9 @@ export default {
     SecurityQuestion,
     VueHcaptcha,
   },
-
+  mounted() {
+    this.$store.dispatch('user-security-question/fetchUserSecurityQuestions')
+  },
   metaInfo () {
     return { title: this.$t('register') }
   },

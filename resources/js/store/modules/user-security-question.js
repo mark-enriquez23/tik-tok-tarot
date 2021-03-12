@@ -21,16 +21,16 @@ export const state = {
 
     security_id_3: "",
 
-    question_1: "",
+    question_1: "1",
 
-    question_2: "",
+    question_2: "2",
 
-    question_3: "",
-    
+    question_3: "3",
+
     answer_1: "",
-    
+
     answer_2: "",
-    
+
     answer_3: "",
 
   }),
@@ -79,7 +79,7 @@ export const actions = {
     try {
 
       const { data } = await axios.get("/api/security-question");
-      
+
       commit(types.FETCH_USER_SECURITY_QUESTION, { userSecurityQuestions: data.data });
 
     } catch (e) {
@@ -95,7 +95,7 @@ export const actions = {
     try {
 
       const { data } = await axios.get("/api/authenticated-security-question");
-      
+
       commit(types.FETCH_USER_SECURITY_QUESTION, { userSecurityQuestions: data.data });
 
     } catch (e) {
@@ -128,7 +128,7 @@ export const actions = {
           state.userSecurityQuestionForm.answer_3 = element.answer
         }
       });
-      
+
     } catch (e) {
 
       return e;
@@ -225,5 +225,5 @@ export const actions = {
     }
 
   },
-  
+
 };
