@@ -19,7 +19,7 @@ class VerificationCodeController extends Controller
         $auth_token = getenv("TWILIO_AUTH_TOKEN"); // Twilio Auth Token from .env
         $twilio_number = getenv("TWILIO_NUMBER"); // Twilio Number from .env
         $client = new Client($account_sid, $auth_token);
-        $client->messages->create($recipients, 
+        $client->messages->create($recipients,
                 ['from' => $twilio_number, 'body' => $message] ); // Send SMS
     }
 
@@ -33,7 +33,7 @@ class VerificationCodeController extends Controller
         $validatedData = $request->validate([
             'recipient' => 'required',
         ]);
-        
+
         // Define user_id and recipient from Request
         $userId = $request->userId;
         $recipient = $validatedData["recipient"];

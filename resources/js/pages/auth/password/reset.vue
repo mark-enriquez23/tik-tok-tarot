@@ -64,6 +64,7 @@ const initializeData = () => ({
     token: null
   })
 export default {
+  layout: 'auth',
   middleware: 'guest',
 
   metaInfo () {

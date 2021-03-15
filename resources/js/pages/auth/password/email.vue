@@ -1,9 +1,11 @@
 <template>
-  <div class="row">
-    <div class="col-lg-8 m-auto" v-if="statusAction == 'enter-email'">
-      <card :title="$t('reset_password')">
+  <div class="row h-100">
+    <div class="col-lg-12 m-auto" v-if="statusAction == 'enter-email'">
+      <div>
         <div class="w-100 text-center mt-2 mb-4">
-          <img :src="srcLogoOnly" alt="" srcset="" class="img-fluid col-4">
+          <img :src="srcLogoOnly" style="mix-blend-mode: luminosity;" srcset="" class="img-fluid col-12 col-lg-4">
+          <hr class="mx-auto line-form-break">
+          <h4 >Forgot Password</h4>
         </div>
         <form @submit.prevent="send" @keydown="form.onKeydown($event)">
           <alert-success :form="form" :message="status" />
@@ -47,7 +49,7 @@
           </div>
         </form>
 
-      </card>
+      </div>
     </div>
     <div class="col-lg-8 m-auto" v-if="statusAction == 'security-question'">
       <card title="Security Question">
@@ -77,6 +79,7 @@ const initializeData = () => ({
     statusAction: 'enter-email'
   })
 export default {
+  layout: 'auth',
   middleware: 'guest',
 
   metaInfo () {

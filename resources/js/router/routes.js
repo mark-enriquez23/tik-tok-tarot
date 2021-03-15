@@ -20,7 +20,8 @@ export default [
       { path: 'profile', name: 'settings.profile', component: page('settings/profile.vue') },
       { path: 'security', name: 'settings.security', component: page('settings/security-question.vue') },
       { path: 'password', name: 'settings.password', component: page('settings/password.vue') }
-    ] },
+    ]
+  },
 
   { path: '*', component: page('errors/404.vue') }
 ]

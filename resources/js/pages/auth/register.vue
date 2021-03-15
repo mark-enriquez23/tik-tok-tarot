@@ -58,7 +58,7 @@
           <div class="form-group row col-md-7 mx-auto mt-3">
             <div class="col-md-12 px-0">
               <!-- Submit Button -->
-              <v-button class="btn btn-primary w-100" :loading="form.busy" :disabled="!token">
+              <v-button class="btn btn-primary w-100" :loading="form.busy" >
               <!-- <v-button :loading="form.busy"> -->
                 {{ $t('register') }}
               </v-button>
@@ -70,7 +70,7 @@
         </form>
       </div>
     </div>
-    <div class="col-lg-6 m-auto" v-if="onSecurity">
+    <div class="col-md-7 m-auto" v-if="onSecurity">
       <div title="Security Questions">
         <SecurityQuestion
           :submit = "register"
@@ -105,6 +105,7 @@ const initializeData = () => ({
   })
 
 export default {
+  layout: 'auth',
   middleware: 'guest',
 
   components: {

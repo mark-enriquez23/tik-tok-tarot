@@ -75,6 +75,7 @@ const initializeData = () => ({
   })
 
 export default {
+  layout: 'auth',
   middleware: 'guest',
 
   components: {
