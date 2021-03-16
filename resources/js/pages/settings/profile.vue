@@ -21,6 +21,15 @@
         </div>
       </div>
 
+      <!-- Phone Number -->
+      <div class="form-group row">
+        <label class="col-md-3 col-form-label text-md-right">Phone Number</label>
+        <div class="col-md-7">
+          <input v-model="form.phone_number" :class="{ 'is-invalid': form.errors.has('phone_number') }" class="form-control" type="text" name="phone_number">
+          <has-error :form="form" field="phone_number" />
+        </div>
+      </div>
+
       <!-- Email -->
       <div class="form-group row">
         <label class="col-md-3 col-form-label text-md-right">{{ $t('email') }}</label>
@@ -57,6 +66,7 @@ export default {
     form: new Form({
       username: '',
       name: '',
+      phone_number: '',
       email: ''
     })
   }),
