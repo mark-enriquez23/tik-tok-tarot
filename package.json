@@ -27,8 +27,10 @@
     "vue": "^2.6.10",
     "vue-i18n": "^8.11.2",
     "vue-meta": "^1.6.0",
+    "vue-phone-number-input": "^1.1.10",
     "vue-recaptcha-v3": "^2.0.0",
     "vue-router": "^3.0.6",
+    "vue-verification-code-input": "^1.0.0",
     "vuex": "^3.1.0",
     "vuex-router-sync": "^5.0.0"
   },
