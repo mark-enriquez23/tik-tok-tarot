@@ -59,7 +59,8 @@ Route::group(['middleware' => 'guest:api'], function () {
 
     // Verification api 
     Route::group(['prefix' => 'verification'], function () {
-        Route::post('/send-message', 'VerificationCodeController@sendCustomMessage');
+        Route::post('/send-message', 'PhoneVerificationController@sendCustomMessage');
+        Route::post('/verify-user', 'PhoneVerificationController@verifyUser');
     });
 
     // SendEmail api 

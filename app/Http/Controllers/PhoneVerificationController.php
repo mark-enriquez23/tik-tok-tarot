@@ -4,9 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Twilio\Rest\Client;
-use App\UserVerification;
+use App\PhoneVerification;
+use App\User;
 
-class VerificationCodeController extends Controller
+class PhoneVerificationController extends Controller
 {
     /**
      * Sends sms to user using Twilio's programmable sms client
@@ -28,7 +29,6 @@ class VerificationCodeController extends Controller
      */
     public function sendCustomMessage(Request $request)
     {
-
         // Request fields user_id, recipient
         $validatedData = $request->validate([
             'recipient' => 'required',
@@ -48,13 +48,13 @@ class VerificationCodeController extends Controller
         $this->sendMessage($message, $recipient);
 
         // Save User Code to database
-        $userVerificationData = [
+        $phoneVerificationData = [
             "user_id" => $userId,
             "code" => $generatedCode
         ];
 
         // save data to database
-        UserVerification::create($userVerificationData);
+        PhoneVerification::create($phoneVerificationData);
 
         // return a response
         return response()->json([
@@ -62,5 +62,42 @@ class VerificationCodeController extends Controller
             "message" => __("Verification Code sent."),
             "sent_message" => $message
         ]);
+    }
+
+    public function verifyUser(Request $request){
+
+        $input = $request->all();
+        $fieldType = filter_var($request->email, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+        $user = User::where([[$fieldType, $input['email']], ['is_verified', '0']])->first();
+        $isSuccess = false;
+        $message = null;
+        if ($user) {
+            // not yet verified
+            // continue to verify code
+            $phoneVerification = PhoneVerification::where([['code', $input['code']],['user_id',$user->id]])->first();
+            if ($phoneVerification) {
+                // valid code
+                // upda user is_verified column to 1
+                $user->is_verified = 1;
+                $user->save();
+
+                $isSuccess = true;
+                $message = __('messages.user_verified');
+            }else{
+                // invalid code
+                $isSuccess = false;
+                $message = __('messages.given_code_invalid');
+            }
+        }else{
+            // already verified
+            $isSuccess = false;
+            $message = __('messages.user_already_verified');
+        }
+
+        return response()->json([
+            "success" => $isSuccess,
+            "message" => $message
+        ]);
+
     }
 }
