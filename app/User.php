@@ -100,12 +100,12 @@ class User extends Authenticatable implements JWTSubject //, MustVerifyEmail
     }
 
     /**
-     * Get the Verifications.
+     * Get the phoneVerifications.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function verifications() {
-        return $this->hasMany('App\UserVerification');
+    public function phoneverifications() {
+        return $this->hasMany('App\PhoneVerification');
     }
 
     /**
