@@ -70,7 +70,8 @@ export const actions = {
 
         const { data } = await axios.post("/api/forgot-password/user-security-questions", request );
 
-        commit(types.FETCH_USER_SECURITY_QUESTION, { userSecurityQuestions: data.data.security_questions });
+        console.log(data)
+        commit(types.FETCH_USER_SECURITY_QUESTION, { userSecurityQuestions: data.data.user_security_questions });
 
     } catch (e) {
 
@@ -94,9 +95,11 @@ export const actions = {
 
         }
 
+        console.log(questionData)
+
         state.loading = true;
 
-        const { data } = await axios.post("/api/forgot-password/check-security-question", questionData );
+        const { data } = await state.forgotPassSecurityQuestionForm.post("/api/forgot-password/check-security-question");
 
         return data;
 

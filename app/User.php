@@ -19,7 +19,7 @@ class User extends Authenticatable implements JWTSubject //, MustVerifyEmail
      * @var array
      */
     protected $fillable = [
-        'username', 'name', 'email', 'password',
+        'username', 'name', 'email', 'phone_number', 'password',
     ];
 
     /**
@@ -95,7 +95,7 @@ class User extends Authenticatable implements JWTSubject //, MustVerifyEmail
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function security_questions() {
+    public function userSecurityQuestions() {
         return $this->hasMany('App\UserSecurityQuestion');
     }
 

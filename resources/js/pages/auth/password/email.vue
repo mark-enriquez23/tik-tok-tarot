@@ -55,6 +55,8 @@
       <card title="Security Question">
         <SecurityQuestion
           :status = status
+          :sendEmail = sendEmail
+          :form = form
         />
       </card>
     </div>
@@ -101,33 +103,29 @@ export default {
 
   methods: {
     async send () {
-
       // check the selected option
       if (this.form.option === "send-email") {
-
-        const { data } = await this.form.post('/api/password/email')
-
-        this.status = data.status
-
-        this.form.reset()
-
-        this.token = null
-
+        await this.sendEmail()
       }else{ // security question
 
         this.forgotPassSecurityQuestionForm.email = this.form.email
-
         this.statusAction = 'security-question'
-
         this.$store.dispatch('forgot-pass-security-question/fetchUserSecurityQuestions')
 
       }
 
     },
+    async sendEmail(){
+      const { data } = await this.form.post('/api/password/email')
+      this.status = data.status
+      this.form.reset()
+      this.token = null
+
+      return data
+      
+    },
     isVerified(e) {
-
       this.token = e;
-
     }
   }
 }

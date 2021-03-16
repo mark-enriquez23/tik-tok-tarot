@@ -9,7 +9,7 @@
                     <select class="form-control" v-model="forgotPassSecurityQuestionForm.question_id" required>
                         <option value="">Choose Question</option>
                         <option 
-                            :value="forgotPassSecurityQuestion.question_Id"
+                            :value="forgotPassSecurityQuestion.id"
                             v-for="forgotPassSecurityQuestion in forgotPassSecurityQuestions" 
                             :key="forgotPassSecurityQuestion.id"
                         >
@@ -29,7 +29,7 @@
             <div class="form-group row">
                 <div class="col-md-12 offset-md-12 d-flex justify-content-end">
                 <!-- Submit Button -->
-                <v-button :loading="forgotPassSecurityQuestionForm.busy">
+                <v-button :loading="form.busy">
                     Submit
                 </v-button>
                 </div>
@@ -39,8 +39,8 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
 
+import { mapGetters } from "vuex";
 import { swalOops, swalSuccess } from "~/helpers";
 
 export default {
@@ -48,7 +48,9 @@ export default {
   middleware: 'guest',
 
   props: {
-    status: { type: String, default: null }
+    status: { type: String, default: null },
+    sendEmail: { type: Function },
+    form: { type: FormData },
   },
 
   components: {
@@ -60,28 +62,21 @@ export default {
   }),
 
   methods: {
-      submit(){
-        this.$store.dispatch('forgot-pass-security-question/checkUserSecurityQuestion')
-        .then(({ success, message, data }) => {
+        submit(){
+            this.$store.dispatch('forgot-pass-security-question/checkUserSecurityQuestion')
+            .then(({ success, message }) => {
 
-          if (success) {
+                if (success) {
+                   this.sendEmail().then((response)=>{
+                       swalSuccess(response.status)
+                   })
+                }else{
+                    swalOops(message)
+                }
 
-            swalSuccess(message).then(() => {
-
-                this.$router.push({ name: "password.reset", 
-                    params: { token: data.token }, 
-                    query: { email: data.email, custom: true } 
-                });
-
-            });
-
-          }else{
-              swalOops(message)
-          }
-
-        }).catch(() => swalOops());
-
-      }
+            }).catch((e) => swalOops(e));
+        },
+        
   }
 
 }
