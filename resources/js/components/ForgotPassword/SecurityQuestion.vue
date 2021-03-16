@@ -9,7 +9,7 @@
                     <select class="form-control" v-model="forgotPassSecurityQuestionForm.question_id" required>
                         <option value="">Choose Question</option>
                         <option 
-                            :value="forgotPassSecurityQuestion.question_Id"
+                            :value="forgotPassSecurityQuestion.id"
                             v-for="forgotPassSecurityQuestion in forgotPassSecurityQuestions" 
                             :key="forgotPassSecurityQuestion.id"
                         >
@@ -39,8 +39,8 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
 
+import { mapGetters } from "vuex";
 import { swalOops, swalSuccess } from "~/helpers";
 
 export default {
@@ -48,7 +48,8 @@ export default {
   middleware: 'guest',
 
   props: {
-    status: { type: String, default: null }
+    status: { type: String, default: null },
+    sendEmail: { type: Function }
   },
 
   components: {
@@ -60,28 +61,28 @@ export default {
   }),
 
   methods: {
-      submit(){
-        this.$store.dispatch('forgot-pass-security-question/checkUserSecurityQuestion')
-        .then(({ success, message, data }) => {
+        submit(){
+            this.$store.dispatch('forgot-pass-security-question/checkUserSecurityQuestion')
+            .then(({ success, message }) => {
 
-          if (success) {
+                if (success) {
+                   this.sendEmail()
+                    // swalSuccess(message).then(() => {
 
-            swalSuccess(message).then(() => {
+                    //     this.$router.push({ name: "password.reset", 
+                    //         params: { token: data.token }, 
+                    //         query: { email: data.email, custom: true } 
+                    //     });
 
-                this.$router.push({ name: "password.reset", 
-                    params: { token: data.token }, 
-                    query: { email: data.email, custom: true } 
-                });
+                    // });
 
-            });
+                }else{
+                    swalOops(message)
+                }
 
-          }else{
-              swalOops(message)
-          }
-
-        }).catch(() => swalOops());
-
-      }
+            }).catch((e) => swalOops(e));
+        },
+        
   }
 
 }

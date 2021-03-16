@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\UserSecurityQuestion;
+use App\SecurityQuestion;
 use App\User;
 use App\PasswordReset;
 
@@ -57,11 +58,19 @@ class ForgotPasswordController extends Controller
      */
     public function getUserSecurityQuestion(Request $request){
 
-        $securityQuestion = User::where('email', $request->email)->with(['security_questions.security_question'])->first();
-
+        // get user data based on email given
+        $user = User::where('email', $request->email)->with(['userSecurityQuestions'])->first();
+        // $userSecurityQuestionData = array();
+     
+        foreach ($user->userSecurityQuestions as $key => $userSecurityQuestion) {
+            // get user security questions
+            $SecurityQuestion = SecurityQuestion::where('id', $userSecurityQuestion->question_id)->first();
+            $user->userSecurityQuestions[$key]['security_question'] = $SecurityQuestion;
+        }
+        
         return response()->json([
             "success" => true,
-            "data" => $securityQuestion
+            "data" => $user
         ]);
 
     }
@@ -87,7 +96,7 @@ class ForgotPasswordController extends Controller
 
         $token = '';
 
-        if ($securityQuestion->answer === $answer) {
+        if ($securityQuestion['answer'] === $answer) {
             $success = true;
             $status = 'validated';
 
