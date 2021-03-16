@@ -21,10 +21,17 @@
           </div>
 
           <!-- Name -->
-           <div class="form-group col-md-7 mx-auto">
+          <div class="form-group col-md-7 mx-auto">
             <label>{{ $t('name') }}</label>
             <input  v-model="form.name" :class="{ 'is-invalid': form.errors.has('name') }" class="form-control" type="text" name="name">
             <has-error :form="form" field="name" />
+          </div>
+
+          <!-- Phone number -->
+          <div class="form-group col-md-7 mx-auto">
+            <label>Phone Number</label>
+            <input  v-model="form.phone_number" :class="{ 'is-invalid': form.errors.has('phone_number') }" class="form-control" type="text" name="phone_number">
+            <has-error :form="form" field="phone_number" />
           </div>
 
           <!-- Email -->
@@ -93,6 +100,7 @@ const initializeData = () => ({
     form: new Form({
       username: '',
       name: '',
+      phone_number: '',
       email: '',
       password: '',
       password_confirmation: '',

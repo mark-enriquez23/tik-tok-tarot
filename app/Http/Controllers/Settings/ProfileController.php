@@ -22,6 +22,6 @@ class ProfileController extends Controller
             'email' => 'required|email|unique:users,email,'.$user->id,
         ]);
 
-        return tap($user)->update($request->only('username','name', 'email'));
+        return tap($user)->update($request->only('username','name', 'phone_number', 'email'));
     }
 }
