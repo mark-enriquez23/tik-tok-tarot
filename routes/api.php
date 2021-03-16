@@ -38,6 +38,11 @@ Route::group(['middleware' => 'guest:api'], function () {
     Route::post('login', 'Auth\LoginController@login');
     Route::post('register', 'Auth\RegisterController@register');
 
+    // User api
+    Route::group(['prefix' => 'user'], function () {
+        Route::post('/validate-username', 'Auth\UserController@validateUserName');
+    });
+
     // SecurityQuestion api 
     Route::group(['prefix' => 'security-question'], function () {
         Route::get('/', 'Auth\SecurityQuestionController@index');
