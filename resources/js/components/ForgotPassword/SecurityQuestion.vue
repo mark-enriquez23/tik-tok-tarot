@@ -29,7 +29,7 @@
             <div class="form-group row">
                 <div class="col-md-12 offset-md-12 d-flex justify-content-end">
                 <!-- Submit Button -->
-                <v-button :loading="forgotPassSecurityQuestionForm.busy">
+                <v-button :loading="form.busy">
                     Submit
                 </v-button>
                 </div>
@@ -49,7 +49,8 @@ export default {
 
   props: {
     status: { type: String, default: null },
-    sendEmail: { type: Function }
+    sendEmail: { type: Function },
+    form: { type: FormData },
   },
 
   components: {
@@ -66,16 +67,9 @@ export default {
             .then(({ success, message }) => {
 
                 if (success) {
-                   this.sendEmail()
-                    // swalSuccess(message).then(() => {
-
-                    //     this.$router.push({ name: "password.reset", 
-                    //         params: { token: data.token }, 
-                    //         query: { email: data.email, custom: true } 
-                    //     });
-
-                    // });
-
+                   this.sendEmail().then((response)=>{
+                       swalSuccess(response.status)
+                   })
                 }else{
                     swalOops(message)
                 }

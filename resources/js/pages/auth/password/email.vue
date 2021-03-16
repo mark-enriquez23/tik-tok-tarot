@@ -56,6 +56,7 @@
         <SecurityQuestion
           :status = status
           :sendEmail = sendEmail
+          :form = form
         />
       </card>
     </div>
@@ -119,6 +120,9 @@ export default {
       this.status = data.status
       this.form.reset()
       this.token = null
+
+      return data
+      
     },
     isVerified(e) {
       this.token = e;
