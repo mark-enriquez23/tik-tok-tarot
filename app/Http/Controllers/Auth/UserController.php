@@ -30,11 +30,32 @@ class UserController extends Controller
         $user = User::where('username', $request->username)->first();
 
         return response()->json([
-            "success" => true,
+            "success" => $user ? true : false,
             "message" => $user ? 
                 __('messages.username_validated') : 
                 __('messages.username_not_validated'),
             "data" => $user
         ]);
+    }
+
+    /**
+     * Validate the requested email.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function validateEmail(Request $request)
+    {
+
+        $user = User::where('email', $request->email)->first();
+
+        return response()->json([
+            "success" => $user ? true : false,
+            "message" => $user ? 
+                __('messages.email_found') : 
+                __('messages.email_not_found'),
+            "data" => $user
+        ]);
+
     }
 }
