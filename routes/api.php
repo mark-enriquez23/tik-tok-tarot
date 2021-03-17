@@ -31,6 +31,12 @@ Route::group(['middleware' => 'auth:api'], function () {
         Route::get('/', 'Auth\UserSecurityQuestionController@authenticated');
         Route::post('/save', 'Auth\UserSecurityQuestionController@saveAuthenticated');
     });
+
+    // Verification api 
+    Route::group(['prefix' => 'verification'], function () {
+        // Route::post('/send-message', 'PhoneVerificationController@sendCustomMessage');
+        Route::post('/verify-user', 'PhoneVerificationController@verifyUser');
+    });
 });
 
 // Public
@@ -55,12 +61,6 @@ Route::group(['middleware' => 'guest:api'], function () {
         Route::get('/', 'Auth\UserSecurityQuestionController@index');
         Route::post('/save', 'Auth\UserSecurityQuestionController@save');
         Route::post('/delete', 'Auth\UserSecurityQuestionController@delete');
-    });
-
-    // Verification api 
-    Route::group(['prefix' => 'verification'], function () {
-        Route::post('/send-message', 'PhoneVerificationController@sendCustomMessage');
-        Route::post('/verify-user', 'PhoneVerificationController@verifyUser');
     });
 
     // SendEmail api 
