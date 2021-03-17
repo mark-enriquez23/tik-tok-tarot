@@ -47,6 +47,7 @@ Route::group(['middleware' => 'guest:api'], function () {
     // User api
     Route::group(['prefix' => 'user'], function () {
         Route::post('/validate-username', 'Auth\UserController@validateUserName');
+        Route::post('/validate-email', 'Auth\UserController@validateEmail');
     });
 
     // SecurityQuestion api 
@@ -80,6 +81,7 @@ Route::group(['middleware' => 'guest:api'], function () {
     // Custom Reset Password
     Route::post('password/custom-reset', 'Auth\ResetPasswordController@customResetPassword');
 
+    // Varification Controller
     Route::post('email/verify/{user}', 'Auth\VerificationController@verify')->name('verification.verify');
     Route::post('email/resend', 'Auth\VerificationController@resend');
 
