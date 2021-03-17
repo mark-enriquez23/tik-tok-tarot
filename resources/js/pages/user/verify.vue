@@ -6,30 +6,30 @@
           <h4 >Verify Account</h4>
           <hr class="mx-auto line-form-break">
         </div>
-        <div class="col-md-7 mx-auto">
-          <div class="mx-auto">
-            <CodeInput style="width: 100% !important" :loading="false" class="input" v-on:change="onChange" v-on:complete="onComplete" />
+        <form @submit.prevent="verifyCode" @keydown="form.onKeydown($event)">
+          <div class="col-md-7 mx-auto">
+            <div class="mx-auto">
+              <CodeInput style="width: 100% !important" :type="'text'" :loading="false" class="input" v-on:change="onChange" v-on:complete="onComplete" />
+            </div>
+            <p class="col-md-12 mb-0 mt-3">Please enter the code we've sent to your phone number for your account verification.</p>
+            <div class="col-md-12 mt-3">
+              <v-button class="btn btn-primary w-100" :disabled="!form.code">Verify Code</v-button>
+            </div>
           </div>
-          <p class="col-md-12 mb-0 mt-3">Please enter the code we've sent to your phone number for your account verification.</p>
-          <div class="col-md-12 mt-3">
-            <v-button class="btn btn-primary w-100">Verify Code</v-button>
-          </div>
-        </div>
+        </form>
       </card>
     </div>
   </div>
 </template>
 
 <script>
+import Form from 'vform'
 import axios from 'axios'
+import { mapGetters } from 'vuex'
 import CodeInput from "vue-verification-code-input";
 import Swal from 'sweetalert2';
 
-
-const qs = (params) => Object.keys(params).map(key => `${key}=${params[key]}`).join('&')
-
 export default {
-
 
   components: {
     CodeInput
@@ -37,35 +37,50 @@ export default {
   metaInfo () {
     return { title: this.$t('verify_email') }
   },
-
   data: () => ({
     error: '',
     success: '',
     code: '',
+    form: new Form({
+      code: '',
+      email: '',
+    }),
   }),
+  mounted() {
+    this.form.email = this.user.email;
+  },
+  computed: mapGetters({
+    user: 'auth/user'
+  }),
+
    methods: {
     onChange(v) {
       console.log("onChange ", v);
     },
     onComplete(v) {
       console.log("onComplete ", v);
-      this.code = v;
+      this.form.code = v;
     },
     async verifyCode() {
-      const verificationData = {
-        email: this.user.email,
-        code: this.code
-      }
-      const { data } = await axios.post("/api/verification/verify-user", verificationData );
+
+      const { data } = await this.form.post("/api/verification/verify-user");
       console.log(data);
-      Swal.fire({
-        title: 'Success',
-        text: "Congratulations your account has been verified!",
-        type: 'success'
-      }).then(() => {
-        // Redirect home.
-        this.$router.push({ name: 'home' })
-      })
+      if (!data.success) {
+        Swal.fire({
+          title: 'Incorrect Code',
+          text: "Code is not correct!",
+          type: 'error'
+        })
+      } else {
+        Swal.fire({
+          title: 'Success',
+          text: "Congratulations your account has been verified!",
+          type: 'success'
+        }).then(() => {
+          // Redirect home.
+          this.$router.push({ name: 'home' })
+        })
+      }
     }
   }
 }

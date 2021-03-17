@@ -88,7 +88,7 @@
               <!-- Phone number -->
               <div class="form-group col-md-7 mx-auto">
                 <label>Phone Number</label>
-                <VuePhoneNumberInput v-model="form.phone_number" no-flags  :class="{ 'is-invalid': form.errors.has('phone_number') }" name="phone_number"/>
+                <VuePhoneNumberInput no-flags v-model="phone_number" @update="updatePhoneNumber"  :class="{ 'is-invalid': form.errors.has('phone_number') }" name="phone_number"/>
                 <!-- <input  v-model="form.phone_number" :class="{ 'is-invalid': form.errors.has('phone_number') }" class="form-control" type="text" name="phone_number"> -->
                 <has-error :form="form" field="phone_number" />
               </div>
@@ -108,14 +108,13 @@
               </div>
               <div class="col-md-6 px-0 pl-lg-1">
                 <!-- Submit Button -->
-                <v-button class="btn btn-primary w-100" :loading="form.busy" >
+                <v-button class="btn btn-primary w-100" :loading="form.busy" :disabled="!validPhoneNumber">
                 <!-- <v-button :loading="form.busy"> -->
-                  {{ $t('register') }}
+                  Next
                 </v-button>
               </div>
             </div>
           </div>
-
         </form>
       </div>
     </div>
@@ -123,6 +122,7 @@
       <div title="Security Questions">
         <SecurityQuestion
           :submit = "register"
+          :form = form
         />
       </div>
     </div>
@@ -154,6 +154,8 @@ const initializeData = () => ({
       password_confirmation: '',
       validate: null
     }),
+    phone_number: '',
+    validPhoneNumber: false,
     mustVerifyEmail: false,
     onSecurity: false,
     srcLogoOnly: window.config.assetURL + 'images/sample-logo.png',
@@ -184,6 +186,12 @@ export default {
   },
 
   methods: {
+    updatePhoneNumber(e) {
+      console.log(e)
+      this.form.phone_number = e.e164;
+      if(e.isValid)
+      this.validPhoneNumber = true
+    },
     prev() {
       this.step--;
     },
@@ -236,9 +244,9 @@ export default {
             }
           }
 
-          // const { emailRes } = axios.post('api/email/send-email', emailData )
+          const { emailRes } = axios.post('api/email/send-email', emailData )
 
-          // console.log(emailRes)
+          console.log(emailRes)
 
           // Log in the user.
           const { data: { token } } = await this.form.post('/api/login')
@@ -249,20 +257,13 @@ export default {
           // Update the user.
           this.$store.dispatch('auth/updateUser', { user: data })
 
-          const phoneData = {
-            recipient: this.form.phone_number
-          }
-          await axios.post('api/verification/send-message', phoneData ).finally((res) => {
-            console.log(res)
-          })
-
           Swal.fire({
               title: 'Success',
               text: "A verification code has been sent to your phone number!",
               type: 'success'
             }).then(() => {
                 // Redirect home.
-                this.$router.push({ name: 'login' })
+                this.$router.push({ name: 'user.verify' })
             })
 
         }

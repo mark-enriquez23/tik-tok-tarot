@@ -44,7 +44,7 @@
                 </div>
                 <div class="col-md-6 px-0 pl-lg-1" >
                   <!-- Submit Button -->
-                  <button type="button"  class="btn btn-primary w-100" @click.prevent="next()" :disabled="form.email === ''">
+                  <button type="button"  class="btn btn-primary w-100" @click.prevent="next()" :disabled="validateEmail()">
                   <!-- <v-button :loading="form.busy"> -->
                     Next
                   </button>
@@ -94,36 +94,6 @@
               </div>
             </div>
           </div>
-
-
-          <!-- Option -->
-          <!-- <div class="form-group row">
-            <label class="col-md-3 col-form-label text-md-right">Option</label>
-            <div class="col-md-7">
-              <select class="form-control" v-model="form.option" required>
-                  <option value="">Select Option</option>
-                  <option value="send-email">Send Email</option>
-                  <option value="security-question">Security Question</option>
-              </select>
-              <has-error :form="form" field="option" />
-            </div>
-          </div> -->
-
-          <!-- ReCaptcha -->
-          <!-- <div class="form-group row col-md-7 mx-auto" v-if="!captchaDisabled">
-            <div class="col-md-12 px-0">
-              <vue-hcaptcha sitekey="3f7f821f-05b7-486b-a3d9-21395609a73e" @verify="isVerified"></vue-hcaptcha>
-            </div>
-          </div> -->
-
-          <!-- Submit Button -->
-          <!-- <div class="form-group row col-md-7 mx-auto mt-3">
-            <div class="col-md-12 px-0">
-              <v-button class="btn btn-primary w-100" :disabled="token" :loading="form.busy">
-                {{ $t('send_password_reset_link') }}
-              </v-button>
-            </div>
-          </div> -->
         </form>
 
       </div>
@@ -177,7 +147,22 @@ export default {
       this.step--;
     },
     next() {
-      this.step++;
+        this.form.post('/api/user/validate-email').then(res => {
+          if (res.data.data!==null) {
+            this.step++;
+            this.status = '';
+          }
+          else {
+            this.status = `Email doesn't exist`;
+          }
+        })
+    },
+    validateEmail() {
+      if (!/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(this.form.email)) {
+        return true;
+      } else {
+        return false
+      }
     },
     setMethod(method) {
       if (method ==='scq') {
@@ -192,6 +177,7 @@ export default {
       if (this.step === 2) {
         this.form.post('/api/user/validate-username').then(res => {
           if (res.data.data!==null) {
+            this.status = '';
             this.sendEmail()
           }
           else {

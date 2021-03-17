@@ -53,8 +53,8 @@
             <div class="form-group col-md-12 px-0 mt-3">
               <div class="col-md-12 px-0">
                 <!-- Submit Button -->
-                <v-button class="btn btn-primary w-100" :loading="userSecurityQuestionForm.busy">
-                    Next
+                <v-button class="btn btn-primary w-100" :loading="form.busy">
+                    {{ $t('register') }}
                 </v-button>
                 </div>
             </div>
@@ -74,7 +74,8 @@ export default {
 
   props: {
     title: { type: String, default: null },
-    submit: { type: Function }
+    submit: { type: Function },
+    form: {type: FormData}
   },
 
   data:() => {
