@@ -8,10 +8,11 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use App\Traits\SendMessage;
 
 class RegisterController extends Controller
 {
-    use RegistersUsers;
+    use RegistersUsers, SendMessage;
 
     /**
      * Create a new controller instance.
@@ -74,13 +75,18 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
 
-        return User::create([
+        $user = User::create([
             'username' => $data['username'],
             'name' => $data['name'],
             'phone_number' => $data['phone_number'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);
+
+        // send sms code
+        $this->sendCustomMessage($user->id, $data['phone_number']);
+
+        return $user;
 
     }
 
