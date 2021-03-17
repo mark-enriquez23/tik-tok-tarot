@@ -3,33 +3,30 @@
         <form @submit.prevent="submit" @keydown="forgotPassSecurityQuestionForm.onKeydown($event)">
             <!-- <alert-error :form="forgotPassSecurityQuestionForm" :message="status" /> -->
             <!-- Question -->
-            <div class="form-group row">
-                <label class="col-md-3 col-form-label text-md-right">Question</label>
-                <div class="col-md-7">
-                    <select class="form-control" v-model="forgotPassSecurityQuestionForm.question_id" required>
-                        <option value="">Choose Question</option>
-                        <option 
-                            :value="forgotPassSecurityQuestion.id"
-                            v-for="forgotPassSecurityQuestion in forgotPassSecurityQuestions" 
-                            :key="forgotPassSecurityQuestion.id"
-                        >
-                            {{ forgotPassSecurityQuestion.security_question.question }}
-                        </option>
-                    </select>
-                </div>
-            </div>
-            <!-- First Answer -->
-            <div class="form-group row">
-                <label class="col-md-3 col-form-label text-md-right">Answer</label>
-                <div class="col-md-7">
-                    <input class="form-control" type="text" name="answer_1" v-model="forgotPassSecurityQuestionForm.answer">
-                </div>
+           <div class="form-group col-md-7 mx-auto">
+              <label>Question</label>
+                <select class="form-control" type="text" name="question" v-model="forgotPassSecurityQuestionForm.question_id" required>
+                  <option value="">Select Question</option>
+                  <option
+                    :value="forgotPassSecurityQuestion.id"
+                    v-for="forgotPassSecurityQuestion in forgotPassSecurityQuestions"
+                    :key="forgotPassSecurityQuestion.id">
+                    {{ forgotPassSecurityQuestion.security_question.question }}
+                  </option>
+                </select>
             </div>
 
-            <div class="form-group row">
-                <div class="col-md-12 offset-md-12 d-flex justify-content-end">
+            <!-- First Answer -->
+           <div class="form-group col-md-7 mx-auto">
+              <input  v-model="forgotPassSecurityQuestionForm.answer" class="form-control" type="text" name="answer_1">
+              <has-error :form="form" field="answer_1" />
+            </div>
+
+
+            <div class="form-group row col-md-7 mx-auto mt-3">
+              <div class="col-md-12 px-0" >
                 <!-- Submit Button -->
-                <v-button :loading="form.busy">
+                <v-button class="btn btn-primary w-100" :loading="form.busy">
                     Submit
                 </v-button>
                 </div>
@@ -42,6 +39,7 @@
 
 import { mapGetters } from "vuex";
 import { swalOops, swalSuccess } from "~/helpers";
+import Swal from 'sweetalert2';
 
 export default {
   name: 'Card',
@@ -68,15 +66,21 @@ export default {
 
                 if (success) {
                    this.sendEmail().then((response)=>{
-                       swalSuccess(response.status)
+                    Swal.fire({
+                        title: 'Success',
+                        text: response.status,
+                        type: 'success'
+                      }).then(() => {
+                          // Redirect home.
+                          this.$router.push({ name: 'login' })
+                      })
                    })
                 }else{
                     swalOops(message)
                 }
-
             }).catch((e) => swalOops(e));
         },
-        
+
   }
 
 }
