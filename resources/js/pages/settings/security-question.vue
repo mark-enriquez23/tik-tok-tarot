@@ -1,85 +1,84 @@
 <template>
-    <card title="Your Security Question">
+    <card class="py-3">
+    <h4 class="mb-0">Security Questions</h4>
+    <p class="mb-0">Change your security questions here.</p>
+    <hr>
         <form @submit.prevent="update" @keydown="form.onKeydown($event)">
             <alert-success :form="form" :message="$t('info_updated')" />
 
             <!-- First Question -->
-            <div class="form-group row">
-                <label class="col-md-3 col-form-label text-md-right">Question #1</label>
-                <div class="col-md-7">
-                    <select class="form-control" v-model="userSecurityQuestionForm.question_1" required>
-                        <option value="">First Question</option>
-                        <option 
-                            :value="userSecurityQuestion.id" 
-                            v-for="userSecurityQuestion in userSecurityQuestions" 
-                            :key="userSecurityQuestion.id"
-                        >
-                            {{ userSecurityQuestion.question }}
-                        </option>
-                    </select>
-                </div>
+            <div class="form-group col-md-7 mx-auto">
+              <label>Question #1</label>
+              <select @change="onChange($event, 0)" class="form-control" v-model="userSecurityQuestionForm.question_1" required :disabled="!isUpdating">
+                  <option value="">First Question</option>
+                  <option
+                    :value="userSecurityQuestion.id"
+                    v-for="userSecurityQuestion in secQs[0]"
+                    :key="userSecurityQuestion.id"
+                  >
+                  {{ userSecurityQuestion.question }}
+                </option>
+              </select>
             </div>
             <!-- First Answer -->
-            <div class="form-group row">
-                <label class="col-md-3 col-form-label text-md-right">Answer #1</label>
-                <div class="col-md-7">
-                    <input class="form-control" type="text" name="answer_1" v-model="userSecurityQuestionForm.answer_1">
-                </div>
+            <div class="form-group col-md-7 mx-auto">
+              <input v-model="userSecurityQuestionForm.answer_1" class="form-control" type="text" name="answer_1" :readonly="!isUpdating">
             </div>
             <!-- Second Question -->
-            <div class="form-group row">
-                <label class="col-md-3 col-form-label text-md-right">Question #2</label>
-                <div class="col-md-7">
-                    <select class="form-control" v-model="userSecurityQuestionForm.question_2">
-                        <option value="">Second Question</option>
-                        <option 
-                            :value="userSecurityQuestion.id" 
-                            v-for="userSecurityQuestion in userSecurityQuestions" 
-                            :key="userSecurityQuestion.id"
-                        >
-                            {{ userSecurityQuestion.question }}
-                        </option>
-                    </select>
-                </div>
+            <div class="form-group col-md-7 mx-auto">
+              <label>Question #2</label>
+              <select @change="onChange($event, 1)" class="form-control" v-model="userSecurityQuestionForm.question_2" required :disabled="!isUpdating">
+                  <option value="">Second Question</option>
+                  <option
+                    :value="userSecurityQuestion.id"
+                    v-for="userSecurityQuestion in secQs[1]"
+                    :key="userSecurityQuestion.id"
+                  >
+                  {{ userSecurityQuestion.question }}
+                </option>
+              </select>
             </div>
             <!-- Second Answer -->
-            <div class="form-group row">
-                <label class="col-md-3 col-form-label text-md-right">Answer #1</label>
-                <div class="col-md-7">
-                <input class="form-control" type="text" name="answer_2" v-model="userSecurityQuestionForm.answer_2">
-                </div>
+            <div class="form-group col-md-7 mx-auto">
+              <input v-model="userSecurityQuestionForm.answer_2" class="form-control" type="text" name="answer_2" :readonly="!isUpdating">
             </div>
             <!-- Third Question -->
-            <div class="form-group row">
-                <label class="col-md-3 col-form-label text-md-right">Question #2</label>
-                <div class="col-md-7">
-                    <select class="form-control" v-model="userSecurityQuestionForm.question_3">
-                        <option value="">Third Question</option>
-                        <option 
-                            :value="userSecurityQuestion.id" 
-                            v-for="userSecurityQuestion in userSecurityQuestions" 
-                            :key="userSecurityQuestion.id"
-                        >
-                            {{ userSecurityQuestion.question }}
-                        </option>
-                    </select>
-                </div>
+            <div class="form-group col-md-7 mx-auto">
+              <label>Question #3</label>
+              <select @change="onChange($event, 2)" class="form-control" v-model="userSecurityQuestionForm.question_3" required :disabled="!isUpdating">
+                  <option value="">Third Question</option>
+                  <option
+                    :value="userSecurityQuestion.id"
+                    v-for="userSecurityQuestion in secQs[2]"
+                    :key="userSecurityQuestion.id"
+                  >
+                  {{ userSecurityQuestion.question }}
+                </option>
+              </select>
             </div>
             <!-- Third Answer -->
-            <div class="form-group row">
-                <label class="col-md-3 col-form-label text-md-right">Answer #1</label>
-                <div class="col-md-7">
-                <input class="form-control" type="text" name="answer_3" v-model="userSecurityQuestionForm.answer_3">
-                </div>
+            <div class="form-group col-md-7 mx-auto">
+              <input v-model="userSecurityQuestionForm.answer_3" class="form-control" type="text" name="answer_3" :readonly="!isUpdating">
             </div>
 
             <!-- Submit Button -->
-            <div class="form-group row">
-                <div class="col-md-9 ml-md-auto">
-                <v-button :loading="form.busy" type="success">
-                    {{ $t('update') }}
+            <div class="form-group row col-md-7 mx-auto mt-3">
+              <div class="col-md-6 px-0 pr-lg-1"  v-if="isUpdating">
+                <!-- Bac Button -->
+                <button type="button" class="btn btn-secondary w-100" @click.prevent="cancelUpdate()"  >
+                <!-- <v-button :loading="form.busy"> -->
+                Cancel
+                </button>
+              </div>
+              <div class="col-md-6 px-0 pl-lg-1 ml-md-auto">
+                <!-- Update Button -->
+                <button class="btn btn-primary w-100" @click.prevent="isUpdating = true"  v-if="!isUpdating">
+                  {{ $t('update') }}
+                </button>
+                <v-button class="btn btn-primary w-100"  v-else>
+                  Confirm
                 </v-button>
-                </div>
+              </div>
             </div>
         </form>
     </card>
@@ -102,7 +101,9 @@ export default {
       username: '',
       name: '',
       email: ''
-    })
+    }),
+    isUpdating: false,
+    secQs: [[],[],[]]
   }),
 
   computed: mapGetters({
@@ -116,21 +117,42 @@ export default {
     this.form.keys().forEach(key => {
       this.form[key] = this.user[key]
     })
+    console.log(this.form)
   },
-
   methods: {
     async update () {
       this.$store.dispatch('user-security-question/saveAuthenticatedUserSecurityQuestion')
         .then(({success, message})=>{
             if (success) {
-                swalSuccess(message)
+                swalSuccess('Security Questions Updated')
+                this.cancelUpdate()
             }
         })
+    },
+      onChange(event, i) {
+        const selectedItem = parseInt(event.target.value);
+        for (let index = 0; index < this.secQs.length; index++) {
+          if (index !== i ) {
+            this.secQs[index] = this.userSecurityQuestions
+            this.secQs[index] = this.secQs[index].filter(x => {
+              return x.id !== selectedItem
+            })
+          }
+        }
+      },
+      cancelUpdate() {
+      this.$store.dispatch('user-security-question/fetchDefaultAuthenticatedSecurityQuestions')
+      this.$store.dispatch('user-security-question/fetchAuthenticatedUserSecurityQuestions')
+      for (let index = 0; index < this.secQs.length; index++) {
+        this.secQs[index] = this.userSecurityQuestions
+      }
+      this.isUpdating = false
     }
   },
   beforeMount(){
-    this.$store.dispatch('user-security-question/fetchDefaultAuthenticatedSecurityQuestions')
-    this.$store.dispatch('user-security-question/fetchAuthenticatedUserSecurityQuestions')
+      for (let index = 0; index < this.secQs.length; index++) {
+        this.secQs[index] = this.userSecurityQuestions
+      }
   }
 }
 </script>

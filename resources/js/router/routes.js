@@ -16,7 +16,7 @@ export default [
   { path: '/settings',
     component: page('settings/index.vue'),
     children: [
-      { path: '', redirect: { name: 'settings.profile' } },
+      { path: '**', redirect: { name: 'settings.profile' } },
       { path: 'profile', name: 'settings.profile', component: page('settings/profile.vue') },
       { path: 'security', name: 'settings.security', component: page('settings/security-question.vue') },
       { path: 'password', name: 'settings.password', component: page('settings/password.vue') }
