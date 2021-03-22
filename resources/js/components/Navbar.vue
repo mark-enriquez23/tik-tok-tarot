@@ -1,26 +1,21 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-light bg-white">
+<div>
+
+  <nav class="navbar navbar-expand-lg navbar-light bg-white bs-none">
     <div class="container">
+
       <router-link :to="{ name: user ? 'home' : 'welcome' }" class="navbar-brand">
-        {{ appName }}
+          <img :src="srcLogoOnly" style="mix-blend-mode: luminosity; width: 90px " srcset="" >
       </router-link>
 
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false">
-        <span class="navbar-toggler-icon" />
-      </button>
-
-      <div id="navbarToggler" class="collapse navbar-collapse">
-        <ul class="navbar-nav">
+        <!-- <ul class="navbar-nav">
           <locale-dropdown />
-          <!-- <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
-          </li> -->
-        </ul>
+        </ul> -->
 
-        <ul class="navbar-nav ml-auto">
+        <ul class="navbar-nav ml-auto navbar-nav-auth">
           <!-- Authenticated -->
           <li v-if="user" class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle text-dark"
+            <a class="nav-link dropdown-toggle text-dark auth-links"
                href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
             >
               <img :src="user.photo_url" class="rounded-circle profile-photo mr-1">
@@ -42,20 +37,81 @@
           <!-- Guest -->
           <template v-else>
             <li class="nav-item">
-              <router-link :to="{ name: 'login' }" class="nav-link" active-class="active">
+              <router-link :to="{ name: 'login' }" class="nav-link auth-links" active-class="active">
                 {{ $t('login') }}
               </router-link>
             </li>
             <li class="nav-item">
-              <router-link :to="{ name: 'register' }" class="nav-link" active-class="active">
+              <router-link :to="{ name: 'register' }" class="nav-link auth-links" active-class="active">
                 {{ $t('register') }}
               </router-link>
             </li>
           </template>
         </ul>
+    </div>
+
+  </nav>
+
+  <nav class="navbar navbar-expand-lg navbar-light bg-white">
+    <div class="container">
+    <form class="form-inline col-8 col-md-4 px-0">
+      <input class="form-control mr-sm-2 w-100" type="search" placeholder="Search" aria-label="Search">
+    </form>
+
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false">
+        <span class="navbar-toggler-icon" />
+      </button>
+
+      <div id="navbarToggler" class="collapse navbar-collapse">
+        <ul class="navbar-nav ml-auto ">
+            <li class="nav-item">
+              <router-link :to="{ name: 'welcome' }" class="nav-link" active-class="active">
+                {{ $t('home') }}
+              </router-link>
+            </li>
+            <li class="nav-item">
+              <router-link :to="{ name: 'register' }" class="nav-link" active-class="active">
+                Prices
+              </router-link>
+            </li>
+            <li class="nav-item dropdown">
+               <a class="nav-link dropdown-toggle"
+               href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                >
+                  Latest Vlogs
+                </a>
+                <div class="dropdown-menu">
+                  <router-link :to="{ name: 'settings.profile' }" class="dropdown-item pl-3">
+                    All Vlogs
+                  </router-link>
+                </div>
+
+            </li>
+            <li class="nav-item">
+              <router-link :to="{ name: 'register' }" class="nav-link" active-class="active">
+                Testimonials
+              </router-link>
+            </li>
+            <li class="nav-item">
+              <router-link :to="{ name: 'register' }" class="nav-link" active-class="active">
+               Vlog Review
+              </router-link>
+            </li>
+            <li class="nav-item">
+              <router-link :to="{ name: 'register' }" class="nav-link" active-class="active">
+               About Us
+              </router-link>
+            </li>
+            <li class="nav-item">
+              <router-link :to="{ name: 'register' }" class="nav-link" active-class="active">
+                Contact Us
+              </router-link>
+            </li>
+        </ul>
       </div>
     </div>
   </nav>
+</div>
 </template>
 
 <script>
@@ -68,7 +124,8 @@ export default {
   },
 
   data: () => ({
-    appName: window.config.appName
+    appName: window.config.appName,
+    srcLogoOnly: window.config.assetURL + 'images/sample-logo.png',
   }),
 
   computed: mapGetters({
@@ -87,10 +144,26 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .profile-photo {
   width: 2rem;
   height: 2rem;
   margin: -.375rem 0;
+}
+.bs-none {
+  box-shadow: none;
+}
+
+@media (max-width: 771px) {
+  .navbar-nav-auth {
+    flex-direction: row;
+  }
+  .navbar-nav-auth .auth-links {
+      padding-right: 0.5rem;
+      padding-left: 0.5rem;
+    &:last-child {
+      padding-right: 0px;
+    }
+  }
 }
 </style>
