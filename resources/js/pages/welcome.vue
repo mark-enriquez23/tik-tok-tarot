@@ -97,8 +97,8 @@
                       <fa class="quote-icon-right" :icon="['fas', 'quote-right']" />
                     </p>
                     <img :src="testimonialImage1" class="testimonial-img" alt="">
-                    <h3>Saul Goodman</h3>
-                    <h4>Ceo &amp; Founder</h4>
+                    <h3>John Doe</h3>
+                    <h4>Client</h4>
                     <p class="client-review-stars">
                       <fa :icon="['fas', 'star']" />
                       <fa :icon="['fas', 'star']" />
@@ -115,8 +115,8 @@
                       <fa class="quote-icon-right" :icon="['fas', 'quote-right']" />
                     </p>
                     <img :src="testimonialImage2" class="testimonial-img" alt="">
-                    <h3>Sara Wilsson</h3>
-                    <h4>Designer</h4>
+                    <h3>John Doe</h3>
+                    <h4>Client</h4>
                     <p class="client-review-stars">
                       <fa :icon="['fas', 'star']" />
                       <fa :icon="['fas', 'star']" />
@@ -133,8 +133,8 @@
                       <fa class="quote-icon-right" :icon="['fas', 'quote-right']" />
                     </p>
                     <img :src="testimonialImage3" class="testimonial-img" alt="">
-                    <h3>Jena Karlis</h3>
-                    <h4>Store Owner</h4>
+                    <h3>John Doe</h3>
+                    <h4>Client</h4>
                     <p class="client-review-stars">
                       <fa :icon="['fas', 'star']" />
                       <fa :icon="['fas', 'star']" />
@@ -151,8 +151,8 @@
                       <fa class="quote-icon-right" :icon="['fas', 'quote-right']" />
                     </p>
                     <img :src="testimonialImage4" class="testimonial-img" alt="">
-                    <h3>Matt Brandon</h3>
-                    <h4>Freelancer</h4>
+                    <h3>John Doe</h3>
+                    <h4>Client</h4>
                     <p class="client-review-stars">
                       <fa :icon="['fas', 'star']" />
                       <fa :icon="['fas', 'star']" />
@@ -169,8 +169,8 @@
                       <fa class="quote-icon-right" :icon="['fas', 'quote-right']" />
                     </p>
                     <img :src="testimonialImage5" class="testimonial-img" alt="">
-                    <h3>John Larson</h3>
-                    <h4>Entrepreneur</h4>
+                    <h3>John Doe</h3>
+                    <h4>Client</h4>
                     <p class="client-review-stars">
                       <fa :icon="['fas', 'star']" />
                       <fa :icon="['fas', 'star']" />
@@ -212,7 +212,7 @@
                 <div class="member" data-aos="zoom-in" data-aos-delay="100">
                   <div class="pic"><img :src="testimonialImage5" class="img-fluid" alt=""></div>
                   <div class="member-info">
-                    <h4>Walter White</h4>
+                    <h4>John Doe</h4>
                     <span>Reader 1</span>
                     <p class="text-success mb-0">online</p>
                     <p>Explicabo voluptatem mollitia et repellat qui dolorum quasi</p>
@@ -224,7 +224,7 @@
                 <div class="member" data-aos="zoom-in" data-aos-delay="100">
                   <div class="pic"><img :src="testimonialImage1" class="img-fluid" alt=""></div>
                   <div class="member-info">
-                    <h4>Walter White</h4>
+                    <h4>John Doe</h4>
                     <span>Reader 2</span>
                     <p class="text-success mb-0">online</p>
                     <p>Explicabo voluptatem mollitia et repellat qui dolorum quasi</p>
@@ -236,7 +236,7 @@
                 <div class="member" data-aos="zoom-in" data-aos-delay="100">
                   <div class="pic"><img :src="testimonialImage3" class="img-fluid" alt=""></div>
                   <div class="member-info">
-                    <h4>Walter White</h4>
+                    <h4>John Doe</h4>
                     <span>Reader 3</span>
                     <p class="text-success mb-0">online</p>
                     <p>Explicabo voluptatem mollitia et repellat qui dolorum quasi</p>
@@ -248,7 +248,7 @@
                 <div class="member" data-aos="zoom-in" data-aos-delay="200">
                   <div class="pic"><img :src="testimonialImage2" class="img-fluid" alt=""></div>
                   <div class="member-info">
-                    <h4>Sarah Jhonson</h4>
+                    <h4>John Doe</h4>
                     <span>Reader 4</span>
                     <p class="text-success mb-0">online</p>
                     <p>Aut maiores voluptates amet et quis praesentium qui senda para</p>
@@ -260,7 +260,7 @@
                 <div class="member" data-aos="zoom-in" data-aos-delay="300">
                   <div class="pic"><img :src="testimonialImage1" class="img-fluid" alt=""></div>
                   <div class="member-info">
-                    <h4>William Anderson</h4>
+                    <h4>John Doe</h4>
                     <span>Reader 4</span>
                     <p class="text-success mb-0">online</p>
                     <p>Quisquam facilis cum velit laborum corrupti fuga rerum quia</p>
@@ -272,7 +272,7 @@
                 <div class="member" data-aos="zoom-in">
                   <div class="pic"><img :src="testimonialImage4" class="img-fluid" alt=""></div>
                   <div class="member-info">
-                    <h4>Amanda Jepson</h4>
+                    <h4>John Doe</h4>
                     <span>Reader 5</span>
                     <p class="text-success mb-0">online</p>
                     <p>Dolorum tempora officiis odit laborum officiis et et accusamus</p>
