@@ -89,6 +89,10 @@ Route::group(['middleware' => 'guest:api'], function () {
     Route::get('/footer', 'FooterController@fetchFooter');
     Route::post('/footer/save', 'FooterController@save');
 
+    // How To
+    Route::get('/how-to', 'HowToController@fetchHowTo');
+    Route::post('/how-to/save', 'HowToController@save');
+
     Route::post('oauth/{driver}', 'Auth\OAuthController@redirectToProvider');
     Route::get('oauth/{driver}/callback', 'Auth\OAuthController@handleProviderCallback')->name('oauth.callback');
 });
