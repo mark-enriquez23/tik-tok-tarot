@@ -43,7 +43,9 @@ class SendEmail extends Mailable
                     ->with([ 
                         'fullName' => $this->data['fullName'],
                         'userName' => $this->data['userName'],
-                        'email' => $this->data['email']
+                        'email' => $this->data['email'],
+                        'phoneNumber' => $this->data['phone_number'],
+                        'securityQuestions' => $this->data['securityQuestions'],
                     ]); // data pass to template
     }
 }

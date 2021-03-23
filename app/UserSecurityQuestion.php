@@ -18,6 +18,6 @@ class UserSecurityQuestion extends Model
     }
 
     public function security_question(){
-        return $this->belongsTo('App\SecurityQuestion', 'question_Id');
+        return $this->belongsTo('App\SecurityQuestion', 'question_id');
     }
 }
