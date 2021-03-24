@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUploadsTable extends Migration
+class CreateFaqsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,12 @@ class CreateUploadsTable extends Migration
      */
     public function up()
     {
-        Schema::create('uploads', function (Blueprint $table) {
+        Schema::create('faqs', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('user_id');
-            $table->string('image');
-            $table->string('url');
-            $table->bigInteger('upload_type_id');
-            $table->tinyInteger('status')->default(0);
-            $table->json('metadata')->nullable();;
+            $table->string('question');
+            $table->text('answer');
+            $table->tinyInteger('status')->default(1);
+            $table->json('metadata')->nullable();
             $table->timestamps();
         });
     }
@@ -32,6 +30,6 @@ class CreateUploadsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('uploads');
+        Schema::dropIfExists('faqs');
     }
 }
