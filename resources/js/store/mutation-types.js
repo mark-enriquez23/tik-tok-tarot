@@ -15,3 +15,6 @@ export const DELETE_USER_SECURITY_QUESTION = 'DELETE_USER_SECURITY_QUESTION'
 
 // lang.js
 export const SET_LOCALE = 'SET_LOCALE'
+
+// footer.js
+export const FETCH_FOOTER = 'FETCH_FOOTER'

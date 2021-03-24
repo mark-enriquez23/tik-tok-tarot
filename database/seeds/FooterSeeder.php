@@ -13,16 +13,21 @@ class FooterSeeder extends Seeder
     public function run()
     {
         $data = [
-            'social_media_links'      => ['facebook.com', 'twitter.com'],
+            'social_media_links'      => [
+                ['type' => 'facebook', 'url' => 'facebook.com' ],
+                ['type' => 'instagram', 'url' => 'instagram.com' ],
+                ['type' => 'twitter', 'url' => 'twitter.com' ],
+                ['type' => 'linkedin', 'url' => 'linkedin.com' ],
+            ],
             'terms_and_condition_id'    =>  1,
             'refund_policy_id'    =>  1,
             'copyright_id'    =>  1,
             'contact_support'    =>  'test@support.test',
-            'accredited_icons'    =>  ['fa-eye', 'fa-trash'],
+            'accredited_icons'    =>  ['certificate', 'clipboard-check'],
             'additional_footer_detail_id'    =>  1,
             'purchased_readings'    =>  ['testOne', 'testTwo'],
         ];
- 
+
         $refund = Footer::create($data);
     }
 }

@@ -5,19 +5,24 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 // import { } from '@fortawesome/free-regular-svg-icons'
 
 import {
-  faUser, faLock, faSignOutAlt, faCog, faStar, faStarAndCrescent, faStarHalfAlt, faStarHalf, faCaretRight, faChevronRight, faQuoteLeft, faQuoteRight, faReceipt, faImages, faVideo, faBook, faUserTie, faHandsHelping
+  faUser, faLock, faSignOutAlt, faCog, faStar,
+  faStarAndCrescent, faStarHalfAlt, faStarHalf,
+  faCaretRight, faChevronRight, faQuoteLeft,
+  faQuoteRight, faReceipt, faImages, faVideo,
+  faBook, faUserTie, faHandsHelping, faEnvelope,
+  faCheckDouble, faCertificate, faClipboardCheck,
 } from '@fortawesome/free-solid-svg-icons'
 
-import {
-  faGithub
-} from '@fortawesome/free-brands-svg-icons'
+import { faFacebook, faInstagram, faLinkedin, faTwitter } from '@fortawesome/free-brands-svg-icons'
 
 library.add(
   faUser, faLock, faSignOutAlt, faCog, faStar,
   faStarAndCrescent, faStarHalfAlt, faStarHalf,
-  faUser, faCaretRight, faChevronRight, faQuoteLeft,
+  faCaretRight, faChevronRight, faQuoteLeft,
   faQuoteRight, faReceipt, faImages, faVideo,
-  faBook, faUserTie, faHandsHelping
+  faBook, faUserTie, faHandsHelping, faEnvelope,
+  faCheckDouble, faCertificate, faClipboardCheck,
+  faFacebook, faTwitter, faLinkedin, faInstagram
 )
 
 Vue.component('fa', FontAwesomeIcon)

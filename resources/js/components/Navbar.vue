@@ -70,7 +70,7 @@
               </router-link>
             </li>
             <li class="nav-item">
-              <router-link :to="{ name: 'register' }" class="nav-link" active-class="active">
+              <router-link :to="{ name: 'prices' }" class="nav-link" active-class="active">
                 Prices
               </router-link>
             </li>
@@ -78,32 +78,30 @@
                <a class="nav-link dropdown-toggle"
                href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                 >
-                  Latest Vlogs
+                   Vlogs
                 </a>
                 <div class="dropdown-menu">
-                  <router-link :to="{ name: 'settings.profile' }" class="dropdown-item pl-3">
+                  <router-link :to="{ name: 'vlogs.list' }" class="dropdown-item pl-3">
                     All Vlogs
+                  </router-link>
+                  <router-link :to="{ name: 'vlogs.review' }" class="dropdown-item pl-3">
+                    Vlog Review
                   </router-link>
                 </div>
 
             </li>
             <li class="nav-item">
-              <router-link :to="{ name: 'register' }" class="nav-link" active-class="active">
+              <router-link :to="{ name: 'testimonials' }" class="nav-link" active-class="active">
                 Testimonials
               </router-link>
             </li>
             <li class="nav-item">
-              <router-link :to="{ name: 'register' }" class="nav-link" active-class="active">
-               Vlog Review
-              </router-link>
-            </li>
-            <li class="nav-item">
-              <router-link :to="{ name: 'register' }" class="nav-link" active-class="active">
+              <router-link :to="{ name: 'about.us' }" class="nav-link" active-class="active">
                About Us
               </router-link>
             </li>
             <li class="nav-item">
-              <router-link :to="{ name: 'register' }" class="nav-link" active-class="active">
+              <router-link :to="{ name: 'contact.us' }" class="nav-link" active-class="active">
                 Contact Us
               </router-link>
             </li>
@@ -131,6 +129,9 @@ export default {
   computed: mapGetters({
     user: 'auth/user'
   }),
+
+  mounted() {
+  },
 
   methods: {
     async logout () {

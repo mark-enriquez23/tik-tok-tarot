@@ -19,7 +19,7 @@
         </div>
     </div>
 </header>
-<div class="container my-5">
+<section class="container my-5">
   <div class="">
     <div class="section-title">
       <h2>Featured Vlogs</h2>
@@ -76,7 +76,7 @@
       </div>
     </div>
   </div>
-</div>
+</section>
  <!-- ======= Testimonials Section ======= -->
 <section id="testimonials" class="testimonials section-bg">
   <div class="container">
@@ -609,15 +609,65 @@
             </div>
         </div>
     </div>
-</div>
+    </div>
     </section>
+
+<!--News Letter Section -->
+<section class="subscribe-panel cta">
+    <div class="container text-center text-white">
+    <h1>Join Our Newsletter</h1>
+    <p>Subscribe to our weekly Newsletter and stay tuned.</p>
+    <form action="" method="post">
+        <div class="col-5 mx-auto">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <fa :icon="['fas', 'envelope']" class="input-group-text" id="basic-addon1" style="font-size: 38px" />
+            </div>
+            <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+          </div>
+        </div>
+          <button class="btn btn-danger btn-lg">Subscribe Now!</button>
+    </form>
   </div>
+  </section>
+  <!-- ======= About Section ======= -->
+  <section id="about" class="about">
+      <div class="container">
+
+        <div class="row content">
+          <div class="col-lg-6" data-aos="fade-right" data-aos-delay="100">
+            <h2>Lorem ipsum dolor sit amet</h2>
+            <h3>Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</h3>
+          </div>
+          <div class="col-lg-6 pt-4 pt-lg-0" data-aos="fade-left" data-aos-delay="200">
+            <p>
+               Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+               Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+            </p>
+            <ul>
+              <li><fa class="text-danger" :icon="['fas', 'check-double']" id="basic-addon1" /> Consectetur adipiscing elit, sed do eiusmod tempor incididunt</li>
+              <li><fa class="text-danger" :icon="['fas', 'check-double']" id="basic-addon1" /> Duis aute irure dolor in reprehenderit in voluptate velit</li>
+              <li><fa class="text-danger" :icon="['fas', 'check-double']" id="basic-addon1" /> Ullamco laboris nisi ut aliquip ex ea commodo consequat.</li>
+            </ul>
+            <p class="font-italic">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
+              magna aliqua.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </section><!-- End About Section -->
+    <Footer />
+</div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
+import Footer from '../components/Footer.vue'
 
 export default {
+  components: { Footer },
   layout: 'default',
 
   metaInfo () {
@@ -636,7 +686,10 @@ export default {
 
   computed: mapGetters({
     authenticated: 'auth/check'
-  })
+  }),
+  beforeCreate() {
+    this.$store.dispatch('footer/fetchFooterData')
+  }
 }
 </script>
 
@@ -665,14 +718,12 @@ export default {
   padding-top: 10.5rem;
   padding-bottom: 10.5rem;
   text-align: center;
-  background-image: linear-gradient(
-    rgba(235, 229, 229, 0.1),
-    rgba(235, 229, 229, 0.1)
-  ), url('/images/tarot2.jpg');
+  background-image: radial-gradient(at top center, rgba(25,7,0,0) 28%, #000000 100%), url('/images/tarot2.jpg');
   background-repeat: no-repeat;
   background-attachment: scroll;
   background-position: center center;
   background-size: cover;
+  position: relative;
 }
 
 .card {
