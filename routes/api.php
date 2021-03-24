@@ -37,6 +37,7 @@ Route::group(['middleware' => 'auth:api'], function () {
         // Route::post('/send-message', 'PhoneVerificationController@sendCustomMessage');
         Route::post('/verify-user', 'PhoneVerificationController@verifyUser');
     });
+
 });
 
 // Public
@@ -96,6 +97,12 @@ Route::group(['middleware' => 'guest:api'], function () {
     // How To
     Route::get('/faq', 'FaqController@fetchFaq');
     Route::post('/faq/save', 'FaqController@save');
+
+    // Upload api 
+    Route::group(['prefix' => 'upload'], function () {
+        Route::get('/featured-uploads/{typeName}', 'UploadController@fetchFeaturedUpload');
+        Route::post('/save', 'UploadController@save');
+    });
 
     Route::post('oauth/{driver}', 'Auth\OAuthController@redirectToProvider');
     Route::get('oauth/{driver}/callback', 'Auth\OAuthController@handleProviderCallback')->name('oauth.callback');
