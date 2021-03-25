@@ -18,7 +18,7 @@ class CreateFaqsTable extends Migration
             $table->string('question');
             $table->text('answer');
             $table->tinyInteger('status')->default(1);
-            $table->json('metadata')->nullable();
+            $table->longText('metadata')->nullable();
             $table->timestamps();
         });
     }

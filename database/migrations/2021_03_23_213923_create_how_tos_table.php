@@ -17,7 +17,7 @@ class CreateHowTosTable extends Migration
             $table->id();
             $table->string('title');
             $table->text('content')->nullable();
-            $table->json('metadata')->nullable();
+            $table->longText('metadata')->nullable();
             $table->timestamps();
         });
     }

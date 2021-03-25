@@ -19,7 +19,7 @@ class CreateNotificationsTable extends Migration
             $table->string('title');
             $table->text('description')->nullable();
             $table->tinyInteger('is_read')->default(0);
-            $table->json('metadata')->nullable();
+            $table->longText('metadata')->nullable();
             $table->timestamps();
         });
     }

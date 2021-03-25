@@ -20,7 +20,7 @@ class CreateUploadsTable extends Migration
             $table->string('url');
             $table->bigInteger('upload_type_id');
             $table->tinyInteger('status')->default(0);
-            $table->json('metadata')->nullable();;
+            $table->longText('metadata')->nullable();
             $table->timestamps();
         });
     }

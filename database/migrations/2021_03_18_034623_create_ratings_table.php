@@ -19,7 +19,7 @@ class CreateRatingsTable extends Migration
             $table->bigInteger('upload_id');
             $table->text('description')->nullable();
             $table->bigInteger('rate');
-            $table->json('metadata')->nullable();
+            $table->longText('metadata')->nullable();
             $table->timestamps();
         });
     }

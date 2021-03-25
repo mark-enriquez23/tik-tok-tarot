@@ -26,7 +26,7 @@ class AddPhoneNumberToUsers extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('phone_number');
+            // $table->dropColumn('phone_number');
         });
     }
 }
