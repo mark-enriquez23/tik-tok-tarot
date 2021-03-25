@@ -9,7 +9,7 @@ class FaqController extends Controller
 {
     public function fetchFaq()
     {
-        $faqs = Faq::where('status', 1)->get();
+        $faqs = Faq::orderBy('created_at', 'DESC')->first();
 
         return response()->json([
             'success' => true,

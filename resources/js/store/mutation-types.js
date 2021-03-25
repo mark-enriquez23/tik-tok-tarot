@@ -18,3 +18,9 @@ export const SET_LOCALE = 'SET_LOCALE'
 
 // footer.js
 export const FETCH_FOOTER = 'FETCH_FOOTER'
+
+// how-to.js
+export const FETCH_HOW_TO = 'FETCH_HOW_TO'
+
+// faq.js
+export const FETCH_FAQ = 'FETCH_FAQ'

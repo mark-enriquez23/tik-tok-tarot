@@ -18,5 +18,7 @@ class DatabaseSeeder extends Seeder
         $this->call(RefundPolicySeeder::class);
         $this->call(TermsAndConditionSeeder::class);
         $this->call(FooterSeeder::class);
+        $this->call(HowToSeeder::class);
+        $this->call(FaqSeeder::class);
     }
 }

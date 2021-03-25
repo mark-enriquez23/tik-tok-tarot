@@ -13,10 +13,18 @@ class CreateFaqsTable extends Migration
      */
     public function up()
     {
+        // Schema::create('faqs', function (Blueprint $table) {
+        //     $table->id();
+        //     $table->string('question');
+        //     $table->text('answer');
+        //     $table->tinyInteger('status')->default(1);
+        //     $table->json('metadata')->nullable();
+        //     $table->timestamps();
+        // });
         Schema::create('faqs', function (Blueprint $table) {
             $table->id();
-            $table->string('question');
-            $table->text('answer');
+            $table->string('subtitle');
+            $table->json('categories');
             $table->tinyInteger('status')->default(1);
             $table->json('metadata')->nullable();
             $table->timestamps();

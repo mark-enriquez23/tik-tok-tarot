@@ -21,18 +21,18 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::patch('settings/profile', 'Settings\ProfileController@update');
     Route::patch('settings/password', 'Settings\PasswordController@update');
 
-    // SecurityQuestion api 
+    // SecurityQuestion api
     Route::group(['prefix' => 'authenticated-security-question'], function () {
         Route::get('/', 'Auth\SecurityQuestionController@authenticated');
     });
 
-    // UserSecurityQuestion api 
+    // UserSecurityQuestion api
     Route::group(['prefix' => 'authenticated-user-security-question'], function () {
         Route::get('/', 'Auth\UserSecurityQuestionController@authenticated');
         Route::post('/save', 'Auth\UserSecurityQuestionController@saveAuthenticated');
     });
 
-    // Verification api 
+    // Verification api
     Route::group(['prefix' => 'verification'], function () {
         // Route::post('/send-message', 'PhoneVerificationController@sendCustomMessage');
         Route::post('/verify-user', 'PhoneVerificationController@verifyUser');
@@ -51,26 +51,26 @@ Route::group(['middleware' => 'guest:api'], function () {
         Route::post('/validate-email', 'Auth\UserController@validateEmail');
     });
 
-    // SecurityQuestion api 
+    // SecurityQuestion api
     Route::group(['prefix' => 'security-question'], function () {
         Route::get('/', 'Auth\SecurityQuestionController@index');
         Route::post('/save', 'Auth\SecurityQuestionController@save');
         Route::post('/delete', 'Auth\SecurityQuestionController@delete');
     });
 
-    // UserSecurityQuestion api 
+    // UserSecurityQuestion api
     Route::group(['prefix' => 'user-security-question'], function () {
         Route::get('/', 'Auth\UserSecurityQuestionController@index');
         Route::post('/save', 'Auth\UserSecurityQuestionController@save');
         Route::post('/delete', 'Auth\UserSecurityQuestionController@delete');
     });
 
-    // SendEmail api 
+    // SendEmail api
     Route::group(['prefix' => 'email'], function () {
         Route::post('/send-email', 'SendEmailController@sendEmail');
     });
 
-    // ForgotPassword api 
+    // ForgotPassword api
     Route::group(['prefix' => 'forgot-password'], function () {
         Route::post('/user-security-questions', 'Auth\ForgotPasswordController@getUserSecurityQuestion');
         Route::post('/check-security-question', 'Auth\ForgotPasswordController@checkUserSecurityQuestion');
@@ -94,11 +94,11 @@ Route::group(['middleware' => 'guest:api'], function () {
     Route::get('/how-to', 'HowToController@fetchHowTo');
     Route::post('/how-to/save', 'HowToController@save');
 
-    // How To
+    // Faq
     Route::get('/faq', 'FaqController@fetchFaq');
     Route::post('/faq/save', 'FaqController@save');
 
-    // Upload api 
+    // Upload api
     Route::group(['prefix' => 'upload'], function () {
         Route::get('/featured-uploads/{typeName}', 'UploadController@fetchFeaturedUpload');
         Route::post('/save', 'UploadController@save');

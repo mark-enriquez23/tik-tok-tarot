@@ -7,8 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 class Faq extends Model
 {
     protected $fillable = [
-        'question',
-        'answer',
+        'subtitle',
+        'categories',
         'metadata'
+    ];
+
+    protected $casts = [
+        'categories' => 'array',
     ];
 }
