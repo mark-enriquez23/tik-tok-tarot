@@ -17,7 +17,7 @@ class CreatePhoneVerificationsTable extends Migration
             $table->id();
             $table->bigInteger('user_id')->unsigned();
             $table->string('code')->nullable();
-            $table->json('metadata')->nullable();
+            $table->longText('metadata')->nullable();
             $table->timestamps();
         });
     }

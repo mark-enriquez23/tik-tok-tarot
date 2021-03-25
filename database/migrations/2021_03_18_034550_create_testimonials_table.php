@@ -20,7 +20,7 @@ class CreateTestimonialsTable extends Migration
             $table->string('title');
             $table->text('description')->nullable();
             $table->tinyInteger('status')->default(0);
-            $table->json('metadata')->nullable();
+            $table->longText('metadata')->nullable();
             $table->timestamps();
         });
     }
