@@ -18,7 +18,7 @@ class CreateUserSecurityQuestionsTable extends Migration
             $table->bigInteger('user_id')->unsigned();
             $table->bigInteger('question_id')->unsigned();
             $table->string('answer')->nullable();
-            $table->json('metadata')->nullable();
+            $table->longText('metadata')->nullable();
             $table->timestamps();
         });
     }

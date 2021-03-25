@@ -16,9 +16,9 @@ class CreateHowTosTable extends Migration
         Schema::create('how_tos', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->text('content')->nullable();;
+            $table->text('content')->nullable();
             $table->json('additional_data')->nullable();
-            $table->json('metadata')->nullable();
+            $table->longText('metadata')->nullable();
             $table->timestamps();
         });
     }

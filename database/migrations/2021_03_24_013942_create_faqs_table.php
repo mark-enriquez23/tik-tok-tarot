@@ -26,7 +26,7 @@ class CreateFaqsTable extends Migration
             $table->string('subtitle');
             $table->json('categories');
             $table->tinyInteger('status')->default(1);
-            $table->json('metadata')->nullable();
+            $table->longText('metadata')->nullable();
             $table->timestamps();
         });
     }

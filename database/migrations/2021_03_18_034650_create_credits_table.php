@@ -17,7 +17,7 @@ class CreateCreditsTable extends Migration
             $table->id();
             $table->bigInteger('user_id');
             $table->integer('points');
-            $table->json('metadata');
+            $table->longText('metadata')->nullable();
             $table->timestamps();
         });
     }

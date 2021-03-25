@@ -17,7 +17,7 @@ class CreateLoginAttemptsTable extends Migration
             $table->id();
             $table->bigInteger('user_id')->unsigned();
             $table->tinyInteger('attempt')->unsigned();
-            $table->json('metadata')->nullable();
+            $table->longText('metadata')->nullable();
             $table->timestamps();
         });
     }

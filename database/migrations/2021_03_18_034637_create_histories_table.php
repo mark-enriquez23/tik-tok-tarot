@@ -19,7 +19,7 @@ class CreateHistoriesTable extends Migration
             $table->bigInteger('upload_id');
             $table->string('title');
             $table->text('description')->nullable();
-            $table->json('metadata')->nullable();
+            $table->longText('metadata')->nullable();
             $table->timestamps();
         });
     }
