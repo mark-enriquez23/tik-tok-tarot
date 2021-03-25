@@ -5,7 +5,7 @@
         <div class="row h-100 align-items-center justify-content-center text-center">
             <div class="col-lg-10 align-self-end">
                 <img :src="srcLogoOnly" style="mix-blend-mode: luminosity; width: 350px" srcset="" >
-                <h1 class="text-uppercase font-weight-bold text-white mt-2">Welcome to Test a Psychic</h1>
+                <h1 class="text-uppercase font-weight-bold text-white mt-2">Welcome to TikTok Tarot</h1>
                 <hr class="divider my-2 col-2" style="background: #ffff" />
             </div>
             <div class="col-lg-8 align-self-baseline">
