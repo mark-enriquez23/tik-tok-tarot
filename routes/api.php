@@ -104,6 +104,18 @@ Route::group(['middleware' => 'guest:api'], function () {
         Route::post('/save', 'UploadController@save');
     });
 
+    // Contact us api
+    Route::group(['prefix' => 'contact-us'], function () {
+        Route::get('/', 'ContactUsController@fetchContactUs');
+        Route::post('/save', 'ContactUsController@save');
+    });
+
+    // About us api
+    Route::group(['prefix' => 'about-us'], function () {
+        Route::get('/', 'AboutUsController@fetchAboutUs');
+        Route::post('/save', 'AboutUsController@save');
+    });
+
     Route::post('oauth/{driver}', 'Auth\OAuthController@redirectToProvider');
     Route::get('oauth/{driver}/callback', 'Auth\OAuthController@handleProviderCallback')->name('oauth.callback');
 });
