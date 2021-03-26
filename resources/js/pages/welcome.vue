@@ -4,7 +4,7 @@
     <div class="container h-100">
         <div class="row h-100 align-items-center justify-content-center text-center">
             <div class="col-lg-10 align-self-end">
-                <img :src="srcLogoOnly" style="mix-blend-mode: luminosity; width: 350px" srcset="" >
+                <img :src="srcLogoOnly" style="mix-blend-mode: luminosity; width: 20rem" srcset="" >
                 <h1 class="text-uppercase font-weight-bold text-white mt-2">Welcome to TikTok Tarot</h1>
                 <hr class="divider my-2 col-2" style="background: #ffff" />
             </div>
@@ -19,64 +19,6 @@
         </div>
     </div>
 </header>
-<section class="container my-5">
-  <div class="">
-    <div class="section-title">
-      <h2>Featured Vlogs</h2>
-      <p>Magnam dolores commodi suscipit uisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
-    </div>
-  </div>
-  <div class="mb-2">
-    <div class="row">
-      <div class="col-md-4">
-        <div class="card ">
-          <a href="#">
-          <img class="card-img-top" src="https://images.unsplash.com/photo-1535025639604-9a804c092faa?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6cb0ceb620f241feb2f859e273634393&auto=format&fit=crop&w=500&q=80" alt="Card image cap">
-          <div class="card-body">
-            <h5 class="card-title">Lorem ipsum dolor sit amet.</h5>
-            <p class="card-text text-muted">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab accusantium ad alias, aliquid amet aspernatur atque culpa cum debitis dicta doloremque, dolorum ea eos et excepturi explicabo facilis harum illo impedit incidunt laborum laudantium...
-            </p>
-        </div>
-          </a>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="card ">
-          <a href="#">
-          <img class="card-img-top" src="https://images.unsplash.com/photo-1535025639604-9a804c092faa?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6cb0ceb620f241feb2f859e273634393&auto=format&fit=crop&w=500&q=80" alt="Card image cap">
-          <div class="card-body">
-            <h5 class="card-title">Lorem ipsum dolor sit amet.</h5>
-            <p class="card-text text-muted">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab accusantium ad alias, aliquid amet aspernatur atque culpa cum debitis dicta doloremque, dolorum ea eos et excepturi explicabo facilis harum illo impedit incidunt laborum laudantium...
-            </p>
-        </div>
-          </a>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="card ">
-          <a href="#">
-          <img class="card-img-top" src="https://images.unsplash.com/photo-1535025639604-9a804c092faa?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6cb0ceb620f241feb2f859e273634393&auto=format&fit=crop&w=500&q=80" alt="Card image cap">
-          <div class="card-body">
-            <h5 class="card-title">Lorem ipsum dolor sit amet.</h5>
-            <p class="card-text text-muted">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab accusantium ad alias, aliquid amet aspernatur atque culpa cum debitis dicta doloremque, dolorum ea eos et excepturi explicabo facilis harum illo impedit incidunt laborum laudantium...
-            </p>
-        </div>
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="mt-5 mx-auto col-md-3 mx-auto ">
-    <div class="btn btn-danger w-100">
-      <div class=" row no-gutters mx-auto justify-content-center">
-        <div class="my-auto mr-2">Show More</div> <fa :icon="['fas', 'chevron-right']" class="my-auto" />
-      </div>
-    </div>
-  </div>
-</section>
  <!-- ======= Testimonials Section ======= -->
 <section id="testimonials" class="testimonials section-bg">
   <div class="container">
@@ -307,6 +249,66 @@
 
       </div>
     </section><!-- End Cta Section -->
+
+<section class="container my-5">
+  <div class="">
+    <div class="section-title">
+      <h2>Featured Vlogs</h2>
+      <p>Magnam dolores commodi suscipit uisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
+    </div>
+  </div>
+  <div class="mb-2">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="card ">
+          <a href="#">
+          <img class="card-img-top" src="https://images.unsplash.com/photo-1535025639604-9a804c092faa?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6cb0ceb620f241feb2f859e273634393&auto=format&fit=crop&w=500&q=80" alt="Card image cap">
+          <div class="card-body">
+            <h5 class="card-title">Lorem ipsum dolor sit amet.</h5>
+            <p class="card-text text-muted">
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab accusantium ad alias, aliquid amet aspernatur atque culpa cum debitis dicta doloremque, dolorum ea eos et excepturi explicabo facilis harum illo impedit incidunt laborum laudantium...
+            </p>
+        </div>
+          </a>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card ">
+          <a href="#">
+          <img class="card-img-top" src="https://images.unsplash.com/photo-1535025639604-9a804c092faa?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6cb0ceb620f241feb2f859e273634393&auto=format&fit=crop&w=500&q=80" alt="Card image cap">
+          <div class="card-body">
+            <h5 class="card-title">Lorem ipsum dolor sit amet.</h5>
+            <p class="card-text text-muted">
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab accusantium ad alias, aliquid amet aspernatur atque culpa cum debitis dicta doloremque, dolorum ea eos et excepturi explicabo facilis harum illo impedit incidunt laborum laudantium...
+            </p>
+        </div>
+          </a>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card ">
+          <a href="#">
+          <img class="card-img-top" src="https://images.unsplash.com/photo-1535025639604-9a804c092faa?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6cb0ceb620f241feb2f859e273634393&auto=format&fit=crop&w=500&q=80" alt="Card image cap">
+          <div class="card-body">
+            <h5 class="card-title">Lorem ipsum dolor sit amet.</h5>
+            <p class="card-text text-muted">
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab accusantium ad alias, aliquid amet aspernatur atque culpa cum debitis dicta doloremque, dolorum ea eos et excepturi explicabo facilis harum illo impedit incidunt laborum laudantium...
+            </p>
+        </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="mt-5 mx-auto col-md-3 mx-auto ">
+    <div class="btn btn-danger w-100">
+      <div class=" row no-gutters mx-auto justify-content-center">
+        <div class="my-auto mr-2">Show More</div> <fa :icon="['fas', 'chevron-right']" class="my-auto" />
+      </div>
+    </div>
+  </div>
+</section>
+
     <HowTo />
 
     <!--FAQ Section-->

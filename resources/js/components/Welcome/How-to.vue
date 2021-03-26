@@ -1,6 +1,6 @@
 <template>
     <!-- ======= Why Us Section ======= -->
-    <section id="why-us" class="why-us" v-if="howTo">
+    <section id="why-us" class="why-us section-bg" v-if="howTo">
       <div class="container">
 
         <div class="row">

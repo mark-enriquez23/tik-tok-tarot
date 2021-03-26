@@ -1,5 +1,5 @@
 <template>
-    <section class="section-bg" v-if="faq">
+    <section class="" v-if="faq">
     <div class="container">
     <div class="section-title">
       <h2>Frequently Asked Questions</h2>
