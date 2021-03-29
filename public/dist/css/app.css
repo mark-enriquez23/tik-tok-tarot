@@ -1052,7 +1052,7 @@ section {
   box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.1);
 }
 
-.contact .info i {
+.contact .info .icon {
   font-size: 20px;
   color: #fff;
   float: left;

@@ -320,15 +320,15 @@
     <h1>Join Our Newsletter</h1>
     <p>Subscribe to our weekly Newsletter and stay tuned.</p>
     <form action="" method="post">
-        <!-- <div class="col-5 mx-auto">
+        <div class="col-lg-5  mx-auto">
           <div class="input-group mb-3">
             <div class="input-group-prepend">
               <fa :icon="['fas', 'envelope']" class="input-group-text" id="basic-addon1" style="font-size: 38px" />
             </div>
-            <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+            <input type="text" class="form-control" placeholder="Email" aria-label="Email" aria-describedby="basic-addon1">
           </div>
-        </div> -->
-          <button class="btn btn-danger btn-lg">Subscribe Now!</button>
+        </div>
+        <button class="btn btn-danger btn-lg">Subscribe Now!</button>
     </form>
   </div>
   </section>
