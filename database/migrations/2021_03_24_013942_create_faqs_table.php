@@ -24,7 +24,7 @@ class CreateFaqsTable extends Migration
         Schema::create('faqs', function (Blueprint $table) {
             $table->id();
             $table->string('subtitle');
-            $table->json('categories');
+            $table->longText('categories');
             $table->tinyInteger('status')->default(1);
             $table->longText('metadata')->nullable();
             $table->timestamps();
