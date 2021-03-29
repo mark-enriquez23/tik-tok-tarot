@@ -27,3 +27,6 @@ export const FETCH_FAQ = 'FETCH_FAQ'
 
 // about-us.js
 export const FETCH_ABOUT_US = 'FETCH_ABOUT_US'
+
+// contact-us.js
+export const FETCH_CONTACT_US = 'FETCH_CONTACT_US'

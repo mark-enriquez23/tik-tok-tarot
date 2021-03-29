@@ -10,7 +10,7 @@ export default [
   { path: '/vlogs/review', name: 'vlogs.review', component: page('welcome.vue') },
   { path: '/testimonials', name: 'testimonials', component: page('welcome.vue') },
   { path: '/about-us', name: 'about.us', component: page('about-us.vue') },
-  { path: '/contact-us', name: 'contact.us', component: page('welcome.vue') },
+  { path: '/contact-us', name: 'contact.us', component: page('contact-us.vue') },
   { path: '/login', name: 'login', component: page('auth/login.vue') },
   { path: '/register', name: 'register', component: page('auth/register.vue') },
   { path: '/password/reset', name: 'password.request', component: page('auth/password/email.vue') },

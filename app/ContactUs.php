@@ -7,9 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 class ContactUs extends Model
 {
     protected $fillable = [
+        'sub_title',
+        'location',
         'email',
-        'subject',
-        'body',
+        'phone_number',
         'metadata',
+    ];
+
+    protected $casts = [
+        'location' => 'array',
     ];
 }

@@ -4,10 +4,12 @@
       <div class="container py-5">
         <div class="row h-100 align-items-center py-5">
           <div class="col-lg-6">
-            <h1 class="display-4 text-bold text-danger">{{ aboutUs.title }}</h1>
-            <p class="lead text-muted mb-0">{{ aboutUs.sub_title }}</p>
+            <div class="section-title">
+              <h2>{{ aboutUs.title }}</h2>
+              <p>{{ aboutUs.sub_title }}</p>
+            </div>
           </div>
-          <div class="col-lg-6 d-none d-lg-block"><img :src="imageUrl + aboutUs.banner_image" alt="" class="banner img-fluid"></div>
+          <div class="col-lg-6 mt-lg-0 mt-4 d-lg-block"><img :src="imageUrl + aboutUs.banner_image" alt="" class="banner img-fluid"></div>
         </div>
       </div>
     </div>
@@ -20,7 +22,7 @@
             <h2 class="font-weight-light">{{ item.title }}</h2>
             <p class="font-italic text-muted mb-4">{{item.description}}</p><a href="#" class="btn btn-danger px-5 rounded-pill shadow-sm">Learn More</a>
           </div>
-          <div class="col-lg-5 px-5 mx-auto " :class="'order-'+ ((index+2)%2 || 2) + ' order-lg-' + ((index+3)%2 || 2) "><img style="max-height: 30rem; width: 100%;" :src="imageUrl + item.image" alt="" class="banner img-fluid mb-4 mb-lg-0"></div>
+          <div class="col-lg-5 px-lg-5 mx-lg-auto mt-4" :class="'order-'+ ((index+2)%2 || 2) + ' order-lg-' + ((index+3)%2 || 2) "><img style="max-height: 30rem; width: 100%;" :src="imageUrl + item.image" alt="" class="banner img-fluid mb-4 mb-lg-0"></div>
         </div>
       </div>
     </div>
