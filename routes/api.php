@@ -116,6 +116,12 @@ Route::group(['middleware' => 'guest:api'], function () {
         Route::post('/save', 'AboutUsController@save');
     });
 
+    // General Info api
+    Route::group(['prefix' => 'general-info'], function () {
+        Route::get('/', 'GeneralInformationController@fetchGeneralInformation');
+        Route::post('/save', 'GeneralInformationController@save');
+    });
+
     Route::post('oauth/{driver}', 'Auth\OAuthController@redirectToProvider');
     Route::get('oauth/{driver}/callback', 'Auth\OAuthController@handleProviderCallback')->name('oauth.callback');
 });
