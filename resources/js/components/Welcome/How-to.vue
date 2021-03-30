@@ -1,5 +1,4 @@
 <template>
-    <!-- ======= Why Us Section ======= -->
     <section id="why-us" class="why-us section-bg" v-if="howTo">
       <div class="container">
 
@@ -31,7 +30,7 @@
         </div>
 
       </div>
-    </section><!-- End Why Us Section -->
+    </section>
 </template>
 
 <script>

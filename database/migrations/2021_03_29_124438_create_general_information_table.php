@@ -15,10 +15,10 @@ class CreateGeneralInformationTable extends Migration
     {
         Schema::create('general_information', function (Blueprint $table) {
             $table->id();
-            $table->string('email');
+            $table->string('title');
             $table->text('sub_title')->nullable();
-            $table->string('phone_number')->nullable();
-            $table->longText('location')->nullable();
+            $table->text('banner_image')->nullable();
+            $table->longText('content')->nullable();
             $table->longText('metadata')->nullable();
             $table->timestamps();
         });

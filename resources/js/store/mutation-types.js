@@ -30,3 +30,6 @@ export const FETCH_ABOUT_US = 'FETCH_ABOUT_US'
 
 // contact-us.js
 export const FETCH_CONTACT_US = 'FETCH_CONTACT_US'
+
+// general-info.js
+export const FETCH_GENERAL_INFO = 'FETCH_GENERAL_INFO'

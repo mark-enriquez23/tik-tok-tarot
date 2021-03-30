@@ -309,6 +309,7 @@
   </div>
 </section>
 
+    <!-- How To Section -->
     <HowTo />
 
     <!--FAQ Section-->
@@ -332,34 +333,10 @@
     </form>
   </div>
   </section>
-  <!-- ======= About Section ======= -->
-  <section id="about" class="about">
-      <div class="container">
+    <!-- General Info Section -->
+    <General-info />
 
-        <div class="row content">
-          <div class="col-lg-6" data-aos="fade-right" data-aos-delay="100">
-            <h2>Lorem ipsum dolor sit amet</h2>
-            <h3>Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</h3>
-          </div>
-          <div class="col-lg-6 pt-4 pt-lg-0" data-aos="fade-left" data-aos-delay="200">
-            <p>
-               Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-               Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-            </p>
-            <ul>
-              <li><fa class="text-danger" :icon="['fas', 'check-double']" id="basic-addon1" /> Consectetur adipiscing elit, sed do eiusmod tempor incididunt</li>
-              <li><fa class="text-danger" :icon="['fas', 'check-double']" id="basic-addon1" /> Duis aute irure dolor in reprehenderit in voluptate velit</li>
-              <li><fa class="text-danger" :icon="['fas', 'check-double']" id="basic-addon1" /> Ullamco laboris nisi ut aliquip ex ea commodo consequat.</li>
-            </ul>
-            <p class="font-italic">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-              magna aliqua.
-            </p>
-          </div>
-        </div>
-
-      </div>
-    </section><!-- End About Section -->
+    <!-- Footer Section -->
     <Footer />
 </div>
 </template>
@@ -368,10 +345,11 @@
 import { mapGetters } from 'vuex'
 import Footer from '../components/Utilities/Footer.vue'
 import Faq from '../components/Welcome/Faq.vue'
+import GeneralInfo from '../components/Welcome/General-info.vue'
 import HowTo from '../components/Welcome/How-to.vue'
 
 export default {
-  components: { Footer, HowTo, Faq },
+  components: { Footer, HowTo, Faq, GeneralInfo },
   layout: 'default',
 
   metaInfo () {

@@ -5,7 +5,7 @@ function page (path) {
 export default [
   { path: '/', redirect: 'landing' },
   { path: '/landing', name: 'welcome', component: page('welcome.vue') },
-  { path: '/prices', name: 'prices', component: page('welcome.vue') },
+  { path: '/prices', name: 'prices', component: page('pricing.vue') },
   { path: '/vlogs/list', name: 'vlogs.list', component: page('welcome.vue') },
   { path: '/vlogs/review', name: 'vlogs.review', component: page('welcome.vue') },
   { path: '/testimonials', name: 'testimonials', component: page('welcome.vue') },
