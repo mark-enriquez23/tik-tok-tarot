@@ -10,7 +10,9 @@ import {
   faCaretRight, faChevronRight, faQuoteLeft,
   faQuoteRight, faReceipt, faImages, faVideo,
   faBook, faUserTie, faHandsHelping, faEnvelope,
-  faCheckDouble, faCertificate, faClipboardCheck, faChartBar, faLeaf, faHouseUser, faMapPin, faPhone,
+  faCheckDouble, faCertificate, faClipboardCheck,
+  faChartBar, faLeaf, faHouseUser, faMapPin, faPhone,
+  faCalendar, faCalendarAlt, faComment, faFolder,
 } from '@fortawesome/free-solid-svg-icons'
 
 import { faFacebook, faInstagram, faLinkedin, faTwitter } from '@fortawesome/free-brands-svg-icons'
@@ -24,7 +26,7 @@ library.add(
   faCheckDouble, faCertificate, faClipboardCheck,
   faFacebook, faTwitter, faLinkedin, faInstagram,
   faChartBar,  faLeaf, faHouseUser, faMapPin,
-  faPhone
+  faPhone, faCalendarAlt, faComment, faFolder
 )
 
 Vue.component('fa', FontAwesomeIcon)

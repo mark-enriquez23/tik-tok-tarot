@@ -15,6 +15,10 @@ class CreateMailchimpsTable extends Migration
     {
         Schema::create('mailchimps', function (Blueprint $table) {
             $table->id();
+            $table->string('email');
+            $table->tinyInteger('is_subscribed');
+            $table->string('listId');
+            $table->longText('metadata')->nullable();
             $table->timestamps();
         });
     }

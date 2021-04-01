@@ -3,21 +3,45 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Newsletter;
+use Mailchimp;
+use App\Mailchimp as MC;
 
 class MailchimpController extends Controller
 {
-    // public $newsletter;
-    // public $listId = '0e5ec5601as';
+    public $listId = 'b38dfba26f';
 
-    // public function __construct(Newsletter $newsletter)
-    // {
-    //     $this->newsletter = $newsletter;
-    // }
+    public function getLists(){
+        $list = Mailchimp::getLists();
 
-    public function test(){
         return response()->json([
-            "success" => true
+            'success' => true,
+            'data' => $list,
+        ]);
+    }
+
+    public function getListWithParameter(Request $request){
+        $this->validate($request, [
+	    	'email' => 'required|email',
+        ]);
+
+        $list = Mailchimp::getLists(['email' => $request->email, 'fields' => 'lists.id']);
+
+        return response()->json([
+            'success' => true,
+            'data' => $list,
+        ]);
+    }
+
+    public function checkIfSubscribed(Request $request){
+        $this->validate($request, [
+	    	'email' => 'required|email',
+        ]);
+
+        $mailchimp = Mailchimp::check($this->listId, $request->email);
+
+        return response()->json([
+            'success' => true,
+            'is_subscribed' => $mailchimp,
         ]);
     }
 
@@ -27,64 +51,66 @@ class MailchimpController extends Controller
 	    	'email' => 'required|email',
         ]);
 
-        // return response()->json(['data' => true]);
-
         try {
-            $newsletter = Newsletter::subscribe('rincewind@discworld.com');
-            return response()->json([
-                'success' => true,
-                'data' => $newsletter
-            ]);
+            $isSubscribed = Mailchimp::check($this->listId, $request->email);
+
+            if (!$isSubscribed) {
+                $mailchimp = Mailchimp::subscribe($this->listId, $request->email, $merge = [], $confirm = false);
+            
+                // store to data base
+                $mc = MC::where('email', $request->email)->first();
+
+                if ($mc) {
+                    $mc->update('');
+                }else{
+                    $data = [
+                        "email"             => $request->email,
+                        "is_subscribed"     => true,
+                        "listId"            => $this->listId
+                    ];
+                    $mc = MC::create($data);
+                }
+
+                return response()->json([
+                    'success'   => true,
+                    'data'      => $mailchimp,
+                    'db_data'   => $mc
+                ]);
+            }else{
+                return response()->json([
+                    'success'   => true,
+                    'message'   => "Already Subscribed"
+                ]);
+            }
+
         } catch (Mailchimp_List_AlreadySubscribed $e) {
             return response()->json([
                 'success' => false,
-                'data' => 'Email is Already Subscribed'
+                'message' => "Email is Already Subscribed",
             ]);
         } catch (Mailchimp_Error $e) {
             return response()->json([
                 'success' => false,
-                'data' => 'Error from MailChimp'
+                'message' => "Error from MailChimp",
             ]);
         }
     }
 
-    public function sendCompaign(Request $request)
-    {
-    	$this->validate($request, [
-	    	'subject' => 'required',
-	    	'to_email' => 'required',
-	    	'from_email' => 'required',
-	    	'message' => 'required',
-        ]);
+    public function getSubscribers(){
+        $list = MC::all();
 
-        try {
-	        $options = [
-                'list_id'   => $this->listId,
-                'subject' => $request->input('subject'),
-                'from_name' => $request->input('from_email'),
-                'from_email' => 'hardik@onlinecode',
-                'to_name' => $request->input('to_email')
-	        ];
-
-	        $content = [
-                'html' => $request->input('message'),
-                'text' => strip_tags($request->input('message'))
-	        ];
-
-	        $campaign = $this->mailchimp->campaigns->create('regular', $options, $content);
-
-	        $this->mailchimp->campaigns->send($campaign['id']);
-
+        if ($list) {
             return response()->json([
                 'success' => true,
-                'data' => 'send campaign successfully'
+                'data'    => $list
             ]);
-        } catch (Exception $e) {
+        }else{
             return response()->json([
                 'success' => true,
-                'data' => 'Error from MailChimp'
+                'message'    => "No subscriber"
             ]);
         }
 
+        
     }
 }
