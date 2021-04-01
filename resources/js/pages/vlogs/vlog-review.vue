@@ -1,31 +1,96 @@
 <template>
   <div class="" v-if="aboutUs">
-    <div class="col-md-12">
-      <div class="blog-entry ftco-animate d-md-flex fadeInUp ftco-animated">
-        <a href="single.html" class="img img-2" :style="{'background-image': 'url(' + userImageeUrl + 'testimonials-1.jpg )'}"></a>
-        <div class="text text-2 pl-md-4">
-        <h2 class="mb-2 text-danger ">A Loving Heart is the Truest Wisdom</h2>
-        <div class="meta-wrap">
-        <p class="meta mb-2">
-        <span class="mr-2"><fa class="" :icon="['fas', 'calendar-alt']" /> June 28, 2019</span>
-        <span><fa class="" :icon="['fas', 'comment']" /> 5 Comment</span>
-        </p>
+  <div class="container">
+    <div class="row py-5">
+      <div class="col-lg-8 mb-5 mb-lg-0">
+        <div class="section-title">
+          <h2>Why Vlog?</h2>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
         </div>
-        <p class="mb-2">A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
-
-          <div class="btn btn-danger rounded-pill">
-            <div class=" row no-gutters mx-auto justify-content-center">
-              <div class="my-auto mr-2">Show More</div> <fa :icon="['fas', 'chevron-right']" class="my-auto" />
+        <div class="card py-5">
+          <div class="px-5" v-for="(review, index) in vlog_reviews" :key="index">
+            <div class="blog-entry ftco-animate d-md-flex fadeInUp ftco-animated text-md-left text-center" >
+            <img class="rounded-circle img-thumbnail shadow-sm" :src="review.author_img" alt="" width="150">
+            <div class="text text-2 pl-md-4 review-content">
+            <h2 class="mb-2 text-danger review-data">{{ review.title }}</h2>
+            <div class="meta-wrap">
+            <p class="meta mb-2">
+            <span class="mr-2"><fa class="" :icon="['fas', 'calendar-alt']" /> {{ review.date_created }}</span>
+            <span><fa class="" :icon="['fas', 'comment']" />{{ review.comments }} Reviews</span>
+            </p>
             </div>
+            <p class="mb-2 review-data">{{ review.description }}</p>
+                <div class="btn btn-danger rounded-pill">
+                  <div class=" row no-gutters mx-auto justify-content-center">
+                    <div class="my-auto mr-2">Show Vlog</div> <fa :icon="['fas', 'chevron-right']" class="my-auto" />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <hr style="height: 10px">
           </div>
         </div>
       </div>
+          <div class="col-lg-4 ">
+            <!-- Newsletter widget -->
+            <div class="px-4 py-5 section-bg mb-5 text-center">
+              <h3 class="h5"><i class="far fa-envelope mr-2"></i>Join the family</h3>
+              <p class="text-small text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod.</p>
+              <form action="#">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <fa :icon="['fas', 'envelope']" class="input-group-text" id="basic-addon1" style="font-size: 38px" />
+                  </div>
+                  <input type="text" class="form-control" placeholder="Email" aria-label="Email" aria-describedby="basic-addon1">
+                </div>
+                <div class="form-group mb-0">
+                  <button class="btn btn-danger btn-block btn-md" type="submit">Subscribe Now!</button>
+                </div>
+              </form>
+            </div>
+            <div class="pb-5">
+              <div class="container pb-4">
+              <div class="section-title">
+                <h2>Featured Vlogs</h2>
+                <p>Magnam dolores commodi suscipit uisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
+              </div>
+                <div class="row">
+                  <div class="col-lg-4 col-md-6 px-md-1 py-1"><a class="instagram-item d-block w-100 reset-anchor text-white" href="#"><img class="img-fluid" :src="imageUrl + 'listing-tnumbnail-1.jpg'" alt="">
+                      <div class="instagram-item-overlay">
+                      </div></a></div>
+                  <div class="col-lg-4 col-md-6 px-md-1 py-1"><a class="instagram-item d-block w-100 reset-anchor text-white" href="#"><img class="img-fluid" :src="imageUrl + 'listing-tnumbnail-2.jpg'"  alt="">
+                      <div class="instagram-item-overlay">
+                      </div></a></div>
+                  <div class="col-lg-4 col-md-6 px-md-1 py-1"><a class="instagram-item d-block w-100 reset-anchor text-white" href="#"><img class="img-fluid" :src="imageUrl + 'listing-tnumbnail-3.jpg'"  alt="">
+                      <div class="instagram-item-overlay">
+                      </div></a></div>
+                  <div class="col-lg-4 col-md-6 px-md-1 py-1"><a class="instagram-item d-block w-100 reset-anchor text-white" href="#"><img class="img-fluid" :src="imageUrl + 'listing-tnumbnail-4.jpg'"  alt="">
+                      <div class="instagram-item-overlay">
+                      </div></a></div>
+                  <div class="col-lg-4 col-md-6 px-md-1 py-1"><a class="instagram-item d-block w-100 reset-anchor text-white" href="#"><img class="img-fluid" :src="imageUrl + 'listing-tnumbnail-6.jpg'"  alt="">
+                      <div class="instagram-item-overlay">
+                      </div></a></div>
+                  <div class="col-lg-4 col-md-6 px-md-1 py-1"><a class="instagram-item d-block w-100 reset-anchor text-white" href="#"><img class="img-fluid" :src="imageUrl + 'listing-tnumbnail-5.jpg'"  alt="">
+                      <div class="instagram-item-overlay">
+                      </div></a></div>
+                  <div class="col-lg-4 col-md-6 px-md-1 py-1"><a class="instagram-item d-block w-100 reset-anchor text-white" href="#"><img class="img-fluid" :src="imageUrl + 'listing-tnumbnail-1.jpg'"  alt="">
+                      <div class="instagram-item-overlay">
+                      </div></a></div>
+                  <div class="col-lg-4 col-md-6 px-md-1 py-1"><a class="instagram-item d-block w-100 reset-anchor text-white" href="#"><img class="img-fluid" :src="imageUrl + 'listing-tnumbnail-2.jpg'" alt="">
+                      <div class="instagram-item-overlay">
+                      </div></a></div>
+                </div>
+              </div>
+            </div>
+          </div>
     </div>
+  </div>
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
+import moment from 'moment'
 
 export default {
   components: { },
@@ -43,6 +108,44 @@ export default {
     imageUrl: window.config.assetURL + 'images/',
     userImageeUrl: window.config.assetURL + 'images/testimonials/',
     srcLogoOnly: window.config.assetURL + 'images/sample-logo.png',
+    vlog_reviews: [
+       {
+        title: 'Lorem Impsum',
+        author: 'John Doe',
+        author_img: window.config.assetURL + 'images/testimonials/testimonials-4.jpg',
+        id: 0,
+        description: 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
+        comments: 5,
+        date_created: moment().format('MMMM DD, YYYY')
+      },
+      {
+        title: 'Duis aute irure dolor',
+        author: 'John Doe',
+        author_img: window.config.assetURL + 'images/testimonials/testimonials-5.jpg',
+        id: 0,
+        description: 'Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+        comments: 2,
+        date_created: moment().format('MMMM DD, YYYY')
+      },
+      {
+        title: 'Ut enim ad minim veniam',
+        author: 'John Doe',
+        author_img: window.config.assetURL + 'images/testimonials/testimonials-2.jpg',
+        id: 0,
+        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ',
+        comments: 3,
+        date_created: moment().format('MMMM DD, YYYY')
+      },
+      {
+        title: 'Deserunt mollit anim id est laborum',
+        author: 'John Doe',
+        author_img: window.config.assetURL + 'images/testimonials/testimonials-3.jpg',
+        id: 0,
+        description: 'Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+        comments: 8,
+        date_created: moment().format('MMMM DD, YYYY')
+      },
+    ]
   }),
 
   computed: mapGetters({
@@ -62,6 +165,34 @@ export default {
     width: 150px;
     border-radius: 50%;
     background-size: contain;
+  }
+
+  .review-content {
+    white-space: nowrap;
+    overflow: hidden;
+    .review-data {
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+  }
+
+  .instagram-item-overlay {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    transition: all 0.3s;
+    opacity: 0;
+    background: rgba(0, 0, 0, 0.5);
+  }
+
+  .instagram-item {
+    position: relative;
+  }
+
+  .instagram-item:hover .instagram-item-overlay {
+    opacity: 1;
   }
 </style>
 

@@ -9,10 +9,10 @@
                 <hr class="divider my-2 col-2" style="background: #ffff" />
             </div>
             <div class="col-lg-8 align-self-baseline">
-                <h4 class="font-weight-light mb-5 text-white">Where you Own the Power to Click.</h4>
+                <h4 class="font-weight-light mb-5 text-white">24/7 live psychics at your services</h4>
                 <div class="row no-gutters text-center" >
                   <div class="col-lg-6 mx-auto">
-                    <a class="btn btn-danger btn-xl w-lg-50 w-75 text-white">Become a Reader</a>
+                    <a class="btn btn-danger btn-xl w-lg-50 w-75 text-white">Register</a>
                   </div>
                 </div>
             </div>
