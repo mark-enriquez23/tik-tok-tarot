@@ -122,6 +122,11 @@ Route::group(['middleware' => 'guest:api'], function () {
         Route::post('/save', 'GeneralInformationController@save');
     });
 
+    // Mailchimp api
+    Route::group(['prefix' => 'mailchimp'], function () {
+        Route::post('/subscribe','MailchimpController@subscribe');
+    });
+
     Route::post('oauth/{driver}', 'Auth\OAuthController@redirectToProvider');
     Route::get('oauth/{driver}/callback', 'Auth\OAuthController@handleProviderCallback')->name('oauth.callback');
 });
