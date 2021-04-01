@@ -11,6 +11,7 @@ class Upload extends Model
         'image',
         'url',
         'upload_type_id',
+        'is_featured',
         'status',
         'metadata',
     ];

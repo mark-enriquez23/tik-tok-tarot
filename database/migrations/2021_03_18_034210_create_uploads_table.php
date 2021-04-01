@@ -19,7 +19,9 @@ class CreateUploadsTable extends Migration
             $table->string('image');
             $table->string('url');
             $table->bigInteger('upload_type_id');
+            $table->longText('content');
             $table->tinyInteger('status')->default(0);
+            $table->tinyInteger('is_featured')->default(0);
             $table->longText('metadata')->nullable();
             $table->timestamps();
         });
