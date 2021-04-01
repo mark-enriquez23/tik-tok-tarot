@@ -8,11 +8,12 @@
         "php": "^7.2.5",
         "fideloper/proxy": "^4.2",
         "fruitcake/laravel-cors": "^1.0",
-        "guzzlehttp/guzzle": "^6.3",
+        "guzzlehttp/guzzle": "^7.0",
         "laravel/framework": "^7.0",
         "laravel/socialite": "^4.3",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^2.0",
+        "nztim/mailchimp": "^4.3",
         "spatie/laravel-newsletter": "^4.9",
         "twilio/sdk": "^6.18",
         "tymon/jwt-auth": "^1.0.0"
