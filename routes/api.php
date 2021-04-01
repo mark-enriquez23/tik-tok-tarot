@@ -38,6 +38,11 @@ Route::group(['middleware' => 'auth:api'], function () {
         Route::post('/verify-user', 'PhoneVerificationController@verifyUser');
     });
 
+    // Upload api
+    Route::group(['prefix' => 'upload'], function () {
+        Route::post('/upload-video', 'UploadController@uploadVideo');
+    });
+
 });
 
 // Public
@@ -120,6 +125,15 @@ Route::group(['middleware' => 'guest:api'], function () {
     Route::group(['prefix' => 'general-info'], function () {
         Route::get('/', 'GeneralInformationController@fetchGeneralInformation');
         Route::post('/save', 'GeneralInformationController@save');
+    });
+
+    // Mailchimp api
+    Route::group(['prefix' => 'mailchimp'], function () {
+        Route::get('/','MailchimpController@getLists');
+        Route::post('/list-with-parameter','MailchimpController@getListWithParameter');
+        Route::post('/check-if-subscribed','MailchimpController@checkIfSubscribed');
+        Route::post('/subscribe','MailchimpController@subscribe');
+        Route::get('/get-subscribers','MailchimpController@getSubscribers');
     });
 
     Route::post('oauth/{driver}', 'Auth\OAuthController@redirectToProvider');

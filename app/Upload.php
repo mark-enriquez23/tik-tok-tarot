@@ -8,9 +8,11 @@ class Upload extends Model
 {
     protected $fillable = [
         'user_id',
-        'image',
-        'url',
+        'thumbnail',
+        'src',
         'upload_type_id',
+        'content',
+        'is_featured',
         'status',
         'metadata',
     ];
