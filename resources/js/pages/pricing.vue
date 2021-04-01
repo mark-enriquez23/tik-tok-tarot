@@ -1,18 +1,19 @@
 <template>
   <div id="generic_price_table">
-<section>
-        <div class="container">
+<section class="container row mx-auto">
+        <div class="container col-md-3">
             <div class="row">
                 <div class="col-md-12">
-                    <!--PRICE HEADING START-->
-                    <div class="price-heading clearfix">
-                        <h1>TikTok-Tarot Pricing</h1>
-                    </div>
-                    <!--//PRICE HEADING END-->
+                <div class="">
+                  <div class="section-title">
+                    <h2>TikTok-Tarot Pricing</h2>
+                    <p>Magnam dolores commodi suscipit uisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
+                  </div>
+                </div>
                 </div>
             </div>
         </div>
-        <div class="container">
+        <div class="container col-md-9">
 
             <!--BLOCK ROW START-->
             <div class="row">
