@@ -38,6 +38,11 @@ Route::group(['middleware' => 'auth:api'], function () {
         Route::post('/verify-user', 'PhoneVerificationController@verifyUser');
     });
 
+    // Upload api
+    Route::group(['prefix' => 'upload'], function () {
+        Route::post('/upload-video', 'UploadController@uploadVideo');
+    });
+
 });
 
 // Public
