@@ -24,13 +24,13 @@
             <div class="dropdown-menu">
               <router-link :to="{ name: 'settings.profile' }" class="dropdown-item pl-3">
                 <fa icon="cog" fixed-width />
-                {{ $t('settings') }}
+                Settings
               </router-link>
 
               <div class="dropdown-divider" />
               <a href="#" class="dropdown-item pl-3" @click.prevent="logout">
                 <fa icon="sign-out-alt" fixed-width />
-                {{ $t('logout') }}
+                Logout
               </a>
             </div>
           </li>
@@ -38,12 +38,12 @@
           <template v-else>
             <li class="nav-item">
               <router-link :to="{ name: 'login' }" class="nav-link auth-links" active-class="active">
-                {{ $t('login') }}
+                Login
               </router-link>
             </li>
             <li class="nav-item">
               <router-link :to="{ name: 'register' }" class="nav-link auth-links" active-class="active">
-                {{ $t('register') }}
+                Register
               </router-link>
             </li>
           </template>
@@ -74,6 +74,16 @@
                 Prices
               </router-link>
             </li>
+            <li class="nav-item">
+              <router-link :to="{ name: 'prices' }" class="nav-link" active-class="active">
+                Our Readers
+              </router-link>
+            </li>
+            <li class="nav-item">
+              <router-link :to="{ name: 'prices' }" class="nav-link" active-class="active">
+                Active Sessions
+              </router-link>
+            </li>
             <li class="nav-item dropdown">
                <a class="nav-link dropdown-toggle"
                href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
@@ -89,11 +99,6 @@
                   </router-link>
                 </div>
 
-            </li>
-            <li class="nav-item">
-              <router-link :to="{ name: 'testimonials' }" class="nav-link" active-class="active">
-                Testimonials
-              </router-link>
             </li>
             <li class="nav-item">
               <router-link :to="{ name: 'about.us' }" class="nav-link" active-class="active">
