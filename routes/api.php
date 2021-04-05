@@ -136,6 +136,12 @@ Route::group(['middleware' => 'guest:api'], function () {
         Route::get('/get-subscribers','MailchimpController@getSubscribers');
     });
 
+    // Price api
+    Route::group(['prefix' => 'price'], function () {
+        Route::get('/', 'PriceController@fetchPrice');
+        Route::post('/save', 'PriceController@save');
+    });
+
     Route::post('oauth/{driver}', 'Auth\OAuthController@redirectToProvider');
     Route::get('oauth/{driver}/callback', 'Auth\OAuthController@handleProviderCallback')->name('oauth.callback');
 });
