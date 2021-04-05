@@ -197,6 +197,8 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import axios from "axios"
+import Swal from 'sweetalert2';
 
 export default {
   components: { },
@@ -209,6 +211,10 @@ export default {
     this.$store.dispatch('about-us/fetchAboutUsData')
   },
 
+  created(){
+    this.fetchPrices()
+  },
+    
   data: () => ({
     title: window.config.appName,
     imageUrl: window.config.assetURL + 'images/',
@@ -219,7 +225,21 @@ export default {
   computed: mapGetters({
     authenticated: 'auth/check',
     aboutUs: 'about-us/aboutUs'
-  })
+  }),
+
+  methods: {
+      async fetchPrices() {
+        const { data } = await axios.get("/api/pricing");
+        console.log(data);
+        if (!data.success) {
+          Swal.fire({
+          title: 'Fetching Prices Failed',
+          text: "An error has occurred. Please try again.",
+          type: 'error'
+        })
+      }
+    }
+  }
 }
 </script>
 

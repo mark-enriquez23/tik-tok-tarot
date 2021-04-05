@@ -309,6 +309,25 @@
   </div>
 </section>
 
+<!-- Featured Reader WIP -->
+<!-- <section class="container my-5">
+  <div class="">
+    <div class="section-title">
+      <h2>Featured Reader</h2>
+      <p>Magnam dolores commodi suscipit uisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
+    </div>
+  </div>
+  <div>
+    <transition-group name="fade" tag="div">
+      <div v-for="i in [currentIndex]" :key="i">
+        <img :src="currentImg" />
+      </div>
+    </transition-group>
+    <a class="prev" @click="prev" href="#">&#10094; Previous</a>
+    <a class="next" @click="next" href="#">&#10095; Next</a>
+  </div>
+</section> -->
+
     <!-- How To Section -->
     <HowTo />
 
@@ -320,16 +339,16 @@
     <div class="container text-center text-white">
     <h1>Join Our Newsletter</h1>
     <p>Subscribe to our weekly Newsletter and stay tuned.</p>
-    <form action="" method="post">
+    <form action="" method="post" @submit.prevent="subscribe">
         <div class="col-lg-5  mx-auto">
           <div class="input-group mb-3">
             <div class="input-group-prepend">
               <fa :icon="['fas', 'envelope']" class="input-group-text" id="basic-addon1" style="font-size: 38px" />
             </div>
-            <input type="text" class="form-control" placeholder="Email" aria-label="Email" aria-describedby="basic-addon1">
+            <input v-model="form['email']" type="text" class="form-control" placeholder="Email" aria-label="Email" aria-describedby="basic-addon1">
           </div>
         </div>
-        <button class="btn btn-danger btn-lg">Subscribe Now!</button>
+        <v-button class="btn btn-danger btn-lg" :disabled="!form.email">Subscribe Now!</v-button>
     </form>
   </div>
   </section>
@@ -347,6 +366,8 @@ import Footer from '../components/Utilities/Footer.vue'
 import Faq from '../components/Welcome/Faq.vue'
 import GeneralInfo from '../components/Welcome/General-info.vue'
 import HowTo from '../components/Welcome/How-to.vue'
+import Form from 'vform'
+import Swal from 'sweetalert2';
 
 export default {
   components: { Footer, HowTo, Faq, GeneralInfo },
@@ -354,6 +375,10 @@ export default {
 
   metaInfo () {
     return { title: this.$t('home') }
+  },
+
+   mounted: function() {
+    this.startSlide();
   },
 
   data: () => ({
@@ -364,11 +389,57 @@ export default {
     testimonialImage4: window.config.assetURL + 'images/testimonials/testimonials-4.jpg',
     testimonialImage5: window.config.assetURL + 'images/testimonials/testimonials-5.jpg',
     srcLogoOnly: window.config.assetURL + 'images/sample-logo.png',
+    form: new Form({
+      email: null
+    }),
+    images: [
+        "https://cdn.pixabay.com/photo/2015/12/12/15/24/amsterdam-1089646_1280.jpg",
+        "https://cdn.pixabay.com/photo/2016/02/17/23/03/usa-1206240_1280.jpg",
+        "https://cdn.pixabay.com/photo/2015/05/15/14/27/eiffel-tower-768501_1280.jpg",
+        "https://cdn.pixabay.com/photo/2016/12/04/19/30/berlin-cathedral-1882397_1280.jpg"
+      ],
+      timer: null,
+      currentIndex: 0
   }),
 
   computed: mapGetters({
-    authenticated: 'auth/check'
-  })
+    authenticated: 'auth/check',
+
+    currentImg: function() {
+      return this.images[Math.abs(this.currentIndex) % this.images.length];
+    }
+  }),
+  
+  methods: {
+      async subscribe() {
+        const { data } = await this.form.post("/api/mailchimp/subscribe");
+        console.log(this.form)
+      //   if (!data.success) {
+      //     Swal.fire({
+      //     title: 'Subscribing Failed',
+      //     text: "An error has occurred. Please try again.",
+      //     type: 'error'
+      //   })
+      //   } else {
+      //     Swal.fire({
+      //     title: 'Success',
+      //     text: "You have been successfully subscribed!",
+      //     type: 'success'
+      //   })
+      // }
+    },
+
+    startSlide: function() {
+      this.timer = setInterval(this.next, 4000);
+    },
+
+    next: function() {
+      this.currentIndex += 1;
+    },
+    prev: function() {
+      this.currentIndex -= 1;
+    }
+  }
 }
 </script>
 
