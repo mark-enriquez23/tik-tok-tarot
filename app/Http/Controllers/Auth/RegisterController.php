@@ -74,13 +74,13 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-
         $user = User::create([
             'username' => $data['username'],
             'name' => $data['name'],
             'phone_number' => $data['phone_number'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
+            'role_id' => $data['role_id'],
         ]);
 
         // send sms code

@@ -19,7 +19,7 @@ class User extends Authenticatable implements JWTSubject //, MustVerifyEmail
      * @var array
      */
     protected $fillable = [
-        'username', 'name', 'email', 'phone_number', 'password',
+        'username', 'name', 'email', 'phone_number', 'role_id', 'password',
     ];
 
     /**
@@ -122,5 +122,10 @@ class User extends Authenticatable implements JWTSubject //, MustVerifyEmail
     public function getJWTCustomClaims()
     {
         return [];
+    }
+
+    public function role()
+    {
+        return $this->belongsTo('App\Models\Role');
     }
 }
