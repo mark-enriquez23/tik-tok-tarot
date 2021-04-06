@@ -81,6 +81,7 @@ class RegisterController extends Controller
             'phone_number' => $data['phone_number'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
+            'role_id' => $data['role_id'],
         ]);
 
         // send sms code
