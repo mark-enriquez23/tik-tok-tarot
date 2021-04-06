@@ -16,7 +16,7 @@
         "nztim/mailchimp": "^4.3",
         "spatie/laravel-newsletter": "^4.9",
         "twilio/sdk": "^6.18",
-        "tymon/jwt-auth": "^1.0.0"
+        "tymon/jwt-auth": "dev-develop"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.4.0",

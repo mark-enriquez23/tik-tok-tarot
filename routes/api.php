@@ -142,6 +142,13 @@ Route::group(['middleware' => 'guest:api'], function () {
         Route::post('/save', 'PriceController@save');
     });
 
+    // Role api
+    Route::group(['prefix' => 'role'], function () {
+        Route::get('/', 'RoleController@index');
+    });
+    // Route::get('role', 'RoleController@index');
+
     Route::post('oauth/{driver}', 'Auth\OAuthController@redirectToProvider');
     Route::get('oauth/{driver}/callback', 'Auth\OAuthController@handleProviderCallback')->name('oauth.callback');
-});
+}); 
+

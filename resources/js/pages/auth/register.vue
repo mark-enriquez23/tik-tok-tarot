@@ -1,12 +1,13 @@
 <template>
   <div class="row h-100">
+    <h5>Register</h5>
     <div class="col-lg-12 my-auto" v-if="!onSecurity">
       <div v-if="mustVerifyEmail">
         <div class="alert alert-success" role="alert">
           {{ $t('verify_email_address') }}
         </div>
       </div>
-      <div v-else>
+      <div v-if="!mustVerifyEmail">
         <div class="w-100 text-center mt-2 mb-4">
           <img :src="srcLogoOnly" style="mix-blend-mode: luminosity;" srcset="" class="img-fluid col-12 col-lg-4">
           <hr class="mx-auto line-form-break">
@@ -27,8 +28,22 @@
               <input  v-model="form.name" :class="{ 'is-invalid': form.errors.has('name') }" class="form-control" type="text" name="name">
               <has-error :form="form" field="name" />
             </div>
-             <div class="form-group row col-md-7 mx-auto mt-3">
-            <div class="col-md-6 px-0 pr-lg-1" >
+
+            <!-- Role -->
+            <div class="form-group col-md-7 mx-auto">
+              <label>Select Role</label>
+              <select id="firstQuestion" class="form-control"  v-model="form.role_id" required>
+                 <option :value="role.id"
+                        v-for="(role) in roles"
+                        :key="role.id">
+                      {{ role.name }}
+                </option>
+              </select>
+              <has-error :form="form" field="name" />
+            </div>
+
+            <div class="form-group row col-md-7 mx-auto mt-3">
+              <div class="col-md-6 px-0 pr-lg-1" >
                 <!-- Submit Button -->
                 <router-link to="/login" >
                 <button type="button" class="btn btn-secondary w-100" >
@@ -140,7 +155,7 @@ import axios from "axios";
 import VuePhoneNumberInput from 'vue-phone-number-input';
 import 'vue-phone-number-input/dist/vue-phone-number-input.css';
 import Swal from 'sweetalert2';
-
+import { mapGetters } from 'vuex'
 
 Vue.component('vue-phone-number-input', VuePhoneNumberInput);
 
@@ -152,6 +167,7 @@ const initializeData = () => ({
       email: '',
       password: '',
       password_confirmation: '',
+      role_id: null,
       validate: null
     }),
     phone_number: '',
@@ -161,7 +177,17 @@ const initializeData = () => ({
     srcLogoOnly: window.config.assetURL + 'images/sample-logo.png',
     token: null,
     step: 0,
-    userData: null
+    userData: null,
+    roles: [
+      {
+        id: 2,
+        name: 'Reader'
+      },
+      {
+        id: 3,
+        name: 'Viewer'
+      }
+    ]
   })
 
 export default {
@@ -174,8 +200,14 @@ export default {
     VuePhoneNumberInput,
     VueHcaptcha,
   },
+
+  computed: mapGetters({
+    // roles: 'role/roles'
+  }),
+
   mounted() {
     this.$store.dispatch('user-security-question/fetchUserSecurityQuestions')
+    this.$store.dispatch('role/fetchRoles')
   },
   metaInfo () {
     return { title: this.$t('register') }
@@ -244,9 +276,9 @@ export default {
             }
           }
 
-          const { emailRes } = axios.post('api/email/send-email', emailData )
-
-          console.log(emailRes)
+          // uncomment this if going to push on production
+          // const { emailRes } = axios.post('api/email/send-email', emailData )
+          // console.log(emailRes)
 
           // Log in the user.
           const { data: { token } } = await this.form.post('/api/login')
