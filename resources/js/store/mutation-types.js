@@ -33,3 +33,6 @@ export const FETCH_CONTACT_US = 'FETCH_CONTACT_US'
 
 // general-info.js
 export const FETCH_GENERAL_INFO = 'FETCH_GENERAL_INFO'
+
+// role.js
+export const FETCH_ROLE = 'FETCH_ROLE'
