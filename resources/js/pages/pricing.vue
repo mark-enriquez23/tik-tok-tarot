@@ -31,7 +31,7 @@
                               <!--HEAD START-->
                                 <div class="head_bg"></div>
                                 <div class="head">
-                                    <span>Basic</span>
+                                    <span>{{ price.data.data[2].type }}</span>
                                 </div>
                                 <!--//HEAD END-->
 
@@ -41,9 +41,9 @@
                             <!--PRICE START-->
                             <div class="generic_price_tag clearfix">
                                 <span class="price">
-                                    <span class="sign">$</span>
-                                    <span class="currency">99</span>
-                                    <span class="cent">.99</span>
+                                    <span class="sign">{{ price.data.data[2].sign }}</span>
+                                    <span class="currency">{{ price.data.data[2].currency }}</span>
+                                    <span class="cent">{{ price.data.data[2].cent }}</span>
                                     <span class="month">/MON</span>
                                 </span>
                             </div>
@@ -55,10 +55,10 @@
                         <!--FEATURE LIST START-->
                         <div class="generic_feature_list">
                           <ul>
-                                <li><span>7</span> Tarot Cards</li>
-                                <li><span>12</span> Accounts</li>
-                                <li><span>7</span> Readings</li>
-                                <li><span>24/7</span> Support</li>
+                                <li><span>{{JSON.parse(this.price.data.data[2].feature)[0].total_card}}</span> Tarot Cards</li>
+                                <li><span>{{JSON.parse(this.price.data.data[2].feature)[0].account}}</span> Accounts</li>
+                                <li><span>{{JSON.parse(this.price.data.data[2].feature)[0].reading}}</span> Readings</li>
+                                <li><span>{{JSON.parse(this.price.data.data[2].feature)[0].support}}</span> Support</li>
                             </ul>
                         </div>
                         <!--//FEATURE LIST END-->
@@ -88,7 +88,7 @@
                               <!--HEAD START-->
                                 <div class="head_bg"></div>
                                 <div class="head">
-                                    <span>Standard</span>
+                                    <span>{{ price.data.data[0].type }}</span>
                                 </div>
                                 <!--//HEAD END-->
 
@@ -98,9 +98,9 @@
                             <!--PRICE START-->
                             <div class="generic_price_tag clearfix">
                                 <span class="price">
-                                    <span class="sign">$</span>
-                                    <span class="currency">199</span>
-                                    <span class="cent">.99</span>
+                                    <span class="sign">{{ price.data.data[0].sign }}</span>
+                                    <span class="currency">{{ price.data.data[0].currency }}</span>
+                                    <span class="cent">{{ price.data.data[0].cent }}</span>
                                     <span class="month">/MON</span>
                                 </span>
                             </div>
@@ -112,10 +112,10 @@
                         <!--FEATURE LIST START-->
                         <div class="generic_feature_list">
                           <ul>
-                                <li><span>7</span> Tarot Cards</li>
-                                <li><span>12</span> Accounts</li>
-                                <li><span>7</span> Readings</li>
-                                <li><span>24/7</span> Support</li>
+                                <li><span>{{JSON.parse(this.price.data.data[0].feature)[0].total_card}}</span> Tarot Cards</li>
+                                <li><span>{{JSON.parse(this.price.data.data[0].feature)[0].account}}</span> Accounts</li>
+                                <li><span>{{JSON.parse(this.price.data.data[0].feature)[0].reading}}</span> Readings</li>
+                                <li><span>{{JSON.parse(this.price.data.data[0].feature)[0].support}}</span> Support</li>
                             </ul>
                         </div>
                         <!--//FEATURE LIST END-->
@@ -144,7 +144,7 @@
                               <!--HEAD START-->
                                 <div class="head_bg"></div>
                                 <div class="head">
-                                    <span>Unlimited</span>
+                                    <span>{{ price.data.data[1].type }}</span>
                                 </div>
                                 <!--//HEAD END-->
 
@@ -152,11 +152,12 @@
                             <!--//HEAD CONTENT END-->
 
                             <!--PRICE START-->
+
                             <div class="generic_price_tag clearfix">
                                 <span class="price">
-                                    <span class="sign">$</span>
-                                    <span class="currency">299</span>
-                                    <span class="cent">.99</span>
+                                    <span class="sign">{{ price.data.data[1].sign }}</span>
+                                    <span class="currency">{{ price.data.data[1].currency }}</span>
+                                    <span class="cent">{{ price.data.data[1].cent }}</span>
                                     <span class="month">/MON</span>
                                 </span>
                             </div>
@@ -168,10 +169,10 @@
                         <!--FEATURE LIST START-->
                         <div class="generic_feature_list">
                           <ul>
-                                <li><span>7</span> Tarot Cards</li>
-                                <li><span>12</span> Accounts</li>
-                                <li><span>7</span> Readings</li>
-                                <li><span>24/7</span> Support</li>
+                                <li><span>{{JSON.parse(this.price.data.data[1].feature)[0].total_card}}</span> Tarot Cards</li>
+                                <li><span>{{JSON.parse(this.price.data.data[1].feature)[0].account}}</span> Accounts</li>
+                                <li><span>{{JSON.parse(this.price.data.data[1].feature)[0].reading}}</span> Readings</li>
+                                <li><span>{{JSON.parse(this.price.data.data[1].feature)[0].support}}</span> Support</li>
                             </ul>
                         </div>
                         <!--//FEATURE LIST END-->
@@ -220,6 +221,8 @@ export default {
     imageUrl: window.config.assetURL + 'images/',
     userImageeUrl: window.config.assetURL + 'images/testimonials/',
     srcLogoOnly: window.config.assetURL + 'images/sample-logo.png',
+    price:[],
+    feature: []
   }),
 
   computed: mapGetters({
@@ -229,9 +232,10 @@ export default {
 
   methods: {
       async fetchPrices() {
-        const { data } = await axios.get("/api/pricing");
-        console.log(data);
-        if (!data.success) {
+        this.price = await axios.get("/api/price");
+        console.log(this.price);
+        console.log(JSON.parse(this.price.data.data[3].feature)[0].total_card);
+        if (!this.price.data.success) {
           Swal.fire({
           title: 'Fetching Prices Failed',
           text: "An error has occurred. Please try again.",
