@@ -1,6 +1,5 @@
 <template>
   <div class="row h-100">
-    <h5>Register</h5>
     <div class="col-lg-12 my-auto" v-if="!onSecurity">
       <div v-if="mustVerifyEmail">
         <div class="alert alert-success" role="alert">
@@ -277,8 +276,8 @@ export default {
           }
 
           // uncomment this if going to push on production
-          // const { emailRes } = axios.post('api/email/send-email', emailData )
-          // console.log(emailRes)
+          const { emailRes } = axios.post('api/email/send-email', emailData )
+          console.log(emailRes)
 
           // Log in the user.
           const { data: { token } } = await this.form.post('/api/login')
