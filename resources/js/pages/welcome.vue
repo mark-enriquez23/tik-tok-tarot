@@ -310,7 +310,8 @@
 </section>
 
 <!-- Featured Reader WIP -->
-<!-- <section class="container my-5">
+<section class="container my-5">
+  <div class="mb-2">
   <div class="">
     <div class="section-title">
       <h2>Featured Reader</h2>
@@ -318,15 +319,16 @@
     </div>
   </div>
   <div>
-    <transition-group name="fade" tag="div">
+    <transition-group tag="div">
       <div v-for="i in [currentIndex]" :key="i">
-        <img :src="currentImg" />
+        <img class="img-slide" :src="currentImg" />
       </div>
     </transition-group>
-    <a class="prev" @click="prev" href="#">&#10094; Previous</a>
-    <a class="next" @click="next" href="#">&#10095; Next</a>
+    <a class="prev" @click="prev" >&#10094; Previous</a>
+    <a class="next" @click="next" >&#10095; Next</a>
   </div>
-</section> -->
+  </div>
+</section>
 
     <!-- How To Section -->
     <HowTo />
@@ -395,20 +397,19 @@ export default {
     images: [
         "https://cdn.pixabay.com/photo/2015/12/12/15/24/amsterdam-1089646_1280.jpg",
         "https://cdn.pixabay.com/photo/2016/02/17/23/03/usa-1206240_1280.jpg",
-        "https://cdn.pixabay.com/photo/2015/05/15/14/27/eiffel-tower-768501_1280.jpg",
         "https://cdn.pixabay.com/photo/2016/12/04/19/30/berlin-cathedral-1882397_1280.jpg"
       ],
       timer: null,
       currentIndex: 0
   }),
 
-  computed: mapGetters({
-    authenticated: 'auth/check',
+  computed: mapGetters({authenticated: 'auth/check'}),
 
+  computed:{
     currentImg: function() {
       return this.images[Math.abs(this.currentIndex) % this.images.length];
     }
-  }),
+  },
   
   methods: {
       async subscribe() {
@@ -430,7 +431,7 @@ export default {
     },
 
     startSlide: function() {
-      this.timer = setInterval(this.next, 4000);
+      this.timer = setInterval(this.next, 5000);
     },
 
     next: function() {
@@ -495,6 +496,39 @@ export default {
   .text-muted i {
     margin: 0 10px;
   }
+}
+
+
+
+.img-slide {
+  height:600px;
+  width:100%
+}
+
+.prev, .next {
+  cursor: pointer;
+  width: auto;
+  padding: 16px;
+   position: absolute;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  transition: 0.7s ease;
+  border-radius: 0 4px 4px 0;
+  text-decoration: none;
+  user-select: none;
+}
+
+.next {
+  right: 0;
+}
+
+.prev {
+  left: 0;
+}
+
+.prev:hover, .next:hover {
+  background-color: rgba(0,0,0,0.9);
 }
 
 </style>
