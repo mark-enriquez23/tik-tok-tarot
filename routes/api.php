@@ -43,6 +43,12 @@ Route::group(['middleware' => 'auth:api'], function () {
         Route::post('/upload-video', 'UploadController@uploadVideo');
     });
 
+    // Testimonial api
+    Route::group(['prefix' => 'testimonial'], function () {
+        Route::get('/', 'TestimonialController@index');
+        Route::post('/save', 'TestimonialController@save');
+        Route::post('/delete', 'TestimonialController@delete');
+    });
 });
 
 // Public
@@ -147,7 +153,7 @@ Route::group(['middleware' => 'guest:api'], function () {
         Route::get('/', 'RoleController@index');
     });
 
-    // Role api
+    // Users api
     Route::group(['prefix' => 'user'], function () {
         Route::get('/fetch-readers', 'Auth\UserController@fetchReaders');
     });
