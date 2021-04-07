@@ -10,6 +10,8 @@ class ContactUs extends Model
         'sub_title',
         'location',
         'email',
+        'name',
+        'subject',
         'phone_number',
         'metadata',
     ];
