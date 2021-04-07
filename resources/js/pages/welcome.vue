@@ -383,6 +383,11 @@ export default {
     this.startSlide();
   },
 
+  created(){
+    this.fetchVlogs(),
+    this.fetchTestimonials()
+  },
+
   data: () => ({
     title: window.config.appName,
     testimonialImage1: window.config.assetURL + 'images/testimonials/testimonials-1.jpg',
@@ -414,20 +419,20 @@ export default {
   methods: {
       async subscribe() {
         const { data } = await this.form.post("/api/mailchimp/subscribe");
-        console.log(this.form)
-      //   if (!data.success) {
-      //     Swal.fire({
-      //     title: 'Subscribing Failed',
-      //     text: "An error has occurred. Please try again.",
-      //     type: 'error'
-      //   })
-      //   } else {
-      //     Swal.fire({
-      //     title: 'Success',
-      //     text: "You have been successfully subscribed!",
-      //     type: 'success'
-      //   })
-      // }
+        console.log(data);
+        if (!data.success) {
+          Swal.fire({
+          title: 'Subscribing Failed',
+          text: "An error has occurred. Please try again.",
+          type: 'error'
+        })
+        } else {
+          Swal.fire({
+          title: 'Success',
+          text: "You have been successfully subscribed!",
+          type: 'success'
+        })
+      }
     },
 
     startSlide: function() {
@@ -439,7 +444,31 @@ export default {
     },
     prev: function() {
       this.currentIndex -= 1;
-    }
+    },
+
+    async fetchVlogs() {
+        const { data } = await this.form.post("/api/vlogs");
+        console.log(data);
+        // if (!data.success) {
+        //   Swal.fire({
+        //   title: 'Fetching Vlogs Failed',
+        //   text: "An error has occurred. Please try again.",
+        //   type: 'error'
+        // })
+      // }
+    },
+
+    async fetchTestimonials() {
+        const { data } = await this.form.post("/api/testimonials");
+        console.log(data);
+        // if (!data.success) {
+        //   Swal.fire({
+        //   title: 'Fetching Vlogs Failed',
+        //   text: "An error has occurred. Please try again.",
+        //   type: 'error'
+        // })
+      // }
+    },
   }
 }
 </script>
