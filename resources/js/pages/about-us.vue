@@ -59,7 +59,7 @@ import { mapGetters } from 'vuex'
 
 export default {
   components: { },
-  layout: 'default',
+  layout: 'default', 
 
   metaInfo () {
     return { title: this.$t('home') }
