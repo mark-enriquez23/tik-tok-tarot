@@ -15,7 +15,7 @@ class UploadController extends Controller
     public function fetchFeaturedUpload($typeName)
     {
         // get upload type
-        // $uploadType = UploadType::where('name', $typeName)->first();
+        $uploadType = UploadType::where('name', $typeName)->first();
 
         $featuredUpload = Upload::where([['upload_type_id', $uploadType->id], ['is_featured', 1]])->get();
 
@@ -63,10 +63,11 @@ class UploadController extends Controller
 
         if (isset( $upload )) {
             $data = [
-                'id'        => $request->id, 
-                'src'       => $request->src,
-                'thumbnail' => $request->thumbnail,
-                'status'    => $request->status
+                'id'                => $request->id,
+                'user_id'           => $request->user_id,
+                'content'           => $request->content,
+                'thumbnail'         => $request->thumbnail,
+                'src'               => $request->src,
             ];
 
             $upload->update($data);
@@ -77,6 +78,7 @@ class UploadController extends Controller
             $data = [
                 'id'                => $request->id,
                 'user_id'           => $request->user_id,
+                'content'           => $request->content,
                 'thumbnail'         => $request->thumbnail,
                 'src'               => $request->src,
                 'upload_type_id'    => $request->upload_type_id
@@ -130,7 +132,6 @@ class UploadController extends Controller
                 'message' =>  __('messages.file_uploaded'),
                 'src' => url($basePath.$fileName)
             ];
-
 
             return $data;
         }

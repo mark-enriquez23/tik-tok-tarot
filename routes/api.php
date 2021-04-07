@@ -141,10 +141,15 @@ Route::group(['middleware' => 'guest:api'], function () {
         Route::get('/', 'PriceController@fetchPrice');
         Route::post('/save', 'PriceController@save');
     });
-
+    
     // Role api
     Route::group(['prefix' => 'role'], function () {
         Route::get('/', 'RoleController@index');
+    });
+
+    // Role api
+    Route::group(['prefix' => 'user'], function () {
+        Route::get('/fetch-readers', 'Auth\UserController@fetchReaders');
     });
     // Route::get('role', 'RoleController@index');
 

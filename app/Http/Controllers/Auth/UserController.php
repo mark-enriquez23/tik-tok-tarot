@@ -46,7 +46,6 @@ class UserController extends Controller
      */
     public function validateEmail(Request $request)
     {
-
         $user = User::where('email', $request->email)->first();
 
         return response()->json([
@@ -57,5 +56,14 @@ class UserController extends Controller
             "data" => $user
         ]);
 
+    }
+
+    public function fetchReaders(){
+        $user = User::where('role_id', '2')->get();
+
+        return response()->json([
+            "success" => $user ? true : false,
+            "data" => $user
+        ]);
     }
 }
