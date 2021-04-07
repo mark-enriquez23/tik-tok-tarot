@@ -330,6 +330,123 @@
   </div>
 </section>
 
+<!-- <section id="reader" class="testimonials section-bg">
+  <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="section-title">
+              <h2>Featured Reader</h2>
+              <p>Magnam dolores commodi suscipit uisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
+            </div>
+          </div>
+          <div class="col-lg-12">
+           <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+              <div class="carousel-inner testimonials-carousel">
+                <div class="testimonial-item carousel-item active">
+                    <p>
+                      <fa class="quote-icon-left" :icon="['fas', 'quote-left']" />
+                      Proin iaculis purus consequat sem cure digni ssim donec porttitora entum suscipit rhoncus. Accusantium quam, ultricies eget id, aliquam eget nibh et. Maecen aliquam, risus at semper.
+                      <fa class="quote-icon-right" :icon="['fas', 'quote-right']" />
+                    </p>
+                    <img :src="testimonialImage1" class="testimonial-img" alt="">
+                    <h3>John Doe</h3>
+                    <h4>Client</h4>
+                    <p class="client-review-stars">
+                      <fa :icon="['fas', 'star']" />
+                      <fa :icon="['fas', 'star']" />
+                      <fa :icon="['fas', 'star']" />
+                      <fa :icon="['fas', 'star']" />
+                      <fa :icon="['fas', 'star-half']" />
+                    </p>
+                  </div>
+
+                  <div class="testimonial-item carousel-item">
+                    <p>
+                      <fa class="quote-icon-left" :icon="['fas', 'quote-left']" />
+                      Proin iaculis purus consequat sem cure digni ssim donec porttitora entum suscipit rhoncus. Accusantium quam, ultricies eget id, aliquam eget nibh et. Maecen aliquam, risus at semper.
+                      <fa class="quote-icon-right" :icon="['fas', 'quote-right']" />
+                    </p>
+                    <img :src="testimonialImage2" class="testimonial-img" alt="">
+                    <h3>John Doe</h3>
+                    <h4>Client</h4>
+                    <p class="client-review-stars">
+                      <fa :icon="['fas', 'star']" />
+                      <fa :icon="['fas', 'star']" />
+                      <fa :icon="['fas', 'star']" />
+                      <fa :icon="['fas', 'star']" />
+                      <fa :icon="['fas', 'star-half']" />
+                    </p>
+                  </div>
+
+                  <div class="testimonial-item carousel-item">
+                    <p>
+                      <fa class="quote-icon-left" :icon="['fas', 'quote-left']" />
+                      Proin iaculis purus consequat sem cure digni ssim donec porttitora entum suscipit rhoncus. Accusantium quam, ultricies eget id, aliquam eget nibh et. Maecen aliquam, risus at semper.
+                      <fa class="quote-icon-right" :icon="['fas', 'quote-right']" />
+                    </p>
+                    <img :src="testimonialImage3" class="testimonial-img" alt="">
+                    <h3>John Doe</h3>
+                    <h4>Client</h4>
+                    <p class="client-review-stars">
+                      <fa :icon="['fas', 'star']" />
+                      <fa :icon="['fas', 'star']" />
+                      <fa :icon="['fas', 'star']" />
+                      <fa :icon="['fas', 'star']" />
+                      <fa :icon="['fas', 'star-half']" />
+                    </p>
+                  </div>
+
+                  <div class="testimonial-item carousel-item">
+                    <p>
+                      <fa class="quote-icon-left" :icon="['fas', 'quote-left']" />
+                      Proin iaculis purus consequat sem cure digni ssim donec porttitora entum suscipit rhoncus. Accusantium quam, ultricies eget id, aliquam eget nibh et. Maecen aliquam, risus at semper.
+                      <fa class="quote-icon-right" :icon="['fas', 'quote-right']" />
+                    </p>
+                    <img :src="testimonialImage4" class="testimonial-img" alt="">
+                    <h3>John Doe</h3>
+                    <h4>Client</h4>
+                    <p class="client-review-stars">
+                      <fa :icon="['fas', 'star']" />
+                      <fa :icon="['fas', 'star']" />
+                      <fa :icon="['fas', 'star']" />
+                      <fa :icon="['fas', 'star']" />
+                      <fa :icon="['fas', 'star-half']" />
+                    </p>
+                  </div>
+
+                  <div class="testimonial-item carousel-item">
+                    <p>
+                      <fa class="quote-icon-left" :icon="['fas', 'quote-left']" />
+                      Proin iaculis purus consequat sem cure digni ssim donec porttitora entum suscipit rhoncus. Accusantium quam, ultricies eget id, aliquam eget nibh et. Maecen aliquam, risus at semper.
+                      <fa class="quote-icon-right" :icon="['fas', 'quote-right']" />
+                    </p>
+                    <img :src="testimonialImage5" class="testimonial-img" alt="">
+                    <h3>John Doe</h3>
+                    <h4>Client</h4>
+                    <p class="client-review-stars">
+                      <fa :icon="['fas', 'star']" />
+                      <fa :icon="['fas', 'star']" />
+                      <fa :icon="['fas', 'star']" />
+                      <fa :icon="['fas', 'star']" />
+                      <fa :icon="['fas', 'star-half']" />
+                    </p>
+                  </div>
+              </div>
+              <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+              </a>
+              <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+              </a>
+          </div>
+          </div>
+        </div>
+
+      </div>
+    </section>End Testimonials Section -->
+
     <!-- How To Section -->
     <HowTo />
 
@@ -386,9 +503,7 @@ export default {
   // created(){
   //   this.fetchVlogs(),
   //   this.fetchTestimonials(),
-  //   this.fetchReaders(),
-  //   this.fetchFaqs(),
-  //   this.fetchHowTo()
+  //   this.fetchReaders()
   // },
 
   data: () => ({
@@ -399,6 +514,9 @@ export default {
     testimonialImage4: window.config.assetURL + 'images/testimonials/testimonials-4.jpg',
     testimonialImage5: window.config.assetURL + 'images/testimonials/testimonials-5.jpg',
     srcLogoOnly: window.config.assetURL + 'images/sample-logo.png',
+    // vlogs:[],
+    // testimonials:[],
+    // readers:[],
     form: new Form({
       email: null
     }),
@@ -449,65 +567,39 @@ export default {
       this.currentIndex -= 1;
     },
 
-    async fetchVlogs() {
-        const { data } = await this.form.post("/api/vlogs");
-        console.log(data);
-        // if (!data.success) {
-        //   Swal.fire({
-        //   title: 'Fetching Vlogs Failed',
-        //   text: "An error has occurred. Please try again.",
-        //   type: 'error'
-        // })
-      // }
-    },
+    // async fetchVlogs() {
+    //     this.vlogs = await axios.get("/api/vlogs");
+    //     // if (!this.vlogs.data.success) {
+    //     //   Swal.fire({
+    //     //   title: 'Fetching Vlogs Failed',
+    //     //   text: "An error has occurred. Please try again.",
+    //     //   type: 'error'
+    //     // })
+    //   // }
+    // },
 
-    async fetchTestimonials() {
-        const { data } = await this.form.post("/api/testimonials");
-        console.log(data);
-        // if (!data.success) {
-        //   Swal.fire({
-        //   title: 'Fetching Testimonials Failed',
-        //   text: "An error has occurred. Please try again.",
-        //   type: 'error'
-        // })
-      // }
-    },
+    // async fetchTestimonials() {
+    //     this.testimonials = await axios.get("/api/testimonials");
+    //     // if (!this.testimonials.data.success) {
+    //     //   Swal.fire({
+    //     //   title: 'Fetching Testimonials Failed',
+    //     //   text: "An error has occurred. Please try again.",
+    //     //   type: 'error'
+    //     // })
+    //   // }
+    // },
 
-    async fetchReaders() {
-        const { data } = await this.form.post("/api/readers");
-        console.log(data);
-        // if (!data.success) {
-        //   Swal.fire({
-        //   title: 'Fetching Readers Failed',
-        //   text: "An error has occurred. Please try again.",
-        //   type: 'error'
-        // })
-      // }
-    },
-
-    async fetchFaqs() {
-        const { data } = await this.form.post("/api/faq");
-        console.log(data);
-        // if (!data.success) {
-        //   Swal.fire({
-        //   title: 'Fetching FAQ Failed',
-        //   text: "An error has occurred. Please try again.",
-        //   type: 'error'
-        // })
-      // }
-    },
-
-    async fetchHowTo() {
-        const { data } = await this.form.post("/api/how-to");
-        console.log(data);
-        // if (!data.success) {
-        //   Swal.fire({
-        //   title: 'Fetching How-To Failed',
-        //   text: "An error has occurred. Please try again.",
-        //   type: 'error'
-        // })
-      // }
-    },
+    // async fetchReaders() {
+    //     this.readers = await axios.get("/api/readers");
+    //     console.log(data);
+    //     // if (!this.readers.data.success) {
+    //     //   Swal.fire({
+    //     //   title: 'Fetching Readers Failed',
+    //     //   text: "An error has occurred. Please try again.",
+    //     //   type: 'error'
+    //     // })
+    //   // }
+    // },
   }
 }
 </script>
