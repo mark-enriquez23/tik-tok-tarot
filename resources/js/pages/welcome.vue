@@ -383,10 +383,13 @@ export default {
     this.startSlide();
   },
 
-  created(){
-    this.fetchVlogs(),
-    this.fetchTestimonials()
-  },
+  // created(){
+  //   this.fetchVlogs(),
+  //   this.fetchTestimonials(),
+  //   this.fetchReaders(),
+  //   this.fetchFaqs(),
+  //   this.fetchHowTo()
+  // },
 
   data: () => ({
     title: window.config.appName,
@@ -463,7 +466,43 @@ export default {
         console.log(data);
         // if (!data.success) {
         //   Swal.fire({
-        //   title: 'Fetching Vlogs Failed',
+        //   title: 'Fetching Testimonials Failed',
+        //   text: "An error has occurred. Please try again.",
+        //   type: 'error'
+        // })
+      // }
+    },
+
+    async fetchReaders() {
+        const { data } = await this.form.post("/api/readers");
+        console.log(data);
+        // if (!data.success) {
+        //   Swal.fire({
+        //   title: 'Fetching Readers Failed',
+        //   text: "An error has occurred. Please try again.",
+        //   type: 'error'
+        // })
+      // }
+    },
+
+    async fetchFaqs() {
+        const { data } = await this.form.post("/api/faq");
+        console.log(data);
+        // if (!data.success) {
+        //   Swal.fire({
+        //   title: 'Fetching FAQ Failed',
+        //   text: "An error has occurred. Please try again.",
+        //   type: 'error'
+        // })
+      // }
+    },
+
+    async fetchHowTo() {
+        const { data } = await this.form.post("/api/how-to");
+        console.log(data);
+        // if (!data.success) {
+        //   Swal.fire({
+        //   title: 'Fetching How-To Failed',
         //   text: "An error has occurred. Please try again.",
         //   type: 'error'
         // })
