@@ -141,5 +141,4 @@ class UploadController extends Controller
             'message' =>  __('messages.no_file')
         ]);
     }
-
 }
