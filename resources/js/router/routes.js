@@ -30,5 +30,8 @@ export default [
     ]
   },
 
+  // Reader
+  { path: '/reader/vlog', name: 'reader.vlog', component: page('reader/vlog/index.vue') },
+
   { path: '*', component: page('errors/404.vue') }
 ]
