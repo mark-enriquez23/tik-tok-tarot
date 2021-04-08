@@ -12,7 +12,7 @@ class UploadTypeSeeder extends Seeder
      */
     public function run()
     {
-        $data = [
+        $datas = [
             [
                 'name'      => 'live',
             ],
@@ -20,7 +20,9 @@ class UploadTypeSeeder extends Seeder
                 'name'      => 'vlog',
             ]
         ];
- 
-        $uploadType = UploadType::create($data);
+
+        foreach ($datas as $data) {
+            $uploadType = UploadType::create($data);
+        }
     }
 }

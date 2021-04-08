@@ -126,6 +126,10 @@ class User extends Authenticatable implements JWTSubject //, MustVerifyEmail
 
     public function role()
     {
-        return $this->belongsTo('App\Models\Role');
+        return $this->belongsTo('App\Role');
+    }
+
+    public function testimonials() {
+        return $this->hasMany('App\Tetimonial');
     }
 }
