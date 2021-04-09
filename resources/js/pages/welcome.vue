@@ -20,7 +20,7 @@
     </div>
 </header>
  <!-- ======= Testimonials Section ======= -->
-<!-- <section id="testimonials" class="testimonials section-bg">
+<section id="testimonials" class="testimonials section-bg">
   <div class="container">
         <div class="row">
           <div class="col-lg-4">
@@ -41,7 +41,7 @@
                     </p>
                     <img :src="testimonialImage1" class="testimonial-img" alt="">
                     <h3>{{ testimonials.data.data[0].user.name }}</h3>
-                    <h4>Client</h4>
+                    <h4 class="testimonial-title">Client</h4>
                     <p class="client-review-stars">
                       <fa :icon="['fas', 'star']" />
                       <fa :icon="['fas', 'star']" />
@@ -59,7 +59,7 @@
                     </p>
                     <img :src="testimonialImage2" class="testimonial-img" alt="">
                     <h3>{{ testimonials.data.data[1].user.name }}</h3>
-                    <h4>Client</h4>
+                    <h4 class="testimonial-title">Client</h4>
                     <p class="client-review-stars">
                       <fa :icon="['fas', 'star']" />
                       <fa :icon="['fas', 'star']" />
@@ -77,7 +77,7 @@
                     </p>
                     <img :src="testimonialImage3" class="testimonial-img" alt="">
                     <h3>{{ testimonials.data.data[2].user.name }}</h3>
-                    <h4>Client</h4>
+                    <h4 class="testimonial-title">Client</h4>
                     <p class="client-review-stars">
                       <fa :icon="['fas', 'star']" />
                       <fa :icon="['fas', 'star']" />
@@ -95,7 +95,7 @@
                     </p>
                     <img :src="testimonialImage4" class="testimonial-img" alt="">
                     <h3>{{ testimonials.data.data[3].user.name }}</h3>
-                    <h4>Client</h4>
+                    <h4 class="testimonial-title">Client</h4>
                     <p class="client-review-stars">
                       <fa :icon="['fas', 'star']" />
                       <fa :icon="['fas', 'star']" />
@@ -119,7 +119,8 @@
         </div>
 
       </div>
-    </section>End Testimonials Section -->
+    </section>
+    <!-- End Testimonials Section -->
 
     <!-- ======= Live Session Section ======= -->
     <section id="team" class="team">
@@ -293,27 +294,7 @@
   </div>
 </section>
 
-<!-- Featured Reader WIP -->
-<!-- <section class="container my-5">
-  <div class="mb-2">
-  <div class="">
-    <div class="section-title">
-      <h2>Featured Reader</h2>
-      <p>Magnam dolores commodi suscipit uisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
-    </div>
-  </div>
-  <div>
-    <transition-group tag="div">
-      <div v-for="i in [currentIndex]" :key="i">
-        <img class="img-slide" :src="currentImg" />
-      </div>
-    </transition-group>
-    <a class="prev" @click="prev" >&#10094; Previous</a>
-    <a class="next" @click="next" >&#10095; Next</a>
-  </div>
-  </div>
-</section> -->
-
+<!-- Featured Reader -->
 <section id="reader" class="testimonials section-bg">
   <div class="container">
         <div class="row">
@@ -360,7 +341,7 @@
 
       </div>
     </section>
-    <!-- End Testimonials Section -->
+    <!-- End Featured Reader Section -->
 
     <!-- How To Section -->
     <HowTo />
@@ -426,7 +407,7 @@ export default {
     testimonialImage4: window.config.assetURL + 'images/testimonials/testimonials-4.jpg',
     testimonialImage5: window.config.assetURL + 'images/testimonials/testimonials-5.jpg',
     srcLogoOnly: window.config.assetURL + 'images/sample-logo.png',
-    // vlogs:[],
+    vlogs:[],
     testimonials:[],
     readers:[],
     form: new Form({
@@ -455,16 +436,16 @@ export default {
       }
     },
 
-    // async fetchVlogs() {
-    //     this.vlogs = await axios.get("/api/vlogs");
-    //     // if (!this.vlogs.data.success) {
-    //     //   Swal.fire({
-    //     //   title: 'Fetching Vlogs Failed',
-    //     //   text: "An error has occurred. Please try again.",
-    //     //   type: 'error'
-    //     // })
-    //   // }
-    // },
+    async fetchVlogs() {
+        this.vlogs = await axios.get("/api/vlogs");
+        if (!this.vlogs.data.success) {
+          Swal.fire({
+          title: 'Fetching Vlogs Failed',
+          text: "An error has occurred. Please try again.",
+          type: 'error'
+        })
+      }
+    },
 
     async fetchTestimonials() {
         this.testimonials = await axios.get("/api/testimonial");
@@ -480,14 +461,14 @@ export default {
 
     async fetchReaders() {
         this.readers = await axios.get("/api/user/fetch-readers");
-        // console.log(this.readers);
-        // if (!this.readers.data.success) {
-        //   Swal.fire({
-        //   title: 'Fetching Readers Failed',
-        //   text: "An error has occurred. Please try again.",
-        //   type: 'error'
-        // })
-      // }
+        console.log(this.readers);
+        if (!this.readers.data.success) {
+          Swal.fire({
+          title: 'Fetching Readers Failed',
+          text: "An error has occurred. Please try again.",
+          type: 'error'
+        })
+      }
     },
   }
 }
