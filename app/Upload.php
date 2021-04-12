@@ -14,7 +14,12 @@ class Upload extends Model
         'content',
         'is_featured',
         'status',
+        'is_active',
         'metadata',
     ];
     
+    public function uploadType()
+    {
+        return $this->hasOne('App\UploadType');
+    }
 }

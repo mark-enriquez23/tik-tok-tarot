@@ -8,6 +8,7 @@ use App\User;
 use App\Upload;
 use App\UploadApproval;
 use App\UploadType;
+use App\UploadReview;
 
 class UploadController extends Controller
 {
@@ -81,6 +82,8 @@ class UploadController extends Controller
                 'content'           => $request->content,
                 'thumbnail'         => $request->thumbnail,
                 'src'               => $request->src,
+                'status'            => $request->status,
+                'is_active'         => $request->is_active,
                 'upload_type_id'    => $request->upload_type_id
             ];
 
@@ -140,5 +143,43 @@ class UploadController extends Controller
             'success' => false,
             'message' =>  __('messages.no_file')
         ]);
+    }
+
+    public function saveReview(Request $request)
+    {
+        // dd('hey');
+        // return response()->json('asd');
+        // check if request is update
+        $uploadReview = UploadReview::find($request->id);
+        $data = $request->all();
+
+        if (isset($uploadReview)) { // update review
+            $uploadReview->update($data);
+
+            return response()->json([
+                'success'   => true,
+                'message'   => __('message.review_updated'),
+                'data'      => $uploadReview
+            ]);
+        }else{ // save review
+            $uploadReview = UploadReview::create($data);
+
+            return response()->json([
+                'success'   => true,
+                'message'   => __('message.review_submitted')
+            ]);
+        }
+    }
+
+    public function uploadReview($uploadId)
+    {
+        $uploadReview = UploadReview::where('upload_id', $uploadId)->get();
+
+        if (isset($uploadReview)) {
+            return response()->json([
+                'success'   => true,
+                'data'      => $uploadReview
+            ]);
+        }
     }
 }
