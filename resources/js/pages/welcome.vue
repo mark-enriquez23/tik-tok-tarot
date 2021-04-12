@@ -20,7 +20,7 @@
     </div>
 </header>
  <!-- ======= Testimonials Section ======= -->
-<section id="testimonials" class="testimonials section-bg">
+<!-- <section id="testimonials" class="testimonials section-bg">
   <div class="container">
         <div class="row">
           <div class="col-lg-4">
@@ -119,7 +119,7 @@
         </div>
 
       </div>
-    </section>
+    </section> -->
     <!-- End Testimonials Section -->
 
     <!-- ======= Live Session Section ======= -->
@@ -141,7 +141,7 @@
                   <div class="member-info">
                     <h4>John Doe</h4>
                     <span>Reader 1</span>
-                    <p class="text-success mb-0">online</p>
+                    <p class="text-success mb-0">Online</p>
                     <p>Explicabo voluptatem mollitia et repellat qui dolorum quasi</p>
                   </div>
                 </div>
@@ -153,7 +153,7 @@
                   <div class="member-info">
                     <h4>John Doe</h4>
                     <span>Reader 2</span>
-                    <p class="text-success mb-0">online</p>
+                    <p class="text-success mb-0">Online</p>
                     <p>Explicabo voluptatem mollitia et repellat qui dolorum quasi</p>
                   </div>
                 </div>
@@ -165,7 +165,7 @@
                   <div class="member-info">
                     <h4>John Doe</h4>
                     <span>Reader 3</span>
-                    <p class="text-success mb-0">online</p>
+                    <p class="text-success mb-0">Online</p>
                     <p>Explicabo voluptatem mollitia et repellat qui dolorum quasi</p>
                   </div>
                 </div>
@@ -177,7 +177,7 @@
                   <div class="member-info">
                     <h4>John Doe</h4>
                     <span>Reader 4</span>
-                    <p class="text-success mb-0">online</p>
+                    <p class="text-success mb-0">Online</p>
                     <p>Aut maiores voluptates amet et quis praesentium qui senda para</p>
                   </div>
                 </div>
@@ -189,7 +189,7 @@
                   <div class="member-info">
                     <h4>John Doe</h4>
                     <span>Reader 4</span>
-                    <p class="text-success mb-0">online</p>
+                    <p class="text-success mb-0">Online</p>
                     <p>Quisquam facilis cum velit laborum corrupti fuga rerum quia</p>
                   </div>
                 </div>
@@ -201,7 +201,7 @@
                   <div class="member-info">
                     <h4>John Doe</h4>
                     <span>Reader 5</span>
-                    <p class="text-success mb-0">online</p>
+                    <p class="text-success mb-0">Online</p>
                     <p>Dolorum tempora officiis odit laborum officiis et et accusamus</p>
                   </div>
                 </div>
@@ -231,7 +231,6 @@
             </div>
           </div>
         </div>
-
       </div>
     </section><!-- End Cta Section -->
 
@@ -528,37 +527,9 @@ export default {
   }
 }
 
-
-
 .img-slide {
   height:600px;
   width:100%
-}
-
-.prev, .next {
-  cursor: pointer;
-  width: auto;
-  padding: 16px;
-   position: absolute;
-  color: white;
-  font-weight: bold;
-  font-size: 18px;
-  transition: 0.7s ease;
-  border-radius: 0 4px 4px 0;
-  text-decoration: none;
-  user-select: none;
-}
-
-.next {
-  right: 0;
-}
-
-.prev {
-  left: 0;
-}
-
-.prev:hover, .next:hover {
-  background-color: rgba(0,0,0,0.9);
 }
 
 </style>
