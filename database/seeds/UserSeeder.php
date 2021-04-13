@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use App\User;
+use App\FeaturedUser;
 use App\UserSecurityQuestion;
 
 class UserSeeder extends Seeder
@@ -59,6 +60,18 @@ class UserSeeder extends Seeder
         // save
         foreach ($users as $user) {
             $registeredUser = User::create($user);
+
+            // save reader as featured
+            if ($registeredUser->role_id === 2) {
+                $featureData = [
+                    'id'        => '',
+                    'user_id'   => $registeredUser->id
+                ];
+
+                $featuredReader = new FeaturedUser;
+                $featuredReader->user_id = $registeredUser->id;
+                $featuredReader->save();
+            }
 
             // saved user security questions
             foreach ($questionData as $qd) {
