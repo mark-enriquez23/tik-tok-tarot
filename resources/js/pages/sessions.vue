@@ -12,76 +12,16 @@
               <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem.</p>
             </div>
           </div>
-          <div class="col-lg-8">
+
+          <div class="col-lg-6 mt-4 mt-lg-0" v-for="session in sessions.data">
             <div class="row">
               <div class="col-lg-6">
                 <div class="member" data-aos="zoom-in" data-aos-delay="100">
                   <div class="pic"><img :src="testimonialImage4" class="img-fluid" alt=""></div>
                   <div class="member-info">
-                    <h4>John Doe</h4>
-                    <span>Reader 1</span>
-                    <p class="text-success mb-0">Online</p>
+                    <h4>{{session.name}}</h4>
+                    <p class="text-success mb-0">{{ session.is_active == 1 ? 'Online' : 'Offline' }}</p>
                     <p>Explicabo voluptatem mollitia et repellat qui dolorum quasi</p>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-lg-6 col-lg-6 mt-4 mt-lg-0">
-                <div class="member" data-aos="zoom-in" data-aos-delay="100">
-                  <div class="pic"><img :src="testimonialImage2" class="img-fluid" alt=""></div>
-                  <div class="member-info">
-                    <h4>John Doe</h4>
-                    <span>Reader 2</span>
-                    <p class="text-success mb-0">Online</p>
-                    <p>Explicabo voluptatem mollitia et repellat qui dolorum quasi</p>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-lg-6 mt-4">
-                <div class="member" data-aos="zoom-in" data-aos-delay="100">
-                  <div class="pic"><img :src="testimonialImage3" class="img-fluid" alt=""></div>
-                  <div class="member-info">
-                    <h4>John Doe</h4>
-                    <span>Reader 3</span>
-                    <p class="text-success mb-0">Online</p>
-                    <p>Explicabo voluptatem mollitia et repellat qui dolorum quasi</p>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-lg-6 mt-4">
-                <div class="member" data-aos="zoom-in" data-aos-delay="200">
-                  <div class="pic"><img :src="testimonialImage2" class="img-fluid" alt=""></div>
-                  <div class="member-info">
-                    <h4>John Doe</h4>
-                    <span>Reader 4</span>
-                    <p class="text-success mb-0">Online</p>
-                    <p>Aut maiores voluptates amet et quis praesentium qui senda para</p>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-lg-6 mt-4">
-                <div class="member" data-aos="zoom-in" data-aos-delay="300">
-                  <div class="pic"><img :src="testimonialImage1" class="img-fluid" alt=""></div>
-                  <div class="member-info">
-                    <h4>John Doe</h4>
-                    <span>Reader 4</span>
-                    <p class="text-success mb-0">Online</p>
-                    <p>Quisquam facilis cum velit laborum corrupti fuga rerum quia</p>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-lg-6 mt-4">
-                <div class="member" data-aos="zoom-in">
-                  <div class="pic"><img :src="testimonialImage4" class="img-fluid" alt=""></div>
-                  <div class="member-info">
-                    <h4>John Doe</h4>
-                    <span>Reader 5</span>
-                    <p class="text-success mb-0">Online</p>
-                    <p>Dolorum tempora officiis odit laborum officiis et et accusamus</p>
                   </div>
                 </div>
               </div>
@@ -113,7 +53,7 @@ export default {
   },
 
   created(){
-    //this.fetchSessions()
+    this.fetchSessions()
   },
 
   data: () => ({
@@ -133,10 +73,11 @@ export default {
   computed: mapGetters({authenticated: 'auth/check'}),
   
   methods: {
-    async fetchReaders() {
-        this.sessions = await axios.get("/api/user/fetch-sessions");
+    async fetchSessions() {
+        var sessions = await axios.get("/api/homepage/live-sessions");
+        this.sessions = sessions.data;
         console.log(this.sessions);
-        if (!this.sessions.data.success) {
+        if (!this.sessions.success) {
           Swal.fire({
           title: 'Fetching Sessions Failed',
           text: "An error has occurred. Please try again.",

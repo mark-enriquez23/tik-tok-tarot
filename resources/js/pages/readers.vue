@@ -10,78 +10,29 @@
             <div class="section-title" data-aos="fade-right">
               <h2>Our Readers</h2>
               <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem.</p>
-              <form class="form-inline col-12 col-md-12 px-0 my-2">
-                <input class="form-control mr-sm-2 w-100" type="search" name="reader" placeholder="Search Readers" aria-label="Search">
+              <form class="form-inline col-12 col-md-12 px-0 my-2" action="" method="post" @submit.prevent="search">
+                <input v-model="form['key']" class="form-control mr-sm-2 w-100" type="text" name="reader" placeholder="Search Readers" aria-label="Search">
+                <v-button class="btn btn-danger btn-lg mt-2" :disabled="!form.key">Search</v-button>
               </form>
+             
             </div>
           </div>
+
           <div class="col-lg-8">
             <div class="row">
-              <div class="col-lg-6">
+
+              <div class="col-lg-6 mt-4 mt-lg-0" v-for="reader in readers.data">
                 <div class="member" data-aos="zoom-in" data-aos-delay="100">
                   <div class="pic"><img :src="testimonialImage5" class="img-fluid" alt=""></div>
                   <div class="member-info">
-                    <h4>John Doe</h4>
-                    <span>Reader 1</span>
+                    <h4>{{reader.name}}</h4>
+                    <p class="text-success mb-0">{{ reader.is_active == 1 ? 'Online' : 'Offline' }}</p>
                     <p>Explicabo voluptatem mollitia et repellat qui dolorum quasi</p>
+                    <span class="mt-3" >Health</span>
                   </div>
                 </div>
               </div>
 
-              <div class="col-lg-6 col-lg-6 mt-4 mt-lg-0">
-                <div class="member" data-aos="zoom-in" data-aos-delay="100">
-                  <div class="pic"><img :src="testimonialImage1" class="img-fluid" alt=""></div>
-                  <div class="member-info">
-                    <h4>John Doe</h4>
-                    <span>Reader 2</span>
-                    <p>Explicabo voluptatem mollitia et repellat qui dolorum quasi</p>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-lg-6 mt-4">
-                <div class="member" data-aos="zoom-in" data-aos-delay="100">
-                  <div class="pic"><img :src="testimonialImage3" class="img-fluid" alt=""></div>
-                  <div class="member-info">
-                    <h4>John Doe</h4>
-                    <span>Reader 3</span>
-                    <p>Explicabo voluptatem mollitia et repellat qui dolorum quasi</p>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-lg-6 mt-4">
-                <div class="member" data-aos="zoom-in" data-aos-delay="200">
-                  <div class="pic"><img :src="testimonialImage2" class="img-fluid" alt=""></div>
-                  <div class="member-info">
-                    <h4>John Doe</h4>
-                    <span>Reader 4</span>
-                    <p>Aut maiores voluptates amet et quis praesentium qui senda para</p>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-lg-6 mt-4">
-                <div class="member" data-aos="zoom-in" data-aos-delay="300">
-                  <div class="pic"><img :src="testimonialImage1" class="img-fluid" alt=""></div>
-                  <div class="member-info">
-                    <h4>John Doe</h4>
-                    <span>Reader 4</span>
-                    <p>Quisquam facilis cum velit laborum corrupti fuga rerum quia</p>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-lg-6 mt-4">
-                <div class="member" data-aos="zoom-in">
-                  <div class="pic"><img :src="testimonialImage4" class="img-fluid" alt=""></div>
-                  <div class="member-info">
-                    <h4>John Doe</h4>
-                    <span>Reader 5</span>
-                    <p>Dolorum tempora officiis odit laborum officiis et et accusamus</p>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
         </div>
@@ -123,7 +74,7 @@ export default {
     srcLogoOnly: window.config.assetURL + 'images/sample-logo.png',
     readers:[],
     form: new Form({
-      email: null
+      key: null
     }),
   }),
 
@@ -131,15 +82,28 @@ export default {
   
   methods: {
     async fetchReaders() {
-        this.readers = await axios.get("/api/user/fetch-readers");
+        var readers = await axios.get("/api/user/fetch-readers");
+        this.readers = readers.data;
         console.log(this.readers);
-        if (!this.readers.data.success) {
+        if (!this.readers.success) {
           Swal.fire({
           title: 'Fetching Readers Failed',
           text: "An error has occurred. Please try again.",
           type: 'error'
         })
       }
+    },
+
+    async search() {
+        const { data } = await this.form.post("/api/our-reader/search/");
+        console.log(data);
+        if (!data.success) {
+          Swal.fire({
+          title: 'Search Failed',
+          text: "An error has occurred. Please try again.",
+          type: 'error'
+        })
+        }
     },
   }
 }

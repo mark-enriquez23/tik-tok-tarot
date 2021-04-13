@@ -135,83 +135,21 @@
           </div>
           <div class="col-lg-8">
             <div class="row">
-              <div class="col-lg-6">
+              
+              <div class="col-lg-6 col-lg-6 mt-4 mt-lg-0" v-for="session in sessions.data">
                 <div class="member" data-aos="zoom-in" data-aos-delay="100">
                   <div class="pic"><img :src="testimonialImage5" class="img-fluid" alt=""></div>
                   <div class="member-info">
-                    <h4>John Doe</h4>
-                    <span>Reader 1</span>
-                    <p class="text-success mb-0">Online</p>
-                    <p>Explicabo voluptatem mollitia et repellat qui dolorum quasi</p>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-lg-6 col-lg-6 mt-4 mt-lg-0">
-                <div class="member" data-aos="zoom-in" data-aos-delay="100">
-                  <div class="pic"><img :src="testimonialImage1" class="img-fluid" alt=""></div>
-                  <div class="member-info">
-                    <h4>John Doe</h4>
-                    <span>Reader 2</span>
-                    <p class="text-success mb-0">Online</p>
-                    <p>Explicabo voluptatem mollitia et repellat qui dolorum quasi</p>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-lg-6 mt-4">
-                <div class="member" data-aos="zoom-in" data-aos-delay="100">
-                  <div class="pic"><img :src="testimonialImage3" class="img-fluid" alt=""></div>
-                  <div class="member-info">
-                    <h4>John Doe</h4>
-                    <span>Reader 3</span>
-                    <p class="text-success mb-0">Online</p>
-                    <p>Explicabo voluptatem mollitia et repellat qui dolorum quasi</p>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-lg-6 mt-4">
-                <div class="member" data-aos="zoom-in" data-aos-delay="200">
-                  <div class="pic"><img :src="testimonialImage2" class="img-fluid" alt=""></div>
-                  <div class="member-info">
-                    <h4>John Doe</h4>
-                    <span>Reader 4</span>
-                    <p class="text-success mb-0">Online</p>
-                    <p>Aut maiores voluptates amet et quis praesentium qui senda para</p>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-lg-6 mt-4">
-                <div class="member" data-aos="zoom-in" data-aos-delay="300">
-                  <div class="pic"><img :src="testimonialImage1" class="img-fluid" alt=""></div>
-                  <div class="member-info">
-                    <h4>John Doe</h4>
-                    <span>Reader 4</span>
-                    <p class="text-success mb-0">Online</p>
-                    <p>Quisquam facilis cum velit laborum corrupti fuga rerum quia</p>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-lg-6 mt-4">
-                <div class="member" data-aos="zoom-in">
-                  <div class="pic"><img :src="testimonialImage4" class="img-fluid" alt=""></div>
-                  <div class="member-info">
-                    <h4>John Doe</h4>
-                    <span>Reader 5</span>
-                    <p class="text-success mb-0">Online</p>
-                    <p>Dolorum tempora officiis odit laborum officiis et et accusamus</p>
+                    <h4>{{session.reader}}</h4>
+                    <p class="text-success mb-0">{{ session.is_active == 1 ? 'Online' : 'Offline' }}</p>
+                    <p>{{ session.description}}</p>
                   </div>
                 </div>
               </div>
 
             </div>
-
           </div>
         </div>
-
       </div>
     </section><!-- End Live Session Section -->
 
@@ -241,47 +179,24 @@
       <p>Magnam dolores commodi suscipit uisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
     </div>
   </div>
+
   <div class="mb-2">
     <div class="row">
-      <div class="col-md-4">
+
+      <div class="col-md-4" v-for="vlog in vlogs.data">
         <div class="card ">
           <a href="#">
           <img class="card-img-top" src="https://images.unsplash.com/photo-1535025639604-9a804c092faa?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6cb0ceb620f241feb2f859e273634393&auto=format&fit=crop&w=500&q=80" alt="Card image cap">
           <div class="card-body">
-            <h5 class="card-title">Lorem ipsum dolor sit amet.</h5>
+            <h5 class="card-title">{{vlog.title}}</h5>
             <p class="card-text text-muted">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab accusantium ad alias, aliquid amet aspernatur atque culpa cum debitis dicta doloremque, dolorum ea eos et excepturi explicabo facilis harum illo impedit incidunt laborum laudantium...
+              {{vlog.description}}
             </p>
-        </div>
+          </div>
           </a>
         </div>
-      </div>
-      <div class="col-md-4">
-        <div class="card ">
-          <a href="#">
-          <img class="card-img-top" src="https://images.unsplash.com/photo-1535025639604-9a804c092faa?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6cb0ceb620f241feb2f859e273634393&auto=format&fit=crop&w=500&q=80" alt="Card image cap">
-          <div class="card-body">
-            <h5 class="card-title">Lorem ipsum dolor sit amet.</h5>
-            <p class="card-text text-muted">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab accusantium ad alias, aliquid amet aspernatur atque culpa cum debitis dicta doloremque, dolorum ea eos et excepturi explicabo facilis harum illo impedit incidunt laborum laudantium...
-            </p>
-        </div>
-          </a>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="card ">
-          <a href="#">
-          <img class="card-img-top" src="https://images.unsplash.com/photo-1535025639604-9a804c092faa?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6cb0ceb620f241feb2f859e273634393&auto=format&fit=crop&w=500&q=80" alt="Card image cap">
-          <div class="card-body">
-            <h5 class="card-title">Lorem ipsum dolor sit amet.</h5>
-            <p class="card-text text-muted">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab accusantium ad alias, aliquid amet aspernatur atque culpa cum debitis dicta doloremque, dolorum ea eos et excepturi explicabo facilis harum illo impedit incidunt laborum laudantium...
-            </p>
-        </div>
-          </a>
-        </div>
-      </div>
+      </div>     
+
     </div>
   </div>
   <div class="mt-5 mx-auto col-md-3 mx-auto ">
@@ -393,9 +308,10 @@ export default {
   },
 
   created(){
-  //  this.fetchVlogs(),
+    this.fetchVlogs(),
   // this.fetchTestimonials()
-    this.fetchReaders()
+    this.fetchReaders(),
+    this.fetchSessions()
   },
 
   data: () => ({
@@ -409,9 +325,10 @@ export default {
     vlogs:[],
     testimonials:[],
     readers:[],
+    sessions:[],
     form: new Form({
       email: null
-    }),
+    })
   }),
 
   computed: mapGetters({authenticated: 'auth/check'}),
@@ -436,10 +353,25 @@ export default {
     },
 
     async fetchVlogs() {
-        this.vlogs = await axios.get("/api/vlogs");
-        if (!this.vlogs.data.success) {
+        var vlogs = await axios.get("/api/homepage/vlogs");
+        this.vlogs = vlogs.data;
+        console.log(this.vlogs);
+        if (!this.vlogs.success) {
           Swal.fire({
           title: 'Fetching Vlogs Failed',
+          text: "An error has occurred. Please try again.",
+          type: 'error'
+        })
+      }
+    },
+
+    async fetchSessions() {
+        var sessions = await axios.get("/api/homepage/live-sessions");
+        this.sessions = sessions.data;
+        console.log(this.sessions);
+        if (!this.sessions.success) {
+          Swal.fire({
+          title: 'Fetching Sessions Failed',
           text: "An error has occurred. Please try again.",
           type: 'error'
         })
