@@ -4,12 +4,17 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class UploadType extends Model
+class UploadReview extends Model
 {
     protected $fillable = [
-        'name',
+        'upload_id',
+        'user_id',
+        'comment',
+        'rate',
+        'status',
+        'metadata'
     ];
-
+    
     public function upload()
     {
         return $this->belongsTo('App\Upload');

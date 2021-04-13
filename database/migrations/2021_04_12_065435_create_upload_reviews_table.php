@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUploadsTable extends Migration
+class CreateUploadReviewsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,13 @@ class CreateUploadsTable extends Migration
      */
     public function up()
     {
-        Schema::create('uploads', function (Blueprint $table) {
+        Schema::create('upload_reviews', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('user_id');
-            $table->string('thumbnail');
-            $table->string('src');
-            $table->bigInteger('upload_type_id');
-            $table->longText('content');
-            $table->tinyInteger('is_active')->default(0);
-            $table->enum('status', ['streaming', 'ended'])->nullable();
-            $table->tinyInteger('is_featured')->default(0);
+            $table->bigInteger('upload_id');
+            $table->string('comment')->nullable();
+            $table->string('rate');
+            $table->tinyInteger('status')->default(0);
             $table->longText('metadata')->nullable();
             $table->timestamps();
         });
@@ -35,6 +32,6 @@ class CreateUploadsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('uploads');
+        Schema::dropIfExists('upload_reviews');
     }
 }

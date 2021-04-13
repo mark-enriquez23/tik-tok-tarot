@@ -13,6 +13,110 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// SecurityQuestion api
+Route::group(['prefix' => 'security-question'], function () {
+    Route::get('/', 'Auth\SecurityQuestionController@index');
+    Route::post('/save', 'Auth\SecurityQuestionController@save');
+    Route::post('/delete', 'Auth\SecurityQuestionController@delete');
+});
+
+// UserSecurityQuestion api
+Route::group(['prefix' => 'user-security-question'], function () {
+    Route::get('/', 'Auth\UserSecurityQuestionController@index');
+    Route::post('/save', 'Auth\UserSecurityQuestionController@save');
+    Route::post('/delete', 'Auth\UserSecurityQuestionController@delete');
+});
+
+// SendEmail api
+Route::group(['prefix' => 'email'], function () {
+    Route::post('/send-email', 'SendEmailController@sendEmail');
+});
+
+// ForgotPassword api
+Route::group(['prefix' => 'forgot-password'], function () {
+    Route::post('/user-security-questions', 'Auth\ForgotPasswordController@getUserSecurityQuestion');
+    Route::post('/check-security-question', 'Auth\ForgotPasswordController@checkUserSecurityQuestion');
+});
+
+Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail');
+Route::post('password/reset', 'Auth\ResetPasswordController@reset');
+
+// Custom Reset Password
+Route::post('password/custom-reset', 'Auth\ResetPasswordController@customResetPassword');
+
+// Varification Controller
+Route::post('email/verify/{user}', 'Auth\VerificationController@verify')->name('verification.verify');
+Route::post('email/resend', 'Auth\VerificationController@resend');
+
+// Footer
+Route::get('/footer', 'FooterController@fetchFooter');
+Route::post('/footer/save', 'FooterController@save');
+
+// How To
+Route::get('/how-to', 'HowToController@fetchHowTo');
+Route::post('/how-to/save', 'HowToController@save');
+
+// Faq
+Route::get('/faq', 'FaqController@fetchFaq');
+Route::post('/faq/save', 'FaqController@save');
+
+// Upload api
+Route::group(['prefix' => 'upload'], function () {
+    Route::get('/featured-uploads/{typeName}', 'UploadController@fetchFeaturedUpload');
+    Route::post('/save', 'UploadController@save');
+});
+
+// Contact us api
+Route::group(['prefix' => 'contact-us'], function () {
+    Route::get('/', 'ContactUsController@fetchContactUs');
+    Route::post('/save', 'ContactUsController@save');
+});
+
+// About us api
+Route::group(['prefix' => 'about-us'], function () {
+    Route::get('/', 'AboutUsController@fetchAboutUs');
+    Route::post('/save', 'AboutUsController@save');
+});
+
+// General Info api
+Route::group(['prefix' => 'general-info'], function () {
+    Route::get('/', 'GeneralInformationController@fetchGeneralInformation');
+    Route::post('/save', 'GeneralInformationController@save');
+});
+
+// Mailchimp api
+Route::group(['prefix' => 'mailchimp'], function () {
+    Route::get('/','MailchimpController@getLists');
+    Route::post('/list-with-parameter','MailchimpController@getListWithParameter');
+    Route::post('/check-if-subscribed','MailchimpController@checkIfSubscribed');
+    Route::post('/subscribe','MailchimpController@subscribe');
+    Route::get('/get-subscribers','MailchimpController@getSubscribers');
+});
+
+// Price api
+Route::group(['prefix' => 'price'], function () {
+    Route::get('/', 'PriceController@fetchPrice');
+    Route::post('/save', 'PriceController@save');
+});
+
+// Role api
+Route::group(['prefix' => 'role'], function () {
+    Route::get('/', 'RoleController@index');
+});
+
+// Users api
+Route::group(['prefix' => 'user'], function () {
+    Route::get('/fetch-readers', 'Auth\UserController@fetchReaders');
+});
+
+// Homepage Counter
+Route::group(['prefix' => 'homepage'], function () {
+    Route::get('/current-viewers', 'HomePageController@currentViewer');
+    Route::get('/vlogs', 'HomePageController@vlogs');
+    Route::get('/live-sessions', 'HomePageController@liveSessions');
+});
+
+// -------------------------------Authenticated routes------------------------------ //
 Route::group(['middleware' => 'auth:api'], function () {
     Route::post('logout', 'Auth\LoginController@logout');
 
@@ -41,6 +145,8 @@ Route::group(['middleware' => 'auth:api'], function () {
     // Upload api
     Route::group(['prefix' => 'upload'], function () {
         Route::post('/upload-video', 'UploadController@uploadVideo');
+        Route::post('/save-review', 'UploadController@saveReview');
+        Route::get('/upload-review/{uploadId}', 'UploadController@uploadReview');
     });
 
     // Testimonial api
@@ -51,7 +157,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     });
 });
 
-// Public
+// Public routes
 Route::group(['middleware' => 'guest:api'], function () {
     Route::post('login', 'Auth\LoginController@login');
     Route::post('register', 'Auth\RegisterController@register');
@@ -62,101 +168,7 @@ Route::group(['middleware' => 'guest:api'], function () {
         Route::post('/validate-email', 'Auth\UserController@validateEmail');
     });
 
-    // SecurityQuestion api
-    Route::group(['prefix' => 'security-question'], function () {
-        Route::get('/', 'Auth\SecurityQuestionController@index');
-        Route::post('/save', 'Auth\SecurityQuestionController@save');
-        Route::post('/delete', 'Auth\SecurityQuestionController@delete');
-    });
-
-    // UserSecurityQuestion api
-    Route::group(['prefix' => 'user-security-question'], function () {
-        Route::get('/', 'Auth\UserSecurityQuestionController@index');
-        Route::post('/save', 'Auth\UserSecurityQuestionController@save');
-        Route::post('/delete', 'Auth\UserSecurityQuestionController@delete');
-    });
-
-    // SendEmail api
-    Route::group(['prefix' => 'email'], function () {
-        Route::post('/send-email', 'SendEmailController@sendEmail');
-    });
-
-    // ForgotPassword api
-    Route::group(['prefix' => 'forgot-password'], function () {
-        Route::post('/user-security-questions', 'Auth\ForgotPasswordController@getUserSecurityQuestion');
-        Route::post('/check-security-question', 'Auth\ForgotPasswordController@checkUserSecurityQuestion');
-    });
-
-    Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail');
-    Route::post('password/reset', 'Auth\ResetPasswordController@reset');
-
-    // Custom Reset Password
-    Route::post('password/custom-reset', 'Auth\ResetPasswordController@customResetPassword');
-
-    // Varification Controller
-    Route::post('email/verify/{user}', 'Auth\VerificationController@verify')->name('verification.verify');
-    Route::post('email/resend', 'Auth\VerificationController@resend');
-
-    // Footer
-    Route::get('/footer', 'FooterController@fetchFooter');
-    Route::post('/footer/save', 'FooterController@save');
-
-    // How To
-    Route::get('/how-to', 'HowToController@fetchHowTo');
-    Route::post('/how-to/save', 'HowToController@save');
-
-    // Faq
-    Route::get('/faq', 'FaqController@fetchFaq');
-    Route::post('/faq/save', 'FaqController@save');
-
-    // Upload api
-    Route::group(['prefix' => 'upload'], function () {
-        Route::get('/featured-uploads/{typeName}', 'UploadController@fetchFeaturedUpload');
-        Route::post('/save', 'UploadController@save');
-    });
-
-    // Contact us api
-    Route::group(['prefix' => 'contact-us'], function () {
-        Route::get('/', 'ContactUsController@fetchContactUs');
-        Route::post('/save', 'ContactUsController@save');
-    });
-
-    // About us api
-    Route::group(['prefix' => 'about-us'], function () {
-        Route::get('/', 'AboutUsController@fetchAboutUs');
-        Route::post('/save', 'AboutUsController@save');
-    });
-
-    // General Info api
-    Route::group(['prefix' => 'general-info'], function () {
-        Route::get('/', 'GeneralInformationController@fetchGeneralInformation');
-        Route::post('/save', 'GeneralInformationController@save');
-    });
-
-    // Mailchimp api
-    Route::group(['prefix' => 'mailchimp'], function () {
-        Route::get('/','MailchimpController@getLists');
-        Route::post('/list-with-parameter','MailchimpController@getListWithParameter');
-        Route::post('/check-if-subscribed','MailchimpController@checkIfSubscribed');
-        Route::post('/subscribe','MailchimpController@subscribe');
-        Route::get('/get-subscribers','MailchimpController@getSubscribers');
-    });
-
-    // Price api
-    Route::group(['prefix' => 'price'], function () {
-        Route::get('/', 'PriceController@fetchPrice');
-        Route::post('/save', 'PriceController@save');
-    });
     
-    // Role api
-    Route::group(['prefix' => 'role'], function () {
-        Route::get('/', 'RoleController@index');
-    });
-
-    // Users api
-    Route::group(['prefix' => 'user'], function () {
-        Route::get('/fetch-readers', 'Auth\UserController@fetchReaders');
-    });
     // Route::get('role', 'RoleController@index');
 
     Route::post('oauth/{driver}', 'Auth\OAuthController@redirectToProvider');
