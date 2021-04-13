@@ -116,6 +116,18 @@ Route::group(['prefix' => 'homepage'], function () {
     Route::get('/live-sessions', 'HomePageController@liveSessions');
 });
 
+// Our Reader
+Route::group(['prefix' => 'our-reader'], function () {
+    Route::get('/search/{search}/{categoryKey}', 'OurReaderController@search');
+    Route::get('/upload-with-reader-detail', 'OurReaderController@uploadWithReaderDetail');
+});
+
+// Homepage Counter // private
+Route::group(['prefix' => 'category'], function () {
+    Route::get('/', 'CategoryController@index');
+    Route::post('/save', 'CategoryController@save');
+});
+
 // -------------------------------Authenticated routes------------------------------ //
 Route::group(['middleware' => 'auth:api'], function () {
     Route::post('logout', 'Auth\LoginController@logout');
