@@ -107,6 +107,7 @@ Route::group(['prefix' => 'role'], function () {
 // Users api
 Route::group(['prefix' => 'user'], function () {
     Route::get('/fetch-readers', 'Auth\UserController@fetchReaders');
+    Route::get('/fetch-featured-readers', 'Auth\UserController@fetchFeaturedReaders');
 });
 
 // Homepage Counter
