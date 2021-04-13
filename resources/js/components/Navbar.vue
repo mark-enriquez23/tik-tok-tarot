@@ -55,7 +55,7 @@
   <nav class="navbar navbar-expand-lg navbar-light bg-white">
     <div class="container">
     <form class="form-inline col-8 col-md-4 px-0">
-      <input class="form-control mr-sm-2 w-100" type="search" placeholder="Search" aria-label="Search">
+      <input class="form-control mr-sm-2 w-100" type="search" name="q" placeholder="Search" aria-label="Search">
     </form>
 
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false">
@@ -75,12 +75,12 @@
               </router-link>
             </li>
             <li class="nav-item">
-              <router-link :to="{ name: 'prices' }" class="nav-link" active-class="active">
+              <router-link :to="{ name: 'readers' }" class="nav-link" active-class="active">
                 Our Readers
               </router-link>
             </li>
             <li class="nav-item">
-              <router-link :to="{ name: 'prices' }" class="nav-link" active-class="active">
+              <router-link :to="{ name: 'sessions' }" class="nav-link" active-class="active">
                 Active Sessions
               </router-link>
             </li>
@@ -145,6 +145,10 @@ export default {
 
       // Redirect to login.
       this.$router.push({ name: 'login' })
+    },
+
+    search() {
+       alert('triggered')
     }
   }
 }

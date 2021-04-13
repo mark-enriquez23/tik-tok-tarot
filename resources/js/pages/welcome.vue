@@ -20,7 +20,7 @@
     </div>
 </header>
  <!-- ======= Testimonials Section ======= -->
-<section id="testimonials" class="testimonials section-bg">
+<!-- <section id="testimonials" class="testimonials section-bg">
   <div class="container">
         <div class="row">
           <div class="col-lg-4">
@@ -32,15 +32,16 @@
           <div class="col-lg-8">
            <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
               <div class="carousel-inner testimonials-carousel">
+                
                 <div class="testimonial-item carousel-item active">
                     <p>
                       <fa class="quote-icon-left" :icon="['fas', 'quote-left']" />
-                      Proin iaculis purus consequat sem cure digni ssim donec porttitora entum suscipit rhoncus. Accusantium quam, ultricies eget id, aliquam eget nibh et. Maecen aliquam, risus at semper.
+                      {{ testimonials.data.data[0].body }}
                       <fa class="quote-icon-right" :icon="['fas', 'quote-right']" />
                     </p>
                     <img :src="testimonialImage1" class="testimonial-img" alt="">
-                    <h3>John Doe</h3>
-                    <h4>Client</h4>
+                    <h3>{{ testimonials.data.data[0].user.name }}</h3>
+                    <h4 class="testimonial-title">Client</h4>
                     <p class="client-review-stars">
                       <fa :icon="['fas', 'star']" />
                       <fa :icon="['fas', 'star']" />
@@ -53,12 +54,12 @@
                   <div class="testimonial-item carousel-item">
                     <p>
                       <fa class="quote-icon-left" :icon="['fas', 'quote-left']" />
-                      Proin iaculis purus consequat sem cure digni ssim donec porttitora entum suscipit rhoncus. Accusantium quam, ultricies eget id, aliquam eget nibh et. Maecen aliquam, risus at semper.
+                      {{ testimonials.data.data[1].body }}
                       <fa class="quote-icon-right" :icon="['fas', 'quote-right']" />
                     </p>
                     <img :src="testimonialImage2" class="testimonial-img" alt="">
-                    <h3>John Doe</h3>
-                    <h4>Client</h4>
+                    <h3>{{ testimonials.data.data[1].user.name }}</h3>
+                    <h4 class="testimonial-title">Client</h4>
                     <p class="client-review-stars">
                       <fa :icon="['fas', 'star']" />
                       <fa :icon="['fas', 'star']" />
@@ -71,12 +72,12 @@
                   <div class="testimonial-item carousel-item">
                     <p>
                       <fa class="quote-icon-left" :icon="['fas', 'quote-left']" />
-                      Proin iaculis purus consequat sem cure digni ssim donec porttitora entum suscipit rhoncus. Accusantium quam, ultricies eget id, aliquam eget nibh et. Maecen aliquam, risus at semper.
+                      {{ testimonials.data.data[2].body }}
                       <fa class="quote-icon-right" :icon="['fas', 'quote-right']" />
                     </p>
                     <img :src="testimonialImage3" class="testimonial-img" alt="">
-                    <h3>John Doe</h3>
-                    <h4>Client</h4>
+                    <h3>{{ testimonials.data.data[2].user.name }}</h3>
+                    <h4 class="testimonial-title">Client</h4>
                     <p class="client-review-stars">
                       <fa :icon="['fas', 'star']" />
                       <fa :icon="['fas', 'star']" />
@@ -89,12 +90,12 @@
                   <div class="testimonial-item carousel-item">
                     <p>
                       <fa class="quote-icon-left" :icon="['fas', 'quote-left']" />
-                      Proin iaculis purus consequat sem cure digni ssim donec porttitora entum suscipit rhoncus. Accusantium quam, ultricies eget id, aliquam eget nibh et. Maecen aliquam, risus at semper.
+                      {{ testimonials.data.data[3].body }}
                       <fa class="quote-icon-right" :icon="['fas', 'quote-right']" />
                     </p>
                     <img :src="testimonialImage4" class="testimonial-img" alt="">
-                    <h3>John Doe</h3>
-                    <h4>Client</h4>
+                    <h3>{{ testimonials.data.data[3].user.name }}</h3>
+                    <h4 class="testimonial-title">Client</h4>
                     <p class="client-review-stars">
                       <fa :icon="['fas', 'star']" />
                       <fa :icon="['fas', 'star']" />
@@ -104,23 +105,6 @@
                     </p>
                   </div>
 
-                  <div class="testimonial-item carousel-item">
-                    <p>
-                      <fa class="quote-icon-left" :icon="['fas', 'quote-left']" />
-                      Proin iaculis purus consequat sem cure digni ssim donec porttitora entum suscipit rhoncus. Accusantium quam, ultricies eget id, aliquam eget nibh et. Maecen aliquam, risus at semper.
-                      <fa class="quote-icon-right" :icon="['fas', 'quote-right']" />
-                    </p>
-                    <img :src="testimonialImage5" class="testimonial-img" alt="">
-                    <h3>John Doe</h3>
-                    <h4>Client</h4>
-                    <p class="client-review-stars">
-                      <fa :icon="['fas', 'star']" />
-                      <fa :icon="['fas', 'star']" />
-                      <fa :icon="['fas', 'star']" />
-                      <fa :icon="['fas', 'star']" />
-                      <fa :icon="['fas', 'star-half']" />
-                    </p>
-                  </div>
               </div>
               <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -135,7 +119,8 @@
         </div>
 
       </div>
-    </section><!-- End Testimonials Section -->
+    </section> -->
+    <!-- End Testimonials Section -->
 
     <!-- ======= Live Session Section ======= -->
     <section id="team" class="team">
@@ -156,7 +141,7 @@
                   <div class="member-info">
                     <h4>John Doe</h4>
                     <span>Reader 1</span>
-                    <p class="text-success mb-0">online</p>
+                    <p class="text-success mb-0">Online</p>
                     <p>Explicabo voluptatem mollitia et repellat qui dolorum quasi</p>
                   </div>
                 </div>
@@ -168,7 +153,7 @@
                   <div class="member-info">
                     <h4>John Doe</h4>
                     <span>Reader 2</span>
-                    <p class="text-success mb-0">online</p>
+                    <p class="text-success mb-0">Online</p>
                     <p>Explicabo voluptatem mollitia et repellat qui dolorum quasi</p>
                   </div>
                 </div>
@@ -180,7 +165,7 @@
                   <div class="member-info">
                     <h4>John Doe</h4>
                     <span>Reader 3</span>
-                    <p class="text-success mb-0">online</p>
+                    <p class="text-success mb-0">Online</p>
                     <p>Explicabo voluptatem mollitia et repellat qui dolorum quasi</p>
                   </div>
                 </div>
@@ -192,7 +177,7 @@
                   <div class="member-info">
                     <h4>John Doe</h4>
                     <span>Reader 4</span>
-                    <p class="text-success mb-0">online</p>
+                    <p class="text-success mb-0">Online</p>
                     <p>Aut maiores voluptates amet et quis praesentium qui senda para</p>
                   </div>
                 </div>
@@ -204,7 +189,7 @@
                   <div class="member-info">
                     <h4>John Doe</h4>
                     <span>Reader 4</span>
-                    <p class="text-success mb-0">online</p>
+                    <p class="text-success mb-0">Online</p>
                     <p>Quisquam facilis cum velit laborum corrupti fuga rerum quia</p>
                   </div>
                 </div>
@@ -216,7 +201,7 @@
                   <div class="member-info">
                     <h4>John Doe</h4>
                     <span>Reader 5</span>
-                    <p class="text-success mb-0">online</p>
+                    <p class="text-success mb-0">Online</p>
                     <p>Dolorum tempora officiis odit laborum officiis et et accusamus</p>
                   </div>
                 </div>
@@ -246,7 +231,6 @@
             </div>
           </div>
         </div>
-
       </div>
     </section><!-- End Cta Section -->
 
@@ -309,28 +293,8 @@
   </div>
 </section>
 
-<!-- Featured Reader WIP -->
-<section class="container my-5">
-  <div class="mb-2">
-  <div class="">
-    <div class="section-title">
-      <h2>Featured Reader</h2>
-      <p>Magnam dolores commodi suscipit uisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
-    </div>
-  </div>
-  <div>
-    <transition-group tag="div">
-      <div v-for="i in [currentIndex]" :key="i">
-        <img class="img-slide" :src="currentImg" />
-      </div>
-    </transition-group>
-    <a class="prev" @click="prev" >&#10094; Previous</a>
-    <a class="next" @click="next" >&#10095; Next</a>
-  </div>
-  </div>
-</section>
-
-<!-- <section id="reader" class="testimonials section-bg">
+<!-- Featured Reader -->
+<section id="reader" class="testimonials section-bg">
   <div class="container">
         <div class="row">
           <div class="col-lg-12">
@@ -340,103 +304,33 @@
             </div>
           </div>
           <div class="col-lg-12">
-           <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+           <div id="carouselControls" class="carousel slide" data-ride="carousel">
               <div class="carousel-inner testimonials-carousel">
+
                 <div class="testimonial-item carousel-item active">
-                    <p>
-                      <fa class="quote-icon-left" :icon="['fas', 'quote-left']" />
-                      Proin iaculis purus consequat sem cure digni ssim donec porttitora entum suscipit rhoncus. Accusantium quam, ultricies eget id, aliquam eget nibh et. Maecen aliquam, risus at semper.
-                      <fa class="quote-icon-right" :icon="['fas', 'quote-right']" />
-                    </p>
-                    <img :src="testimonialImage1" class="testimonial-img" alt="">
+                    <img :src="testimonialImage1" class="slider-img" alt="">
+                    <!-- <img :src="image1" class="testimonial-img" alt=""> -->
                     <h3>John Doe</h3>
-                    <h4>Client</h4>
-                    <p class="client-review-stars">
-                      <fa :icon="['fas', 'star']" />
-                      <fa :icon="['fas', 'star']" />
-                      <fa :icon="['fas', 'star']" />
-                      <fa :icon="['fas', 'star']" />
-                      <fa :icon="['fas', 'star-half']" />
-                    </p>
+                    <h4 class="reader-title">Client</h4>
                   </div>
 
                   <div class="testimonial-item carousel-item">
-                    <p>
-                      <fa class="quote-icon-left" :icon="['fas', 'quote-left']" />
-                      Proin iaculis purus consequat sem cure digni ssim donec porttitora entum suscipit rhoncus. Accusantium quam, ultricies eget id, aliquam eget nibh et. Maecen aliquam, risus at semper.
-                      <fa class="quote-icon-right" :icon="['fas', 'quote-right']" />
-                    </p>
-                    <img :src="testimonialImage2" class="testimonial-img" alt="">
+                    <img :src="testimonialImage2" class="slider-img" alt="">
                     <h3>John Doe</h3>
-                    <h4>Client</h4>
-                    <p class="client-review-stars">
-                      <fa :icon="['fas', 'star']" />
-                      <fa :icon="['fas', 'star']" />
-                      <fa :icon="['fas', 'star']" />
-                      <fa :icon="['fas', 'star']" />
-                      <fa :icon="['fas', 'star-half']" />
-                    </p>
+                    <h4 class="reader-title">Client</h4>
                   </div>
 
                   <div class="testimonial-item carousel-item">
-                    <p>
-                      <fa class="quote-icon-left" :icon="['fas', 'quote-left']" />
-                      Proin iaculis purus consequat sem cure digni ssim donec porttitora entum suscipit rhoncus. Accusantium quam, ultricies eget id, aliquam eget nibh et. Maecen aliquam, risus at semper.
-                      <fa class="quote-icon-right" :icon="['fas', 'quote-right']" />
-                    </p>
-                    <img :src="testimonialImage3" class="testimonial-img" alt="">
+                    <img :src="testimonialImage3" class="slider-img" alt="">
                     <h3>John Doe</h3>
-                    <h4>Client</h4>
-                    <p class="client-review-stars">
-                      <fa :icon="['fas', 'star']" />
-                      <fa :icon="['fas', 'star']" />
-                      <fa :icon="['fas', 'star']" />
-                      <fa :icon="['fas', 'star']" />
-                      <fa :icon="['fas', 'star-half']" />
-                    </p>
-                  </div>
-
-                  <div class="testimonial-item carousel-item">
-                    <p>
-                      <fa class="quote-icon-left" :icon="['fas', 'quote-left']" />
-                      Proin iaculis purus consequat sem cure digni ssim donec porttitora entum suscipit rhoncus. Accusantium quam, ultricies eget id, aliquam eget nibh et. Maecen aliquam, risus at semper.
-                      <fa class="quote-icon-right" :icon="['fas', 'quote-right']" />
-                    </p>
-                    <img :src="testimonialImage4" class="testimonial-img" alt="">
-                    <h3>John Doe</h3>
-                    <h4>Client</h4>
-                    <p class="client-review-stars">
-                      <fa :icon="['fas', 'star']" />
-                      <fa :icon="['fas', 'star']" />
-                      <fa :icon="['fas', 'star']" />
-                      <fa :icon="['fas', 'star']" />
-                      <fa :icon="['fas', 'star-half']" />
-                    </p>
-                  </div>
-
-                  <div class="testimonial-item carousel-item">
-                    <p>
-                      <fa class="quote-icon-left" :icon="['fas', 'quote-left']" />
-                      Proin iaculis purus consequat sem cure digni ssim donec porttitora entum suscipit rhoncus. Accusantium quam, ultricies eget id, aliquam eget nibh et. Maecen aliquam, risus at semper.
-                      <fa class="quote-icon-right" :icon="['fas', 'quote-right']" />
-                    </p>
-                    <img :src="testimonialImage5" class="testimonial-img" alt="">
-                    <h3>John Doe</h3>
-                    <h4>Client</h4>
-                    <p class="client-review-stars">
-                      <fa :icon="['fas', 'star']" />
-                      <fa :icon="['fas', 'star']" />
-                      <fa :icon="['fas', 'star']" />
-                      <fa :icon="['fas', 'star']" />
-                      <fa :icon="['fas', 'star-half']" />
-                    </p>
+                    <h4 class="reader-title">Client</h4>
                   </div>
               </div>
-              <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+              <a class="carousel-control-prev" href="#carouselControls" role="button" data-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                 <span class="sr-only">Previous</span>
               </a>
-              <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+              <a class="carousel-control-next" href="#carouselControls" role="button" data-slide="next">
                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                 <span class="sr-only">Next</span>
               </a>
@@ -445,7 +339,8 @@
         </div>
 
       </div>
-    </section>End Testimonials Section -->
+    </section>
+    <!-- End Featured Reader Section -->
 
     <!-- How To Section -->
     <HowTo />
@@ -487,6 +382,7 @@ import GeneralInfo from '../components/Welcome/General-info.vue'
 import HowTo from '../components/Welcome/How-to.vue'
 import Form from 'vform'
 import Swal from 'sweetalert2';
+import axios from "axios"
 
 export default {
   components: { Footer, HowTo, Faq, GeneralInfo },
@@ -496,15 +392,11 @@ export default {
     return { title: this.$t('home') }
   },
 
-   mounted: function() {
-    this.startSlide();
+  created(){
+  //  this.fetchVlogs(),
+  // this.fetchTestimonials()
+    this.fetchReaders()
   },
-
-  // created(){
-  //   this.fetchVlogs(),
-  //   this.fetchTestimonials(),
-  //   this.fetchReaders()
-  // },
 
   data: () => ({
     title: window.config.appName,
@@ -514,28 +406,15 @@ export default {
     testimonialImage4: window.config.assetURL + 'images/testimonials/testimonials-4.jpg',
     testimonialImage5: window.config.assetURL + 'images/testimonials/testimonials-5.jpg',
     srcLogoOnly: window.config.assetURL + 'images/sample-logo.png',
-    // vlogs:[],
-    // testimonials:[],
-    // readers:[],
+    vlogs:[],
+    testimonials:[],
+    readers:[],
     form: new Form({
       email: null
     }),
-    images: [
-        "https://cdn.pixabay.com/photo/2015/12/12/15/24/amsterdam-1089646_1280.jpg",
-        "https://cdn.pixabay.com/photo/2016/02/17/23/03/usa-1206240_1280.jpg",
-        "https://cdn.pixabay.com/photo/2016/12/04/19/30/berlin-cathedral-1882397_1280.jpg"
-      ],
-      timer: null,
-      currentIndex: 0
   }),
 
   computed: mapGetters({authenticated: 'auth/check'}),
-
-  computed:{
-    currentImg: function() {
-      return this.images[Math.abs(this.currentIndex) % this.images.length];
-    }
-  },
   
   methods: {
       async subscribe() {
@@ -556,50 +435,40 @@ export default {
       }
     },
 
-    startSlide: function() {
-      this.timer = setInterval(this.next, 5000);
+    async fetchVlogs() {
+        this.vlogs = await axios.get("/api/vlogs");
+        if (!this.vlogs.data.success) {
+          Swal.fire({
+          title: 'Fetching Vlogs Failed',
+          text: "An error has occurred. Please try again.",
+          type: 'error'
+        })
+      }
     },
 
-    next: function() {
-      this.currentIndex += 1;
+    async fetchTestimonials() {
+        this.testimonials = await axios.get("/api/testimonial");
+        console.log(this.testimonials.data.data[0].user);
+        if (!this.testimonials.data.success) {
+          Swal.fire({
+          title: 'Fetching Testimonials Failed',
+          text: "An error has occurred. Please try again.",
+          type: 'error'
+        })
+      }
     },
-    prev: function() {
-      this.currentIndex -= 1;
+
+    async fetchReaders() {
+        this.readers = await axios.get("/api/user/fetch-readers");
+        console.log(this.readers);
+        if (!this.readers.data.success) {
+          Swal.fire({
+          title: 'Fetching Readers Failed',
+          text: "An error has occurred. Please try again.",
+          type: 'error'
+        })
+      }
     },
-
-    // async fetchVlogs() {
-    //     this.vlogs = await axios.get("/api/vlogs");
-    //     // if (!this.vlogs.data.success) {
-    //     //   Swal.fire({
-    //     //   title: 'Fetching Vlogs Failed',
-    //     //   text: "An error has occurred. Please try again.",
-    //     //   type: 'error'
-    //     // })
-    //   // }
-    // },
-
-    // async fetchTestimonials() {
-    //     this.testimonials = await axios.get("/api/testimonials");
-    //     // if (!this.testimonials.data.success) {
-    //     //   Swal.fire({
-    //     //   title: 'Fetching Testimonials Failed',
-    //     //   text: "An error has occurred. Please try again.",
-    //     //   type: 'error'
-    //     // })
-    //   // }
-    // },
-
-    // async fetchReaders() {
-    //     this.readers = await axios.get("/api/readers");
-    //     console.log(data);
-    //     // if (!this.readers.data.success) {
-    //     //   Swal.fire({
-    //     //   title: 'Fetching Readers Failed',
-    //     //   text: "An error has occurred. Please try again.",
-    //     //   type: 'error'
-    //     // })
-    //   // }
-    // },
   }
 }
 </script>
@@ -658,37 +527,9 @@ export default {
   }
 }
 
-
-
 .img-slide {
   height:600px;
   width:100%
-}
-
-.prev, .next {
-  cursor: pointer;
-  width: auto;
-  padding: 16px;
-   position: absolute;
-  color: white;
-  font-weight: bold;
-  font-size: 18px;
-  transition: 0.7s ease;
-  border-radius: 0 4px 4px 0;
-  text-decoration: none;
-  user-select: none;
-}
-
-.next {
-  right: 0;
-}
-
-.prev {
-  left: 0;
-}
-
-.prev:hover, .next:hover {
-  background-color: rgba(0,0,0,0.9);
 }
 
 </style>

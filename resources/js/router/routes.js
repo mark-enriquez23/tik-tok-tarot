@@ -6,6 +6,8 @@ export default [
   { path: '/', redirect: 'landing' },
   { path: '/landing', name: 'welcome', component: page('welcome.vue') },
   { path: '/prices', name: 'prices', component: page('pricing.vue') },
+  { path: '/readers', name: 'readers', component: page('readers.vue') },
+  { path: '/sessions', name: 'sessions', component: page('sessions.vue') },
   { path: '/vlogs/list', name: 'vlogs.list', component: page('vlogs/vlogs.vue') },
   { path: '/vlogs/view', name: 'vlog.view', component: page('vlogs/vlog-post.vue') },
   { path: '/vlogs/review', name: 'vlogs.review', component: page('vlogs/vlog-review.vue') },
