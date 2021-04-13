@@ -20,7 +20,8 @@ class CreateUploadsTable extends Migration
             $table->string('src');
             $table->bigInteger('upload_type_id');
             $table->longText('content');
-            $table->tinyInteger('status')->default(0);
+            $table->tinyInteger('is_active')->default(0);
+            $table->enum('status', ['streaming', 'ended'])->nullable();
             $table->tinyInteger('is_featured')->default(0);
             $table->longText('metadata')->nullable();
             $table->timestamps();
