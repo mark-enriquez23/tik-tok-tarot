@@ -19,7 +19,7 @@ class User extends Authenticatable implements JWTSubject //, MustVerifyEmail
      * @var array
      */
     protected $fillable = [
-        'username', 'name', 'email', 'phone_number', 'role_id', 'password',
+        'category_id', 'username', 'name', 'email', 'phone_number', 'role_id', 'password',
     ];
 
     /**
@@ -131,5 +131,9 @@ class User extends Authenticatable implements JWTSubject //, MustVerifyEmail
 
     public function testimonials() {
         return $this->hasMany('App\Tetimonial');
+    }
+
+    public function uploads(){
+        return $this->hasMany('App\Upload');
     }
 }
