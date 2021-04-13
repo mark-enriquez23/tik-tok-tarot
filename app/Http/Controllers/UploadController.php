@@ -79,6 +79,7 @@ class UploadController extends Controller
             $data = [
                 'id'                => $request->id,
                 'user_id'           => $request->user_id,
+                'name'              => $request->name,
                 'content'           => $request->content,
                 'thumbnail'         => $request->thumbnail,
                 'src'               => $request->src,
