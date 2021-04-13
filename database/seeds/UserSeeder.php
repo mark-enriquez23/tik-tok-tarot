@@ -21,6 +21,7 @@ class UserSeeder extends Seeder
                 'email'     => 'admin@tiktok_tarot.com',
                 'password'  => bcrypt('admin2021'),
                 'role_id'   => 1,
+                'status'   => 'offline',
                 'is_verified'   => 1,
             ],
             [
@@ -29,6 +30,7 @@ class UserSeeder extends Seeder
                 'email'     => 'reader@tiktok_tarot.com',
                 'password'  => bcrypt('reader2021'),
                 'role_id'   => 2,
+                'status'   => 'offline',
                 'is_verified'   => 1,
             ],
             [
@@ -37,6 +39,7 @@ class UserSeeder extends Seeder
                 'email'     => 'client@tiktok_tarot.com',
                 'password'  => bcrypt('client2021'),
                 'role_id'   => 3,
+                'status'   => 'online',
                 'is_verified'   => 1,
             ]
         ];
