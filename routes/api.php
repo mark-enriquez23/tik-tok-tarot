@@ -118,12 +118,12 @@ Route::group(['prefix' => 'homepage'], function () {
     Route::get('/current-viewers', 'HomePageController@currentViewer');
     Route::get('/vlogs', 'HomePageController@vlogs');
     Route::get('/live-sessions', 'HomePageController@liveSessions');
-    Route::get('/search-tool/{val}', 'HomePageController@searchTool');
+    Route::post('/search-tool', 'HomePageController@searchTool');
 });
 
 // Our Reader
 Route::group(['prefix' => 'our-reader'], function () {
-    Route::get('/search/{search}', 'OurReaderController@search');
+    Route::post('/search', 'OurReaderController@search');
     Route::get('/upload-with-reader-detail', 'OurReaderController@uploadWithReaderDetail');
 });
 

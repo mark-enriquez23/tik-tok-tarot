@@ -50,21 +50,22 @@ class HomePageController extends Controller
         ]);
     }
 
-    public function searchTool($val)
+    public function searchTool(Request $request)
     {
+        $search = $request->search;
         // search on reader first
         try {
             $role = Role::where('name', 'reader')->first();
 
             $result = User::where('role_id', $role->id)
-            ->where('username','LIKE','%'.$val.'%')
-            ->orWhere('name','LIKE','%'.$val.'%')
+            ->where('username','LIKE','%'.$search.'%')
+            ->orWhere('name','LIKE','%'.$search.'%')
             ->with(['uploads'])
             ->get();
 
             if (count($result) <= 0 ) {
                 // search for uploads
-                $result = Upload::where('name','LIKE','%'.$val.'%')->get();
+                $result = Upload::where('name','LIKE','%'.$search.'%')->get();
                 
                 if (count($result) > 0) {
                     return response()->json([

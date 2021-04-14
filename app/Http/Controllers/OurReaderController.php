@@ -10,8 +10,10 @@ use App\Category;
 
 class OurReaderController extends Controller
 {
-    public function search($search, $categoryKey = null)
+    public function search(Request $request)
     {
+        $search = $request->search;
+
         try {
             $role = Role::where('name', 'reader')->first();
 
