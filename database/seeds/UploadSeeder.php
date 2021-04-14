@@ -69,6 +69,7 @@ class UploadSeeder extends Seeder
                 'upload_type_id'    => 2 // live
             ],
         ];
+        
         foreach ($datas as $data) {
             $upload = Upload::create($data);
         }
