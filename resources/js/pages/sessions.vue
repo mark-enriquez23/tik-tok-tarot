@@ -32,7 +32,6 @@
       </div>
     </section><!-- Sessions Section -->
 
-
     <!-- Footer Section -->
     <Footer />
 </div>

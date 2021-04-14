@@ -229,7 +229,7 @@
               {{vlog.content}}
             </p>
             <p class="client-review-stars">
-                      <fa :icon="['fas', 'star']" v-for="index in 5" :key="index" />
+                      <fa :icon="['fas', 'star']" v-for="index in vlog.rate" :key="index" />
                     
             </p>
           </div>

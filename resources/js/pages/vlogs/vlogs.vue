@@ -39,7 +39,7 @@
                 {{ vlog.content }}
               </p>
               <p class="client-review-stars">
-                <fa :icon="['fas', 'star']" v-for="index in 5" :key="index" />
+                <fa :icon="['fas', 'star']" v-for="index in vlog.rate" :key="index" />
                     
               </p>
               <!-- <router-link :to="{ name: 'vlog.view' }">
@@ -100,7 +100,7 @@ export default {
 
   methods: {
     async fetchVlogs() {
-        var vlogs = await axios.get("/api/upload/latest-vlogs");
+        var vlogs = await axios.get("/api/upload/all-vlogs");
         this.vlogs = vlogs.data.data;
         console.log(this.vlogs);
         if (!vlogs.data.success) {
