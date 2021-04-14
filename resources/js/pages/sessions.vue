@@ -4,8 +4,8 @@
     <!-- ======= Sessions Section ======= -->
     <section id="team" class="team">
       <div class="container">
-
         <div class="row">
+          
           <div class="col-lg-4">
             <div class="section-title" data-aos="fade-right">
               <h2>Active Sessions</h2>
@@ -13,9 +13,9 @@
             </div>
           </div>
 
-          <div class="col-lg-6 mt-4 mt-lg-0" v-for="session in sessions.data">
+          <div class="col-lg-8">
             <div class="row">
-              <div class="col-lg-6">
+              <div class="col-lg-6"  v-for="session in sessions.data" v-bind:key="session.id">
                 <div class="member" data-aos="zoom-in" data-aos-delay="100">
                   <div class="pic"><img :src="testimonialImage4" class="img-fluid" alt=""></div>
                   <div class="member-info">
@@ -27,6 +27,7 @@
               </div>
             </div>
           </div>
+
         </div>
       </div>
     </section><!-- Sessions Section -->
