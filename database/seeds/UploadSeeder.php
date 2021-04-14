@@ -55,7 +55,7 @@ class UploadSeeder extends Seeder
                 'status'            => "ended",
                 'is_active'         => 1,
                 'is_featured'       => 1,
-                'upload_type_id'    => 2 // live
+                'upload_type_id'    => 2 // vlog
             ],
             [
                 'user_id'           => 2,
@@ -66,7 +66,7 @@ class UploadSeeder extends Seeder
                 'status'            => "ended",
                 'is_active'         => 1,
                 'is_featured'       => 1,
-                'upload_type_id'    => 2 // live
+                'upload_type_id'    => 2 // vlog
             ],
             [
                 'user_id'           => 2,
@@ -77,7 +77,7 @@ class UploadSeeder extends Seeder
                 'status'            => "ended",
                 'is_active'         => 1,
                 'is_featured'       => 1,
-                'upload_type_id'    => 2 // live
+                'upload_type_id'    => 2 // vlog
             ],
             [
                 'user_id'           => 2,
@@ -88,7 +88,7 @@ class UploadSeeder extends Seeder
                 'status'            => "ended",
                 'is_active'         => 1,
                 'is_featured'       => 1,
-                'upload_type_id'    => 2 // live
+                'upload_type_id'    => 2 // vlog
             ],
             [
                 'user_id'           => 2,
