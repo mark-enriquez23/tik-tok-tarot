@@ -21,26 +21,26 @@
           <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
       </header>
       <div class="card-columns">
-        <div class="card" v-for="(vlog, i) in vlogs" :key="i" >
+        <div class="card" v-for="vlog in vlogs" :key="vlog.id" >
           <div class="thumb-container">
 
-            <img class="card-img-top" :src="vlog.thumb" :alt="vlog.title">
-            <div class="overlay"  @click="index = i">
+            <img class="card-img-top" :src="vlogImage" :alt="vlog.thumbnail">
+            <div class="overlay">
             </div>
           </div>
             <div class="card-body">
-              <h4 class="card-title text-danger mb-0">{{ vlog.title }}</h4>
-              <p class="text-muted">By {{ vlog.author }}</p>
+              <h4 class="card-title text-danger mb-0">{{ vlog.name }}</h4>
+              <!-- <p class="text-muted">By {{ vlog.author }}</p> -->
               <p class="meta mb-2">
-              <span class="mr-2"><fa class="" :icon="['fas', 'calendar-alt']" /> {{ vlog.date_created }}</span>
-              <span><fa class="" :icon="['fas', 'comment']" /> {{vlog.comments}} Comments</span>
+              <span class="mr-2"><fa class="" :icon="['fas', 'calendar-alt']" /> {{ vlog.created_at }}</span>
+              <!-- <span><fa class="" :icon="['fas', 'comment']" /> {{vlog.comments}} Comments</span> -->
               </p>
               <p class="card-text text-muted">
-                {{ vlog.description }}
+                {{ vlog.content }}
               </p>
-              <router-link :to="{ name: 'vlog.view' }">
+              <!-- <router-link :to="{ name: 'vlog.view' }">
               <a href="" class="text-danger">Continue Reading</a>
-              </router-link>
+              </router-link> -->
           </div>
         </div>
       </div>
@@ -58,6 +58,8 @@ import vmodal from 'vue-js-modal'
 import { mapGetters } from 'vuex'
 import moment from 'moment'
 import CoolLightBox from 'vue-cool-lightbox';
+import Swal from 'sweetalert2';
+import axios from "axios"
 
 Vue.use(vmodal)
 
@@ -79,374 +81,34 @@ export default {
     imageUrl: window.config.assetURL + 'images/',
     userImageeUrl: window.config.assetURL + 'images/testimonials/',
     srcLogoOnly: window.config.assetURL + 'images/sample-logo.png',
-    vlogs: [
-      {
-        title: 'Lorem Impsum',
-        author: 'John Doe',
-        thumb: 'https://img.youtube.com/vi/8osYwrqZXAE/0.jpg',
-        src: 'https://www.youtube.com/watch?v=8osYwrqZXAE&t=1s&ab_channel=SoulSourceTarot',
-        description: 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
-        comments: 5,
-        date_created: moment().format('MMMM DD, YYYY')
-      },
-      {
-        title: 'Duis aute irure dolor',
-        author: 'John Doe',
-        thumb: 'https://img.youtube.com/vi/O3jkL7W-nqU/0.jpg',
-        src: 'https://www.youtube.com/watch?v=O3jkL7W-nqU&t=9s&ab_channel=TheGemGoddess',
-        description: 'Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-        comments: 2,
-        date_created: moment().format('MMMM DD, YYYY')
-      },
-      {
-        title: 'Ut enim ad minim veniam',
-        author: 'John Doe',
-        thumb: 'https://img.youtube.com/vi/9PJA7WtHVnM/0.jpg',
-        src: 'https://www.youtube.com/watch?v=9PJA7WtHVnM&ab_channel=TheGemGoddess',
-        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ',
-        comments: 3,
-        date_created: moment().format('MMMM DD, YYYY')
-      },
-      {
-        title: 'Deserunt mollit anim id est laborum',
-        author: 'John Doe',
-        thumb: 'https://img.youtube.com/vi/8osYwrqZXAE/0.jpg',
-        src: 'https://www.youtube.com/watch?v=8osYwrqZXAE&t=1s&ab_channel=SoulSourceTarot',
-        description: 'Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-        comments: 8,
-        date_created: moment().format('MMMM DD, YYYY')
-      },
-      {
-        title: 'Lorem Impsum',
-        author: 'John Doe',
-        thumb: 'https://img.youtube.com/vi/O3jkL7W-nqU/0.jpg',
-        src: 'https://www.youtube.com/watch?v=O3jkL7W-nqU&t=9s&ab_channel=TheGemGoddess',
-        description: 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
-        comments: 5,
-        date_created: moment().format('MMMM DD, YYYY')
-      },
-      {
-        title: 'Duis aute irure dolor',
-        author: 'John Doe',
-        thumb: 'https://img.youtube.com/vi/9PJA7WtHVnM/0.jpg',
-        src: 'https://www.youtube.com/watch?v=9PJA7WtHVnM&ab_channel=TheGemGoddess',
-        description: 'Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-        comments: 2,
-        date_created: moment().format('MMMM DD, YYYY')
-      },
-      {
-        title: 'Ut enim ad minim veniam',
-        author: 'John Doe',
-        thumb: 'https://img.youtube.com/vi/O3jkL7W-nqU/0.jpg',
-        src: 'https://www.youtube.com/watch?v=O3jkL7W-nqU&t=9s&ab_channel=TheGemGoddess',
-        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ',
-        comments: 3,
-        date_created: moment().format('MMMM DD, YYYY')
-      },
-      {
-        title: 'Deserunt mollit anim id est laborum',
-        author: 'John Doe',
-        thumb: 'https://img.youtube.com/vi/8osYwrqZXAE/0.jpg',
-        src: 'https://www.youtube.com/watch?v=8osYwrqZXAE&t=1s&ab_channel=SoulSourceTarot',
-        description: 'Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-        comments: 8,
-        date_created: moment().format('MMMM DD, YYYY')
-      },
-      {
-        title: 'Lorem Impsum',
-        author: 'John Doe',
-        thumb: 'https://img.youtube.com/vi/9PJA7WtHVnM/0.jpg',
-        src: 'https://www.youtube.com/watch?v=9PJA7WtHVnM&ab_channel=TheGemGoddess',
-        description: 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
-        comments: 5,
-        date_created: moment().format('MMMM DD, YYYY')
-      },
-      {
-        title: 'Duis aute irure dolor',
-        author: 'John Doe',
-        thumb: 'https://img.youtube.com/vi/O3jkL7W-nqU/0.jpg',
-        src: 'https://www.youtube.com/watch?v=O3jkL7W-nqU&t=9s&ab_channel=TheGemGoddess',
-        description: 'Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-        comments: 2,
-        date_created: moment().format('MMMM DD, YYYY')
-      },
-      {
-        title: 'Ut enim ad minim veniam',
-        author: 'John Doe',
-        thumb: 'https://img.youtube.com/vi/8osYwrqZXAE/0.jpg',
-        src: 'https://www.youtube.com/watch?v=8osYwrqZXAE&t=1s&ab_channel=SoulSourceTarot',
-        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ',
-        comments: 3,
-        date_created: moment().format('MMMM DD, YYYY')
-      },
-      {
-        title: 'Deserunt mollit anim id est laborum',
-        author: 'John Doe',
-        thumb: 'https://img.youtube.com/vi/O3jkL7W-nqU/0.jpg',
-        src: 'https://www.youtube.com/watch?v=O3jkL7W-nqU&t=9s&ab_channel=TheGemGoddess',
-        description: 'Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-        comments: 8,
-        date_created: moment().format('MMMM DD, YYYY')
-      },
-      {
-        title: 'Lorem Impsum',
-        author: 'John Doe',
-        thumb: 'https://img.youtube.com/vi/9PJA7WtHVnM/0.jpg',
-        src: 'https://www.youtube.com/watch?v=9PJA7WtHVnM&ab_channel=TheGemGoddess',
-        description: 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
-        comments: 5,
-        date_created: moment().format('MMMM DD, YYYY')
-      },
-      {
-        title: 'Duis aute irure dolor',
-        author: 'John Doe',
-        thumb: 'https://img.youtube.com/vi/8osYwrqZXAE/0.jpg',
-        src: 'https://www.youtube.com/watch?v=8osYwrqZXAE&t=1s&ab_channel=SoulSourceTarot',
-        description: 'Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-        comments: 2,
-        date_created: moment().format('MMMM DD, YYYY')
-      },
-      {
-        title: 'Ut enim ad minim veniam',
-        author: 'John Doe',
-        thumb: 'https://img.youtube.com/vi/O3jkL7W-nqU/0.jpg',
-        src: 'https://www.youtube.com/watch?v=O3jkL7W-nqU&t=9s&ab_channel=TheGemGoddess',
-        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ',
-        comments: 3,
-        date_created: moment().format('MMMM DD, YYYY')
-      },
-      {
-        title: 'Deserunt mollit anim id est laborum',
-        author: 'John Doe',
-        thumb: 'https://img.youtube.com/vi/8osYwrqZXAE/0.jpg',
-        src: 'https://www.youtube.com/watch?v=8osYwrqZXAE&t=1s&ab_channel=SoulSourceTarot',
-        description: 'Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-        comments: 8,
-        date_created: moment().format('MMMM DD, YYYY')
-      },
-      {
-        title: 'Lorem Impsum',
-        author: 'John Doe',
-        thumb: 'https://img.youtube.com/vi/9PJA7WtHVnM/0.jpg',
-        src: 'https://www.youtube.com/watch?v=9PJA7WtHVnM&ab_channel=TheGemGoddess',
-        description: 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
-        comments: 5,
-        date_created: moment().format('MMMM DD, YYYY')
-      },
-      {
-        title: 'Duis aute irure dolor',
-        author: 'John Doe',
-        thumb: 'https://img.youtube.com/vi/O3jkL7W-nqU/0.jpg',
-        src: 'https://www.youtube.com/watch?v=O3jkL7W-nqU&t=9s&ab_channel=TheGemGoddess',
-        description: 'Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-        comments: 2,
-        date_created: moment().format('MMMM DD, YYYY')
-      },
-      {
-        title: 'Ut enim ad minim veniam',
-        author: 'John Doe',
-        thumb: 'https://img.youtube.com/vi/8osYwrqZXAE/0.jpg',
-        src: 'https://www.youtube.com/watch?v=8osYwrqZXAE&t=1s&ab_channel=SoulSourceTarot',
-        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ',
-        comments: 3,
-        date_created: moment().format('MMMM DD, YYYY')
-      },
-      {
-        title: 'Deserunt mollit anim id est laborum',
-        author: 'John Doe',
-        thumb: 'https://img.youtube.com/vi/O3jkL7W-nqU/0.jpg',
-        src: 'https://www.youtube.com/watch?v=O3jkL7W-nqU&t=9s&ab_channel=TheGemGoddess',
-        description: 'Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-        comments: 8,
-        date_created: moment().format('MMMM DD, YYYY')
-      },
-      {
-        title: 'Lorem Impsum',
-        author: 'John Doe',
-        thumb: 'https://img.youtube.com/vi/9PJA7WtHVnM/0.jpg',
-        src: 'https://www.youtube.com/watch?v=9PJA7WtHVnM&ab_channel=TheGemGoddess',
-        description: 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
-        comments: 5,
-        date_created: moment().format('MMMM DD, YYYY')
-      },
-      {
-        title: 'Duis aute irure dolor',
-        author: 'John Doe',
-        thumb: 'https://img.youtube.com/vi/8osYwrqZXAE/0.jpg',
-        src: 'https://www.youtube.com/watch?v=8osYwrqZXAE&t=1s&ab_channel=SoulSourceTarot',
-        description: 'Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-        comments: 2,
-        date_created: moment().format('MMMM DD, YYYY')
-      },
-      {
-        title: 'Ut enim ad minim veniam',
-        author: 'John Doe',
-        thumb: 'https://img.youtube.com/vi/9PJA7WtHVnM/0.jpg',
-        src: 'https://www.youtube.com/watch?v=9PJA7WtHVnM&ab_channel=TheGemGoddess',
-        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ',
-        comments: 3,
-        date_created: moment().format('MMMM DD, YYYY')
-      },
-      {
-        title: 'Deserunt mollit anim id est laborum',
-        author: 'John Doe',
-        thumb: 'https://img.youtube.com/vi/8osYwrqZXAE/0.jpg',
-        src: 'https://www.youtube.com/watch?v=8osYwrqZXAE&t=1s&ab_channel=SoulSourceTarot',
-        description: 'Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-        comments: 8,
-        date_created: moment().format('MMMM DD, YYYY')
-      },
-      {
-        title: 'Lorem Impsum',
-        author: 'John Doe',
-        thumb: 'https://img.youtube.com/vi/9PJA7WtHVnM/0.jpg',
-        src: 'https://www.youtube.com/watch?v=9PJA7WtHVnM&ab_channel=TheGemGoddess',
-        description: 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
-        comments: 5,
-        date_created: moment().format('MMMM DD, YYYY')
-      },
-      {
-        title: 'Duis aute irure dolor',
-        author: 'John Doe',
-        thumb: 'https://img.youtube.com/vi/8osYwrqZXAE/0.jpg',
-        src: 'https://www.youtube.com/watch?v=8osYwrqZXAE&t=1s&ab_channel=SoulSourceTarot',
-        description: 'Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-        comments: 2,
-        date_created: moment().format('MMMM DD, YYYY')
-      },
-      {
-        title: 'Ut enim ad minim veniam',
-        author: 'John Doe',
-        thumb: 'https://img.youtube.com/vi/9PJA7WtHVnM/0.jpg',
-        src: 'https://www.youtube.com/watch?v=O3jkL7W-nqU&t=9s&ab_channel=TheGemGoddess',
-        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ',
-        comments: 3,
-        date_created: moment().format('MMMM DD, YYYY')
-      },
-      {
-        title: 'Deserunt mollit anim id est laborum',
-        author: 'John Doe',
-        thumb: 'https://img.youtube.com/vi/8osYwrqZXAE/0.jpg',
-        src: 'https://www.youtube.com/watch?v=8osYwrqZXAE&t=1s&ab_channel=SoulSourceTarot',
-        description: 'Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-        comments: 8,
-        date_created: moment().format('MMMM DD, YYYY')
-      },
-      {
-        title: 'Lorem Impsum',
-        author: 'John Doe',
-        thumb: 'https://img.youtube.com/vi/9PJA7WtHVnM/0.jpg',
-        src: 'https://www.youtube.com/watch?v=9PJA7WtHVnM&ab_channel=TheGemGoddess',
-        description: 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
-        comments: 5,
-        date_created: moment().format('MMMM DD, YYYY')
-      },
-      {
-        title: 'Duis aute irure dolor',
-        author: 'John Doe',
-        thumb: 'https://img.youtube.com/vi/8osYwrqZXAE/0.jpg',
-        src: 'https://www.youtube.com/watch?v=8osYwrqZXAE&t=1s&ab_channel=SoulSourceTarot',
-        description: 'Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-        comments: 2,
-        date_created: moment().format('MMMM DD, YYYY')
-      },
-      {
-        title: 'Ut enim ad minim veniam',
-        author: 'John Doe',
-        thumb: 'https://img.youtube.com/vi/O3jkL7W-nqU/0.jpg',
-        src: 'https://www.youtube.com/watch?v=O3jkL7W-nqU&t=9s&ab_channel=TheGemGoddess',
-        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ',
-        comments: 3,
-        date_created: moment().format('MMMM DD, YYYY')
-      },
-      {
-        title: 'Deserunt mollit anim id est laborum',
-        author: 'John Doe',
-        thumb: 'https://img.youtube.com/vi/8osYwrqZXAE/0.jpg',
-        src: 'https://www.youtube.com/watch?v=8osYwrqZXAE&t=1s&ab_channel=SoulSourceTarot',
-        description: 'Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-        comments: 8,
-        date_created: moment().format('MMMM DD, YYYY')
-      },
-      {
-        title: 'Lorem Impsum',
-        author: 'John Doe',
-        thumb: 'https://img.youtube.com/vi/9PJA7WtHVnM/0.jpg',
-        src: 'https://www.youtube.com/watch?v=9PJA7WtHVnM&ab_channel=TheGemGoddess',
-        description: 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
-        comments: 5,
-        date_created: moment().format('MMMM DD, YYYY')
-      },
-      {
-        title: 'Duis aute irure dolor',
-        author: 'John Doe',
-        thumb: 'https://img.youtube.com/vi/8osYwrqZXAE/0.jpg',
-        src: 'https://www.youtube.com/watch?v=8osYwrqZXAE&t=1s&ab_channel=SoulSourceTarot',
-        description: 'Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-        comments: 2,
-        date_created: moment().format('MMMM DD, YYYY')
-      },
-      {
-        title: 'Ut enim ad minim veniam',
-        author: 'John Doe',
-        thumb: 'https://img.youtube.com/vi/O3jkL7W-nqU/0.jpg',
-        src: 'https://www.youtube.com/watch?v=O3jkL7W-nqU&t=9s&ab_channel=TheGemGoddess',
-        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ',
-        comments: 3,
-        date_created: moment().format('MMMM DD, YYYY')
-      },
-      {
-        title: 'Deserunt mollit anim id est laborum',
-        author: 'John Doe',
-        thumb: 'https://img.youtube.com/vi/8osYwrqZXAE/0.jpg',
-        src: 'https://www.youtube.com/watch?v=8osYwrqZXAE&t=1s&ab_channel=SoulSourceTarot',
-        description: 'Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-        comments: 8,
-        date_created: moment().format('MMMM DD, YYYY')
-      },
-      {
-        title: 'Lorem Impsum',
-        author: 'John Doe',
-        thumb: 'https://img.youtube.com/vi/9PJA7WtHVnM/0.jpg',
-        src: 'https://www.youtube.com/watch?v=9PJA7WtHVnM&ab_channel=TheGemGoddess',
-        description: 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
-        comments: 5,
-        date_created: moment().format('MMMM DD, YYYY')
-      },
-      {
-        title: 'Duis aute irure dolor',
-        author: 'John Doe',
-        thumb: 'https://img.youtube.com/vi/8osYwrqZXAE/0.jpg',
-        src: 'https://www.youtube.com/watch?v=8osYwrqZXAE&t=1s&ab_channel=SoulSourceTarot',
-        description: 'Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-        comments: 2,
-        date_created: moment().format('MMMM DD, YYYY')
-      },
-      {
-        title: 'Ut enim ad minim veniam',
-        author: 'John Doe',
-        thumb: 'https://img.youtube.com/vi/O3jkL7W-nqU/0.jpg',
-        src: 'https://www.youtube.com/watch?v=O3jkL7W-nqU&t=9s&ab_channel=TheGemGoddess',
-        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ',
-        comments: 3,
-        date_created: moment().format('MMMM DD, YYYY')
-      },
-      {
-        title: 'Deserunt mollit anim id est laborum',
-        author: 'John Doe',
-        thumb: 'https://img.youtube.com/vi/8osYwrqZXAE/0.jpg',
-        src: 'https://www.youtube.com/watch?v=8osYwrqZXAE&t=1s&ab_channel=SoulSourceTarot',
-        description: 'Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-        comments: 8,
-        date_created: moment().format('MMMMMMMM DD, YYYY')
-      }
-    ]
+    vlogImage: window.config.assetURL + 'images/listing-tnumbnail-3.jpg',
+    vlogs: []
   }),
+
+  created(){
+    this.fetchVlogs()
+  },
 
   computed: mapGetters({
     authenticated: 'auth/check',
     aboutUs: 'about-us/aboutUs'
-  })
+  }),
+
+  methods: {
+    async fetchVlogs() {
+        var vlogs = await axios.get("/api/upload/latest-vlogs");
+        this.vlogs = vlogs.data.data;
+        console.log(this.vlogs);
+        if (!vlogs.data.success) {
+          Swal.fire({
+          title: 'Fetching Vlogs Failed',
+          text: "An error has occurred. Please try again.",
+          type: 'error'
+        })
+      }
+    },
+
+  }
 }
 </script>
 

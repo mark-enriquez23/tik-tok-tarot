@@ -44,7 +44,7 @@ Route::post('password/reset', 'Auth\ResetPasswordController@reset');
 // Custom Reset Password
 Route::post('password/custom-reset', 'Auth\ResetPasswordController@customResetPassword');
 
-// Varification Controller
+// Verification Controller
 Route::post('email/verify/{user}', 'Auth\VerificationController@verify')->name('verification.verify');
 Route::post('email/resend', 'Auth\VerificationController@resend');
 

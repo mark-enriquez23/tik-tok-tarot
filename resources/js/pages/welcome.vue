@@ -19,6 +19,58 @@
         </div>
     </div>
 </header>
+
+<section id="team" class="team">
+      <div class="container">
+
+        <div class="row">
+          <div class="col-lg-4">
+          </div>
+          <div class="col-lg-8">
+            <div class="row">
+              
+              <div class="col-lg-4 mt-4 mt-lg-0">
+                <router-link :to="{ name: 'readers' }" class="nav-link" active-class="active">
+                <div class="member red-background" data-aos="zoom-in" data-aos-delay="100">
+                  <div class="member-info">
+                    
+                      <h5 class="white-text">Viewers: {{totalViewers.data.total}} </h5>
+                    
+                  </div>
+                </div>
+                </router-link>
+              </div>
+
+              <div class="col-lg-4 mt-4 mt-lg-0">
+                 <router-link :to="{ name: 'vlogs.list' }" class="nav-link" active-class="active">
+                <div class="member red-background" data-aos="zoom-in" data-aos-delay="100">
+                  <div class="member-info">
+                     
+                        <h5 class="white-text">Vlogs: {{totalVlogs.data.total}} </h5>
+                      
+                  </div>
+                </div>
+                </router-link>
+              </div>
+
+              <div class="col-lg-4 mt-4 mt-lg-0">
+                <router-link :to="{ name: 'sessions' }" class="nav-link" active-class="active">
+                <div class="member red-background" data-aos="zoom-in" data-aos-delay="100">
+                  <div class="member-info">
+                      
+                         <h5 class="white-text">Sessions: {{totalSession.data.total}} </h5>
+                      
+                  </div>
+                </div>
+                </router-link>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
  <!-- ======= Testimonials Section ======= -->
 <!-- <section id="testimonials" class="testimonials section-bg">
   <div class="container">
@@ -136,13 +188,13 @@
           <div class="col-lg-8">
             <div class="row">
               
-              <div class="col-lg-6 col-lg-6 mt-4 mt-lg-0" v-for="session in sessions.data">
+              <div class="col-lg-6 col-lg-6 mt-4 mt-lg-0" v-for="session in sessions.data" v-bind:key="session.id">
                 <div class="member" data-aos="zoom-in" data-aos-delay="100">
                   <div class="pic"><img :src="testimonialImage5" class="img-fluid" alt=""></div>
                   <div class="member-info">
-                    <h4>{{session.reader}}</h4>
-                    <p class="text-success mb-0">{{ session.is_active == 1 ? 'Online' : 'Offline' }}</p>
-                    <p>{{ session.description}}</p>
+                    <h4>{{ session.name }}</h4>
+                    <p class="text-success mb-0">{{ session.status == 'streaming' ? 'Streaming' : 'Offline' }}</p>
+                    <p>{{ session.content }}</p>
                   </div>
                 </div>
               </div>
@@ -183,7 +235,7 @@
   <div class="mb-2">
     <div class="row">
 
-      <div class="col-md-4" v-for="vlog in vlogs.data">
+      <div class="col-md-4" v-for="vlog in vlogs.data" v-bind:key="vlog.id">
         <div class="card ">
           <a href="#">
           <img class="card-img-top" src="https://images.unsplash.com/photo-1535025639604-9a804c092faa?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6cb0ceb620f241feb2f859e273634393&auto=format&fit=crop&w=500&q=80" alt="Card image cap">
@@ -224,8 +276,7 @@
 
                 <div class="testimonial-item carousel-item active">
                     <img :src="testimonialImage1" class="slider-img" alt="">
-                    <!-- <img :src="image1" class="testimonial-img" alt=""> -->
-                    <h3>John Doe</h3>
+                    <h3>{{ readers.data.data[0].user.name }}</h3>
                     <h4 class="reader-title">Client</h4>
                   </div>
 
@@ -309,9 +360,12 @@ export default {
 
   created(){
     this.fetchVlogs(),
-  // this.fetchTestimonials()
+    //this.fetchTestimonials()
     this.fetchReaders(),
-    this.fetchSessions()
+    this.fetchSessions(),
+    this.fetchTotalSessions(),
+    this.fetchTotalViewers(),
+    this.fetchTotalVlogs()
   },
 
   data: () => ({
@@ -328,7 +382,10 @@ export default {
     sessions:[],
     form: new Form({
       email: null
-    })
+    }),
+    totalSession:[],
+    totalVlogs:[],
+    totalViewers:[]
   }),
 
   computed: mapGetters({authenticated: 'auth/check'}),
@@ -368,7 +425,7 @@ export default {
     async fetchSessions() {
         var sessions = await axios.get("/api/homepage/live-sessions");
         this.sessions = sessions.data;
-        console.log(this.sessions);
+        console.log("session",this.sessions);
         if (!this.sessions.success) {
           Swal.fire({
           title: 'Fetching Sessions Failed',
@@ -391,7 +448,7 @@ export default {
     },
 
     async fetchReaders() {
-        this.readers = await axios.get("/api/user/fetch-readers");
+        this.readers = await axios.get("/api/user/fetch-featured-readers");
         console.log(this.readers);
         if (!this.readers.data.success) {
           Swal.fire({
@@ -401,6 +458,40 @@ export default {
         })
       }
     },
+
+    async fetchTotalSessions() {
+        this.totalSession = await axios.get("/api/homepage/live-sessions");
+        if (!this.totalSession.data.success) {
+          Swal.fire({
+          title: 'Fetching Total Session Failed',
+          text: "An error has occurred. Please try again.",
+          type: 'error'
+        })
+      }
+    },
+
+    async fetchTotalVlogs() {
+        this.totalVlogs = await axios.get("/api/homepage/vlogs");
+        if (!this.totalVlogs.data.success) {
+          Swal.fire({
+          title: 'Fetching Total Vlogs Failed',
+          text: "An error has occurred. Please try again.",
+          type: 'error'
+        })
+      }
+    },
+
+    async fetchTotalViewers() {
+        this.totalViewers = await axios.get("/api/homepage/current-viewers");
+        if (!this.totalViewers.data.success) {
+          Swal.fire({
+          title: 'Fetching Total Viewers Failed',
+          text: "An error has occurred. Please try again.",
+          type: 'error'
+        })
+      }
+     },
+
   }
 }
 </script>
@@ -462,6 +553,19 @@ export default {
 .img-slide {
   height:600px;
   width:100%
+}
+
+.red-background{
+  background-color:#DC3545;
+}
+
+.red-background:hover{
+  background-color:#C82333;
+}
+
+.white-text{
+  color:white;
+  font-weight: bolder;
 }
 
 </style>

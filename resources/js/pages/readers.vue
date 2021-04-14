@@ -95,7 +95,7 @@ export default {
     },
 
     async search() {
-        const { data } = await this.form.post("/api/our-reader/search/reader/a");
+        const { data } = await this.form.post("/api/our-reader/search");
         console.log(data);
         if (!data.success) {
           Swal.fire({
