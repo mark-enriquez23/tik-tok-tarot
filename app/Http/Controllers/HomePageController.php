@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Upload;
 use App\UploadType;
+use App\Role;
 
 class HomePageController extends Controller
 {
@@ -49,5 +50,40 @@ class HomePageController extends Controller
         ]);
     }
 
+    public function searchTool($val)
+    {
+        // search on reader first
+        try {
+            $role = Role::where('name', 'reader')->first();
 
+            $result = User::where('role_id', $role->id)
+            ->where('username','LIKE','%'.$val.'%')
+            ->orWhere('name','LIKE','%'.$val.'%')
+            ->with(['uploads'])
+            ->get();
+
+            if (count($result) <= 0 ) {
+                // search for uploads
+                $result = Upload::where('name','LIKE','%'.$val.'%')->get();
+                
+                if (count($result) > 0) {
+                    return response()->json([
+                        'success'   => true,
+                        'category'  => 'vlog',
+                        'message'   => 'data found',
+                        'data'      => $result
+                    ]);
+                }
+            }
+
+            return response()->json([
+                'success'   => count($result) > 0 ? true : false,
+                'category'  => 'reader',
+                'message'   => count($result) > 0 ? 'data found' : 'data not found',
+                'data'      => $result
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json(['error'=>$th]);
+        }
+    }
 }
