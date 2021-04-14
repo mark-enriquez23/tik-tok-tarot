@@ -20,7 +20,7 @@
     </div>
 </header>
 
-<section id="team" class="team">
+<section id="team" class="team" >
       <div class="container">
 
         <div class="row">
@@ -28,38 +28,38 @@
           </div>
           <div class="col-lg-8">
             <div class="row">
-              
-              <div class="col-lg-4 mt-4 mt-lg-0">
+
+              <div class="col-lg-4 mt-4 mt-lg-0" v-if="totalViewers !== null">
                 <router-link :to="{ name: 'readers' }" class="nav-link" active-class="active">
                 <div class="member red-background" data-aos="zoom-in" data-aos-delay="100">
                   <div class="member-info">
-                    
+
                       <h5 class="white-text">Viewers: {{totalViewers.data.total}} </h5>
-                    
+
                   </div>
                 </div>
                 </router-link>
               </div>
 
-              <div class="col-lg-4 mt-4 mt-lg-0">
+              <div class="col-lg-4 mt-4 mt-lg-0" v-if="totalVlogs !== null">
                  <router-link :to="{ name: 'vlogs.list' }" class="nav-link" active-class="active">
                 <div class="member red-background" data-aos="zoom-in" data-aos-delay="100">
                   <div class="member-info">
-                     
+
                         <h5 class="white-text">Vlogs: {{totalVlogs.data.total}} </h5>
-                      
+
                   </div>
                 </div>
                 </router-link>
               </div>
 
-              <div class="col-lg-4 mt-4 mt-lg-0">
+              <div class="col-lg-4 mt-4 mt-lg-0" v-if="totalSession !== null">
                 <router-link :to="{ name: 'sessions' }" class="nav-link" active-class="active">
                 <div class="member red-background" data-aos="zoom-in" data-aos-delay="100">
                   <div class="member-info">
-                      
+
                          <h5 class="white-text">Sessions: {{totalSession.data.total}} </h5>
-                      
+
                   </div>
                 </div>
                 </router-link>
@@ -84,7 +84,7 @@
           <div class="col-lg-8">
            <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
               <div class="carousel-inner testimonials-carousel">
-                
+
                 <div class="testimonial-item carousel-item active">
                     <p>
                       <fa class="quote-icon-left" :icon="['fas', 'quote-left']" />
@@ -187,7 +187,7 @@
           </div>
           <div class="col-lg-8">
             <div class="row">
-              
+
               <div class="col-lg-6 col-lg-6 mt-4 mt-lg-0" v-for="session in sessions.data" v-bind:key="session.id">
                 <div class="member" data-aos="zoom-in" data-aos-delay="100">
                   <div class="pic"><img :src="testimonialImage5" class="img-fluid" alt=""></div>
@@ -247,7 +247,7 @@
           </div>
           </a>
         </div>
-      </div>     
+      </div>
 
     </div>
   </div>
@@ -262,7 +262,7 @@
 
 <!-- Featured Reader -->
 <section id="reader" class="testimonials section-bg">
-  <div class="container">
+  <div class="container" v-if="readers !== null">
         <div class="row">
           <div class="col-lg-12">
             <div class="section-title">
@@ -378,18 +378,18 @@ export default {
     srcLogoOnly: window.config.assetURL + 'images/sample-logo.png',
     vlogs:[],
     testimonials:[],
-    readers:[],
+    readers: null,
     sessions:[],
     form: new Form({
       email: null
     }),
-    totalSession:[],
-    totalVlogs:[],
-    totalViewers:[]
+    totalSession: null,
+    totalVlogs: null,
+    totalViewers: null
   }),
 
   computed: mapGetters({authenticated: 'auth/check'}),
-  
+
   methods: {
       async subscribe() {
         const { data } = await this.form.post("/api/mailchimp/subscribe");
