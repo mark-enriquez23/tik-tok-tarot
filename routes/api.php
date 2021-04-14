@@ -133,6 +133,13 @@ Route::group(['prefix' => 'category'], function () {
     Route::post('/save', 'CategoryController@save');
 });
 
+// Testimonial api
+Route::group(['prefix' => 'testimonial'], function () {
+    Route::get('/', 'TestimonialController@index');
+    Route::post('/save', 'TestimonialController@save');
+    Route::post('/delete', 'TestimonialController@delete');
+});
+
 // -------------------------------Authenticated routes------------------------------ //
 Route::group(['middleware' => 'auth:api'], function () {
     Route::post('logout', 'Auth\LoginController@logout');
@@ -163,13 +170,6 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::group(['prefix' => 'upload'], function () {
         Route::post('/upload-video', 'UploadController@uploadVideo');
         Route::post('/save-review', 'UploadController@saveReview');
-    });
-
-    // Testimonial api
-    Route::group(['prefix' => 'testimonial'], function () {
-        Route::get('/', 'TestimonialController@index');
-        Route::post('/save', 'TestimonialController@save');
-        Route::post('/delete', 'TestimonialController@delete');
     });
 });
 
