@@ -38,10 +38,10 @@
               <p class="card-text text-muted">
                 {{ vlog.content }}
               </p>
-               <p class="client-review-stars">
-                      <fa :icon="['fas', 'star']" v-for="index in 5" :key="index" />
+              <p class="client-review-stars">
+                <fa :icon="['fas', 'star']" v-for="index in 5" :key="index" />
                     
-            </p>
+              </p>
               <!-- <router-link :to="{ name: 'vlog.view' }">
               <a href="" class="text-danger">Continue Reading</a>
               </router-link> -->

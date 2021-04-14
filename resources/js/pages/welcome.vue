@@ -72,7 +72,7 @@
     </section>
 
  <!-- ======= Testimonials Section ======= -->
-<!-- <section id="testimonials" class="testimonials section-bg">
+<section id="testimonials" class="testimonials section-bg">
   <div class="container">
         <div class="row">
           <div class="col-lg-4">
@@ -95,11 +95,7 @@
                     <h3>{{ testimonials.data.data[0].user.name }}</h3>
                     <h4 class="testimonial-title">Client</h4>
                     <p class="client-review-stars">
-                      <fa :icon="['fas', 'star']" />
-                      <fa :icon="['fas', 'star']" />
-                      <fa :icon="['fas', 'star']" />
-                      <fa :icon="['fas', 'star']" />
-                      <fa :icon="['fas', 'star-half']" />
+                      <fa :icon="['fas', 'star']" v-for="index in testimonials.data.data[0].rate" :key="index" />
                     </p>
                   </div>
 
@@ -113,11 +109,7 @@
                     <h3>{{ testimonials.data.data[1].user.name }}</h3>
                     <h4 class="testimonial-title">Client</h4>
                     <p class="client-review-stars">
-                      <fa :icon="['fas', 'star']" />
-                      <fa :icon="['fas', 'star']" />
-                      <fa :icon="['fas', 'star']" />
-                      <fa :icon="['fas', 'star']" />
-                      <fa :icon="['fas', 'star-half']" />
+                      <fa :icon="['fas', 'star']" v-for="index in testimonials.data.data[1].rate" :key="index" />
                     </p>
                   </div>
 
@@ -131,11 +123,7 @@
                     <h3>{{ testimonials.data.data[2].user.name }}</h3>
                     <h4 class="testimonial-title">Client</h4>
                     <p class="client-review-stars">
-                      <fa :icon="['fas', 'star']" />
-                      <fa :icon="['fas', 'star']" />
-                      <fa :icon="['fas', 'star']" />
-                      <fa :icon="['fas', 'star']" />
-                      <fa :icon="['fas', 'star-half']" />
+                      <fa :icon="['fas', 'star']" v-for="index in testimonials.data.data[2].rate" :key="index" />
                     </p>
                   </div>
 
@@ -149,11 +137,7 @@
                     <h3>{{ testimonials.data.data[3].user.name }}</h3>
                     <h4 class="testimonial-title">Client</h4>
                     <p class="client-review-stars">
-                      <fa :icon="['fas', 'star']" />
-                      <fa :icon="['fas', 'star']" />
-                      <fa :icon="['fas', 'star']" />
-                      <fa :icon="['fas', 'star']" />
-                      <fa :icon="['fas', 'star-half']" />
+                      <fa :icon="['fas', 'star']" v-for="index in testimonials.data.data[3].rate" :key="index" />
                     </p>
                   </div>
 
@@ -171,7 +155,7 @@
         </div>
 
       </div>
-    </section> -->
+    </section>
     <!-- End Testimonials Section -->
 
     <!-- ======= Live Session Section ======= -->
@@ -364,7 +348,7 @@ export default {
 
   created(){
     this.fetchVlogs(),
-    //this.fetchTestimonials()
+    this.fetchTestimonials()
     this.fetchReaders(),
     this.fetchSessions(),
     this.fetchTotalSessions(),
