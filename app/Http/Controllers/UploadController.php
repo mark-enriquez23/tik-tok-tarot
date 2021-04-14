@@ -20,6 +20,30 @@ class UploadController extends Controller
 
         $featuredUpload = Upload::where([['upload_type_id', $uploadType->id], ['is_featured', 1]])->get();
 
+        foreach ($featuredUpload as $key => $lu) {
+            // get upload/vlog review
+            // dd($lu);
+            $review = UploadReview::where('upload_id', $lu->id)->get();
+            
+            if (count($review) > 0) {
+                $totalRate = 0;
+
+                foreach ($review as $r) {
+                    $totalRate = $totalRate + $r->rate;
+                }
+
+                $totalAverage = $totalRate / count($review);
+
+                $featuredUpload[$key]['review'] = $review;
+                $featuredUpload[$key]['rate'] = floor($totalAverage);
+            }else{
+                $featuredUpload[$key]['review'] = $review;
+                $featuredUpload[$key]['rate'] = 0;
+            }
+            
+            
+        }
+
         return response()->json([
             'success' => true,
             'data' => $featuredUpload
@@ -55,9 +79,24 @@ class UploadController extends Controller
 
         foreach ($latestUpload as $key => $lu) {
             // get upload/vlog review
-            $review = UploadReview::where('upload_id', $lu->user_id)->get();
+            $review = UploadReview::where('upload_id', $lu->id)->get();
+            
+            if (count($review) > 0) {
+                $totalRate = 0;
 
-            $latestUpload[$key]['review'] = $review;
+                foreach ($review as $r) {
+                    $totalRate = $totalRate + $r->rate;
+                }
+
+                $totalAverage = $totalRate / count($review);
+                $latestUpload[$key]['review'] = $review;
+                $latestUpload[$key]['rate'] = floor($totalAverage);
+            }else{
+                $latestUpload[$key]['review'] = $review;
+                $latestUpload[$key]['rate'] = 0;
+            }
+            
+            
         }
 
         return response()->json([
