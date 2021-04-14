@@ -27,7 +27,7 @@
                   <div class="member-info">
                     <h4>{{reader.name}}</h4>
                     <p class="text-success mb-0">{{ reader.is_active == 1 ? 'Online' : 'Offline' }}</p>
-                    <p>Explicabo voluptatem mollitia et repellat qui dolorum quasi</p>
+                    <p>{{reader.description}}</p>
                     <span class="mt-3" >Health</span>
                   </div>
                 </div>
@@ -95,7 +95,7 @@ export default {
     },
 
     async search() {
-        const { data } = await this.form.post("/api/our-reader/search/");
+        const { data } = await this.form.post("/api/our-reader/search/reader/a");
         console.log(data);
         if (!data.success) {
           Swal.fire({

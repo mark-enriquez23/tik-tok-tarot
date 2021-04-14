@@ -21,7 +21,7 @@
                   <div class="member-info">
                     <h4>{{session.name}}</h4>
                     <p class="text-success mb-0">{{ session.is_active == 1 ? 'Online' : 'Offline' }}</p>
-                    <p>Explicabo voluptatem mollitia et repellat qui dolorum quasi</p>
+                    <p>{{session.description}}</p>
                   </div>
                 </div>
               </div>
