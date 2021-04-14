@@ -13,38 +13,59 @@ class OurReaderController extends Controller
     public function search($search, $categoryKey = null)
     {
         try {
-            $category = Category::where('name','LIKE','%'.$categoryKey.'%')
-            ->orWhere('name','LIKE','%'.$categoryKey.'%')
-            ->first();
-            
-            $isSearchByCategory = isset($category) ? true : false;
-            
-            if ($isSearchByCategory) {
-                // get reader role_id
-                $role = Role::where('name', 'reader')->first();
+            $role = Role::where('name', 'reader')->first();
 
-                $user = User::where('category_id', $category->id)
-                ->where('role_id', $role->id)
-                ->where('username','LIKE','%'.$search.'%')
-                ->orWhere('username','LIKE','%'.$search.'%')
-                ->with(['uploads'])
-                ->get();
-
-                return response()->json([
-                    'success'   => true,
-                    'message'   => 'data found',
-                    'data'      => $user
-                ]);
-            }
+            $user = User::where('role_id', $role->id)
+            ->where('username','LIKE','%'.$search.'%')
+            ->orWhere('name','LIKE','%'.$search.'%')
+            ->with(['uploads'])
+            ->get();
 
             return response()->json([
-                'success'   => true,
-                'message'   => 'no data found',
+                'success'   => isset($user) ? true : false,
+                'message'   => isset($user) ? 'data found' : 'data not found',
+                'data'      => $user
             ]);
         } catch (\Throwable $th) {
             return response()->json(['error'=>$th]);
         }
     } 
+
+    // public function search($search, $categoryKey = null)
+    // {
+    //     try {
+    //         $category = Category::where('name','LIKE','%'.$categoryKey.'%')
+    //         ->orWhere('name','LIKE','%'.$categoryKey.'%')
+    //         ->first();
+            
+    //         $isSearchByCategory = isset($category) ? true : false;
+            
+    //         if ($isSearchByCategory) {
+    //             // get reader role_id
+    //             $role = Role::where('name', 'reader')->first();
+
+    //             $user = User::where('category_id', $category->id)
+    //             ->where('role_id', $role->id)
+    //             ->where('username','LIKE','%'.$search.'%')
+    //             ->orWhere('username','LIKE','%'.$search.'%')
+    //             ->with(['uploads'])
+    //             ->get();
+
+    //             return response()->json([
+    //                 'success'   => true,
+    //                 'message'   => 'data found',
+    //                 'data'      => $user
+    //             ]);
+    //         }
+
+    //         return response()->json([
+    //             'success'   => true,
+    //             'message'   => 'no data found',
+    //         ]);
+    //     } catch (\Throwable $th) {
+    //         return response()->json(['error'=>$th]);
+    //     }
+    // } 
 
     public function uploadWithReaderDetail()
     {

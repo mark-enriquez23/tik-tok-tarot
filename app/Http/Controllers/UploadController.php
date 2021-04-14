@@ -13,10 +13,10 @@ use App\UploadReview;
 class UploadController extends Controller
 {
     // fetch featured uploads
-    public function fetchFeaturedUpload($typeName)
+    public function fetchFeaturedVlogs()
     {
         // get upload type
-        $uploadType = UploadType::where('name', $typeName)->first();
+        $uploadType = UploadType::where('name', 'vlog')->first();
 
         $featuredUpload = Upload::where([['upload_type_id', $uploadType->id], ['is_featured', 1]])->get();
 
@@ -25,6 +25,41 @@ class UploadController extends Controller
             'data' => $featuredUpload
         ]);
     }
+
+    // fetch latest uploads/vlogs/live
+    public function fetchLatestVlog()
+    {
+        // get upload type
+        $uploadType = UploadType::where('name', 'vlog')->first();
+
+        $latestUpload = Upload::where('upload_type_id', $uploadType->id)
+            ->orderBy('id', 'desc')
+            ->limit(7)  
+            ->get();
+
+        return response()->json([
+            'success' => true,
+            'data' => $latestUpload
+        ]);
+    }
+
+    // fetch all uploads/vlogs
+    public function fetchAllVlogs()
+    {
+        // get upload type
+        $uploadType = UploadType::where('name', 'vlog')->first();
+
+        $latestUpload = Upload::where('upload_type_id', $uploadType->id)
+            ->orderBy('id', 'desc')
+            ->limit(7)  
+            ->get();
+
+        return response()->json([
+            'success' => true,
+            'data' => $latestUpload
+        ]);
+    }
+
     // approval tool
     public function approveUpload(Request $request)
     {
@@ -79,6 +114,7 @@ class UploadController extends Controller
             $data = [
                 'id'                => $request->id,
                 'user_id'           => $request->user_id,
+                'name'              => $request->name,
                 'content'           => $request->content,
                 'thumbnail'         => $request->thumbnail,
                 'src'               => $request->src,
@@ -173,7 +209,7 @@ class UploadController extends Controller
 
     public function uploadReview($uploadId)
     {
-        $uploadReview = UploadReview::where('upload_id', $uploadId)->get();
+        $uploadReview = UploadReview::where('upload_id', $uploadId)->with(['upload'])->get();
 
         if (isset($uploadReview)) {
             return response()->json([

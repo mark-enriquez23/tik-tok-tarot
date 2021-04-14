@@ -26,11 +26,12 @@ class HomePageController extends Controller
         // get upload type
         $uploadType = UploadType::where('name', 'vlog')->first();
 
-        $upload = Upload::where('upload_type_id', $uploadType->id)->with(['upload'])->count();
+        $upload = Upload::where('upload_type_id', $uploadType->id)->with(['user'])->get();
 
         return response()->json([
             'success'   => true,
-            'total'      => $upload
+            'total'     => count($upload),
+            'data'      => $upload
         ]);
     }
 
@@ -39,11 +40,12 @@ class HomePageController extends Controller
         // get upload type live
         $uploadType = UploadType::where('name', 'live')->first();
 
-        $upload = Upload::where([['upload_type_id', $uploadType->id], ['status', 'streaming']])->with(['upload'])->count();
+        $upload = Upload::where([['upload_type_id', $uploadType->id], ['status', 'streaming']])->with(['user'])->get();
         
         return response()->json([
             'success'   => true,
-            'total'      => $upload
+            'total'     => count($upload),
+            'data'      => $upload
         ]);
     }
 

@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use App\User;
+use App\FeaturedUser;
 use App\UserSecurityQuestion;
 
 class UserSeeder extends Seeder
@@ -20,6 +21,7 @@ class UserSeeder extends Seeder
                 'email'     => 'admin@tiktok_tarot.com',
                 'password'  => bcrypt('admin2021'),
                 'role_id'   => 1,
+                'status'   => 'offline',
                 'is_verified'   => 1,
             ],
             [
@@ -28,6 +30,7 @@ class UserSeeder extends Seeder
                 'email'     => 'reader@tiktok_tarot.com',
                 'password'  => bcrypt('reader2021'),
                 'role_id'   => 2,
+                'status'   => 'offline',
                 'is_verified'   => 1,
             ],
             [
@@ -36,6 +39,7 @@ class UserSeeder extends Seeder
                 'email'     => 'client@tiktok_tarot.com',
                 'password'  => bcrypt('client2021'),
                 'role_id'   => 3,
+                'status'   => 'online',
                 'is_verified'   => 1,
             ]
         ];
@@ -59,6 +63,18 @@ class UserSeeder extends Seeder
         // save
         foreach ($users as $user) {
             $registeredUser = User::create($user);
+
+            // save reader as featured
+            if ($registeredUser->role_id === 2) {
+                $featureData = [
+                    'id'        => '',
+                    'user_id'   => $registeredUser->id
+                ];
+
+                $featuredReader = new FeaturedUser;
+                $featuredReader->user_id = $registeredUser->id;
+                $featuredReader->save();
+            }
 
             // saved user security questions
             foreach ($questionData as $qd) {
