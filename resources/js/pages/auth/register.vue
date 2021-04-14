@@ -1,5 +1,5 @@
 <template>
-  <div class="row h-100">
+ <div class="row h-100">
     <div class="col-lg-12 my-auto" v-if="!onSecurity">
       <div v-if="mustVerifyEmail">
         <div class="alert alert-success" role="alert">
@@ -147,16 +147,9 @@
 <script>
 import Form from 'vform'
 import LoginWithGithub from '~/components/LoginWithGithub'
-import SecurityQuestion from '~/components/Register/SecurityQuestion'
-import Vue from 'vue'
 import VueHcaptcha from '@hcaptcha/vue-hcaptcha';
-import axios from "axios";
+import SecurityQuestion from '~/components/Register/SecurityQuestion'
 import VuePhoneNumberInput from 'vue-phone-number-input';
-import 'vue-phone-number-input/dist/vue-phone-number-input.css';
-import Swal from 'sweetalert2';
-import { mapGetters } from 'vuex'
-
-Vue.component('vue-phone-number-input', VuePhoneNumberInput);
 
 const initializeData = () => ({
     form: new Form({
@@ -195,25 +188,20 @@ export default {
 
   components: {
     LoginWithGithub,
+    VueHcaptcha,
     SecurityQuestion,
     VuePhoneNumberInput,
-    VueHcaptcha,
   },
 
-  computed: mapGetters({
-    // roles: 'role/roles'
-  }),
+  metaInfo () {
+    return { title: 'Register' }
+  },
+
+  data: () => { return initializeData() },
 
   mounted() {
     this.$store.dispatch('user-security-question/fetchUserSecurityQuestions')
     this.$store.dispatch('role/fetchRoles')
-  },
-  metaInfo () {
-    return { title: this.$t('register') }
-  },
-
-  data:() => {
-    return initializeData();
   },
 
   methods: {
@@ -308,6 +296,5 @@ export default {
     }
 
   }
-
 }
 </script>
