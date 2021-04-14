@@ -43,16 +43,22 @@ class UploadController extends Controller
         ]);
     }
 
-    // fetch all uploads/vlogs
+    // fetch all uploads/vlogs with ratings
     public function fetchAllVlogs()
     {
         // get upload type
         $uploadType = UploadType::where('name', 'vlog')->first();
 
         $latestUpload = Upload::where('upload_type_id', $uploadType->id)
-            ->with(['reviewsRating'])
             ->orderBy('id', 'desc')
             ->get();
+
+        foreach ($latestUpload as $key => $lu) {
+            // get upload/vlog review
+            $review = UploadReview::where('upload_id', $lu->user_id)->get();
+
+            $latestUpload[$key]['review'] = $review;
+        }
 
         return response()->json([
             'success' => true,
