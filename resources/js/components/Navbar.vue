@@ -54,8 +54,11 @@
 
   <nav class="navbar navbar-expand-lg navbar-light bg-white">
     <div class="container">
-    <form class="form-inline col-8 col-md-4 px-0">
-      <input class="form-control mr-sm-2 w-100" type="search" name="q" placeholder="Search" aria-label="Search">
+    
+
+    <form class="form-inline col-8 col-md-4 px-0" action="" method="post" @submit.prevent="siteSearch">
+        <input v-model="searchForm['key']" class="form-control mr-sm-2 w-50" type="text" name="reader" placeholder="Search Site" aria-label="Search" >
+        <v-button class="btn btn-danger" :disabled="!searchForm.key">Search</v-button>
     </form>
 
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false">
@@ -120,6 +123,9 @@
 <script>
 import { mapGetters } from 'vuex'
 import LocaleDropdown from './LocaleDropdown'
+import Form from 'vform'
+import Swal from 'sweetalert2';
+import axios from "axios"
 
 export default {
   components: {
@@ -129,6 +135,10 @@ export default {
   data: () => ({
     appName: window.config.appName,
     srcLogoOnly: window.config.assetURL + 'images/sample-logo.png',
+    searchForm: new Form({
+      key: null
+    }),
+    results:[]
   }),
 
   computed: mapGetters({
@@ -147,9 +157,21 @@ export default {
       this.$router.push({ name: 'login' })
     },
 
-    search() {
-       alert('triggered')
-    }
+    async siteSearch() {
+        this.$router.push({name: 'search', query: { key: this.searchForm.key } });
+      }
+
+    // async siteSearch() {
+    //     var results = await this.searchForm.post("/api/homepage/search-tool");
+    //     this.results = results.data;
+    //     if (!this.results.success) {
+    //       Swal.fire({
+    //         title: 'Search Failed',
+    //         text: "An error has occurred. Please try again.",
+    //         type: 'error'
+    //       })
+    //     }
+    //   }
   }
 }
 </script>

@@ -95,9 +95,9 @@ export default {
     },
 
     async search() {
-        const { data } = await this.form.post("/api/our-reader/search/a");
-        console.log(data);
-        if (!data.success) {
+        var readers = await this.form.post("/api/our-reader/search");
+        this.readers = readers.data;
+        if (!this.readers.success) {
           Swal.fire({
           title: 'Search Failed',
           text: "An error has occurred. Please try again.",
