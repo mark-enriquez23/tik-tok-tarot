@@ -62,8 +62,11 @@ Route::post('/faq/save', 'FaqController@save');
 
 // Upload api
 Route::group(['prefix' => 'upload'], function () {
-    Route::get('/featured-uploads/{typeName}', 'UploadController@fetchFeaturedUpload');
+    Route::get('/featured-vlogs', 'UploadController@fetchFeaturedVlogs');
+    Route::get('/latest-vlogs', 'UploadController@fetchLatestVlog');
+    Route::get('/all-vlogs', 'UploadController@fetchAllVlogs');
     Route::post('/save', 'UploadController@save');
+    Route::get('/upload-review/{uploadId}', 'UploadController@uploadReview');
 });
 
 // Contact us api
@@ -119,7 +122,7 @@ Route::group(['prefix' => 'homepage'], function () {
 
 // Our Reader
 Route::group(['prefix' => 'our-reader'], function () {
-    Route::get('/search/{search}/{categoryKey}', 'OurReaderController@search');
+    Route::get('/search/{search}', 'OurReaderController@search');
     Route::get('/upload-with-reader-detail', 'OurReaderController@uploadWithReaderDetail');
 });
 
@@ -159,7 +162,6 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::group(['prefix' => 'upload'], function () {
         Route::post('/upload-video', 'UploadController@uploadVideo');
         Route::post('/save-review', 'UploadController@saveReview');
-        Route::get('/upload-review/{uploadId}', 'UploadController@uploadReview');
     });
 
     // Testimonial api
