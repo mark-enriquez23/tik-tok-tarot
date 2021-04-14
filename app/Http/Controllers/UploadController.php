@@ -50,8 +50,8 @@ class UploadController extends Controller
         $uploadType = UploadType::where('name', 'vlog')->first();
 
         $latestUpload = Upload::where('upload_type_id', $uploadType->id)
+            ->with(['reviewsRating'])
             ->orderBy('id', 'desc')
-            ->limit(7)  
             ->get();
 
         return response()->json([
