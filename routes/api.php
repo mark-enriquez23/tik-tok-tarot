@@ -62,11 +62,11 @@ Route::post('/faq/save', 'FaqController@save');
 
 // Upload api
 Route::group(['prefix' => 'upload'], function () {
-    Route::get('/featured-vlogs', 'UploadController@fetchFeaturedVlogs');
-    Route::get('/latest-vlogs', 'UploadController@fetchLatestVlog');
-    Route::get('/all-vlogs', 'UploadController@fetchAllVlogs');
+    Route::get('/featured-vlogs', 'UploadController@fetchFeaturedVlogs'); // return all featured vlogs
+    Route::get('/latest-vlogs', 'UploadController@fetchLatestVlog'); // return the latest vlog descending order and limit by 7
+    Route::get('/all-vlogs', 'UploadController@fetchAllVlogs'); // return all vlogs
     Route::post('/save', 'UploadController@save');
-    Route::get('/upload-review/{uploadId}', 'UploadController@uploadReview');
+    Route::get('/upload-review/{uploadId}', 'UploadController@uploadReview'); // return uploads reviews
 });
 
 // Contact us api
@@ -118,6 +118,7 @@ Route::group(['prefix' => 'homepage'], function () {
     Route::get('/current-viewers', 'HomePageController@currentViewer');
     Route::get('/vlogs', 'HomePageController@vlogs');
     Route::get('/live-sessions', 'HomePageController@liveSessions');
+    Route::get('/search-tool/{val}', 'HomePageController@searchTool');
 });
 
 // Our Reader
