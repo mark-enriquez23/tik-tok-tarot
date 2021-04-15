@@ -30,6 +30,7 @@
     "vue": "^2.6.12",
     "vue-cool-lightbox": "^2.7.1",
     "vue-core-video-player": "^0.2.0",
+    "vue-dynamic-star-rating": "^1.0.8",
     "vue-i18n": "^8.24.2",
     "vue-js-modal": "^2.0.0-rc.6",
     "vue-meta": "^1.6.0",
