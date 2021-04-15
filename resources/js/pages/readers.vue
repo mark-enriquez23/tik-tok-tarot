@@ -11,8 +11,8 @@
               <h2>Our Readers</h2>
               <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem.</p>
               <form class="form-inline col-12 col-md-12 px-0 my-2" action="" method="post" @submit.prevent="search">
-                <input v-model="form['key']" class="form-control mr-sm-2 w-100" type="text" name="reader" placeholder="Search Readers" aria-label="Search">
-                <v-button class="btn btn-danger btn-lg mt-2" :disabled="!form.key">Search</v-button>
+                <input v-model="form['search']" class="form-control mr-sm-2 w-100" type="text" name="reader" placeholder="Search Readers" aria-label="Search">
+                <v-button class="btn btn-danger btn-lg mt-2" :disabled="!form.search">Search</v-button>
               </form>
              
             </div>
@@ -74,7 +74,7 @@ export default {
     srcLogoOnly: window.config.assetURL + 'images/sample-logo.png',
     readers:[],
     form: new Form({
-      key: null
+      search: null
     }),
   }),
 
@@ -82,7 +82,7 @@ export default {
   
   methods: {
     async fetchReaders() {
-        var readers = await axios.get("/api/user/fetch-readers");
+        var readers = await axios.get("/api/reader/fetch-readers");
         this.readers = readers.data;
         console.log(this.readers);
         if (!this.readers.success) {
@@ -95,7 +95,7 @@ export default {
     },
 
     async search() {
-        var readers = await this.form.post("/api/our-reader/search");
+        var readers = await this.form.post("/api/reader/search");
         this.readers = readers.data;
         if (!this.readers.success) {
           Swal.fire({

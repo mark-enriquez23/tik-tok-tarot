@@ -436,7 +436,7 @@ export default {
     },
 
     async fetchReaders() {
-        this.readers = await axios.get("/api/user/fetch-featured-readers");
+        this.readers = await axios.get("/api/reader/fetch-featured-readers");
         console.log(this.readers);
         if (!this.readers.data.success) {
           Swal.fire({

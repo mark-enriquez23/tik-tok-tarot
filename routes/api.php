@@ -107,10 +107,10 @@ Route::group(['prefix' => 'role'], function () {
     Route::get('/', 'RoleController@index');
 });
 
-// Users api
-Route::group(['prefix' => 'user'], function () {
-    Route::get('/fetch-readers', 'Auth\UserController@fetchReaders');
-    Route::get('/fetch-featured-readers', 'Auth\UserController@fetchFeaturedReaders');
+// Reader api
+Route::group(['prefix' => 'reader'], function () {
+    Route::get('/fetch-readers', 'ReaderController@fetchReaders');
+    Route::get('/fetch-featured-readers', 'ReaderController@fetchFeaturedReaders');
 });
 
 // Homepage Counter
@@ -122,8 +122,8 @@ Route::group(['prefix' => 'homepage'], function () {
 });
 
 // Our Reader
-Route::group(['prefix' => 'our-reader'], function () {
-    Route::post('/search', 'OurReaderController@search');
+Route::group(['prefix' => 'reader'], function () {
+    Route::post('/search', 'ReaderController@search');
     Route::get('/upload-with-reader-detail', 'OurReaderController@uploadWithReaderDetail');
 });
 
@@ -170,6 +170,12 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::group(['prefix' => 'upload'], function () {
         Route::post('/upload-video', 'UploadController@uploadVideo');
         Route::post('/save-review', 'UploadController@saveReview');
+    });
+
+    // Upload api
+    Route::group(['prefix' => 'auth-reader'], function () {
+        Route::post('/update-reader', 'ReaderController@save');
+        Route::post('/change-visibility', 'ReaderController@changeReaderVisibility');
     });
 });
 
