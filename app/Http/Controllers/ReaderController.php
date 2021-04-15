@@ -88,6 +88,17 @@ class ReaderController extends Controller
         ]);
     }
 
+    // Will save detials or update
+    public function fetchReaderById($id)
+    {
+        $user = User::where([['id', $id], ['visible', 1]])->first();
+
+        return response()->json([
+            "success" => $user ? true : false,
+            "data" => $user
+        ]);
+    }
+
     public function fetchFeaturedReaders()
     {
         $user = FeaturedUser::with(['user'])->get();

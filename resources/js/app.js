@@ -10,6 +10,7 @@ import '~/plugins'
 import '~/components'
 import 'vue-cool-lightbox/dist/vue-cool-lightbox.min.css'
 
+
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
