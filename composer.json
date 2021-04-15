@@ -13,6 +13,7 @@
         "laravel/socialite": "^4.3",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^2.0",
+        "lcobucci/jwt": "3.3.3",
         "nztim/mailchimp": "^4.3",
         "spatie/laravel-newsletter": "^4.9",
         "twilio/sdk": "^6.18",

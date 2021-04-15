@@ -59,21 +59,4 @@ class UserController extends Controller
 
     }
 
-    public function fetchReaders(){
-        $user = User::where('role_id', '2')->get();
-
-        return response()->json([
-            "success" => $user ? true : false,
-            "data" => $user
-        ]);
-    }
-
-    public function fetchFeaturedReaders(){
-        $user = FeaturedUser::with(['user'])->get();
-
-        return response()->json([
-            "success" => $user ? true : false,
-            "data" => $user
-        ]);
-    }
 }
