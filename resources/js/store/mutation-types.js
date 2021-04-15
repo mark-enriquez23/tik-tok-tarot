@@ -36,3 +36,7 @@ export const FETCH_GENERAL_INFO = 'FETCH_GENERAL_INFO'
 
 // role.js
 export const FETCH_ROLE = 'FETCH_ROLE'
+
+// admin-reader.js
+export const FETCH_READER = 'FETCH_READER'
+export const EDIT_READER = 'EDIT_READER'
