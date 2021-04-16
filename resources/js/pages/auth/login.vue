@@ -62,6 +62,7 @@
 import Form from 'vform'
 import LoginWithGithub from '~/components/LoginWithGithub'
 import VueHcaptcha from '@hcaptcha/vue-hcaptcha';
+import Cookies from "js-cookie";
 
 const initializeData = () => ({
     form: new Form({
@@ -120,9 +121,22 @@ export default {
       // Fetch the user.
       await this.$store.dispatch('auth/fetchUser')
 
+      this.redirect();
       // Redirect home.
-      this.$router.push({ name: 'home' })
+      // this.$router.push({ name: 'home' })
     },
+    redirect()
+    {
+      const intendedUrl = Cookies.get("intended_url");
+      if (intendedUrl) {
+        Cookies.remove("intended_url");
+        this.$router.push({ path: intendedUrl });
+      } else {
+        // make a condition here and redirect user depends on their role
+        this.$router.push({ name: "home" });
+      }
+    },
+    
     isVerified(e) {
       this.token = e;
     }

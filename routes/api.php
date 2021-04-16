@@ -176,6 +176,8 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::group(['prefix' => 'auth-reader'], function () {
         Route::post('/update-reader', 'ReaderController@save');
         Route::post('/change-visibility', 'ReaderController@changeReaderVisibility');
+        Route::get('/feth-reader-by-id/{id}', 'ReaderController@fetchReaderById');
+        Route::delete('/remove/{id}', 'ReaderController@removeReader');
     });
 });
 

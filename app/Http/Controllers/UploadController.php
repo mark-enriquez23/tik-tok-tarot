@@ -38,7 +38,7 @@ class UploadController extends Controller
                 $featuredUpload[$key]['rate'] = floor($totalAverage);
             }else{
                 $featuredUpload[$key]['review'] = $review;
-                $featuredUpload[$key]['rate'] = 0;
+                $featuredUpload[$key]['rate'] = 1;
             }
             
             
@@ -93,7 +93,7 @@ class UploadController extends Controller
                 $latestUpload[$key]['rate'] = floor($totalAverage);
             }else{
                 $latestUpload[$key]['review'] = $review;
-                $latestUpload[$key]['rate'] = 0;
+                $latestUpload[$key]['rate'] = 1;
             }
             
             

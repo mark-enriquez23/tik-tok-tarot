@@ -36,5 +36,9 @@ export default [
   // Reader
   { path: '/reader/vlog', name: 'reader.vlog', component: page('reader/vlog/index.vue') },
 
+  // Admin
+  { path: '/admin/readers', name: 'admin.readers', component: page('admin/reader-list.vue') },
+  { path: '/admin/reader-form/:id', name: 'admin.reader-form', component: page('admin/reader-form.vue') },
+
   { path: '*', component: page('errors/404.vue') }
 ]
