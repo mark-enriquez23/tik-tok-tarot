@@ -12,7 +12,9 @@
                 <h4 class="font-weight-light mb-5 text-white">24/7 live psychics at your services</h4>
                 <div class="row no-gutters text-center" >
                   <div class="col-lg-6 mx-auto">
-                    <a class="btn btn-danger btn-xl w-lg-50 w-75 text-white">Register</a>
+                    <router-link :to="{ name: 'register' }" class="nav-link" active-class="active">
+                      <a class="btn btn-danger btn-xl w-lg-50 w-75 text-white">Register</a>
+                    </router-link>
                   </div>
                 </div>
             </div>
@@ -161,7 +163,6 @@
     <!-- ======= Live Session Section ======= -->
     <section id="team" class="team">
       <div class="container">
-
         <div class="row">
           <div class="col-lg-4">
             <div class="section-title" data-aos="fade-right">
@@ -171,14 +172,13 @@
           </div>
           <div class="col-lg-8">
             <div class="row">
-
-              <div class="col-lg-6 col-lg-6 mt-4 mt-lg-0" v-for="session in sessions.data" v-bind:key="session.id">
+              <div class="col-lg-6 col-lg-6 my-5 mt-lg-0" v-for="session in sessions.data" v-bind:key="session.id">
                 <div class="member" data-aos="zoom-in" data-aos-delay="100">
                   <div class="pic"><img :src="testimonialImage5" class="img-fluid" alt=""></div>
                   <div class="member-info">
                     <h4>{{ session.name }}</h4>
                     <p class="text-success mb-0">{{ session.status == 'streaming' ? 'Streaming' : 'Offline' }}</p>
-                    <p>{{ session.content }}</p>
+                    <p>{{ getDescription(session.content) }}</p>
                   </div>
                 </div>
               </div>
@@ -198,10 +198,14 @@
           <p> Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
           <div class="row col-md-6 mx-auto">
             <div class="col-md-6 ">
-              <button class="w-100 btn btn-secondary">Login</button>
+              <router-link :to="{ name: 'login' }" class="nav-link" active-class="active">
+                <button class="w-100 btn btn-secondary">Login</button>
+              </router-link>
             </div>
             <div class="col-md-6  mt-md-0 mt-4">
-              <button class="w-100 btn btn-danger">Register</button>
+              <router-link :to="{ name: 'register' }" class="nav-link" active-class="active">
+                <button class="w-100 btn btn-danger">Register</button>
+              </router-link>
             </div>
           </div>
         </div>
@@ -219,7 +223,7 @@
   <div class="mb-2">
     <div class="row">
 
-      <div class="col-md-4" v-for="vlog in vlogs.data" v-bind:key="vlog.id">
+      <div class="col-md-4 mb-4" v-for="vlog in vlogs.data" v-bind:key="vlog.id">
         <div class="card ">
           <a href="#">
           <img class="card-img-top" src="https://images.unsplash.com/photo-1535025639604-9a804c092faa?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6cb0ceb620f241feb2f859e273634393&auto=format&fit=crop&w=500&q=80" alt="Card image cap">
@@ -239,13 +243,13 @@
 
     </div>
   </div>
-  <div class="mt-5 mx-auto col-md-3 mx-auto ">
+  <!-- <div class="mt-5 mx-auto col-md-3 mx-auto ">
     <div class="btn btn-danger w-100">
       <div class=" row no-gutters mx-auto justify-content-center">
         <div class="my-auto mr-2">Show More</div> <fa :icon="['fas', 'chevron-right']" class="my-auto" />
       </div>
     </div>
-  </div>
+  </div> -->
 </section>
 
 <!-- Featured Reader -->
@@ -480,6 +484,14 @@ export default {
         })
       }
      },
+
+    getDescription(desc){
+      if (desc.length > 40){
+        return desc.substr(0,40);
+      }else{
+        return desc;
+      }
+    }
 
   }
 }
