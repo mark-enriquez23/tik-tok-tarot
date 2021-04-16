@@ -38,32 +38,22 @@ export default [
 
   // Admin
   { path: '/admin/readers', name: 'admin.readers', component: page('admin/reader-list.vue'), 
-    async beforeEnter(to, from, next) {
-      try {
-        var hasPermission = await store.dispatch("auth/fetchUser");
-        if (hasPermission) {
-          next()
-        }
-      } catch (e) {
-        next({
-          name: "welcome" // back to safety route //
-        })
-      }
-    }  
+    // async beforeEnter(to, from, next) {
+    //   const store = require('../store/index.js')
+    //   try {
+    //     var hasPermission = await store.dispatch("auth/fetchUser");
+    //     console.log(hasPermission);
+    //     if (hasPermission) {
+    //       next()
+    //     }
+    //   } catch (e) {
+    //     next({
+    //       name: "welcome" // back to safety route //
+    //     })
+    //   }
+    // }  
   },
-  { path: '/admin/reader-form/:id', name: 'admin.reader-form', component: page('admin/reader-form.vue'),
-    async beforeEnter(to, from, next) {
-      try {
-        var hasPermission = await store.dispatch("auth/fetchUser");
-        if (hasPermission) {
-          next()
-        }
-      } catch (e) {
-        next({
-          name: "welcome" // back to safety route //
-        })
-      }
-    }   
+  { path: '/admin/reader-form/:id', name: 'admin.reader-form', component: page('admin/reader-form.vue'), 
   },
   { path: '*', component: page('errors/404.vue') }
 ]

@@ -53,7 +53,7 @@ export const actions = {
 
   async viewReader({ commit }, id) {
     try {
-      const { data } = await axios.get(`/api/auth-reader/feth-reader-by-id/${id}`);
+      const { data } = await axios.get(`/api/auth-reader/fetch-reader-by-id/${id}`);
 
       commit(types.EDIT_READER, { reader: data.data });
     } catch (e) {

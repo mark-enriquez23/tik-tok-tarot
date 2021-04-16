@@ -123,6 +123,18 @@ export default {
   beforeMount () {
     let id = this.$route.params.id
     this.$store.dispatch("admin-reader/viewReader", id);
+
+    this.$store.dispatch('auth/fetchUser');
+
+      if (!this.user){
+        this.$router.push({ name: 'home' })
+      }
+  },
+
+  beforeRouteEnter (to, from, next) {
+    next(vm => {
+      console.log(vm.user);
+    })
   },
 
   methods: {

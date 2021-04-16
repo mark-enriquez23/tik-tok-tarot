@@ -69,6 +69,11 @@ export default {
 
   beforeMount(){
       this.$store.dispatch("admin-reader/fetchReaders");
+      this.$store.dispatch('auth/fetchUser');
+
+      if (!this.user){
+        this.$router.push({ name: 'home' })
+      }
   }
 }
 </script>
