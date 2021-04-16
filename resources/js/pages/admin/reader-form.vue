@@ -1,7 +1,16 @@
 <template>
-  <card class="py-3">
-    <h4 class="mb-0">Update Reader Profile</h4>
-    <p class="mb-0">Change personal information here.</p>
+  <card class="py-3 m-4">
+    <div class="row">
+      <div class="col-md-8">
+        <h4 class="mb-3">Update Reader Profile</h4>
+        <p class="mb-5">Change personal information here.</p>
+      </div>
+      <div class="col-md-4 text-right">
+        <router-link :to="{ name: 'admin.readers' }" class="nav-link" active-class="active">
+          <v-button class="btn btn-danger btn-lg">Back</v-button>
+        </router-link>
+      </div>
+    </div>
     <hr>
     <form @submit.prevent="update" @keydown="readerForm.onKeydown($event)">
       <alert-success :form="readerForm" message="Reader info has been updated!" />
@@ -88,6 +97,7 @@
 import Form from 'vform'
 import { mapGetters } from 'vuex'
 import { swalOops, swalSuccess } from "~/helpers"
+import Swal from 'sweetalert2';
 
 export default {
   scrollToTop: false,
@@ -134,13 +144,30 @@ export default {
     },
 
     async removeAccount(){
-      
-      this.$store.dispatch('admin-reader/removeReader', this.readerForm.id).then(({success, message}) => {
-        if (success) {
-          swalSuccess(message).then(() =>{
-            this.$router.push({ name: 'admin.readers' })
-          })
-        }
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Remove'
+      })
+      .then((result) => {
+        this.$store.dispatch('admin-reader/removeReader', this.readerForm.id).then(({success, message}) => {
+          if (success) {
+            swalSuccess("Reader removed!").then(() =>{
+              this.$router.push({ name: 'admin.readers' })
+            })
+          }
+        })
+        // if (result.isConfirmed) {
+        //   Swal.fire(
+        //   'Deleted!',
+        //   'Your file has been deleted.',
+        //   'success'
+        //   )
+        // }
       })
     },
 
