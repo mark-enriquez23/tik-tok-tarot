@@ -1,28 +1,31 @@
 <template>
-  <card class="py-3">
-    <h4 class="mb-0">Readers List</h4>
-    <p class="mb-0">List of readers.</p>
-    <hr>
+  <card class="py-3 m-4">
+    <h4 class="mb-3">Readers List</h4>
+    <p class="mb-5">Necessitatibus eius consequatur ex aliquid fuga eum quidem.</p>
    <table class="table">
     <thead>
         <tr>
-          <th scope="col">#</th>
+          <th scope="col">ID</th>
           <th scope="col">Username</th>
           <th scope="col">Name</th>
           <th scope="col">Email</th>
+          <th scope="col">Visible?</th>
+          <th scope="col">Banned?</th>
           <th scope="col">Action</th>
         </tr>
     </thead>
     <tbody>
-        <tr v-for="(reader, i) in readers" :key="reader.id">
-            <th scope="row">{{ i + 1 }}</th>
+        <tr v-for="reader in readers" :key="reader.id">
+            <th scope="row">{{reader.id}}</th>
             <td>{{ reader.username }}</td>
             <td>{{ reader.name }}</td>
             <td>{{ reader.email }}</td>
-            <td><div class="cursor-pointer link" @click="view(reader.id)">Edit</div></td>
+            <td>{{ reader.visible ? 'Yes' : 'No' }}</td>
+            <td>{{ reader.is_banned == 0 ? 'No' : 'Yes' }}</td>
+            <td><div class="cursor-pointer link" @click="view(reader.id)">Manage</div></td>
         </tr>
         <tr>
-          <td colspan="5" class="text-center" v-if="readers.length <= 0">No Reader found</td>
+          <td colspan="7" class="text-center" v-if="readers.length <= 0">No Reader found</td>
         </tr>
     </tbody>
     </table>

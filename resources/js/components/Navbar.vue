@@ -158,8 +158,8 @@ export default {
     },
 
     async siteSearch() {
-        this.$router.push({name: 'search', query: { key: this.searchForm.key } });
-      }
+      this.$router.push({name: 'search', query: { key: this.searchForm.key } });
+    }
 
     // async siteSearch() {
     //     var results = await this.searchForm.post("/api/homepage/search-tool");

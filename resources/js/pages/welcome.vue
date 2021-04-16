@@ -425,6 +425,7 @@ export default {
 
     async fetchTestimonials() {
         this.testimonials = await axios.get("/api/testimonial");
+        console.log(this.testimonials)
         console.log(this.testimonials.data.data[0].user);
         if (!this.testimonials.data.success) {
           Swal.fire({
