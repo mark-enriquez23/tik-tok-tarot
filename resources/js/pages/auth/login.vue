@@ -133,7 +133,7 @@ export default {
         this.$router.push({ path: intendedUrl });
       } else {
         // make a condition here and redirect user depends on their role
-        this.$router.push({ name: "home" });
+        this.$router.push({ name: 'admin.readers' });
       }
     },
     
