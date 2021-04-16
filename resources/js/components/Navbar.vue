@@ -97,9 +97,9 @@
                   <router-link :to="{ name: 'vlogs.list' }" class="dropdown-item pl-3">
                     All Vlogs
                   </router-link>
-                  <router-link :to="{ name: 'vlogs.review' }" class="dropdown-item pl-3">
+                  <!-- <router-link :to="{ name: 'vlogs.review' }" class="dropdown-item pl-3">
                     Vlog Review
-                  </router-link>
+                  </router-link> -->
                 </div>
 
             </li>

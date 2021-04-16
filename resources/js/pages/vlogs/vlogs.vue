@@ -31,10 +31,10 @@
             <div class="card-body">
               <h4 class="card-title text-danger mb-0">{{ vlog.name }}</h4>
               <!-- <p class="text-muted">By {{ vlog.author }}</p> -->
-              <p class="meta mb-2">
+              <!-- <p class="meta mb-2">
               <span class="mr-2"><fa class="" :icon="['fas', 'calendar-alt']" /> {{ vlog.created_at }}</span>
-              <!-- <span><fa class="" :icon="['fas', 'comment']" /> {{vlog.comments}} Comments</span> -->
-              </p>
+              <!-- <span><fa class="" :icon="['fas', 'comment']" /> {{vlog.comments}} Comments</span>
+              </p> -->
               <p class="card-text text-muted">
                 {{ vlog.content }}
               </p>
