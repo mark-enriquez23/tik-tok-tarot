@@ -125,16 +125,9 @@ export default {
     this.$store.dispatch("admin-reader/viewReader", id);
 
     this.$store.dispatch('auth/fetchUser');
-
       if (!this.user){
         this.$router.push({ name: 'home' })
       }
-  },
-
-  beforeRouteEnter (to, from, next) {
-    next(vm => {
-      console.log(vm.user);
-    })
   },
 
   methods: {
@@ -155,33 +148,26 @@ export default {
       this.isUpdating = false;
     },
 
-    async removeAccount(){
-      Swal.fire({
+    removeAccount(){
+     Swal.fire({
         title: 'Are you sure?',
-        text: "You won't be able to revert this.",
+        text: "You won't be able to revert this!",
         icon: 'warning',
-        showCancelButton: true,
         confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
         confirmButtonText: 'Remove'
       })
       .then((result) => {
         this.$store.dispatch('admin-reader/removeReader', this.readerForm.id).then(({success, message}) => {
           if (success) {
-            swalSuccess("Reader removed.").then(() =>{
+            swalSuccess("Reader removed!").then(() =>{
               this.$router.push({ name: 'admin.readers' })
             })
           }
         })
-        // if (result.isConfirmed) {
-        //   Swal.fire(
-        //   'Deleted!',
-        //   'Your file has been deleted.',
-        //   'success'
-        //   )
-        // }
       })
     },
+
+    
 
     isBannedChange(){
       this.$store.dispatch('admin-reader/isBannedChange')
