@@ -14,12 +14,16 @@ export const state = {
     phone_number: '',
     email: ''
   }),
+  is_banned: 0,
+  visible: 1,
 };
 
 // getters
 export const getters = {
   readers: state => state.readers,
   readerForm: state => state.readerForm,
+  is_banned: state => state.is_banned,
+  visible: state => state.visible,
 };
 
 // mutations
@@ -30,6 +34,8 @@ export const mutations = {
 
   [types.EDIT_READER](state, { reader }) {
     state.readerForm.fill(reader)
+    state.readerForm.is_banned = reader.is_banned
+    state.readerForm.visible = reader.visible
   },
 };
 
@@ -39,7 +45,6 @@ export const actions = {
   async fetchReaders({ commit }) {
     try {
       const { data } = await axios.get("/api/reader/fetch-readers");
-      console.log(data)
       commit(types.FETCH_READER, { readers: data.data });
     } catch (e) {
       return e;
@@ -47,15 +52,40 @@ export const actions = {
   },
 
   async viewReader({ commit }, id) {
-
-    console.log(id)
     try {
       const { data } = await axios.get(`/api/auth-reader/feth-reader-by-id/${id}`);
-      console.log(data)
+
       commit(types.EDIT_READER, { reader: data.data });
     } catch (e) {
       return e;
     }
   },
+
+  async editReader({ commit }, data) {
+    try {
+      commit(types.EDIT_READER, { reader: data });
+    } catch (e) {
+      return e;
+    }
+  },
+  
+  async removeReader({ commit }, id) {
+    try {
+      const { data } = await axios.delete(`/api/auth-reader/remove/${id}`);
+      console.log(data)
+
+      return data
+    } catch (e) {
+      return e;
+    }
+  },
+
+  isBannedChange(){
+    state.is_banned = !state.is_banned
+  },
+
+  isVisibleChange(){
+    state.visible = !state.visible
+  }
 
 };
