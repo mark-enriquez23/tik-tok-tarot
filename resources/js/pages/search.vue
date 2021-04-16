@@ -76,7 +76,19 @@ export default {
   methods: {
     getKey() {
         this.key = this.$route.query.key;
-        axios.post("/api/homepage/search-tool",{'key':this.key}).then(res=>{
+        // axios.post("/api/homepage/search-tool",{'key':this.key}).then(res=>{
+        //   console.log(res);
+        //   this.results = res.data;
+        //   if (!this.results.success) {
+        //     Swal.fire({
+        //       title: 'Search Failed',
+        //       text: "An error has occurred. Please try again.",
+        //       type: 'error'
+        //     })
+        //   }
+        // });
+
+        axios.post("/api/reader/search",{'search':this.key}).then(res=>{
           console.log(res);
           this.results = res.data;
           if (!this.results.success) {
