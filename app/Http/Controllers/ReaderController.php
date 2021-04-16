@@ -80,7 +80,7 @@ class ReaderController extends Controller
     // Will save detials or update
     public function fetchReaders()
     {
-        $user = User::where([['role_id', '2'], ['visible', 1]])->get();
+        $user = User::where([['role_id', '2']])->get();
 
         return response()->json([
             "success" => $user ? true : false,
@@ -91,7 +91,7 @@ class ReaderController extends Controller
     // Will save detials or update
     public function fetchReaderById($id)
     {
-        $user = User::where([['id', $id], ['visible', 1]])->first();
+        $user = User::where('id', $id)->first();
 
         return response()->json([
             "success" => $user ? true : false,
@@ -134,6 +134,28 @@ class ReaderController extends Controller
             "message"   => 'user has visibility updated',
             "data" => $user
         ]);
+    }
+
+    public function removeReader($id)
+    {
+        try {
+            $reader = User::where('id', $id)->first();
+            if (isset($reader)) {
+                $reader->delete();
+            }
+
+            return response()->json([
+                'success'   => isset($reader) ? true : false,
+                'message'   => isset($reader)?
+                    __('messages.removed') :
+                    __('messages.cant_removed')
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'success'   => false,
+                'message'   => $th
+            ]);
+        }
     }
 
 }

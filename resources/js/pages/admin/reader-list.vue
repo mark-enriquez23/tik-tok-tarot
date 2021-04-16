@@ -6,11 +6,11 @@
    <table class="table">
     <thead>
         <tr>
-        <th scope="col">#</th>
-        <th scope="col">Username</th>
-        <th scope="col">Name</th>
-        <th scope="col">Email</th>
-        <th scope="col">Action</th>
+          <th scope="col">#</th>
+          <th scope="col">Username</th>
+          <th scope="col">Name</th>
+          <th scope="col">Email</th>
+          <th scope="col">Action</th>
         </tr>
     </thead>
     <tbody>
@@ -19,7 +19,10 @@
             <td>{{ reader.username }}</td>
             <td>{{ reader.name }}</td>
             <td>{{ reader.email }}</td>
-            <td><a href="#" @click="view(reader.id)">Edit</a></td>
+            <td><div class="cursor-pointer link" @click="view(reader.id)">Edit</div></td>
+        </tr>
+        <tr>
+          <td colspan="5" class="text-center" v-if="readers.length <= 0">No Reader found</td>
         </tr>
     </tbody>
     </table>

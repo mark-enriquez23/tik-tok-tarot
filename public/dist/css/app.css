@@ -14125,6 +14125,14 @@ body.swal2-toast-column .swal2-toast .swal2-validation-message {
   opacity: 0;
 }
 
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.link {
+  color: #0056b3;
+}
+
 html,
 body {
   font-family: "Circular-Loom";
