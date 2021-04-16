@@ -43,7 +43,6 @@ class LoginController extends Controller
         $this->validate($request, [
             'email'     => 'required',
             'password'  => 'required',
-
         ]);
 
         $fieldType = filter_var($request->email, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';

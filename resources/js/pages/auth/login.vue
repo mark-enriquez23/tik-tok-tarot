@@ -63,6 +63,7 @@ import Form from 'vform'
 import LoginWithGithub from '~/components/LoginWithGithub'
 import VueHcaptcha from '@hcaptcha/vue-hcaptcha';
 import Cookies from "js-cookie";
+import { mapGetters } from 'vuex'
 
 const initializeData = () => ({
     form: new Form({
@@ -83,6 +84,10 @@ export default {
     LoginWithGithub,
     VueHcaptcha
   },
+
+  computed: mapGetters({
+    user: 'auth/user',
+  }),
 
   metaInfo () {
     return { title: this.$t('login') }
@@ -121,9 +126,18 @@ export default {
       // Fetch the user.
       await this.$store.dispatch('auth/fetchUser')
 
-      this.redirect();
-      // Redirect home.
-      // this.$router.push({ name: 'home' })
+      console.log(this.user);
+      if (this.user) {
+        if (this.user.role_id == '1') {
+          this.$router.push({ name: 'admin.readers' });
+        }else if(this.user.role_id == '2'){
+          // Redirect home.
+          this.$router.push({ name: 'home' })
+        }
+      }
+
+      
+      
     },
     redirect()
     {
