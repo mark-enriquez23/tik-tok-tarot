@@ -150,6 +150,7 @@ import LoginWithGithub from '~/components/LoginWithGithub'
 import VueHcaptcha from '@hcaptcha/vue-hcaptcha';
 import SecurityQuestion from '~/components/Register/SecurityQuestion'
 import VuePhoneNumberInput from 'vue-phone-number-input';
+import { swalOops } from '../../helpers/index';
 
 const initializeData = () => ({
     form: new Form({
@@ -215,7 +216,36 @@ export default {
       this.step--;
     },
     next() {
-      this.step++;
+      if (this.step == 0) {
+        // check username first
+       this.$store.dispatch('auth/validateUsername', this.form.username).then(({success, message}) => {
+         if (success) {
+           swalOops(message)
+         }else{
+           this.step++;
+         }
+       })
+      }else if(this.step == 1){
+         // check email first
+        this.$store.dispatch('auth/validateEmail', this.form.email).then(({success, message}) => {
+         if (success) {
+           swalOops(message)
+         }else{
+           // check password
+           if (this.form.password != this.form.password_confirmation) {
+              swalOops('Password not match')
+           }else{
+              this.$store.dispatch('auth/validatePassword', this.form).then(({success, message}) => {
+                if (success) {
+                  this.step++;
+                }
+            })
+           }
+         }
+       })
+      }
+      
+      
     },
     async register () {
       // Register the user.

@@ -2,8 +2,11 @@
 
 return [
 
-    'username_validated' => 'Username is valid',
-    'username_not_validated' => 'Username is not registered',
+    'invalid_username' => 'Username is already in use!',
+    'valid_username' => 'Username is available.',
+
+    'invalid_email' => 'Email is already in use!',
+    'valid_email' => 'Email is available.',
 
     // Phone Verification code
     'user_verified' => 'User successfully verified.',

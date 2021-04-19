@@ -192,8 +192,9 @@ Route::group(['middleware' => 'guest:api'], function () {
 
     // User api
     Route::group(['prefix' => 'user'], function () {
-        Route::post('/validate-username', 'Auth\UserController@validateUserName');
-        Route::post('/validate-email', 'Auth\UserController@validateEmail');
+        Route::get('/validate-username/{username}', 'Auth\UserController@validateUserName');
+        Route::get('/validate-email/{email}', 'Auth\UserController@validateEmail');
+        Route::post('/validate-password', 'Auth\UserController@validatePassword');
     });
 
     
