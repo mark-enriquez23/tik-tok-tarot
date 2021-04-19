@@ -110,6 +110,7 @@ Route::group(['prefix' => 'role'], function () {
 // Reader api
 Route::group(['prefix' => 'reader'], function () {
     Route::get('/fetch-readers', 'ReaderController@fetchReaders');
+    Route::get('/fetch-visible-readers', 'ReaderController@fetchVisibleReaders');
     Route::get('/fetch-featured-readers', 'ReaderController@fetchFeaturedReaders');
 });
 
