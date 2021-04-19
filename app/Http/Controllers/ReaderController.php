@@ -19,6 +19,7 @@ class ReaderController extends Controller
             $role = Role::where('name', 'reader')->first();
 
             $user = User::where('role_id', $role->id)
+            ->where('visible', 1)
             ->where('username','LIKE','%'.$search.'%')
             ->where('name','LIKE','%'.$search.'%')
             // ->orWhere('name','LIKE','%'.$search.'%')
@@ -81,6 +82,17 @@ class ReaderController extends Controller
     public function fetchReaders()
     {
         $user = User::where([['role_id', '2']])->get();
+
+        return response()->json([
+            "success" => $user ? true : false,
+            "data" => $user
+        ]);
+    }
+
+    // Will return visible readers
+    public function fetchVisibleReaders()
+    {
+        $user = User::where([['role_id', '2'], ['visible', 1]])->get();
 
         return response()->json([
             "success" => $user ? true : false,

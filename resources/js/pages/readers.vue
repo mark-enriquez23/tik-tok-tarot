@@ -82,7 +82,7 @@ export default {
   
   methods: {
     async fetchReaders() {
-        var readers = await axios.get("/api/reader/fetch-readers");
+        var readers = await axios.get("/api/reader/fetch-visible-readers");
         this.readers = readers.data;
         console.log(this.readers);
         if (!this.readers.success) {
