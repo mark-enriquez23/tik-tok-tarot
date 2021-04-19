@@ -18,9 +18,8 @@
             </div>
           </div>
 
-          <div class="col-lg-8">
+          <div class="col-lg-8" v-if="readers.data.length != 0">
             <div class="row">
-
               <div class="col-lg-6 mt-4 mt-lg-0" v-for="reader in readers.data" :key="reader.id">
                 <div class="member" data-aos="zoom-in" data-aos-delay="100">
                   <div class="pic"><img :src="testimonialImage5" class="img-fluid" alt=""></div>
@@ -32,9 +31,20 @@
                   </div>
                 </div>
               </div>
-
             </div>
           </div>
+
+          <div class="col-lg-8" v-else>
+            <div class="row">
+              <div class="col-lg-6 mt-4 mt-lg-0">
+                <div class="member" data-aos="zoom-in" data-aos-delay="100">
+                  <h3>No Data found</h3>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
         </div>
       </div>
     </section><!-- Readers Section -->
