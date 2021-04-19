@@ -106,16 +106,20 @@ class UploadController extends Controller
     }
 
     // approval tool
-    public function approveUpload(Request $request)
+    public function approveUpload($id)
     {
         // check if upload is already approved
-        $uploadApproval = UploadApproval::where('upload_id', $request->id)->first();
-
+        $uploadApproval = UploadApproval::where('id', $id)->first();
         $message = null;
         $success = false;
 
-        if ($uploadApproval->is_approved) {
-            $message = __('messages.upload_already_approved');
+        if ($uploadApproval->is_approved === 1) {
+            // disapproved the upload
+            $uploadApproval->is_approved = 0;
+            $uploadApproval->save();
+
+            $success = true;
+            $message = __('messages.upload_disapproved');
         }else{
             // approved the upload
             $uploadApproval->is_approved = 1;
@@ -126,16 +130,35 @@ class UploadController extends Controller
         }
 
         return response()->json([
-            'success' => true,
+            'success' => $success,
             'message' => $message,
             'data' => $uploadApproval
+        ]);
+    }
+
+    public function fetchPendingUploads()
+    {
+        $uploads = UploadApproval::with(['upload', 'user'])->get();
+
+        return response()->json([
+            'success'   => isset($uploads) ? true : false,
+            'data'      => $uploads
+        ]);
+    }
+
+    public function fetchPendingUploadById($id)
+    {
+        $upload = UploadApproval::where('id', $id)->with(['upload', 'user'])->first();
+
+        return response()->json([
+            'success'   => isset($upload) ? true : false,
+            'data'      => $upload
         ]);
     }
 
     // save and update upload
     public function save(Request $request)
     {
-        
         // url
         $upload = Upload::where('id', $request->id)->first();
 
