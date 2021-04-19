@@ -59,6 +59,36 @@ export const actions = {
     }
   },
 
+  async validateUsername ({ commit }, username) {
+    try {
+      const { data } = await axios.get(`/api/user/validate-username/${username}`)
+
+      return data
+    } catch (e) {
+      commit(types.FETCH_USER_FAILURE)
+    }
+  },
+
+  async validatePassword ({ commit }, form) {
+    try {
+      const { data } = await form.post(`/api/user/validate-password`)
+
+      return data
+    } catch (e) {
+      commit(types.FETCH_USER_FAILURE)
+    }
+  },
+
+  async validateEmail ({ commit }, email) {
+    try {
+      const { data } = await axios.get(`/api/user/validate-email/${email}`)
+
+      return data
+    } catch (e) {
+      commit(types.FETCH_USER_FAILURE)
+    }
+  },
+
   updateUser ({ commit }, payload) {
     commit(types.UPDATE_USER, payload)
   },

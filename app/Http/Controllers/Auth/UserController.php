@@ -33,8 +33,8 @@ class UserController extends Controller
         return response()->json([
             "success" => $user ? true : false,
             "message" => $user ? 
-                __('messages.username_validated') : 
-                __('messages.username_not_validated'),
+                __('messages.invalid_username') : 
+                __('messages.valid_username'),
             "data" => $user
         ]);
     }
@@ -52,11 +52,26 @@ class UserController extends Controller
         return response()->json([
             "success" => $user ? true : false,
             "message" => $user ? 
-                __('messages.email_found') : 
-                __('messages.email_not_found'),
+                __('messages.invalid_email') : 
+                __('messages.valid_email'),
             "data" => $user
         ]);
 
     }
 
+    public function validatePassword(Request $request)
+    {
+        // dd($request->password);
+        $validatorCustomMessage = array(
+            'password.regex' => "Password must contain the following: lowercase letter, capital (uppercase) letter, number, minimum 6 characters"
+        );
+
+        $this->validate($request, [
+	    	'password' => 'required|min:6|confirmed|regex:/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/',
+        ],  $validatorCustomMessage);
+
+        return response()->json([
+            'success'   => true
+        ]);
+    }
 }
