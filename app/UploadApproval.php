@@ -11,4 +11,14 @@ class UploadApproval extends Model
         'upload_id',
         'is_approved',
     ];
+
+    public function upload()
+    {
+        return $this->belongsTo('App\Upload');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo('App\User');
+    }
 }

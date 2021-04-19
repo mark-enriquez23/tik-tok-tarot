@@ -170,9 +170,12 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::group(['prefix' => 'upload'], function () {
         Route::post('/upload-video', 'UploadController@uploadVideo');
         Route::post('/save-review', 'UploadController@saveReview');
+        Route::get('/pending', 'UploadController@fetchPendingUploads');
+        Route::get('/approval-by-id/{id}', 'UploadController@fetchPendingUploadById');
+        Route::get('/approve/{id}', 'UploadController@approveUpload');
     });
 
-    // Upload api
+    // Reader api
     Route::group(['prefix' => 'auth-reader'], function () {
         Route::post('/update-reader', 'ReaderController@save');
         Route::post('/change-visibility', 'ReaderController@changeReaderVisibility');

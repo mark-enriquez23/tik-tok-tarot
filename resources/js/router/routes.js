@@ -37,7 +37,7 @@ export default [
   { path: '/reader/vlog', name: 'reader.vlog', component: page('reader/vlog/index.vue') },
 
   // Admin
-  { path: '/admin/readers', name: 'admin.readers', component: page('admin/reader-list.vue'), 
+  { path: '/admin/readers', name: 'admin.readers', component: page('admin/reader/reader-list.vue'), 
     // async beforeEnter(to, from, next) {
     //   const store = require('../store/index.js')
     //   try {
@@ -53,7 +53,13 @@ export default [
     //   }
     // }  
   },
-  { path: '/admin/reader-form/:id', name: 'admin.reader-form', component: page('admin/reader-form.vue'), 
+  { path: '/admin/reader-form/:id', name: 'admin.reader-form', component: page('admin/reader/reader-form.vue'), 
+  },
+
+  // uploa approval
+  { path: '/admin/upload-approvals', name: 'admin.upload-approvals', component: page('admin/video-approval-tool/approval-list.vue'), 
+  },
+  { path: '/admin/upload-approval/:id', name: 'admin.upload-approval', component: page('admin/video-approval-tool/approval-form.vue'), 
   },
   { path: '*', component: page('errors/404.vue') }
 ]
