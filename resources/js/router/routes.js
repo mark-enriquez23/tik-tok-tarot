@@ -1,4 +1,4 @@
-function page (path) {
+function page(path) {
   return () => import(/* webpackChunkName: '' */ `~/pages/${path}`).then(m => m.default || m)
 }
 
@@ -21,9 +21,16 @@ export default [
   { path: '/password/reset/:token', name: 'password.reset', component: page('auth/password/reset.vue') },
   { path: '/email/verify/:id', name: 'verification.verify', component: page('auth/verification/verify.vue') },
   { path: '/email/resend', name: 'verification.resend', component: page('auth/verification/resend.vue') },
-  { path: '/home', name: 'home', component: page('home.vue') },
+  { path: '/home', name: 'home', component: page('home.vue'),
+    meta          : {
+      requiresAuth: true,
+      role        : [2],
+      title       : 'Home'
+    }
+  },
   { path: '/user/verify', name: 'user.verify', component: page('user/verify.vue') },
-  { path: '/settings',
+  {
+    path: '/settings',
     component: page('settings/index.vue'),
     children: [
       { path: '**', redirect: { name: 'settings.profile' } },
@@ -37,29 +44,39 @@ export default [
   { path: '/reader/vlog', name: 'reader.vlog', component: page('reader/vlog/index.vue') },
 
   // Admin
-  { path: '/admin/readers', name: 'admin.readers', component: page('admin/reader/reader-list.vue'), 
-    // async beforeEnter(to, from, next) {
-    //   const store = require('../store/index.js')
-    //   try {
-    //     var hasPermission = await store.dispatch("auth/fetchUser");
-    //     console.log(hasPermission);
-    //     if (hasPermission) {
-    //       next()
-    //     }
-    //   } catch (e) {
-    //     next({
-    //       name: "welcome" // back to safety route //
-    //     })
-    //   }
-    // }  
+  {
+    path: '/admin/readers', name: 'admin.readers', component: page('admin/reader/reader-list.vue'),
+    meta          : {
+      requiresAuth: true,
+      role        : [1],
+      title       : 'Readers'
+    }
   },
-  { path: '/admin/reader-form/:id', name: 'admin.reader-form', component: page('admin/reader/reader-form.vue'), 
+  {
+    path: '/admin/reader-form/:id', name: 'admin.reader-form', component: page('admin/reader/reader-form.vue'),
+    meta          : { 
+      requiresAuth: true, 
+      role        : [1], 
+      title       : 'Reader' 
+    }
   },
 
   // uploa approval
-  { path: '/admin/upload-approvals', name: 'admin.upload-approvals', component: page('admin/video-approval-tool/approval-list.vue'), 
+  {
+    path: '/admin/upload-approvals', name: 'admin.upload-approvals', component: page('admin/video-approval-tool/approval-list.vue'),
+    meta          : { 
+      requiresAuth: true, 
+      role        : [1], 
+      title       : 'Vlog Approvals' 
+    }
   },
-  { path: '/admin/upload-approval/:id', name: 'admin.upload-approval', component: page('admin/video-approval-tool/approval-form.vue'), 
+  {
+    path: '/admin/upload-approval/:id', name: 'admin.upload-approval', component: page('admin/video-approval-tool/approval-form.vue'),
+    meta          : { 
+      requiresAuth: true, 
+      role        : [1], 
+      title       : 'Vlog Approval' 
+    }
   },
   { path: '*', component: page('errors/404.vue') }
 ]

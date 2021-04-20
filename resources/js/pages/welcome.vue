@@ -352,7 +352,7 @@ export default {
 
   created(){
     this.fetchVlogs(),
-    this.fetchTestimonials()
+    this.fetchTestimonials(),
     this.fetchReaders(),
     this.fetchSessions(),
     this.fetchTotalSessions(),
@@ -385,7 +385,7 @@ export default {
   methods: {
       async subscribe() {
         const { data } = await this.form.post("/api/mailchimp/subscribe");
-        console.log(data);
+        // console.log(data);
         if (!data.success) {
           Swal.fire({
           title: 'Subscribing Failed',
@@ -404,7 +404,7 @@ export default {
     async fetchVlogs() {
         var vlogs = await axios.get("/api/upload/featured-vlogs");
         this.vlogs = vlogs.data;
-        console.log(this.vlogs);
+        // console.log(this.vlogs);
         if (!this.vlogs.success) {
           Swal.fire({
           title: 'Fetching Vlogs Failed',
@@ -417,7 +417,7 @@ export default {
     async fetchSessions() {
         var sessions = await axios.get("/api/homepage/live-sessions");
         this.sessions = sessions.data;
-        console.log("session",this.sessions);
+        // console.log("session",this.sessions);
         if (!this.sessions.success) {
           Swal.fire({
           title: 'Fetching Sessions Failed',
@@ -429,8 +429,8 @@ export default {
 
     async fetchTestimonials() {
         this.testimonials = await axios.get("/api/testimonial");
-        console.log(this.testimonials)
-        console.log(this.testimonials.data.data[0].user);
+        // console.log(this.testimonials)
+        // console.log(this.testimonials.data.data[0].user);
         if (!this.testimonials.data.success) {
           Swal.fire({
           title: 'Fetching Testimonials Failed',
@@ -442,7 +442,7 @@ export default {
 
     async fetchReaders() {
         this.readers = await axios.get("/api/reader/fetch-featured-readers");
-        console.log(this.readers);
+        // console.log(this.readers);
         if (!this.readers.data.success) {
           Swal.fire({
           title: 'Fetching Readers Failed',
