@@ -50,7 +50,7 @@
                 :width=75
                 class="mr-2"
                 :disabled="!isUpdating"
-                @change="isBannedChange(is_banned)"
+                @change="isBannedChange"
                 color="#bd2130"
         />
         <label>Visibility</label>
@@ -59,7 +59,7 @@
                 :height=32
                 :width=80
                 :disabled="!isUpdating"
-                @change="isVisibleChange(visible)"
+                @change="isVisibleChange"
         />
       </div>
 
@@ -123,11 +123,6 @@ export default {
   beforeMount () {
     let id = this.$route.params.id
     this.$store.dispatch("admin-reader/viewReader", id);
-
-    // this.$store.dispatch('auth/fetchUser');
-    //   if (!this.user){
-    //     this.$router.push({ name: 'home' })
-    //   }
   },
 
   methods: {
@@ -136,7 +131,6 @@ export default {
       this.readerForm.visible = this.visible;
 
       const { data } = await this.readerForm.post('/api/auth-reader/update-reader')
-      console.log(data.data);
       this.$store.dispatch('admin-reader/editReader', data.data)
       this.isUpdating = false;
     },
@@ -171,22 +165,13 @@ export default {
       })
     },    
 
-    isBannedChange(val){
-      if (val == 0){
-        this.$store.dispatch('admin-reader/isBannedChange',1)
-      }else{
-        this.$store.dispatch('admin-reader/isBannedChange',0)
-      }
+    isBannedChange(){
+      this.$store.dispatch('admin-reader/isBannedChange')
       console.log('changing')
     },
 
-    isVisibleChange(val){
-      console.log(val);
-      if (val == 0){
-        this.$store.dispatch('admin-reader/isVisibleChange',1)
-      }else{
-        this.$store.dispatch('admin-reader/isVisibleChange',0)
-      }
+    isVisibleChange(){
+        this.$store.dispatch('admin-reader/isVisibleChange')
     }
   }
 }

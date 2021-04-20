@@ -43,8 +43,7 @@ export default {
   components: {
   },
 
-  data: () => ({
-  }),
+  data: () => ({}),
 
   computed: mapGetters({
     user: 'auth/user',

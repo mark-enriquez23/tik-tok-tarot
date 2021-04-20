@@ -80,21 +80,12 @@ export const actions = {
     }
   },
 
-  isBannedChange(val){
-    if (val == 0){
-      state.is_banned = 0
-    }else{
-      state.is_banned = 1 
-    }
+  isBannedChange(){
+    state.is_banned = !state.is_banned 
   },
 
-  isVisibleChange(val){
-    if (val == 0){
-      state.visible = 0
-    }else if (val == 1){
-      state.visible = 1 
-    }
-    console.log(state.visible);
+  isVisibleChange(){
+    state.visible = !state.visible
   }
 
 
