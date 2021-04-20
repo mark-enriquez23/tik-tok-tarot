@@ -50,7 +50,7 @@
                 :width=75
                 class="mr-2"
                 :disabled="!isUpdating"
-                @change="isBannedChange"
+                @change="isBannedChange(is_banned)"
                 color="#bd2130"
         />
         <label>Visibility</label>
@@ -59,7 +59,7 @@
                 :height=32
                 :width=80
                 :disabled="!isUpdating"
-                @change="isVisibleChange"
+                @change="isVisibleChange(visible)"
         />
       </div>
 
@@ -136,7 +136,7 @@ export default {
       this.readerForm.visible = this.visible;
 
       const { data } = await this.readerForm.post('/api/auth-reader/update-reader')
- 
+      console.log(data.data);
       this.$store.dispatch('admin-reader/editReader', data.data)
       this.isUpdating = false;
     },
@@ -169,17 +169,24 @@ export default {
         })
         }
       })
-    },
+    },    
 
-    
-
-    isBannedChange(){
-      this.$store.dispatch('admin-reader/isBannedChange')
+    isBannedChange(val){
+      if (val == 0){
+        this.$store.dispatch('admin-reader/isBannedChange',1)
+      }else{
+        this.$store.dispatch('admin-reader/isBannedChange',0)
+      }
       console.log('changing')
     },
 
-    isVisibleChange(){
-      this.$store.dispatch('admin-reader/isVisibleChange')
+    isVisibleChange(val){
+      console.log(val);
+      if (val == 0){
+        this.$store.dispatch('admin-reader/isVisibleChange',1)
+      }else{
+        this.$store.dispatch('admin-reader/isVisibleChange',0)
+      }
     }
   }
 }
