@@ -124,10 +124,10 @@ export default {
     let id = this.$route.params.id
     this.$store.dispatch("admin-reader/viewReader", id);
 
-    this.$store.dispatch('auth/fetchUser');
-      if (!this.user){
-        this.$router.push({ name: 'home' })
-      }
+    // this.$store.dispatch('auth/fetchUser');
+    //   if (!this.user){
+    //     this.$router.push({ name: 'home' })
+    //   }
   },
 
   methods: {

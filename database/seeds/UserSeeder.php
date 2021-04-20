@@ -4,6 +4,7 @@ use Illuminate\Database\Seeder;
 use App\User;
 use App\FeaturedUser;
 use App\UserSecurityQuestion;
+use App\Credit;
 
 class UserSeeder extends Seeder
 {
@@ -69,33 +70,6 @@ class UserSeeder extends Seeder
                 'status'   => 'online',
                 'is_verified'   => 1,
             ],
-            [
-                'username'  => 'reader_two',
-                'name'      => 'Reader Two',
-                'email'     => 'reader_two@tiktok_tarot.com',
-                'password'  => bcrypt('reader2021'),
-                'role_id'   => 2,
-                'status'   => 'online',
-                'is_verified'   => 1,
-            ],
-            [
-                'username'  => 'reader_three',
-                'name'      => 'Reader Three',
-                'email'     => 'reader_three@tiktok_tarot.com',
-                'password'  => bcrypt('reader2021'),
-                'role_id'   => 2,
-                'status'   => 'online',
-                'is_verified'   => 1,
-            ],
-            [
-                'username'  => 'reader_four',
-                'name'      => 'Reader Four',
-                'email'     => 'reader_four@tiktok_tarot.com',
-                'password'  => bcrypt('reader2021'),
-                'role_id'   => 2,
-                'status'   => 'online',
-                'is_verified'   => 1,
-            ],
         ];
 
         // Note role index is only an identifier on loop
@@ -136,6 +110,11 @@ class UserSeeder extends Seeder
 
                 $userSecurity = UserSecurityQuestion::create($qd);
             }
+
+            // Create Initial Credit
+            $credit = Credit::create([
+                'user_id'   => $registeredUser->id,
+            ]);
         }
     }
 }

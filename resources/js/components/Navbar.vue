@@ -52,10 +52,9 @@
 
   </nav>
 
-  <nav class="navbar navbar-expand-lg navbar-light bg-white">
+  <nav class="navbar navbar-expand-lg navbar-light bg-white" v-if="!isLoggedIn">
     <div class="container">
-    
-
+  
     <form class="form-inline col-8 col-md-4 px-0" action="" method="post" @submit.prevent="siteSearch">
         <input v-model="searchForm['key']" class="form-control mr-sm-2 w-50" type="text" name="reader" placeholder="Search Site" aria-label="Search" >
         <v-button class="btn btn-danger" :disabled="!searchForm.key">Search</v-button>
@@ -117,6 +116,42 @@
       </div>
     </div>
   </nav>
+
+  <!-- Dashboard Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-white" v-if="isLoggedIn">
+    <div class="container">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false">
+        <span class="navbar-toggler-icon" />
+      </button>
+
+      <!-- Admin Navbar -->
+      <div id="navbarToggler" class="collapse navbar-collapse" v-if="roleId == 1">
+        <ul class="navbar-nav ml-auto ">
+            <li class="nav-item">
+              <router-link :to="{ name: 'admin.readers' }" class="nav-link" active-class="active">
+                Readers
+              </router-link>
+            </li>
+            <li class="nav-item">
+              <router-link :to="{ name: 'admin.upload-approvals' }" class="nav-link" active-class="active">
+                Pending Uploads
+              </router-link>
+            </li>
+        </ul>
+      </div>
+
+      <!-- Reader Navbar -->
+      <div id="navbarToggler" class="collapse navbar-collapse" v-if="roleId == 2">
+        <ul class="navbar-nav ml-auto ">
+            <li class="nav-item">
+              <router-link :to="{ name: 'home' }" class="nav-link" active-class="active">
+                Home
+              </router-link>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
 </div>
 </template>
 
@@ -138,7 +173,9 @@ export default {
     searchForm: new Form({
       key: null
     }),
-    results:[]
+    results:[],
+    isLoggedIn: false,
+    roleId: null
   }),
 
   computed: mapGetters({
@@ -146,6 +183,14 @@ export default {
   }),
 
   mounted() {
+    
+    // check if have user logged in
+    if (this.user) {
+
+      // check role of logged in user
+      this.isLoggedIn = true
+      this.roleId = this.user.role_id
+    }
   },
 
   methods: {

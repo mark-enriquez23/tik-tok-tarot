@@ -183,6 +183,12 @@ Route::group(['middleware' => 'auth:api'], function () {
         Route::get('/fetch-reader-by-id/{id}', 'ReaderController@fetchReaderById');
         Route::delete('/remove/{id}', 'ReaderController@removeReader');
     });
+
+    // Credits
+    Route::group(['prefix' => 'credit'], function () {
+        Route::post('/save', 'CreditController@save');
+       
+    });
 });
 
 // Public routes
