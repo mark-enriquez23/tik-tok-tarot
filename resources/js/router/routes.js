@@ -78,5 +78,21 @@ export default [
       title       : 'Vlog Approval' 
     }
   },
+  {
+    path: '/admin/user-credits', name: 'admin.user-credits', component: page('admin/credit/credit-list.vue'),
+    meta          : { 
+      requiresAuth: true, 
+      role        : [1], 
+      title       : 'Credits' 
+    }
+  },
+  {
+    path: '/admin/user-credit/:id', name: 'admin.user-credit', component: page('admin/credit/credit-form.vue'),
+    meta          : { 
+      requiresAuth: true, 
+      role        : [1], 
+      title       : 'Credit' 
+    }
+  },
   { path: '*', component: page('errors/404.vue') }
 ]
