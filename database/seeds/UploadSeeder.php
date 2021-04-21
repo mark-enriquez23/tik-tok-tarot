@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use App\Upload;
+use App\UploadApproval;
 
 class UploadSeeder extends Seeder
 {
@@ -116,6 +117,14 @@ class UploadSeeder extends Seeder
         
         foreach ($datas as $data) {
             $upload = Upload::create($data);
+
+            // create upload_approval data
+            $approvelData = [
+                'user_id' => $data['user_id'],
+                'upload_id' => $upload->id,
+            ];
+
+            $uploadApproval = UploadApproval::create($approvelData);
         }
         
     }
