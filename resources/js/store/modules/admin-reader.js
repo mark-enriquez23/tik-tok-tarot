@@ -81,11 +81,13 @@ export const actions = {
   },
 
   isBannedChange(){
-    state.is_banned = !state.is_banned
+    state.is_banned = !state.is_banned 
   },
 
   isVisibleChange(){
     state.visible = !state.visible
   }
+
+
 
 };

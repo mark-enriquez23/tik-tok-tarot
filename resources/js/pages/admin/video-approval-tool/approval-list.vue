@@ -14,17 +14,33 @@
         </tr>
     </thead>
     <tbody>
-        <tr v-for="u in uploads" :key="u.id">
+        <!-- <tr v-for="u in uploads" :key="u.id">
             <th scope="row">{{u.id}}</th>
             <td>{{ u.user.name }}</td>  
             <td>{{ u.user.email }}</td>
             <td>{{ u.upload.name }}</td>
             <td :class="u.is_approved ? 'text-success' : 'text-danger'">{{ u.is_approved ? 'Approved' : 'Pending' }}</td>
             <td><div class="cursor-pointer link" @click="view(u.id)">Manage</div></td>
+        </tr> -->
+        <tr >
+            <th scope="row">2</th>
+            <td>Reader</td>  
+            <td>Reader@temp-mail.com</td>
+            <td>Sample Video</td>
+            <td>Approved</td>
+            <td><div class="cursor-pointer link" @click="view(u.id)">Manage</div></td>
         </tr>
-        <tr>
+        <tr >
+            <th scope="row">3</th>
+            <td>Reader3</td>  
+            <td>Reader3@temp-mail.com</td>
+            <td>Sample Video 2</td>
+            <td>Approved</td>
+            <td><div class="cursor-pointer link" @click="view(u.id)">Manage</div></td>
+        </tr>
+        <!-- <tr>
           <td colspan="7" class="text-center" v-if="uploads ? uploads.length <= 0 : false">No Pending Uploads</td>
-        </tr>
+        </tr> -->
     </tbody>
     </table>
   </card>
@@ -43,8 +59,7 @@ export default {
   components: {
   },
 
-  data: () => ({
-  }),
+  data: () => ({}),
 
   computed: mapGetters({
     user: 'auth/user',
