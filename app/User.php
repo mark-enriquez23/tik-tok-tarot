@@ -136,4 +136,9 @@ class User extends Authenticatable implements JWTSubject //, MustVerifyEmail
     public function uploads(){
         return $this->hasMany('App\Upload');
     }
+
+    public function credit()
+    {
+        return $this->hasOne('App\Credit');
+    }
 }

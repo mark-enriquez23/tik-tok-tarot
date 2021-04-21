@@ -123,11 +123,6 @@ export default {
   beforeMount () {
     let id = this.$route.params.id
     this.$store.dispatch("admin-reader/viewReader", id);
-
-    // this.$store.dispatch('auth/fetchUser');
-    //   if (!this.user){
-    //     this.$router.push({ name: 'home' })
-    //   }
   },
 
   methods: {
@@ -136,7 +131,6 @@ export default {
       this.readerForm.visible = this.visible;
 
       const { data } = await this.readerForm.post('/api/auth-reader/update-reader')
- 
       this.$store.dispatch('admin-reader/editReader', data.data)
       this.isUpdating = false;
     },
@@ -169,9 +163,7 @@ export default {
         })
         }
       })
-    },
-
-    
+    },    
 
     isBannedChange(){
       this.$store.dispatch('admin-reader/isBannedChange')
@@ -179,7 +171,7 @@ export default {
     },
 
     isVisibleChange(){
-      this.$store.dispatch('admin-reader/isVisibleChange')
+        this.$store.dispatch('admin-reader/isVisibleChange')
     }
   }
 }

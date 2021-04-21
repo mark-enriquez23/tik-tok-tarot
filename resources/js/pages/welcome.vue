@@ -352,7 +352,7 @@ export default {
 
   created(){
     this.fetchVlogs(),
-    this.fetchTestimonials()
+    this.fetchTestimonials(),
     this.fetchReaders(),
     this.fetchSessions(),
     this.fetchTotalSessions(),
@@ -385,7 +385,7 @@ export default {
   methods: {
       async subscribe() {
         const { data } = await this.form.post("/api/mailchimp/subscribe");
-        console.log(data);
+        // console.log(data);
         if (!data.success) {
           Swal.fire({
           title: 'Subscribing Failed',
@@ -404,85 +404,85 @@ export default {
     async fetchVlogs() {
         var vlogs = await axios.get("/api/upload/featured-vlogs");
         this.vlogs = vlogs.data;
-        console.log(this.vlogs);
-        if (!this.vlogs.success) {
-          Swal.fire({
-          title: 'Fetching Vlogs Failed',
-          text: "An error has occurred. Please try again.",
-          type: 'error'
-        })
-      }
+        // console.log(this.vlogs);
+        // if (!this.vlogs.success) {
+        //   Swal.fire({
+        //   title: 'Fetching Vlogs Failed',
+        //   text: "An error has occurred. Please try again.",
+        //   type: 'error'
+        // })
+      //}
     },
 
     async fetchSessions() {
         var sessions = await axios.get("/api/homepage/live-sessions");
         this.sessions = sessions.data;
-        console.log("session",this.sessions);
-        if (!this.sessions.success) {
-          Swal.fire({
-          title: 'Fetching Sessions Failed',
-          text: "An error has occurred. Please try again.",
-          type: 'error'
-        })
-      }
+        // console.log("session",this.sessions);
+        // if (!this.sessions.success) {
+        //   Swal.fire({
+        //   title: 'Fetching Sessions Failed',
+        //   text: "An error has occurred. Please try again.",
+        //   type: 'error'
+        // })
+      //}
     },
 
     async fetchTestimonials() {
         this.testimonials = await axios.get("/api/testimonial");
-        console.log(this.testimonials)
-        console.log(this.testimonials.data.data[0].user);
-        if (!this.testimonials.data.success) {
-          Swal.fire({
-          title: 'Fetching Testimonials Failed',
-          text: "An error has occurred. Please try again.",
-          type: 'error'
-        })
-      }
+        // console.log(this.testimonials)
+        // console.log(this.testimonials.data.data[0].user);
+        // if (!this.testimonials.data.success) {
+        //   Swal.fire({
+        //   title: 'Fetching Testimonials Failed',
+        //   text: "An error has occurred. Please try again.",
+        //   type: 'error'
+        // })
+      //}
     },
 
     async fetchReaders() {
         this.readers = await axios.get("/api/reader/fetch-featured-readers");
-        console.log(this.readers);
-        if (!this.readers.data.success) {
-          Swal.fire({
-          title: 'Fetching Readers Failed',
-          text: "An error has occurred. Please try again.",
-          type: 'error'
-        })
-      }
+        // console.log(this.readers);
+        // if (!this.readers.data.success) {
+        //   Swal.fire({
+        //   title: 'Fetching Readers Failed',
+        //   text: "An error has occurred. Please try again.",
+        //   type: 'error'
+        // })
+      //}
     },
 
     async fetchTotalSessions() {
         this.totalSession = await axios.get("/api/homepage/live-sessions");
-        if (!this.totalSession.data.success) {
-          Swal.fire({
-          title: 'Fetching Total Session Failed',
-          text: "An error has occurred. Please try again.",
-          type: 'error'
-        })
-      }
+        // if (!this.totalSession.data.success) {
+        //   Swal.fire({
+        //   title: 'Fetching Total Session Failed',
+        //   text: "An error has occurred. Please try again.",
+        //   type: 'error'
+        // })
+      //}
     },
 
     async fetchTotalVlogs() {
         this.totalVlogs = await axios.get("/api/homepage/vlogs");
-        if (!this.totalVlogs.data.success) {
-          Swal.fire({
-          title: 'Fetching Total Vlogs Failed',
-          text: "An error has occurred. Please try again.",
-          type: 'error'
-        })
-      }
+        // if (!this.totalVlogs.data.success) {
+        //   Swal.fire({
+        //   title: 'Fetching Total Vlogs Failed',
+        //   text: "An error has occurred. Please try again.",
+        //   type: 'error'
+        // })
+      //}
     },
 
     async fetchTotalViewers() {
         this.totalViewers = await axios.get("/api/homepage/current-viewers");
-        if (!this.totalViewers.data.success) {
-          Swal.fire({
-          title: 'Fetching Total Viewers Failed',
-          text: "An error has occurred. Please try again.",
-          type: 'error'
-        })
-      }
+        // if (!this.totalViewers.data.success) {
+        //   Swal.fire({
+        //   title: 'Fetching Total Viewers Failed',
+        //   text: "An error has occurred. Please try again.",
+        //   type: 'error'
+        // })
+      //}
      },
 
     getDescription(desc){
