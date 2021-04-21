@@ -174,6 +174,7 @@ Route::group(['middleware' => 'auth:api'], function () {
         Route::get('/pending', 'UploadController@fetchPendingUploads');
         Route::get('/approval-by-id/{id}', 'UploadController@fetchPendingUploadById');
         Route::get('/approve/{id}', 'UploadController@approveUpload');
+        Route::get('/disapprove/{id}', 'UploadController@disApproveUpload');
     });
 
     // Reader api

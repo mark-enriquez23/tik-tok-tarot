@@ -113,20 +113,45 @@ class UploadController extends Controller
         $message = null;
         $success = false;
 
-        if ($uploadApproval->is_approved === 1) {
+        if ($uploadApproval) {
+            // disapproved the upload
+            $uploadApproval->is_approved = 1;
+            $uploadApproval->is_pending = 0;
+            $uploadApproval->save();
+
+            $success = true;
+            $message = __('messages.upload_approved');
+        }else{
+            $success = false;
+            $message = __('messages.upload_not_found');
+        }
+
+        return response()->json([
+            'success' => $success,
+            'message' => $message,
+            'data' => $uploadApproval
+        ]);
+    }
+
+    // disapproved tool
+    public function disApproveUpload($id)
+    {
+        // check if upload is already approved
+        $uploadApproval = UploadApproval::where('id', $id)->first();
+        $message = null;
+        $success = false;
+
+        if ($uploadApproval) {
             // disapproved the upload
             $uploadApproval->is_approved = 0;
+            $uploadApproval->is_pending = 0;
             $uploadApproval->save();
 
             $success = true;
             $message = __('messages.upload_disapproved');
         }else{
-            // approved the upload
-            $uploadApproval->is_approved = 1;
-            $uploadApproval->save();
-
-            $success = true;
-            $message = __('messages.upload_approved');
+            $success = false;
+            $message = __('messages.upload_not_found');
         }
 
         return response()->json([
