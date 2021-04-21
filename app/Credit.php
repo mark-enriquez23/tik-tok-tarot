@@ -11,4 +11,9 @@ class Credit extends Model
         'points',
         'metadata'
     ];
+
+    public function user()
+    {
+        return $this->belongsTO('App\User');
+    }
 }
