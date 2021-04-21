@@ -64,13 +64,26 @@ export const actions = {
 	    try {
 				const { data } = await axios.get(`/api/upload/approve/${id}`);
 				console.log(data)
-	      // commit(types.EDIT_READER, { reader: data });
+	      	// commit(types.EDIT_READER, { reader: data });
 
 				return data
 	    } catch (e) {
 	      return e;
 	    }
-	  },
+	 },
+
+	  async updateUploadReject({ commit }, id) {
+			console.log(id)
+		try {
+				const { data } = await axios.get(`/api/upload/disapprove/${id}`);
+				console.log(data)
+	  		// commit(types.EDIT_READER, { reader: data });
+
+				return data
+		} catch (e) {
+	  	  return e;
+		}
+  	},
 
 	//   async removeReader({ commit }, id) {
 	//     try {

@@ -116,7 +116,7 @@ class UploadController extends Controller
         if ($uploadApproval) {
             // disapproved the upload
             $uploadApproval->is_approved = 1;
-            $uploadApproval->is_pending = 0;
+            $uploadApproval->is_pending = 1;
             $uploadApproval->save();
 
             $success = true;
@@ -144,7 +144,7 @@ class UploadController extends Controller
         if ($uploadApproval) {
             // disapproved the upload
             $uploadApproval->is_approved = 0;
-            $uploadApproval->is_pending = 0;
+            $uploadApproval->is_pending = 1;
             $uploadApproval->save();
 
             $success = true;

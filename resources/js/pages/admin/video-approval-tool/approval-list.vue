@@ -19,7 +19,8 @@
             <td>{{ u.user.name }}</td>  
             <td>{{ u.user.email }}</td>
             <td>{{ u.upload.name }}</td>
-            <td :class="u.is_approved ? 'text-success' : 'text-danger'">{{ u.is_approved ? 'Approved' : 'Pending' }}</td>
+            <td v-if='u.is_pending == 0' class="text-danger">Pending</td>
+            <td v-else :class="u.is_approved ? 'text-success' : 'text-danger'">{{ u.is_approved ? 'Approved' : 'Rejected' }}</td>
             <td><div class="cursor-pointer link" @click="view(u.id)">Manage</div></td>
         </tr>
         <tr>
