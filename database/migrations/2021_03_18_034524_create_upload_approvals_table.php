@@ -17,6 +17,7 @@ class CreateUploadApprovalsTable extends Migration
             $table->id();
             $table->bigInteger('user_id');
             $table->bigInteger('upload_id');
+            $table->tinyInteger('is_pending')->default(0);
             $table->tinyInteger('is_approved')->default(0);
             $table->timestamps();
         });
