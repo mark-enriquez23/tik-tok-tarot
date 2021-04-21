@@ -137,6 +137,11 @@
                 Pending Uploads
               </router-link>
             </li>
+            <li class="nav-item">
+              <router-link :to="{ name: 'admin.user-credits' }" class="nav-link" active-class="active">
+                Credits
+              </router-link>
+            </li>
         </ul>
       </div>
 

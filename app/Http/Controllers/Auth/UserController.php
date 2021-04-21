@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\User;
 use App\FeaturedUser;
+use App\Credit;
 
 class UserController extends Controller
 {
@@ -72,6 +73,26 @@ class UserController extends Controller
 
         return response()->json([
             'success'   => true
+        ]);
+    }
+
+    public function userCredit()
+    {
+        $credits = User::where('role_id', '<>', '1')->with(['credit'])->get();
+
+        return response()->json([
+            'success'   => true,
+            'data'      => $credits
+        ]);
+    }
+
+    public function userCreditById($id)
+    {
+        $credit = Credit::where('id', $id)->with(['user'])->first();
+
+        return response()->json([
+            'success'   => true,
+            'data'      => $credit
         ]);
     }
 }

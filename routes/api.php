@@ -187,7 +187,8 @@ Route::group(['middleware' => 'auth:api'], function () {
     // Credits
     Route::group(['prefix' => 'credit'], function () {
         Route::post('/save', 'CreditController@save');
-       
+        Route::get('/list', 'Auth\UserController@userCredit');
+        Route::get('/list-by-id/{id}', 'Auth\UserController@userCreditById');
     });
 });
 
