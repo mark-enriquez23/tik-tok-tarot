@@ -12,7 +12,9 @@ export const state = {
     username: '',
     name: '',
     phone_number: '',
-    email: ''
+    email: '',
+    is_banned: 0,
+    visible: 0,
   }),
   is_banned: 0,
   visible: 1,
@@ -34,8 +36,8 @@ export const mutations = {
 
   [types.EDIT_READER](state, { reader }) {
     state.readerForm.fill(reader)
-    state.readerForm.is_banned = reader.is_banned
-    state.readerForm.visible = reader.visible
+    // state.readerForm.is_banned = reader.is_banned
+    // state.readerForm.visible = reader.visible
   },
 };
 
@@ -55,15 +57,19 @@ export const actions = {
     try {
       const { data } = await axios.get(`/api/auth-reader/fetch-reader-by-id/${id}`);
 
+      console.log(data.data);
       commit(types.EDIT_READER, { reader: data.data });
     } catch (e) {
       return e;
     }
   },
 
-  async editReader({ commit }, data) {
+  async editReader({ commit }, reader) {
     try {
-      commit(types.EDIT_READER, { reader: data });
+      const { data } = await axios.post('/api/auth-reader/update-reader',reader)
+
+      commit(types.EDIT_READER, { reader: data.data });
+      return data;
     } catch (e) {
       return e;
     }
@@ -82,10 +88,12 @@ export const actions = {
 
   isBannedChange(){
     state.is_banned = !state.is_banned 
+    console.log(state.is_banned);
   },
 
   isVisibleChange(){
     state.visible = !state.visible
+    console.log(state.visible);
   }
 
 

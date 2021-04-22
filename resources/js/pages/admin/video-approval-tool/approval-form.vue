@@ -47,18 +47,27 @@
 			<!-- Status -->
       <div class="form-group col-md-7 mx-auto">
         <label>Status</label><br>
-        <label :class="uploadData.is_approved ? 'text-success' : 'text-danger'">{{ uploadData.is_approved ? 'Approved' : 'Pending' }}</label>
+        <label v-if='uploadData.is_pending == 0' class="text-danger">Pending</label>
+        <label v-else :class="uploadData.is_approved ? 'text-success' : 'text-danger'">{{ uploadData.is_approved ? 'Approved' : 'Rejected' }}</label>
       </div>
 
-      <!-- Approve Button -->
-       <div class="form-group row col-md-7 mx-auto mt-3">
+      <!-- Update Button -->
+      <div v-if='uploadData.is_pending == 0' class="form-group row col-md-7 mx-auto mt-3">
         <div class="col-md-6 px-0 pl-lg-1 ml-md-auto">
-          <!-- Update Button -->
-          <button class="btn w-100" :class="uploadData.is_approved ? 'btn-danger' : 'btn-primary'" @click="update">
-            {{ uploadData.is_approved ? 'Disapprove' : 'Approve' }}
-          </button>
+          <button class="btn w-100 btn-danger" @click="reject">Reject</button>
+        </div>
+        <div class="col-md-6 px-0 pl-lg-1 ml-md-auto">
+          <button class="btn w-100 btn-primary" @click="approve">Approve</button>
         </div>
       </div>
+
+      <div v-else class="form-group row col-md-7 mx-auto mt-3">
+        <div class="col-md-6 px-0 pl-lg-1 ml-md-auto">
+          <button class="btn w-100" :class="uploadData.is_approved ? 'btn-danger' : 'btn-primary'" @click="update">
+            {{ uploadData.is_approved ? 'Reject' : 'Approve' }}</button>
+        </div>
+      </div>
+
 		</div>
   </card>
 </template>
@@ -96,29 +105,63 @@ export default {
 	},
 
   methods: {
-    async update () {
-			let id = this.$route.params.id
-			console.log(id)
-      Swal.fire({
-        title: 'Are you sure?',
-        text: "You wan't to approve this!",
-        icon: 'warning',
-        confirmButtonColor: '#3085d6',
-        confirmButtonText: 'Yes'
-      })
-      .then((result) => {
-				if (result) {
-					this.$store.dispatch('admin-upload-approval/updateUploadApproval', id).then(({success, message}) => {
-						if (success) {
-							swalSuccess(message).then(() =>{
-								this.$router.push({ name: 'admin.upload-approvals' })
-							})
-						}
-					})
-				}
-        
-      })
+    async update() {
+      if (this.uploadData.is_approved){
+        this.reject()
+      }else{
+        this.approve()
+      }
+			
     },
+
+    async reject() {
+        console.log("Reject")
+        let id = this.$route.params.id
+			  console.log(id)
+        Swal.fire({
+          title: 'Are you sure?',
+          text: "You are about to reject this video.",
+          icon: 'warning',
+          confirmButtonColor: '#3085d6',
+          confirmButtonText: 'Yes'
+        })
+        .then((result) => {
+				  if (result) {
+					  this.$store.dispatch('admin-upload-approval/updateUploadReject', id).then(({success, message}) => {
+						  if (success) {
+							  swalSuccess("Video has been rejected.").then(() =>{
+								  this.$router.push({ name: 'admin.upload-approvals' })
+							  })
+						  }
+					  })
+				  }
+        })			
+    },
+
+    async approve() {
+        console.log("Approve")
+         let id = this.$route.params.id
+			  console.log(id)
+        Swal.fire({
+          title: 'Are you sure?',
+          text: "You are about to approve this video.",
+          icon: 'warning',
+          confirmButtonColor: '#3085d6',
+          confirmButtonText: 'Yes'
+        })
+        .then((result) => {
+				  if (result) {
+					  this.$store.dispatch('admin-upload-approval/updateUploadApproval', id).then(({success, message}) => {
+						  if (success) {
+							  swalSuccess("Video has been approved.").then(() =>{
+								  this.$router.push({ name: 'admin.upload-approvals' })
+							  })
+						  }
+					  })
+				  }
+        })
+    },
+
   }
 }
 </script>

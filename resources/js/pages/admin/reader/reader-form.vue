@@ -13,7 +13,7 @@
     </div>
     <hr>
     <form @submit.prevent="update" @keydown="readerForm.onKeydown($event)">
-      <alert-success :form="readerForm" message="Reader info has been updated!" />
+      <!-- <alert-success :form="readerForm" message="Reader info has been updated!" /> -->
 
       <!-- Username -->
       <div class="form-group col-md-7 mx-auto">
@@ -44,7 +44,7 @@
       </div>
       <div class="form-group col-md-7 mx-auto">
         <label>Banning</label>
-        <toggle-button :value="is_banned == 1 ? true : false"
+        <toggle-button :value="readerForm.is_banned == 1 ? true : false"
                :labels="{checked: 'Ban', unchecked: 'Unban'}"
                 :height=32       
                 :width=75
@@ -54,7 +54,7 @@
                 color="#bd2130"
         />
         <label>Visibility</label>
-        <toggle-button :value="visible == 1 ? true : false"
+        <toggle-button :value="readerForm.visible == 1 ? true : false"
                :labels="{checked: 'Visible', unchecked: 'Hidden'}"
                 :height=32
                 :width=80
@@ -127,12 +127,38 @@ export default {
 
   methods: {
     async update () {
-      this.readerForm.is_banned = this.is_banned;
-      this.readerForm.visible = this.visible;
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "You are about to update this reader",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Confirm'
+      }).then((result) => {
+        console.log(result.value);
+        if (result.value) {
+          console.log(this.is_banned);
+          if (this.is_banned == 0 || this.is_banned == false)
+            this.readerForm.is_banned = 0;
+          else if (this.is_banned == 1 || this.is_banned == true)
+            this.readerForm.is_banned = 1;
 
-      const { data } = await this.readerForm.post('/api/auth-reader/update-reader')
-      this.$store.dispatch('admin-reader/editReader', data.data)
-      this.isUpdating = false;
+          console.log(this.visible);
+          if (this.visible == 1 || this.visible == true)
+            this.readerForm.visible = 1;
+          else if (this.visible == 0 || this.visible == false)
+            this.visible = 0;
+          
+          this.$store.dispatch('admin-reader/editReader', this.readerForm).then(({success, message}) => {
+          if (success) {
+            swalSuccess("Reader Updated").then(() =>{
+               this.isUpdating = false;
+            })
+          }
+        })
+        }
+      })
     },
 
     cancelUpdate() {
