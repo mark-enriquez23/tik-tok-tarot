@@ -44,23 +44,29 @@
       </div>
       <div class="form-group col-md-7 mx-auto">
         <label>Banning</label>
-        <toggle-button :value="readerForm.is_banned == 1 ? true : false"
-               :labels="{checked: 'Ban', unchecked: 'Unban'}"
+        <InputSwitch v-model="sync_banned" class="mr-2" :disabled="!isUpdating" />
+        <!-- <toggle-button 
+                :value="readerForm.is_banned == 1 ? true : false"
+                :sync="sync_banned"
+                :labels="{checked: 'Ban', unchecked: 'Unban'}"
                 :height=32       
                 :width=75
                 class="mr-2"
                 :disabled="!isUpdating"
                 @change="isBannedChange"
                 color="#bd2130"
-        />
+        /> -->
         <label>Visibility</label>
-        <toggle-button :value="readerForm.visible == 1 ? true : false"
-               :labels="{checked: 'Visible', unchecked: 'Hidden'}"
+        <InputSwitch v-model="sync_visible" class="mr-2" :disabled="!isUpdating" />
+        <!-- <toggle-button 
+                :value="readerForm.visible == 1 ? true : false"
+                :sync="sync_visible"
+                :labels="{checked: 'Visible', unchecked: 'Hidden'}"
                 :height=32
                 :width=80
                 :disabled="!isUpdating"
                 @change="isVisibleChange"
-        />
+        /> -->
       </div>
 
       <!-- Submit Button -->
@@ -98,6 +104,7 @@ import Form from 'vform'
 import { mapGetters } from 'vuex'
 import { swalOops, swalSuccess } from "~/helpers"
 import Swal from 'sweetalert2';
+import InputSwitch from 'primevue/inputswitch';
 
 export default {
   scrollToTop: false,
@@ -107,10 +114,13 @@ export default {
   },
 
   components: {
+    InputSwitch
   },
 
   data: () => ({
     isUpdating: false,
+    sync_banned: false,
+    sync_visible: false,
   }),
 
   computed: mapGetters({
@@ -122,7 +132,12 @@ export default {
 
   beforeMount () {
     let id = this.$route.params.id
-    this.$store.dispatch("admin-reader/viewReader", id);
+    this.$store.dispatch("admin-reader/viewReader", id).then(()=>{
+      console.log(this.readerForm.is_banned)
+      this.sync_banned = this.readerForm.is_banned === 1 ? true : false
+      console.log(this.sync_banned)
+      this.sync_visible = this.readerForm.visible === 1 ? true : false
+    });
   },
 
   methods: {
@@ -138,16 +153,16 @@ export default {
       }).then((result) => {
         console.log(result.value);
         if (result.value) {
-          console.log(this.is_banned);
-          if (this.is_banned == 0 || this.is_banned == false)
+          console.log(this.sync_banned);
+          if (this.sync_banned == 0 || this.sync_banned == false)
             this.readerForm.is_banned = 0;
-          else if (this.is_banned == 1 || this.is_banned == true)
+          else if (this.sync_banned == 1 || this.sync_banned == true)
             this.readerForm.is_banned = 1;
 
           console.log(this.visible);
-          if (this.visible == 1 || this.visible == true)
+          if (this.sync_visible == 1 || this.sync_visible == true)
             this.readerForm.visible = 1;
-          else if (this.visible == 0 || this.visible == false)
+          else if (this.sync_visible == 0 || this.sync_visible == false)
             this.visible = 0;
           
           this.$store.dispatch('admin-reader/editReader', this.readerForm).then(({success, message}) => {
@@ -192,12 +207,14 @@ export default {
     },    
 
     isBannedChange(){
+      this.sync_banned = false
       this.$store.dispatch('admin-reader/isBannedChange')
       console.log('changing')
     },
 
     isVisibleChange(){
-        this.$store.dispatch('admin-reader/isVisibleChange')
+      this.sync_visible = false
+      this.$store.dispatch('admin-reader/isVisibleChange')
     }
   }
 }

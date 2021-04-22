@@ -9,6 +9,7 @@ class UploadApproval extends Model
     protected $fillable = [
         'user_id',
         'upload_id',
+        'is_pending',
         'is_approved',
     ];
 
