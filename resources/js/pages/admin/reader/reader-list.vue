@@ -25,7 +25,7 @@
             <td><div class="cursor-pointer link" @click="view(reader.id)">Manage</div></td>
         </tr>
         <tr>
-          <td colspan="7" class="text-center" v-if="readers.length <= 0">No Reader found</td>
+          <td colspan="7" class="text-center" v-if="readers ? readers.length <= 0 : false">No Reader found</td>
         </tr>
     </tbody>
     </table>
