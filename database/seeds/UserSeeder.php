@@ -33,6 +33,7 @@ class UserSeeder extends Seeder
                 'role_id'   => 2,
                 'status'   => 'online',
                 'is_verified'   => 1,
+                'is_hired'   => 1,
             ],
             [
                 'username'  => 'reader_two',
@@ -42,6 +43,7 @@ class UserSeeder extends Seeder
                 'role_id'   => 2,
                 'status'   => 'online',
                 'is_verified'   => 1,
+                'is_hired'   => 1,
             ],
             [
                 'username'  => 'reader_three',
@@ -51,6 +53,7 @@ class UserSeeder extends Seeder
                 'role_id'   => 2,
                 'status'   => 'online',
                 'is_verified'   => 1,
+                'is_hired'   => 0,
             ],
             [
                 'username'  => 'reader_four',
@@ -60,6 +63,7 @@ class UserSeeder extends Seeder
                 'role_id'   => 2,
                 'status'   => 'online',
                 'is_verified'   => 1,
+                'is_hired'   => 1,
             ],
             [
                 'username'  => 'client',
