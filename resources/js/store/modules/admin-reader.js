@@ -36,8 +36,8 @@ export const mutations = {
 
   [types.EDIT_READER](state, { reader }) {
     state.readerForm.fill(reader)
-    // state.readerForm.is_banned = reader.is_banned
-    // state.readerForm.visible = reader.visible
+    state.readerForm.is_banned = reader.is_banned
+    state.readerForm.visible = reader.visible
   },
 };
 

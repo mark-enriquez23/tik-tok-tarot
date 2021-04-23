@@ -36,7 +36,7 @@
 
           <div class="col-lg-8" v-else>
             <div class="row">
-              <div class="col-lg-6 mt-4 mt-lg-0">
+              <div class="col-lg-12 mt-4 mt-lg-0">
                 <div class="member" data-aos="zoom-in" data-aos-delay="100">
                   <h3>No Readers found</h3>
                 </div>

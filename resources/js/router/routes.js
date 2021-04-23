@@ -94,5 +94,13 @@ export default [
       title       : 'Credit' 
     }
   },
+  {
+    path: '/admin/psychics', name: 'admin.psychics', component: page('admin/psychic/psychic-list.vue'),
+    meta          : { 
+      requiresAuth: true, 
+      role        : [1], 
+      title       : 'Psychic' 
+    }
+  },
   { path: '*', component: page('errors/404.vue') }
 ]

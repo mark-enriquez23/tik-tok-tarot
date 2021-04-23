@@ -17,6 +17,9 @@
     <tbody>
         <tr v-for="reader in readers" :key="reader.id">
             <th scope="row">{{reader.id}}</th>
+            <td>
+              <img class="reader-img" :src="reader.photo_url">
+            </td>
             <td>{{ reader.username }}</td>
             <td>{{ reader.name }}</td>
             <td>{{ reader.email }}</td>
@@ -77,3 +80,12 @@ export default {
   }
 }
 </script>
+<style>
+.reader-img{
+  border-radius: 50%;
+}
+.hired-tag{
+  font-size: 12px;
+  font-weight: bolder;
+}
+</style>

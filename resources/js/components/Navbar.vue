@@ -133,6 +133,11 @@
               </router-link>
             </li>
             <li class="nav-item">
+              <router-link :to="{ name: 'admin.psychics' }" class="nav-link" active-class="active">
+                Psychics
+              </router-link>
+            </li>
+            <li class="nav-item">
               <router-link :to="{ name: 'admin.upload-approvals' }" class="nav-link" active-class="active">
                 Pending Uploads
               </router-link>
