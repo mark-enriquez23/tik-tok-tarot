@@ -16,6 +16,7 @@ class Upload extends Model
         'is_featured',
         'status',
         'is_active',
+        'category',
         'metadata',
     ];
     
