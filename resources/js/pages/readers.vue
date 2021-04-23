@@ -18,7 +18,7 @@
             </div>
           </div>
 
-          <div class="col-lg-8" v-if="readers.data.length != 0">
+          <div class="col-lg-8" v-if="readers.data ? readers.data.length != 0 : false">
             <div class="row">
               <div class="col-lg-6 mt-4 mt-lg-0" v-for="reader in readers.data" :key="reader.id">
                 <div class="member" data-aos="zoom-in" data-aos-delay="100">
@@ -94,7 +94,6 @@ export default {
     async fetchReaders() {
         var readers = await axios.get("/api/reader/fetch-visible-readers");
         this.readers = readers.data;
-        console.log(this.readers);
         if (!this.readers.success) {
           Swal.fire({
           title: 'Fetching Readers Failed',
