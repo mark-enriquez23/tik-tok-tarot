@@ -17,12 +17,17 @@
             <div class="row">
               <div class="col-lg-4 mt-4 mt-lg-0" v-for="reader in readers" :key="reader.id">
                 <div class="member" data-aos="zoom-in" data-aos-delay="100">
-                  <div class="pic"><img :src="reader.photo_url" class="img-fluid" alt=""></div>
+                  <div class="pic">
+                    <img :src="reader.photo_url" class="img-fluid" alt="">
+                  </div>
+                  
+                    <h4>{{reader.name}} <fa class="hired-icon" :icon="['fas', 'check-circle']"/></h4>
                   <div class="member-info">
-                    <h4>{{reader.name}}</h4>
                     <p class="text-success mb-0">{{ reader.is_active == 1 ? 'Online' : 'Offline' }}</p>
                     <p>{{reader.description}}</p>
                     <span class="mt-3" >Health</span>
+                    </br>
+                    <div class="cursor-pointer link view">View Profile</div></td>
                   </div>
                 </div>
               </div>
@@ -92,11 +97,16 @@ export default {
 }
 </script>
 <style>
-.reader-img{
-  border-radius: 50%;
+.hired-icon{
+  font-size: 15px;
+  color:green;
 }
-.hired-tag{
-  font-size: 12px;
-  font-weight: bolder;
+
+.view{
+  color:green;
+}
+
+.view:hover{
+  text-decoration:underline;
 }
 </style>
