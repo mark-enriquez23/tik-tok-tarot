@@ -23,6 +23,7 @@ class UploadSeeder extends Seeder
                 'status'            => "streaming",
                 'is_active'         => 1,
                 'is_featured'       => 1,
+                'category'          => "Love",
                 'upload_type_id'    => 1 // live
             ],
             [
@@ -34,6 +35,7 @@ class UploadSeeder extends Seeder
                 'status'            => "streaming",
                 'is_active'         => 1,
                 'is_featured'       => 1,
+                'category'          => "Love",
                 'upload_type_id'    => 1 // live
             ],
             [
@@ -45,6 +47,7 @@ class UploadSeeder extends Seeder
                 'status'            => "streaming",
                 'is_active'         => 1,
                 'is_featured'       => 1,
+                'category'          => "Health",
                 'upload_type_id'    => 1 // live
             ],
             [
@@ -56,6 +59,7 @@ class UploadSeeder extends Seeder
                 'status'            => "ended",
                 'is_active'         => 1,
                 'is_featured'       => 1,
+                'category'          => "Health",
                 'upload_type_id'    => 2 // vlog
             ],
             [
@@ -67,6 +71,7 @@ class UploadSeeder extends Seeder
                 'status'            => "ended",
                 'is_active'         => 1,
                 'is_featured'       => 1,
+                'category'          => "Disaster",
                 'upload_type_id'    => 2 // vlog
             ],
             [
@@ -78,6 +83,7 @@ class UploadSeeder extends Seeder
                 'status'            => "ended",
                 'is_active'         => 1,
                 'is_featured'       => 1,
+                'category'          => "Love",
                 'upload_type_id'    => 2 // vlog
             ],
             [
@@ -89,6 +95,7 @@ class UploadSeeder extends Seeder
                 'status'            => "ended",
                 'is_active'         => 1,
                 'is_featured'       => 1,
+                'category'          => "Health",
                 'upload_type_id'    => 2 // vlog
             ],
             [
@@ -100,6 +107,7 @@ class UploadSeeder extends Seeder
                 'status'            => "streaming",
                 'is_active'         => 1,
                 'is_featured'       => 1,
+                'category'          => "Disaster",
                 'upload_type_id'    => 1 // live
             ],
             [
@@ -111,6 +119,7 @@ class UploadSeeder extends Seeder
                 'status'            => "streaming",
                 'is_active'         => 1,
                 'is_featured'       => 1,
+                'category'          => "Love",
                 'upload_type_id'    => 1 // live
             ],
         ];
