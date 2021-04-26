@@ -22,7 +22,7 @@ class Upload extends Model
     
     public function uploadType()
     {
-        return $this->hasOne('App\UploadType');
+        return $this->hasOne('App\UploadType', 'id');
     }
 
     public function user(){

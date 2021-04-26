@@ -103,7 +103,7 @@ class ReaderController extends Controller
     // Will save detials or update
     public function fetchReaderById($id)
     {
-        $user = User::where('id', $id)->first();
+        $user = User::where('id', $id)->with(['uploads.uploadType'])->first();
 
         return response()->json([
             "success" => $user ? true : false,

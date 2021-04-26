@@ -102,5 +102,14 @@ export default [
       title       : 'Psychic' 
     }
   },
+  ,
+  {
+    path: '/admin/psychic-profile/:id', name: 'admin.psychic-profile', component: page('admin/psychic/psychic-profile.vue'),
+    meta          : { 
+      requiresAuth: true, 
+      role        : [1], 
+      title       : 'Psychic Profile' 
+    }
+  },
   { path: '*', component: page('errors/404.vue') }
 ]
