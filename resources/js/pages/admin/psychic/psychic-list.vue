@@ -1,16 +1,12 @@
 <template>
+  <card class="py-3 m-4">
+    <h4 class="mb-3">Psychics List</h4>
+    <p class="mb-5">Necessitatibus eius consequatur ex aliquid fuga eum quidem.</p>
   <div class="">
     <!-- ======= Readers Section ======= -->
     <section id="team" class="team">
       <div class="container">
         <div class="row">
-          <div class="col-lg-12">
-            <div class="section-title" data-aos="fade-right">
-              <h2>Our Psychics</h2>
-              <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem.</p>
-            </div>
-          </div>
-
           <div class="col-lg-12" v-if="readers ? readers.length != 0 : false">
             <div class="row">
               <div
@@ -25,10 +21,10 @@
 
                   <h4>
                     {{ reader.name }}
-                    <fa class="hired-icon" :icon="['fas', 'check-circle']" />
+                    <fa v-if="reader.is_hired == 1" class="hired-icon" :icon="['fas', 'check-circle']" />
                   </h4>
                   <div class="member-info">
-                    <p class="text-success mb-0">
+                    <p class="mb-0" :class="reader.is_active == 1 ? 'text-success': 'text-danger'">
                       {{ reader.is_active == 1 ? "Online" : "Offline" }}
                     </p>
                     <p>{{ reader.description }}</p>
@@ -55,11 +51,16 @@
               </div>
             </div>
           </div>
+          
         </div>
       </div>
     </section>
     <!-- Readers Section -->
   </div>
+  </card>
+
+
+  
 </template>
 
 <script>
