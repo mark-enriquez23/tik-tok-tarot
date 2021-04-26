@@ -1,12 +1,13 @@
 import axios from "axios";
-
 import * as types from "../mutation-types";
-
 import Form from "vform";
 
 // state
 export const state = {
   readers: null,
+  is_banned: 0,
+  visible: 1,
+  uploads: [],
   readerForm: new Form({
     id: '',
     username: '',
@@ -14,10 +15,9 @@ export const state = {
     phone_number: '',
     email: '',
     is_banned: 0,
+    is_active: 0,
     visible: 0,
   }),
-  is_banned: 0,
-  visible: 1,
 };
 
 // getters
@@ -26,6 +26,7 @@ export const getters = {
   readerForm: state => state.readerForm,
   is_banned: state => state.is_banned,
   visible: state => state.visible,
+  uploads: state => state.uploads,
 };
 
 // mutations
@@ -38,6 +39,8 @@ export const mutations = {
     state.readerForm.fill(reader)
     state.readerForm.is_banned = reader.is_banned
     state.readerForm.visible = reader.visible
+
+    state.uploads = reader.uploads
   },
 };
 
@@ -47,6 +50,7 @@ export const actions = {
   async fetchReaders({ commit }) {
     try {
       const { data } = await axios.get("/api/reader/fetch-readers");
+      
       commit(types.FETCH_READER, { readers: data.data });
     } catch (e) {
       return e;
@@ -57,7 +61,6 @@ export const actions = {
     try {
       const { data } = await axios.get(`/api/auth-reader/fetch-reader-by-id/${id}`);
 
-      console.log(data.data);
       commit(types.EDIT_READER, { reader: data.data });
     } catch (e) {
       return e;
@@ -78,7 +81,6 @@ export const actions = {
   async removeReader({ commit }, id) {
     try {
       const { data } = await axios.delete(`/api/auth-reader/remove/${id}`);
-      console.log(data)
 
       return data
     } catch (e) {
@@ -88,12 +90,10 @@ export const actions = {
 
   isBannedChange(){
     state.is_banned = !state.is_banned 
-    console.log(state.is_banned);
   },
 
   isVisibleChange(){
     state.visible = !state.visible
-    console.log(state.visible);
   }
 
 

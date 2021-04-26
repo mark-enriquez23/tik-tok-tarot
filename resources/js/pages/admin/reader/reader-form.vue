@@ -6,9 +6,10 @@
         <p class="mb-5">Change personal information here.</p>
       </div>
       <div class="col-md-4 text-right">
-        <router-link :to="{ name: 'admin.readers' }" class="nav-link" active-class="active">
+        <button class="btn btn-danger btn-lg" @click="goBack">Back</button>
+        <!-- <router-link :to="{ name: 'admin.readers' }" class="nav-link" active-class="active">
           <v-button class="btn btn-danger btn-lg">Back</v-button>
-        </router-link>
+        </router-link> -->
       </div>
     </div>
     <hr>
@@ -209,12 +210,15 @@ export default {
     isBannedChange(){
       this.sync_banned = false
       this.$store.dispatch('admin-reader/isBannedChange')
-      console.log('changing')
     },
 
     isVisibleChange(){
       this.sync_visible = false
       this.$store.dispatch('admin-reader/isVisibleChange')
+    },
+
+    goBack(){
+      this.$router.back()
     }
   }
 }
