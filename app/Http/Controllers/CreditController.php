@@ -14,7 +14,8 @@ class CreditController extends Controller
         if (isset($credit)) {
             // update credit
             $credit->user_id = $request->user_id;
-            $credit->points = $request->points;
+            $credit->goal_points = $request->goal_points;
+            $credit->earned_points = $request->earned_points;
             $credit->save();
 
             return response()->json([
@@ -22,10 +23,13 @@ class CreditController extends Controller
                 'message'   => __('messages.credit_updated')
             ]);
         }else{
+            
+
             // save
             $credit = new Credit;
             $credit->user_id = $request->user_id;
-            $credit->points = $request->points;
+            $credit->goal_points = $request->goal_points;
+            $credit->earned_points = $request->earned_points;
             $credit->save();
 
             return response()->json([

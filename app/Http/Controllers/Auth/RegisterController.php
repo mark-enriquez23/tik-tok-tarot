@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\User;
+use App\Credit;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
@@ -81,6 +82,11 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
             'role_id' => $data['role_id'],
+        ]);
+
+        // Create initial Credit
+        $credit = Credit::create([
+            'user_id'   => $user->id,
         ]);
 
         // send sms code
