@@ -191,6 +191,11 @@ Route::group(['middleware' => 'auth:api'], function () {
         Route::get('/list', 'Auth\UserController@userCredit');
         Route::get('/list-by-id/{id}', 'Auth\UserController@userCreditById');
     });
+
+    // Ratings
+    Route::group(['prefix' => 'rating'], function () {
+        Route::post('/save', 'RatingController@save');
+    });
 });
 
 // Public routes

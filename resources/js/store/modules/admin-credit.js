@@ -11,7 +11,8 @@ export const state = {
         user_id: '',
         name: '',
         email: '',
-        points: '',
+        goal_points: '',
+        earned_points: '',
     }),
 };
 
@@ -32,7 +33,8 @@ export const mutations = {
         state.creditForm.user_id = credit.user.id
         state.creditForm.name = credit.user.name
         state.creditForm.email = credit.user.email
-        state.creditForm.points = credit.points
+        state.creditForm.goal_points = credit.goal_points
+        state.creditForm.earned_points = credit.earned_points
     },
 };
 

@@ -16,7 +16,8 @@ class CreateCreditsTable extends Migration
         Schema::create('credits', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('user_id');
-            $table->integer('points')->default(0);
+            $table->integer('goal_points')->default(0);
+            $table->integer('earned_points')->default(0);
             $table->longText('metadata')->nullable();
             $table->timestamps();
         });

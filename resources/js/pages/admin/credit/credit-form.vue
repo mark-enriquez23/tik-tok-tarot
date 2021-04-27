@@ -39,11 +39,22 @@
         />
       </div>
 
-      <!-- Upload Name -->
+      <!-- Earned Points -->
       <div class="form-group col-md-7 mx-auto">
-        <label>Points</label>
+        <label>Earned Points</label>
         <input
-          v-model="creditForm.points"
+          v-model="creditForm.earned_points"
+          class="form-control"
+          type="text"
+          :readonly="!isUpdating"
+        />
+      </div>
+
+      <!-- Goal Points -->
+      <div class="form-group col-md-7 mx-auto">
+        <label>Goal Points</label>
+        <input
+          v-model="creditForm.goal_points"
           class="form-control"
           type="text"
           :readonly="!isUpdating"

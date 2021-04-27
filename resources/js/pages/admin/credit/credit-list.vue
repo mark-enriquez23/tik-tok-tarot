@@ -8,7 +8,8 @@
           <th scope="col">ID</th>
           <th scope="col">User Name</th>
           <th scope="col">User Email</th>
-          <th scope="col">Points</th>
+          <th scope="col">Earned Points</th>
+          <th scope="col">Goal Points</th>
           <th scope="col">Date Updated</th>
           <th scope="col">Action</th>
         </tr>
@@ -18,7 +19,8 @@
             <th scope="row">{{credit.id}}</th>
             <td>{{ credit.name }}</td>  
             <td>{{ credit.email }}</td>
-            <td>{{ credit.credit.points }}</td>
+            <td>{{ credit.credit.earned_points }}</td>
+            <td>{{ credit.credit.goal_points }}</td>
             <td>{{ credit.credit.updated_at }}</td>
             <td><div class="cursor-pointer link" @click="view(credit.id)">Manage</div></td>
         </tr>

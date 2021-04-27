@@ -8,7 +8,8 @@ class Credit extends Model
 {
     protected $fillable = [
         'user_id',
-        'points',
+        'goal_points',
+        'earned_points',
         'metadata'
     ];
 
