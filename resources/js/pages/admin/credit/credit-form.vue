@@ -140,7 +140,7 @@ export default {
       console.log(id);
       Swal.fire({
         title: "Are you sure?",
-        text: "You wan't to update this!",
+        text: "You are about to update the points.",
         icon: "warning",
         confirmButtonColor: "#3085d6",
         confirmButtonText: "Yes"
@@ -150,7 +150,7 @@ export default {
             .dispatch("admin-credit/updateUserCredit", id)
             .then(({ success, message }) => {
               if (success) {
-                swalSuccess(message).then(() => {
+                swalSuccess("Points have been updated.").then(() => {
                   this.$router.push({ name: "admin.user-credits" });
                 });
               }
