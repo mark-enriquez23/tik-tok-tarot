@@ -11,6 +11,13 @@ use App\FeaturedUser;
 
 class ReaderController extends Controller
 {
+    /**
+     * Search Readers
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return json
+    * @return \Illuminate\Http\RedirectResponse
+     */
     public function search(Request $request)
     {
         $search = $request->search;
@@ -36,7 +43,13 @@ class ReaderController extends Controller
         }
     } 
 
-    // Fetch Upload with Reader Details
+    /**
+     * Fetch Upload with Reader Details
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return json
+    * @return \Illuminate\Http\RedirectResponse
+     */
     public function uploadWithReaderDetail()
     {
         $uploads = Upload::with(['user'])->get();
@@ -57,7 +70,13 @@ class ReaderController extends Controller
 
     }
 
-    // Search and Fetch upload with reader details
+    /**
+     * Search and Fetch upload with reader details
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return json
+    * @return \Illuminate\Http\RedirectResponse
+     */
     public function searchUploadWithReaderDetail()
     {
         $uploads = Upload::with(['user'])->get();
@@ -78,7 +97,13 @@ class ReaderController extends Controller
 
     }
 
-    // Will save detials or update
+    /**
+     * Fetch Readers Details
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return json
+    * @return \Illuminate\Http\RedirectResponse
+     */
     public function fetchReaders()
     {
         $user = User::where([['role_id', '2']])->get();
@@ -89,7 +114,13 @@ class ReaderController extends Controller
         ]);
     }
 
-    // Will return visible readers
+    /**
+     * Will return visible readers
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return json
+    * @return \Illuminate\Http\RedirectResponse
+     */
     public function fetchVisibleReaders()
     {
         $user = User::where([['role_id', '2'], ['visible', 1]])->get();
@@ -100,7 +131,13 @@ class ReaderController extends Controller
         ]);
     }
 
-    // Will save detials or update
+    /**
+     * Fetch Single Reader
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return json
+    * @return \Illuminate\Http\RedirectResponse
+     */
     public function fetchReaderById($id)
     {
         $user = User::where('id', $id)->with(['uploads.uploadType'])->first();
@@ -111,6 +148,13 @@ class ReaderController extends Controller
         ]);
     }
 
+    /**
+     * Fetch Featured Readers
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return json
+    * @return \Illuminate\Http\RedirectResponse
+     */
     public function fetchFeaturedReaders()
     {
         $user = FeaturedUser::with(['user'])->get();
@@ -121,6 +165,13 @@ class ReaderController extends Controller
         ]);
     }
 
+    /**
+     * Save Readers Data
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return json
+    * @return \Illuminate\Http\RedirectResponse
+     */
     public function save(Request $request)
     {
         $user = User::where('id', $request->id)->first();
@@ -134,6 +185,13 @@ class ReaderController extends Controller
         ]);
     }
 
+    /**
+     * Update the Visibility of Reader
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return json
+    * @return \Illuminate\Http\RedirectResponse
+     */
     public function changeReaderVisibility(Request $request)
     {
         $user = User::where('id', $request->user_id)->first();
@@ -148,6 +206,11 @@ class ReaderController extends Controller
         ]);
     }
 
+    /**
+     * Remove Reader
+     *
+     * @return json
+     */
     public function removeReader($id)
     {
         try {

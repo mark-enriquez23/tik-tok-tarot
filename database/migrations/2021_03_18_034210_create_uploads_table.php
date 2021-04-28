@@ -16,8 +16,8 @@ class CreateUploadsTable extends Migration
         Schema::create('uploads', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('user_id');
-            $table->string('thumbnail');
-            $table->string('src');
+            $table->string('thumbnail')->nullable();
+            $table->string('src')->nullable();
             $table->bigInteger('upload_type_id');
             $table->longText('content');
             $table->tinyInteger('is_active')->default(0);

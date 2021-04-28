@@ -7,6 +7,11 @@ use App\Role;
 
 class RoleController extends Controller
 {
+    /**
+     * Fetch all roles
+     *
+     * @return json
+     */
     public function index() 
     {
         $roles = Role::all();
@@ -17,6 +22,13 @@ class RoleController extends Controller
         ]);
     }
 
+    /**
+     * Save Role
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return json
+    * @return \Illuminate\Http\RedirectResponse
+     */
     public function save(Request $request)
     {
         $role = Role::where('id', $request->id)->first();
@@ -35,6 +47,13 @@ class RoleController extends Controller
         ]);
     }
 
+    /**
+     * Delete role
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return json
+    * @return \Illuminate\Http\RedirectResponse
+     */
     public function delete(Request $request)
     {
         $unableToDelete = 0;

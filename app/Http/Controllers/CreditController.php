@@ -7,7 +7,13 @@ use App\Credit;
 
 class CreditController extends Controller
 {
-    # save or update
+     /**
+     * Save and Update Credits
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return json
+    * @return \Illuminate\Http\RedirectResponse
+     */
     public function save(Request $request){
         $credit = Credit::where('id', $request->id)->first();
 

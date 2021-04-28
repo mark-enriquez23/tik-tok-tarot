@@ -9,10 +9,17 @@ use App\Upload;
 use App\UploadApproval;
 use App\UploadType;
 use App\UploadReview;
+use App\Traits\UploadVideoTrait;
 
 class UploadController extends Controller
 {
-    // fetch featured uploads
+    use UploadVideoTrait;
+
+    /**
+     * fetch featured uploads
+     *
+     * @return json
+     */
     public function fetchFeaturedVlogs()
     {
         // get upload type
@@ -50,7 +57,11 @@ class UploadController extends Controller
         ]);
     }
 
-    // fetch latest uploads/vlogs/live
+    /**
+     * fetch latest uploads/vlogs/live
+     *
+     * @return json
+     */
     public function fetchLatestVlog()
     {
         // get upload type
@@ -67,7 +78,11 @@ class UploadController extends Controller
         ]);
     }
 
-    // fetch all uploads/vlogs with ratings
+    /**
+     * fetch all uploads/vlogs with ratings
+     *
+     * @return json
+     */
     public function fetchAllVlogs()
     {
         // get upload type
@@ -105,7 +120,11 @@ class UploadController extends Controller
         ]);
     }
 
-    // approval tool
+    /**
+     *  approval tool
+     *
+     * @return json
+     */
     public function approveUpload($id)
     {
         // check if upload is already approved
@@ -133,7 +152,11 @@ class UploadController extends Controller
         ]);
     }
 
-    // disapproved tool
+    /**
+     *  disapproved tool
+     *
+     * @return json
+     */
     public function disApproveUpload($id)
     {
         // check if upload is already approved
@@ -161,6 +184,11 @@ class UploadController extends Controller
         ]);
     }
 
+    /**
+     *  disapproved tool
+     *
+     * @return json
+     */
     public function fetchPendingUploads()
     {
         $uploads = UploadApproval::with(['upload', 'user'])->get();
@@ -171,6 +199,11 @@ class UploadController extends Controller
         ]);
     }
 
+    /**
+     *  disapproved tool
+     * @param $id of upload
+     * @return json
+     */
     public function fetchPendingUploadById($id)
     {
         $upload = UploadApproval::where('id', $id)->with(['upload', 'user'])->first();
@@ -190,13 +223,13 @@ class UploadController extends Controller
         $success = false;
         $message = true;
 
-        if (isset( $upload )) {
+        if (isset($upload)) {
             $data = [
                 'id'                => $request->id,
                 'user_id'           => $request->user_id,
                 'content'           => $request->content,
-                'thumbnail'         => $request->thumbnail,
-                'src'               => $request->src,
+                // 'thumbnail'         => $request->thumbnail,
+                // 'src'               => $request->src,
             ];
 
             $upload->update($data);
@@ -209,14 +242,17 @@ class UploadController extends Controller
                 'user_id'           => $request->user_id,
                 'name'              => $request->name,
                 'content'           => $request->content,
-                'thumbnail'         => $request->thumbnail,
-                'src'               => $request->src,
+                // 'thumbnail'         => $request->thumbnail,
+                // 'src'               => $request->src,
                 'status'            => $request->status,
                 'is_active'         => $request->is_active,
                 'upload_type_id'    => $request->upload_type_id
             ];
 
             $upload = Upload::create($data);
+
+            // upload recorded video file
+            $this->upload($request, $upload->id, 'VLOG_', '/uploads/vlog/');
 
             // create upload_approval data
             $approvelData = [
@@ -237,7 +273,15 @@ class UploadController extends Controller
         ]);
     }
 
-    public function uploadVideo(Request $request){
+     /**
+     * Upload Video
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return json
+    * @return \Illuminate\Http\RedirectResponse
+     */
+    public function uploadVideo(Request $request)
+    {
         
         if($request->hasFile('file')){
 
@@ -274,6 +318,13 @@ class UploadController extends Controller
         ]);
     }
 
+     /**
+     * Submit Reviews
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return json
+    * @return \Illuminate\Http\RedirectResponse
+     */
     public function saveReview(Request $request)
     {
         // dd('hey');
@@ -300,6 +351,13 @@ class UploadController extends Controller
         }
     }
 
+     /**
+     * Submit review on uploads
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return json
+    * @return \Illuminate\Http\RedirectResponse
+     */
     public function uploadReview($uploadId)
     {
         $uploadReview = UploadReview::where('upload_id', $uploadId)->with(['upload'])->get();

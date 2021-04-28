@@ -2,17 +2,80 @@
 
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
-|
-*/
+########### * Authenticated Routes *###########
+Route::group(['middleware' => 'auth:api'], function () {
+    Route::post('logout', 'Auth\LoginController@logout');
 
+    Route::get('/user', 'Auth\UserController@current');
+
+    Route::patch('settings/profile', 'Settings\ProfileController@update');
+    Route::patch('settings/password', 'Settings\PasswordController@update');
+
+    // SecurityQuestion api
+    Route::group(['prefix' => 'authenticated-security-question'], function () {
+        Route::get('/', 'Auth\SecurityQuestionController@authenticated');
+    });
+
+    // UserSecurityQuestion api
+    Route::group(['prefix' => 'authenticated-user-security-question'], function () {
+        Route::get('/', 'Auth\UserSecurityQuestionController@authenticated');
+        Route::post('/save', 'Auth\UserSecurityQuestionController@saveAuthenticated');
+    });
+
+    // Verification api
+    Route::group(['prefix' => 'verification'], function () {
+        // Route::post('/send-message', 'PhoneVerificationController@sendCustomMessage');
+        Route::post('/verify-user', 'PhoneVerificationController@verifyUser');
+    });
+
+    // Upload api
+    Route::group(['prefix' => 'upload'], function () {
+        Route::post('/upload-video', 'UploadController@uploadVideo');
+        Route::post('/save-review', 'UploadController@saveReview');
+        Route::get('/pending', 'UploadController@fetchPendingUploads');
+        Route::get('/approval-by-id/{id}', 'UploadController@fetchPendingUploadById');
+        Route::get('/approve/{id}', 'UploadController@approveUpload');
+        Route::get('/disapprove/{id}', 'UploadController@disApproveUpload');
+    });
+
+    // Reader api
+    Route::group(['prefix' => 'auth-reader'], function () {
+        Route::post('/update-reader', 'ReaderController@save');
+        Route::post('/change-visibility', 'ReaderController@changeReaderVisibility');
+        Route::get('/fetch-reader-by-id/{id}', 'ReaderController@fetchReaderById');
+        Route::delete('/remove/{id}', 'ReaderController@removeReader');
+    });
+
+    // Credits
+    Route::group(['prefix' => 'credit'], function () {
+        Route::post('/save', 'CreditController@save');
+        Route::get('/list', 'Auth\UserController@userCredit');
+        Route::get('/list-by-id/{id}', 'Auth\UserController@userCreditById');
+    });
+
+    // Ratings
+    Route::group(['prefix' => 'rating'], function () {
+        Route::post('/save', 'RatingController@save');
+    });
+});
+
+########### * Guest Routes *###########
+Route::group(['middleware' => 'guest:api'], function () {
+    Route::post('login', 'Auth\LoginController@login');
+    Route::post('register', 'Auth\RegisterController@register');
+
+    // User api
+    Route::group(['prefix' => 'user'], function () {
+        Route::get('/validate-username/{username}', 'Auth\UserController@validateUserName');
+        Route::get('/validate-email/{email}', 'Auth\UserController@validateEmail');
+        Route::post('/validate-password', 'Auth\UserController@validatePassword');
+    });
+
+    Route::post('oauth/{driver}', 'Auth\OAuthController@redirectToProvider');
+    Route::get('oauth/{driver}/callback', 'Auth\OAuthController@handleProviderCallback')->name('oauth.callback');
+}); 
+
+########### * Public Routes *###########
 // SecurityQuestion api
 Route::group(['prefix' => 'security-question'], function () {
     Route::get('/', 'Auth\SecurityQuestionController@index');
@@ -37,7 +100,6 @@ Route::group(['prefix' => 'forgot-password'], function () {
     Route::post('/user-security-questions', 'Auth\ForgotPasswordController@getUserSecurityQuestion');
     Route::post('/check-security-question', 'Auth\ForgotPasswordController@checkUserSecurityQuestion');
 });
-
 Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail');
 Route::post('password/reset', 'Auth\ResetPasswordController@reset');
 
@@ -140,80 +202,3 @@ Route::group(['prefix' => 'testimonial'], function () {
     Route::post('/save', 'TestimonialController@save');
     Route::post('/delete', 'TestimonialController@delete');
 });
-
-// -------------------------------Authenticated routes------------------------------ //
-Route::group(['middleware' => 'auth:api'], function () {
-    Route::post('logout', 'Auth\LoginController@logout');
-
-    Route::get('/user', 'Auth\UserController@current');
-
-    Route::patch('settings/profile', 'Settings\ProfileController@update');
-    Route::patch('settings/password', 'Settings\PasswordController@update');
-
-    // SecurityQuestion api
-    Route::group(['prefix' => 'authenticated-security-question'], function () {
-        Route::get('/', 'Auth\SecurityQuestionController@authenticated');
-    });
-
-    // UserSecurityQuestion api
-    Route::group(['prefix' => 'authenticated-user-security-question'], function () {
-        Route::get('/', 'Auth\UserSecurityQuestionController@authenticated');
-        Route::post('/save', 'Auth\UserSecurityQuestionController@saveAuthenticated');
-    });
-
-    // Verification api
-    Route::group(['prefix' => 'verification'], function () {
-        // Route::post('/send-message', 'PhoneVerificationController@sendCustomMessage');
-        Route::post('/verify-user', 'PhoneVerificationController@verifyUser');
-    });
-
-    // Upload api
-    Route::group(['prefix' => 'upload'], function () {
-        Route::post('/upload-video', 'UploadController@uploadVideo');
-        Route::post('/save-review', 'UploadController@saveReview');
-        Route::get('/pending', 'UploadController@fetchPendingUploads');
-        Route::get('/approval-by-id/{id}', 'UploadController@fetchPendingUploadById');
-        Route::get('/approve/{id}', 'UploadController@approveUpload');
-        Route::get('/disapprove/{id}', 'UploadController@disApproveUpload');
-    });
-
-    // Reader api
-    Route::group(['prefix' => 'auth-reader'], function () {
-        Route::post('/update-reader', 'ReaderController@save');
-        Route::post('/change-visibility', 'ReaderController@changeReaderVisibility');
-        Route::get('/fetch-reader-by-id/{id}', 'ReaderController@fetchReaderById');
-        Route::delete('/remove/{id}', 'ReaderController@removeReader');
-    });
-
-    // Credits
-    Route::group(['prefix' => 'credit'], function () {
-        Route::post('/save', 'CreditController@save');
-        Route::get('/list', 'Auth\UserController@userCredit');
-        Route::get('/list-by-id/{id}', 'Auth\UserController@userCreditById');
-    });
-
-    // Ratings
-    Route::group(['prefix' => 'rating'], function () {
-        Route::post('/save', 'RatingController@save');
-    });
-});
-
-// Public routes
-Route::group(['middleware' => 'guest:api'], function () {
-    Route::post('login', 'Auth\LoginController@login');
-    Route::post('register', 'Auth\RegisterController@register');
-
-    // User api
-    Route::group(['prefix' => 'user'], function () {
-        Route::get('/validate-username/{username}', 'Auth\UserController@validateUserName');
-        Route::get('/validate-email/{email}', 'Auth\UserController@validateEmail');
-        Route::post('/validate-password', 'Auth\UserController@validatePassword');
-    });
-
-    
-    // Route::get('role', 'RoleController@index');
-
-    Route::post('oauth/{driver}', 'Auth\OAuthController@redirectToProvider');
-    Route::get('oauth/{driver}/callback', 'Auth\OAuthController@handleProviderCallback')->name('oauth.callback');
-}); 
-

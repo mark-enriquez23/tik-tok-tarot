@@ -7,6 +7,10 @@ use App\Category;
 
 class CategoryController extends Controller
 {
+     /**
+     * Fetch all Categories
+     * @return void
+     */
     public function index()
     {
         $category = Category::all();
@@ -16,7 +20,14 @@ class CategoryController extends Controller
             'data'      => $category
         ]);
     }
-
+    
+    /**
+     * Save About Category details
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return json
+    * @return \Illuminate\Http\RedirectResponse
+     */
     public function save(Request $request)
     {
         $category = Category::where('id', $request->id)->first();

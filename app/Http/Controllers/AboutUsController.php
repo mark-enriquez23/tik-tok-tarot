@@ -7,6 +7,11 @@ use App\AboutUs;
 
 class AboutUsController extends Controller
 {
+    /**
+     * Get request to fetch about us content ordered by DESC.
+     *
+     * @return void
+     */
     public function fetchAboutUs()
     {
         $aboutUs = AboutUs::orderBy('created_at', 'DESC')->first();
@@ -17,6 +22,13 @@ class AboutUsController extends Controller
         ]);
     }
 
+    /**
+     * Save About us details
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return json
+    * @return \Illuminate\Http\RedirectResponse
+     */
     public function save(Request $request)
     {
         $aboutUs = AboutUs::where('id', $request->id)->first();

@@ -9,10 +9,15 @@ use Mail;
 
 class SendEmailController extends Controller
 {
-    
+    /**
+     * Send Email
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return json
+    * @return \Illuminate\Http\RedirectResponse
+     */
     public function sendEmail(Request $request)
     {
-
         // get the security question using email
         $user = User::where('email', $request->data['email'])->with(['userSecurityQuestions.security_question'])->first();
 

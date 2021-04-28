@@ -10,6 +10,10 @@ class MailchimpController extends Controller
 {
     public $listId = 'b38dfba26f';
 
+    /**
+     * Fetch mailchimp list
+     * @return json
+     */
     public function getLists(){
         $list = Mailchimp::getLists();
 
@@ -19,6 +23,13 @@ class MailchimpController extends Controller
         ]);
     }
 
+    /**
+     * Fetch Mailchimp list eith parameter request
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return json
+    * @return \Illuminate\Http\RedirectResponse
+     */
     public function getListWithParameter(Request $request){
         $this->validate($request, [
 	    	'email' => 'required|email',
@@ -32,6 +43,13 @@ class MailchimpController extends Controller
         ]);
     }
 
+    /**
+     * Check email if already subscribed
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return json
+    * @return \Illuminate\Http\RedirectResponse
+     */
     public function checkIfSubscribed(Request $request){
         $this->validate($request, [
 	    	'email' => 'required|email',
@@ -45,6 +63,13 @@ class MailchimpController extends Controller
         ]);
     }
 
+    /**
+     * Subscribed to mailchimp
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return json
+    * @return \Illuminate\Http\RedirectResponse
+     */
     public function subscribe(Request $request)
     {
     	$this->validate($request, [
@@ -96,6 +121,11 @@ class MailchimpController extends Controller
         }
     }
 
+    /**
+     * Fetch all subscribers
+     *
+     * @return json
+     */
     public function getSubscribers(){
         $list = MC::all();
 
