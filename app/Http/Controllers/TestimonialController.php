@@ -7,6 +7,11 @@ use App\Testimonial;
 
 class TestimonialController extends Controller
 {
+    /**
+     * Fetch testimonials
+     *
+     * @return json
+     */
     public function index() 
     {
         $testimonials = Testimonial::with(['user'])->get();
@@ -17,6 +22,13 @@ class TestimonialController extends Controller
         ]);
     }
 
+    /**
+     * Save Testimonials
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return json
+    * @return \Illuminate\Http\RedirectResponse
+     */
     public function save(Request $request)
     {
         $testimonial = Testimonial::where('id', $request->id)->first();
@@ -35,6 +47,13 @@ class TestimonialController extends Controller
         ]);
     }
 
+    /**
+     * Delete Testimonials
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return json
+    * @return \Illuminate\Http\RedirectResponse
+     */
     public function delete(Request $request)
     {
         $unableToDelete = 0;

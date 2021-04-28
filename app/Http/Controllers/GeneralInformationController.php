@@ -7,6 +7,11 @@ use App\GeneralInformation;
 
 class GeneralInformationController extends Controller
 {
+     /**
+     * Fetch general Information
+     *
+     * @return json
+     */
     public function fetchGeneralInformation()
     {
         $generalInfo = GeneralInformation::orderBy('created_at', 'DESC')->first();
@@ -17,6 +22,13 @@ class GeneralInformationController extends Controller
         ]);
     }
 
+     /**
+     * Save General Information details
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return json
+    * @return \Illuminate\Http\RedirectResponse
+     */
     public function save(Request $request)
     {
         $generalInfo = GeneralInformation::where('id', $request->id)->first();

@@ -7,6 +7,11 @@ use App\Price;
 
 class PriceController extends Controller
 {
+    /**
+     * Fetch Prices
+     *
+     * @return json
+     */
     public function fetchPrice()
     {
         $price = Price::orderBy('created_at', 'DESC')->get();
@@ -17,6 +22,13 @@ class PriceController extends Controller
         ]);
     }
 
+    /**
+     * Save Prices content
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return json
+    * @return \Illuminate\Http\RedirectResponse
+     */
     public function save(Request $request)
     {
         $price = Price::where('id', $request->id)->first();

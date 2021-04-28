@@ -11,6 +11,10 @@ use App\TermAndCondition;
 
 class FooterController extends Controller
 {
+     /**
+     * Save Footers
+     * @return json
+     */
     public function fetchFooter()
     {
         $footer = Footer::orderBy('created_at', 'DESC')->first();
@@ -38,6 +42,13 @@ class FooterController extends Controller
         ]);
     }
 
+     /**
+     * Save Footer details
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return json
+    * @return \Illuminate\Http\RedirectResponse
+     */
     public function save(Request $request)
     {
         $footer = Footer::where('id', $request->id)->first();

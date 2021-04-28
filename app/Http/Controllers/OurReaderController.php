@@ -10,6 +10,13 @@ use App\Category;
 
 class OurReaderController extends Controller
 {
+    /**
+     * Our Readers Search
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return json
+    * @return \Illuminate\Http\RedirectResponse
+     */
     public function search(Request $request)
     {
         $search = $request->search;
@@ -33,42 +40,11 @@ class OurReaderController extends Controller
         }
     } 
 
-    // public function search($search, $categoryKey = null)
-    // {
-    //     try {
-    //         $category = Category::where('name','LIKE','%'.$categoryKey.'%')
-    //         ->orWhere('name','LIKE','%'.$categoryKey.'%')
-    //         ->first();
-            
-    //         $isSearchByCategory = isset($category) ? true : false;
-            
-    //         if ($isSearchByCategory) {
-    //             // get reader role_id
-    //             $role = Role::where('name', 'reader')->first();
-
-    //             $user = User::where('category_id', $category->id)
-    //             ->where('role_id', $role->id)
-    //             ->where('username','LIKE','%'.$search.'%')
-    //             ->orWhere('username','LIKE','%'.$search.'%')
-    //             ->with(['uploads'])
-    //             ->get();
-
-    //             return response()->json([
-    //                 'success'   => true,
-    //                 'message'   => 'data found',
-    //                 'data'      => $user
-    //             ]);
-    //         }
-
-    //         return response()->json([
-    //             'success'   => true,
-    //             'message'   => 'no data found',
-    //         ]);
-    //     } catch (\Throwable $th) {
-    //         return response()->json(['error'=>$th]);
-    //     }
-    // } 
-
+    /**
+     * Fetch uploads with reader details
+     *
+     * @return json
+     */
     public function uploadWithReaderDetail()
     {
         $uploads = Upload::with(['user'])->get();
@@ -89,6 +65,13 @@ class OurReaderController extends Controller
 
     }
 
+    /**
+     * Search uploads with reader details
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return json
+    * @return \Illuminate\Http\RedirectResponse
+     */
     public function searchUploadWithReaderDetail()
     {
         $uploads = Upload::with(['user'])->get();

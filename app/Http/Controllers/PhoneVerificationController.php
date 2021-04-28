@@ -25,7 +25,11 @@ class PhoneVerificationController extends Controller
     }
 
     /**
-     * Send message to a selected users
+     * Send a message to a selected user
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return json
+    * @return \Illuminate\Http\RedirectResponse
      */
     public function sendCustomMessage(Request $request)
     {
@@ -64,6 +68,13 @@ class PhoneVerificationController extends Controller
         ]);
     }
 
+    /**
+     * Verify User 
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return json
+    * @return \Illuminate\Http\RedirectResponse
+     */
     public function verifyUser(Request $request){
 
         $input = $request->all();
@@ -71,6 +82,7 @@ class PhoneVerificationController extends Controller
         $user = User::where([[$fieldType, $input['email']], ['is_verified', '0']])->first();
         $isSuccess = false;
         $message = null;
+
         if ($user) {
             // not yet verified
             // continue to verify code

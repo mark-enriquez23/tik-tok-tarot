@@ -7,6 +7,10 @@ use App\Faq;
 
 class FaqController extends Controller
 {
+     /**
+     * Fetch Faq details
+     * @return json
+     */
     public function fetchFaq()
     {
         $faqs = Faq::orderBy('created_at', 'DESC')->first();
@@ -17,6 +21,13 @@ class FaqController extends Controller
         ]);
     }
 
+     /**
+     * Save Faq details
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return json
+    * @return \Illuminate\Http\RedirectResponse
+     */
     public function save(Request $request)
     {
         $faq = Faq::where('id', $request->id)->first();

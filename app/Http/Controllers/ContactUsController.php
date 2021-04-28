@@ -7,6 +7,10 @@ use App\ContactUs;
 
 class ContactUsController extends Controller
 {
+    /**
+     * Fetch all the first contactus order by desc
+     * @return json
+     */
     public function fetchContactUs()
     {
         $contactUs = ContactUs::orderBy('created_at', 'DESC')->first();
@@ -17,6 +21,13 @@ class ContactUsController extends Controller
         ]);
     }
 
+     /**
+     * Save Contact us details
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return json
+    * @return \Illuminate\Http\RedirectResponse
+     */
     public function save(Request $request)
     {
         $contactUs = ContactUs::where('id', $request->id)->first();

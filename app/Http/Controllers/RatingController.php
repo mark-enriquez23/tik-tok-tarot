@@ -8,6 +8,13 @@ use App\Credit;
 
 class RatingController extends Controller
 {
+    /**
+     * Save Ratings of uploads
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return json
+    * @return \Illuminate\Http\RedirectResponse
+     */
     public function save(Request $request)
     {
         // scenario when the client rate the readers, client will earn points from rating the readers

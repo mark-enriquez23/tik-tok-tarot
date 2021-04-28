@@ -7,6 +7,13 @@ use App\HowTo;
 
 class HowToController extends Controller
 {
+    /**
+     * Fetch How to details
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return json
+    * @return \Illuminate\Http\RedirectResponse
+     */
     public function fetchHowTo()
     {
         $howTo = HowTo::orderBy('created_at', 'DESC')->first();
@@ -17,6 +24,13 @@ class HowToController extends Controller
         ]);
     }
 
+    /**
+     * Save How to details
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return json
+    * @return \Illuminate\Http\RedirectResponse
+     */
     public function save(Request $request)
     {
         $howTo = HowTo::where('id', $request->id)->first();
