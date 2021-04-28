@@ -45,7 +45,7 @@
         <input
           v-model="creditForm.earned_points"
           class="form-control"
-          type="text"
+          type="number"
           :readonly="!isUpdating"
         />
       </div>
@@ -56,7 +56,7 @@
         <input
           v-model="creditForm.goal_points"
           class="form-control"
-          type="text"
+          type="number"
           :readonly="!isUpdating"
         />
       </div>
