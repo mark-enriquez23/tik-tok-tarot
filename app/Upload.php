@@ -33,4 +33,9 @@ class Upload extends Model
     {
         return $this->belongsTo('App\UploadReview');
     }
+
+    public function viewers()
+    {
+        return $this->hasMany('App\Viewer');
+    }
 }
