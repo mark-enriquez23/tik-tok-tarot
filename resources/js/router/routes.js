@@ -111,5 +111,13 @@ export default [
       title       : 'Psychic Profile' 
     }
   },
+  {
+    path: '/admin/history', name: 'admin.history', component: page('admin/history/history-list.vue'),
+    // meta          : {
+    //   requiresAuth: true,
+    //   role        : [1],
+    //   title       : 'Readers'
+    // }
+  },
   { path: '*', component: page('errors/404.vue') }
 ]
