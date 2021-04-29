@@ -25,7 +25,7 @@ class UploadController extends Controller
         // get upload type
         $uploadType = UploadType::where('name', 'vlog')->first();
 
-        $featuredUpload = Upload::where([['upload_type_id', $uploadType->id], ['is_featured', 1]])->get();
+        $featuredUpload = Upload::where([['upload_type_id', $uploadType->id], ['is_featured', 1]])->with(['viewers', 'viewers.user'])->get();
 
         foreach ($featuredUpload as $key => $lu) {
             // get upload/vlog review

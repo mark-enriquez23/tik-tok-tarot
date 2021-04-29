@@ -36,6 +36,10 @@ Route::group(['middleware' => 'auth:api'], function () {
         Route::get('/approval-by-id/{id}', 'UploadController@fetchPendingUploadById');
         Route::get('/approve/{id}', 'UploadController@approveUpload');
         Route::get('/disapprove/{id}', 'UploadController@disApproveUpload');
+
+        // viewer
+        Route::post('/viewer/start', 'ViewerController@startFromViewing');
+        Route::post('/viewer/leave', 'ViewerController@leaveFromViewing');
     });
 
     // Reader api
