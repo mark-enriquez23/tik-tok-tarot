@@ -6,11 +6,13 @@
     <thead>
         <tr>
           <th scope="col">ID</th>
+          <td></td>
           <th scope="col">Username</th>
           <th scope="col">Name</th>
           <th scope="col">Email</th>
           <th scope="col">Visible?</th>
           <th scope="col">Banned?</th>
+          <th scope="col">Status</th>
           <th scope="col">Action</th>
         </tr>
     </thead>
@@ -25,6 +27,7 @@
             <td>{{ reader.email }}</td>
             <td>{{ reader.visible ? 'Yes' : 'No' }}</td>
             <td>{{ reader.is_banned == 0 ? 'No' : 'Yes' }}</td>
+            <td class="text-warning">Pending</td>
             <td><div class="cursor-pointer link" @click="view(reader.id)">Manage</div></td>
         </tr>
         <tr>

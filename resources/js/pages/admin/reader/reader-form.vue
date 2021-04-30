@@ -44,7 +44,7 @@
         <has-error :form="readerForm" field="email" />
       </div>
       <div class="form-group col-md-7 mx-auto">
-        <label>Banning</label>
+        <label>Banned?</label>
         <InputSwitch v-model="sync_banned" class="mr-2" :disabled="!isUpdating" />
         <!-- <toggle-button 
                 :value="readerForm.is_banned == 1 ? true : false"
@@ -57,7 +57,7 @@
                 @change="isBannedChange"
                 color="#bd2130"
         /> -->
-        <label>Visibility</label>
+        <label>Visible?</label>
         <InputSwitch v-model="sync_visible" class="mr-2" :disabled="!isUpdating" />
         <!-- <toggle-button 
                 :value="readerForm.visible == 1 ? true : false"
@@ -68,6 +68,8 @@
                 :disabled="!isUpdating"
                 @change="isVisibleChange"
         /> -->
+        <label>Approved?</label>
+        <InputSwitch class="mr-2" :disabled="!isUpdating" />
       </div>
 
       <!-- Submit Button -->
