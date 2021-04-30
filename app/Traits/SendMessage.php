@@ -28,15 +28,6 @@ trait SendMessage {
      */
     public function sendCustomMessage($userId, $recipient)
     {
-        // Request fields user_id, recipient
-        // $validatedData = $request->validate([
-        //     'recipient' => 'required',
-        // ]);
-
-        // Define user_id and recipient from Request
-        // $userId = $request->userId;
-        // $recipient = $validatedData["recipient"];
-
         // Generate Random Code
         $uniqid = uniqid();
         $randStart = rand(1,5);
@@ -58,6 +49,30 @@ trait SendMessage {
         $response = [
             "success" => true,
             "message" => __("Verification Code sent."),
+            "sent_message" => $message
+        ];
+
+        // return a response
+        return $response;
+    }
+
+    public function sendInvitation($recipient)
+    {
+        // For Reference code
+        $uniqid = uniqid();
+        $randStart = rand(1,5);
+        $generatedCode = substr($uniqid,$randStart,6);
+
+        // Save reference code for user credit
+        
+
+        // define custom message
+        $message = "Your Verification code is " . strtoupper($generatedCode);
+        $this->sendMessage($message, $recipient);
+
+        $response = [
+            "success" => true,
+            "message" => __("Invitation sent."),
             "sent_message" => $message
         ];
 

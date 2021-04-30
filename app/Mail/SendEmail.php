@@ -30,7 +30,7 @@ class SendEmail extends Mailable
      */
     public function build()
     {
-        $address = 'hanszerodii@gmail.com'; // Main SendGrid Account
+        $address = 'test@gmail.com'; // Main SendGrid Account
         $subject = 'New User!'; // Subject of the email
         $name = $this->data['fullName']; // Name of the new user
 
