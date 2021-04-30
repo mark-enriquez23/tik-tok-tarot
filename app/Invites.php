@@ -8,7 +8,13 @@ class Invites extends Model
 {
     protected $fillable = [
         'user_id',
-        'reference_code',
-        'is_validated'
+        'referred_by',
+        'referral_code',
     ];
+
+
+    public function referred()
+    {
+        return $this->belongsTo('App\User', 'referral_code', 'referral_code');
+    }
 }

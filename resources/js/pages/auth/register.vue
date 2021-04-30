@@ -237,15 +237,16 @@ export default {
            }else{
               this.$store.dispatch('auth/validatePassword', this.form).then(({success, message}) => {
                 if (success) {
-                  this.step++;
+                    this.form.referral_code = this.$routes.params.referral_code !== undefined ? this.$routes.params.referral_code : ''
+                    this.step++;
                 }
             })
            }
          }
        })
       }
-      
-      
+
+
     },
     async register () {
       // Register the user.

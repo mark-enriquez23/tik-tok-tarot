@@ -22,6 +22,7 @@ class CreateUsersTable extends Migration
             $table->string('password')->nullable();
             $table->tinyInteger('is_active')->default(1);
             $table->tinyInteger('is_locked')->default(0);
+            $table->string('referral_code')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
