@@ -16,7 +16,7 @@
         "lcobucci/jwt": "3.3.3",
         "nztim/mailchimp": "^4.3",
         "spatie/laravel-newsletter": "^4.9",
-        "twilio/sdk": "^6.18",
+        "twilio/sdk": "^6.22",
         "tymon/jwt-auth": "1.0.0"
     },
     "require-dev": {

@@ -5,6 +5,7 @@ function page(path) {
 export default [
   { path: '/', redirect: 'landing' },
   { path: '/landing', name: 'welcome', component: page('welcome.vue') },
+  { path: '/test-video', name: 'video-room', component: page('video/VideoChat.vue') },
   { path: '/prices', name: 'prices', component: page('pricing.vue') },
   { path: '/readers', name: 'readers', component: page('readers.vue') },
   { path: '/search', name: 'search', component: page('search.vue') },
@@ -54,61 +55,61 @@ export default [
   },
   {
     path: '/admin/reader-form/:id', name: 'admin.reader-form', component: page('admin/reader/reader-form.vue'),
-    meta          : { 
-      requiresAuth: true, 
-      role        : [1], 
-      title       : 'Reader' 
+    meta          : {
+      requiresAuth: true,
+      role        : [1],
+      title       : 'Reader'
     }
   },
 
   // uploa approval
   {
     path: '/admin/upload-approvals', name: 'admin.upload-approvals', component: page('admin/video-approval-tool/approval-list.vue'),
-    meta          : { 
-      requiresAuth: true, 
-      role        : [1], 
-      title       : 'Vlog Approvals' 
+    meta          : {
+      requiresAuth: true,
+      role        : [1],
+      title       : 'Vlog Approvals'
     }
   },
   {
     path: '/admin/upload-approval/:id', name: 'admin.upload-approval', component: page('admin/video-approval-tool/approval-form.vue'),
-    meta          : { 
-      requiresAuth: true, 
-      role        : [1], 
-      title       : 'Vlog Approval' 
+    meta          : {
+      requiresAuth: true,
+      role        : [1],
+      title       : 'Vlog Approval'
     }
   },
   {
     path: '/admin/user-credits', name: 'admin.user-credits', component: page('admin/credit/credit-list.vue'),
-    meta          : { 
-      requiresAuth: true, 
-      role        : [1], 
-      title       : 'Credits' 
+    meta          : {
+      requiresAuth: true,
+      role        : [1],
+      title       : 'Credits'
     }
   },
   {
     path: '/admin/user-credit/:id', name: 'admin.user-credit', component: page('admin/credit/credit-form.vue'),
-    meta          : { 
-      requiresAuth: true, 
-      role        : [1], 
-      title       : 'Credit' 
+    meta          : {
+      requiresAuth: true,
+      role        : [1],
+      title       : 'Credit'
     }
   },
   {
     path: '/admin/psychics', name: 'admin.psychics', component: page('admin/psychic/psychic-list.vue'),
-    meta          : { 
-      requiresAuth: true, 
-      role        : [1], 
-      title       : 'Psychic' 
+    meta          : {
+      requiresAuth: true,
+      role        : [1],
+      title       : 'Psychic'
     }
   },
   ,
   {
     path: '/admin/psychic-profile/:id', name: 'admin.psychic-profile', component: page('admin/psychic/psychic-profile.vue'),
-    meta          : { 
-      requiresAuth: true, 
-      role        : [1], 
-      title       : 'Psychic Profile' 
+    meta          : {
+      requiresAuth: true,
+      role        : [1],
+      title       : 'Psychic Profile'
     }
   },
   {
