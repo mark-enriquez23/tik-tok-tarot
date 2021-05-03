@@ -124,6 +124,11 @@ class User extends Authenticatable implements JWTSubject //, MustVerifyEmail
         return [];
     }
 
+    public function getUserByReferralCode(string $code)
+    {
+        return static::where('referral_code',$code)->get()->first();
+    }
+
     public function role()
     {
         return $this->belongsTo('App\Role');

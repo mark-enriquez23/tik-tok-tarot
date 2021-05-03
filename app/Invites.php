@@ -13,8 +13,13 @@ class Invites extends Model
     ];
 
 
-    public function referred()
+    public function referredUser()
     {
         return $this->belongsTo('App\User', 'referral_code', 'referral_code');
+    }
+
+    public static function getByReferralCode(string $code)
+    {
+        return static::where('referral_code', $code)->with('referredUser')->get()->first();
     }
 }

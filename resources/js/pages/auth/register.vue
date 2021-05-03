@@ -237,7 +237,6 @@ export default {
            }else{
               this.$store.dispatch('auth/validatePassword', this.form).then(({success, message}) => {
                 if (success) {
-                    this.form.referral_code = this.$routes.params.referral_code !== undefined ? this.$routes.params.referral_code : ''
                     this.step++;
                 }
             })
@@ -295,8 +294,8 @@ export default {
           }
 
           // uncomment this if going to push on production
-          const { emailRes } = axios.post('api/email/send-email', emailData )
-          console.log(emailRes)
+          const { emailRes } = axios .post('api/email/send-email', emailData )
+          // console.log(emailRes)
 
           // Log in the user.
           const { data: { token } } = await this.form.post('/api/login')

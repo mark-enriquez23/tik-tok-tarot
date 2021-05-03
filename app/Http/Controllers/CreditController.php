@@ -29,8 +29,6 @@ class CreditController extends Controller
                 'message'   => __('messages.credit_updated')
             ]);
         }else{
-            
-
             // save
             $credit = new Credit;
             $credit->user_id = $request->user_id;
