@@ -21,7 +21,9 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password')->nullable();
             $table->tinyInteger('is_active')->default(1);
+            $table->string('is_approved')->default("PENDING");
             $table->tinyInteger('is_locked')->default(0);
+            $table->string('referral_code')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

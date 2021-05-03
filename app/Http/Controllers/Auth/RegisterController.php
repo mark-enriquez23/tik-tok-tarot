@@ -16,7 +16,7 @@ class RegisterController extends Controller
     use RegistersUsers, SendMessage;
 
     /**
-     * Create a new controller instance.
+     * Create a new controller instance.a
      *
      * @return void
      */
@@ -75,14 +75,26 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        $user = User::create([
-            'username' => $data['username'],
-            'name' => $data['name'],
-            'phone_number' => $data['phone_number'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-            'role_id' => $data['role_id'],
-        ]);
+        if($data['role_id'] === 2){
+            $user = User::create([
+                'username' => $data['username'],
+                'name' => $data['name'],
+                'phone_number' => $data['phone_number'],
+                'email' => $data['email'],
+                'referral_code' => \Str::random(6),
+                'password' => bcrypt($data['password']),
+                'role_id' => $data['role_id'],
+            ]);
+        }else{
+            $user = User::create([
+                'username' => $data['username'],
+                'name' => $data['name'],
+                'phone_number' => $data['phone_number'],
+                'email' => $data['email'],
+                'password' => bcrypt($data['password']),
+                'role_id' => $data['role_id'],
+            ]);
+        }
 
         // Create initial Credit
         $credit = Credit::create([
@@ -90,7 +102,7 @@ class RegisterController extends Controller
         ]);
 
         // send sms code
-        $this->sendCustomMessage($user->id, $data['phone_number']);
+        // $this->sendCustomMessage($user->id, $data['phone_number']);
 
         return $user;
 

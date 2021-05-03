@@ -237,15 +237,15 @@ export default {
            }else{
               this.$store.dispatch('auth/validatePassword', this.form).then(({success, message}) => {
                 if (success) {
-                  this.step++;
+                    this.step++;
                 }
             })
            }
          }
        })
       }
-      
-      
+
+
     },
     async register () {
       // Register the user.
@@ -294,8 +294,8 @@ export default {
           }
 
           // uncomment this if going to push on production
-          const { emailRes } = axios.post('api/email/send-email', emailData )
-          console.log(emailRes)
+          const { emailRes } = axios .post('api/email/send-email', emailData )
+          // console.log(emailRes)
 
           // Log in the user.
           const { data: { token } } = await this.form.post('/api/login')

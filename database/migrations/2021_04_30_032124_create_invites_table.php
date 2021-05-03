@@ -16,8 +16,8 @@ class CreateInvitesTable extends Migration
         Schema::create('invites', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('user_id');
-            $table->string('reference_code');
-            $table->tinyInteger('is_validated')->default(0);
+            $table->bigInteger('referred_by');
+            $table->string('referral_code');
             $table->timestamps();
         });
     }
