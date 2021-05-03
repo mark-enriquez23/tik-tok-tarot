@@ -112,12 +112,36 @@ export default [
     }
   },
   {
-    path: '/admin/history', name: 'admin.history', component: page('admin/history/history-list.vue'),
-    // meta          : {
-    //   requiresAuth: true,
-    //   role        : [1],
-    //   title       : 'Readers'
-    // }
+    path: '/client/history', name: 'client.history', component: page('client/history/history-list.vue'),
+    meta          : {
+      requiresAuth: true,
+      role        : [3],
+      title       : 'Clients'
+    }
+  },
+  {
+    path: '/client/notification', name: 'client.notification', component: page('client/notification/notification.vue'),
+    meta          : {
+      requiresAuth: true,
+      role        : [3],
+      title       : 'Clients'
+    }
+  },
+  {
+    path: '/client/referrals', name: 'client.referrals', component: page('client/referral/referral.vue'),
+    meta          : {
+      requiresAuth: true,
+      role        : [3],
+      title       : 'Clients'
+    }
+  },
+  {
+    path: '/reader/referrals', name: 'reader.referrals', component: page('reader/referral/referral.vue'),
+    meta          : {
+      requiresAuth: true,
+      role        : [2],
+      title       : 'Readers'
+    }
   },
   { path: '*', component: page('errors/404.vue') }
 ]

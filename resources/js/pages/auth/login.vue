@@ -126,15 +126,27 @@ export default {
       // Fetch the user.
       await this.$store.dispatch('auth/fetchUser')
 
-      console.log(this.user);
-      if (this.user) {
-        if (this.user.role_id == '1') {
+      console.log(this.user.role_id);
+      switch (this.user.role_id){
+        case 1:
           this.$router.push({ name: 'admin.readers' });
-        }else if(this.user.role_id == '2'){
-          // Redirect home.
-          this.$router.push({ name: 'home' })
-        }
+          break;
+
+        case 2:
+           this.$router.push({ name: 'home' });
+           break
+
+        case 3:
+            this.$router.push({ name: 'welcome' });
+            break;
       }
+      // if (this.user) {
+      //   if (this.user.role_id == '1') {
+      //     this.$router.push({ name: 'admin.readers' });
+      //   }else if(this.user.role_id == '2'){
+      //     this.$router.push({ name: 'home' })
+      //   }
+      // }
 
       
       
@@ -142,6 +154,7 @@ export default {
     redirect()
     {
       const intendedUrl = Cookies.get("intended_url");
+      console.log(intendedUrl)
       if (intendedUrl) {
         Cookies.remove("intended_url");
         this.$router.push({ path: intendedUrl });

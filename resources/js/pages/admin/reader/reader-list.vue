@@ -27,7 +27,8 @@
             <td>{{ reader.email }}</td>
             <td>{{ reader.visible ? 'Yes' : 'No' }}</td>
             <td>{{ reader.is_banned == 0 ? 'No' : 'Yes' }}</td>
-            <td class="text-warning">Pending</td>
+            <td v-if='reader.is_approved == "PENDING"' class="text-warning">Pending</td>
+            <td v-else :class="reader.is_approved ? 'text-success' : 'text-danger'">{{ reader.is_approved ? 'Approved' : 'Rejected' }}</td>
             <td><div class="cursor-pointer link" @click="view(reader.id)">Manage</div></td>
         </tr>
         <tr>

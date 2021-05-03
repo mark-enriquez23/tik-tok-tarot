@@ -151,6 +151,8 @@ import VueHcaptcha from '@hcaptcha/vue-hcaptcha';
 import SecurityQuestion from '~/components/Register/SecurityQuestion'
 import VuePhoneNumberInput from 'vue-phone-number-input';
 import { swalOops } from '../../helpers/index';
+import axios from 'axios';
+import Swal from 'sweetalert2';
 
 const initializeData = () => ({
     form: new Form({
@@ -244,8 +246,6 @@ export default {
          }
        })
       }
-
-
     },
     async register () {
       // Register the user.
@@ -294,7 +294,7 @@ export default {
           }
 
           // uncomment this if going to push on production
-          const { emailRes } = axios .post('api/email/send-email', emailData )
+          const { emailRes } = axios.post('api/email/send-email', emailData )
           // console.log(emailRes)
 
           // Log in the user.
@@ -308,7 +308,7 @@ export default {
 
           Swal.fire({
               title: 'Success',
-              text: "A verification code has been sent to your phone number!",
+              text: "A verification code has been sent to your email!",
               type: 'success'
             }).then(() => {
                 // Redirect home.
