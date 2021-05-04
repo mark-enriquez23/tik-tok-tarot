@@ -17,7 +17,7 @@ export default [
   { path: '/about-us', name: 'about.us', component: page('about-us.vue') },
   { path: '/contact-us', name: 'contact.us', component: page('contact-us.vue') },
   { path: '/login', name: 'login', component: page('auth/login.vue') },
-  { path: '/register', name: 'register', component: page('auth/register.vue') },
+  { path: '/register/:referral?', name: 'register', component: page('auth/register.vue') },
   { path: '/password/reset', name: 'password.request', component: page('auth/password/email.vue') },
   { path: '/password/reset/:token', name: 'password.reset', component: page('auth/password/reset.vue') },
   { path: '/email/verify/:id', name: 'verification.verify', component: page('auth/verification/verify.vue') },
@@ -113,12 +113,36 @@ export default [
     }
   },
   {
-    path: '/admin/history', name: 'admin.history', component: page('admin/history/history-list.vue'),
-    // meta          : {
-    //   requiresAuth: true,
-    //   role        : [1],
-    //   title       : 'Readers'
-    // }
+    path: '/client/history', name: 'client.history', component: page('client/history/history-list.vue'),
+    meta          : {
+      requiresAuth: true,
+      role        : [3],
+      title       : 'Clients'
+    }
+  },
+  {
+    path: '/client/notification', name: 'client.notification', component: page('client/notification/notification.vue'),
+    meta          : {
+      requiresAuth: true,
+      role        : [3],
+      title       : 'Clients'
+    }
+  },
+  {
+    path: '/client/referrals', name: 'client.referrals', component: page('client/referral/referral.vue'),
+    meta          : {
+      requiresAuth: true,
+      role        : [3],
+      title       : 'Clients'
+    }
+  },
+  {
+    path: '/reader/referrals', name: 'reader.referrals', component: page('reader/referral/referral.vue'),
+    meta          : {
+      requiresAuth: true,
+      role        : [2],
+      title       : 'Readers'
+    }
   },
   { path: '*', component: page('errors/404.vue') }
 ]

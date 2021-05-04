@@ -14,6 +14,12 @@
 
         <ul class="navbar-nav ml-auto navbar-nav-auth">
           <!-- Authenticated -->
+           <li v-if="user && roleId == 3" class="nav-item">
+             <router-link :to="{ name: 'client.notification' }" class="bell px-3">
+                <fa icon="bell"/>
+              </router-link>
+          </li>
+
           <li v-if="user" class="nav-item dropdown">
             <a class="nav-link dropdown-toggle text-dark auth-links"
                href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
@@ -22,9 +28,25 @@
               <!-- {{ user.name }} -->
             </a>
             <div class="dropdown-menu">
+              
               <router-link :to="{ name: 'settings.profile' }" class="dropdown-item pl-3">
                 <fa icon="cog" fixed-width />
                 Settings
+              </router-link>
+
+              <router-link :to="{ name: 'client.history' }" class="dropdown-item pl-3" v-if="user && roleId == 3">
+                <fa icon="history" fixed-width />
+                History
+              </router-link>
+
+              <router-link :to="{ name: 'client.referrals' }" class="dropdown-item pl-3" v-if="user && roleId == 3">
+                <fa icon="user-plus" fixed-width />
+                Referrals
+              </router-link>
+
+              <router-link :to="{ name: 'reader.referral' }" class="dropdown-item pl-3" v-if="user && roleId == 2">
+                <fa icon="user-plus" fixed-width />
+                Referrals
               </router-link>
 
               <div class="dropdown-divider" />
@@ -52,7 +74,7 @@
 
   </nav>
 
-  <nav class="navbar navbar-expand-lg navbar-light bg-white" v-if="!isLoggedIn">
+  <nav class="navbar navbar-expand-lg navbar-light bg-white" v-if="!isLoggedIn || roleId == 3">
     <div class="container">
   
     <form class="form-inline col-8 col-md-4 px-0" action="" method="post" @submit.prevent="siteSearch">
@@ -239,6 +261,10 @@ export default {
 }
 .bs-none {
   box-shadow: none;
+}
+
+.bell{
+  font-size:30px;
 }
 
 @media (max-width: 771px) {

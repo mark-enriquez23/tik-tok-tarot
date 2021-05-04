@@ -33,8 +33,8 @@ class UserController extends Controller
 
         return response()->json([
             "success" => $user ? true : false,
-            "message" => $user ? 
-                __('messages.invalid_username') : 
+            "message" => $user ?
+                __('messages.invalid_username') :
                 __('messages.valid_username'),
             "data" => $user
         ]);
@@ -52,8 +52,8 @@ class UserController extends Controller
 
         return response()->json([
             "success" => $user ? true : false,
-            "message" => $user ? 
-                __('messages.invalid_email') : 
+            "message" => $user ?
+                __('messages.invalid_email') :
                 __('messages.valid_email'),
             "data" => $user
         ]);
@@ -93,6 +93,19 @@ class UserController extends Controller
         return response()->json([
             'success'   => true,
             'data'      => $credit
+        ]);
+    }
+
+    public function refreshInvitationCode($id)
+    {
+        $user = User::findOrFail($id);
+
+        $user->referral_code = \Str::random(6);
+        $user->save;
+
+        return response()->json([
+            'success'   => true,
+            'data'      => $user
         ]);
     }
 }

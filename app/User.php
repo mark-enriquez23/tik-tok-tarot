@@ -19,7 +19,7 @@ class User extends Authenticatable implements JWTSubject //, MustVerifyEmail
      * @var array
      */
     protected $fillable = [
-        'category_id', 'username', 'name', 'email', 'phone_number', 'visible', 'is_banned', 'role_id', 'is_hired', 'password',
+        'category_id', 'username', 'name', 'email', 'referral_code', 'phone_number', 'visible', 'is_banned', 'role_id', 'is_hired', 'password',
     ];
 
     /**
@@ -124,6 +124,11 @@ class User extends Authenticatable implements JWTSubject //, MustVerifyEmail
         return [];
     }
 
+    public function getUserByReferralCode(string $code)
+    {
+        return static::where('referral_code',$code)->get()->first();
+    }
+
     public function role()
     {
         return $this->belongsTo('App\Role');
@@ -140,5 +145,10 @@ class User extends Authenticatable implements JWTSubject //, MustVerifyEmail
     public function credit()
     {
         return $this->hasOne('App\Credit');
+    }
+
+    public function referral()
+    {
+        return $this->hasMany('App\Invites', 'referral_code', 'referral_code');
     }
 }
