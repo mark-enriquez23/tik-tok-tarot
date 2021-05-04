@@ -9,8 +9,12 @@ use Twilio\Jwt\Grants\VideoGrant;
 
 class AccessTokenController extends Controller
 {
-    public function generate_token()
+    public function generate_token($room)
     {
+        // return response()->json([
+        //     'success' => true,
+        //     'message' => $room
+        // ]);
         // Substitute your Twilio Account SID and API Key details
         $accountSid = getenv('TWILIO_ACCOUNT_SID');
         $apiKeySid = getenv('TWILIO_API_KEY_SID');
@@ -29,7 +33,7 @@ class AccessTokenController extends Controller
 
         // Grant access to Video
         $grant = new VideoGrant();
-        $grant->setRoom('cool room');
+        $grant->setRoom($room);
         $token->addGrant($grant);
 
         // Serialize the token as a JWT

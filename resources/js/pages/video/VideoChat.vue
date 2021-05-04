@@ -1,8 +1,10 @@
 <template>
-    <div class="p-5">
+    <div class="p-5 text-center">
         <h1 class="text-2xl mb-4">Laravel Video Chat</h1>
         <div class="grid grid-flow-row grid-cols-3 grid-rows-3 gap-4 bg-black">
-            <div id="my-video-chat-window"></div>
+            <div id="my-video-chat-window">
+              <button @click='getAccessToken' v-if="!accessToken && name"> Start Broadcasting </button>
+            </div>
         </div>
     </div>
 </template>
@@ -12,17 +14,20 @@ export default {
     name: 'video-chat',
     data: function () {
       return {
-        accessToken: ''
+        accessToken: '',
+        roomSid: '',
+        name: this.$route.params.roomName,
       }
     },
     methods : {
     getAccessToken : function () {
+        console.log('Video chat room loading...');
 
         const _this = this
         const axios = require('axios')
 
         // Request a new token
-        axios.get('api/video/access_token')
+        axios.get(`/api/video/access_token/${this.name}`)
             .then(function (response) {
                 _this.accessToken = response.data
             })
@@ -36,11 +41,29 @@ export default {
     ,
     connectToRoom : function () {
 
+        const axios = require('axios');
+
         const { connect, createLocalVideoTrack } = require('twilio-video');
 
-        connect( this.accessToken, { name:'cool room' }).then(room => {
+        connect( this.accessToken, { name:this.name }).then(room => {
 
             console.log(`Successfully joined a Room: ${room}`);
+            console.log("Data::", room.sid);
+            this.roomSid = room.sid;
+
+            let request = {
+              room_name: this.name,
+              room_sid: room.sid,
+              room_status: "ON_GOING"
+            }
+
+            axios.post(`/api/video/history/save`, request)
+            .then((response) =>{
+              console.log(response);
+            })
+            .catch((err)=>{
+              console.log(err);
+            })
 
             const videoChatWindow = document.getElementById('my-video-chat-window');
 
@@ -70,9 +93,17 @@ export default {
     },
 
     mounted : function () {
-        console.log('Video chat room loading...')
+      const axios = require('axios');
+      console.log(this.name)
 
-        this.getAccessToken()
+      axios.get(`/api/video/${this.name}`)
+      .then((response) =>{
+        console.log(response);
+      })
+      .catch((err)=>{
+        console.log(err.response);
+      })
+        // this.getAccessToken()
     }
 }
 </script>
