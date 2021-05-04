@@ -1,6 +1,6 @@
 <template>
   <card class="py-3 m-4">
-    <h4 class="mb-3">My History</h4>
+    <h4 class="mb-3">Notifications</h4>
     <p class="mb-5">Necessitatibus eius consequatur ex aliquid fuga eum quidem.</p>
     <div class="mb-2">
       <div class="row">
@@ -9,6 +9,7 @@
             <tbody>
               <tr class="mb-2" v-for="history in 5">
                 <td>
+                   <h5>Reader uploaded a video!</h5>
                   <div>
                     <img class="img-thumbnail p-0 mr-5" align="left" src="https://images.unsplash.com/photo-1535025639604-9a804c092faa?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6cb0ceb620f241feb2f859e273634393&auto=format&fit=crop&w=500&q=80">
                   </div>
