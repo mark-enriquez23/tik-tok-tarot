@@ -69,7 +69,7 @@
                 @change="isVisibleChange"
         /> -->
         <label>Approved?</label>
-        <InputSwitch class="mr-2" :disabled="!isUpdating" />
+        <InputSwitch v-model="sync_approved"  class="mr-2" :disabled="!isUpdating" />
       </div>
 
       <!-- Submit Button -->
@@ -124,6 +124,7 @@ export default {
     isUpdating: false,
     sync_banned: false,
     sync_visible: false,
+    sync_approved: false,
   }),
 
   computed: mapGetters({
@@ -140,6 +141,7 @@ export default {
       this.sync_banned = this.readerForm.is_banned === 1 ? true : false
       console.log(this.sync_banned)
       this.sync_visible = this.readerForm.visible === 1 ? true : false
+      this.sync_approved = this.readerForm.is_approved === "APPROVED" ? true : false
     });
   },
 
@@ -161,12 +163,18 @@ export default {
             this.readerForm.is_banned = 0;
           else if (this.sync_banned == 1 || this.sync_banned == true)
             this.readerForm.is_banned = 1;
+          
 
           console.log(this.visible);
           if (this.sync_visible == 1 || this.sync_visible == true)
             this.readerForm.visible = 1;
           else if (this.sync_visible == 0 || this.sync_visible == false)
             this.visible = 0;
+          
+          if (this.sync_approved == 0 || this.sync_approved == false)
+            this.readerForm.is_approved = "REJECTED";
+          else if (this.sync_approved == 1 || this.sync_approved == true)
+            this.readerForm.is_approved = "APPROVED";
           
           this.$store.dispatch('admin-reader/editReader', this.readerForm).then(({success, message}) => {
           if (success) {
