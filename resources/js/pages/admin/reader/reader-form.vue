@@ -14,90 +14,64 @@
     </div>
     <hr>
     <form @submit.prevent="update" @keydown="readerForm.onKeydown($event)">
+      <div class="row">
+      <div class="col-md-6">
       <!-- <alert-success :form="readerForm" message="Reader info has been updated!" /> -->
 
       <!-- Username -->
-      <div class="form-group col-md-7 mx-auto">
+      <div class="form-group col-md-11 mx-auto mx-auto  ">
         <label>{{ $t('username') }}</label>
         <input  v-model="readerForm.username" :class="{ 'is-invalid': readerForm.errors.has('username') }" class="form-control" type="text" name="username" :readonly="!isUpdating">
         <has-error :form="readerForm" field="username" />
       </div>
 
       <!-- First Name -->
-      <div class="form-group col-md-7 mx-auto">
+      <div class="form-group col-md-11 mx-auto mx-auto  ">
         <label>{{ $t('First Name') }}</label>
         <input  v-model="readerForm.firstName" :class="{ 'is-invalid': readerForm.errors.has('firstName') }" class="form-control" type="text" name="firstName" :readonly="!isUpdating">
         <has-error :form="readerForm" field="firstName" />
       </div>
 
       <!-- Last Name -->
-      <div class="form-group col-md-7 mx-auto">
+      <div class="form-group col-md-11 mx-auto mx-auto  ">
         <label>{{ $t('Last Name') }}</label>
         <input  v-model="readerForm.lastName" :class="{ 'is-invalid': readerForm.errors.has('lastName') }" class="form-control" type="text" name="lastName" :readonly="!isUpdating">
         <has-error :form="readerForm" field="lastName" />
       </div>
 
-      <!-- <div class="form-group col-md-7 mx-auto">
-        <label>Gender</label>
-          <select id="gender" class="form-control"  v-model="form.gender" required>
-            <option :value="gender.id"
-              v-for="(gender) in gender"
-              :key="gender.id"
-              :readonly="!isUpdating">
-              {{ gender.name }}
-            </option>
-          </select>
-       <has-error :form="form" field="gender" />
-      </div> -->
-
-      <div class="form-group col-md-7 mx-auto">
-        <label>{{ $t('Address') }}</label>
-        <input  v-model="readerForm.address" :class="{ 'is-invalid': readerForm.errors.has('address') }" class="form-control" type="text" name="address" :readonly="!isUpdating">
-        <has-error :form="readerForm" field="address" />
+      <!-- Email -->
+      <div class="form-group col-md-11 mx-auto">
+        <label>{{ $t('email') }}</label>
+        <input  v-model="readerForm.email" :class="{ 'is-invalid': readerForm.errors.has('email') }" class="form-control" type="text" name="email" :readonly="!isUpdating">
+        <has-error :form="readerForm" field="email" />
       </div>
 
-      <div class="form-group col-md-7 mx-auto">
-        <label>{{ $t('State/Province') }}</label>
-        <input  v-model="readerForm.state" :class="{ 'is-invalid': readerForm.errors.has('state') }" class="form-control" type="text" name="state" :readonly="!isUpdating">
-        <has-error :form="readerForm" field="state" />
-      </div>
-
-      <div class="form-group col-md-7 mx-auto">
-        <label>{{ $t('ZIP/Postal Code') }}</label>
-        <input  v-model="readerForm.zip" :class="{ 'is-invalid': readerForm.errors.has('zip') }" class="form-control" type="text" name="zip" :readonly="!isUpdating">
-        <has-error :form="readerForm" field="zip" />
-      </div>
-
-      <div class="form-group col-md-7 mx-auto">
-        <label>{{ $t('Country') }}</label>
-        <input  v-model="readerForm.country" :class="{ 'is-invalid': readerForm.errors.has('country') }" class="form-control" type="text" name="country" :readonly="!isUpdating">
-        <has-error :form="readerForm" field="country" />
-      </div>
-
-      <!-- Phone Number -->
-      <div class="form-group col-md-7 mx-auto">
-        <label>{{ $t('phone_number') }}</label>
+        <!-- Phone Number -->
+      <div class="form-group col-md-11 mx-auto mx-auto  ">
+        <label>{{ $t('Phone Number') }}</label>
         <input  v-model="readerForm.phone_number" :class="{ 'is-invalid': readerForm.errors.has('phone_number') }" class="form-control" type="text" name="phone_number" :readonly="!isUpdating">
         <has-error :form="readerForm" field="phone_number" />
       </div>
 
-
-
-      <!-- Email -->
-      <div class="form-group col-md-7 mx-auto">
-        <label>{{ $t('email') }}</label>
-        <input  v-model="readerForm.email" :class="{ 'is-invalid': readerForm.errors.has('email') }" class="form-control" type="text" name="email" :readonly="!isUpdating">
-        <has-error :form="readerForm" field="email" />
+      <div class="form-group col-md-11 mx-auto mx-auto">
+        <label>{{ $t('Birthdate') }}</label>
+        <birth-datepicker  v-model="readerForm.birthdate" :class="{ 'is-invalid': readerForm.errors.has('birthdate') }" class="form-control" name="birthdate" :readonly="!isUpdating" />
+        <has-error :form="form" field="birthdate" />
       </div>
 
-      <div class="form-group col-md-7 mx-auto">
-        <label>{{ $t('email') }}</label>
-        <input  v-model="readerForm.email" :class="{ 'is-invalid': readerForm.errors.has('email') }" class="form-control" type="text" name="email" :readonly="!isUpdating">
-        <has-error :form="readerForm" field="email" />
-      </div>
-      
+      <div class="form-group col-md-11 mx-auto mx-auto">
+        <label>Gender</label>
+        <select id="gender" class="form-control"  v-model="readerForm.gender" required :readonly="!isUpdating">
+          <option :value="gender.id"
+            v-for="(gender) in genders"
+            :key="gender.id">
+            {{ gender.name }}
+          </option>
+        </select>
+        <has-error :form="readerForm" field="gender" />
+      </div>     
 
-      <div class="form-group col-md-7 mx-auto">
+      <div class="form-group col-md-11 mx-auto mx-auto  ">
         <label>Banned?</label>
         <InputSwitch v-model="sync_banned" class="mr-2" :disabled="!isUpdating" />
         <!-- <toggle-button 
@@ -125,9 +99,52 @@
         <label>Approved?</label>
         <InputSwitch v-model="sync_approved"  class="mr-2" :disabled="!isUpdating" />
       </div>
+      </div>
+      <div class="col-md-6">
+      <!-- <alert-success :form="readerForm" message="Reader info has been updated!" /> -->
+
+      <!-- Password -->
+      <div class="form-group col-md-11 mx-auto mx-auto  ">
+        <label>{{ $t('password') }}</label>
+        <input  v-model="readerForm.password" :class="{ 'is-invalid': readerForm.errors.has('password') }" class="form-control" type="password" name="password" :readonly="!isUpdating">
+        <has-error :form="readerForm" field="password" />
+      </div>
+
+      <!-- First Name -->
+      <div class="form-group col-md-11 mx-auto mx-auto  ">
+        <label>{{ $t('Confirm Password') }}</label>
+        <input :class="{ 'is-invalid': readerForm.errors.has('password') }" class="form-control" type="password" name="confirmPassword" :readonly="!isUpdating">
+        <has-error :form="readerForm" field="firstName" />
+      </div>
+
+      <div class="form-group col-md-11 mx-auto mt-5">
+        <label>{{ $t('Address') }}</label>
+        <input  v-model="readerForm.address" :class="{ 'is-invalid': readerForm.errors.has('address') }" class="form-control" type="text" name="address" :readonly="!isUpdating">
+        <has-error :form="readerForm" field="address" />
+      </div>
+
+      <div class="form-group col-md-11 mx-auto mx-auto  ">
+        <label>{{ $t('State/Province') }}</label>
+        <input  v-model="readerForm.state" :class="{ 'is-invalid': readerForm.errors.has('state') }" class="form-control" type="text" name="state" :readonly="!isUpdating">
+        <has-error :form="readerForm" field="state" />
+      </div>
+
+      <div class="form-group col-md-11 mx-auto mx-auto  ">
+        <label>{{ $t('ZIP/Postal Code') }}</label>
+        <input  v-model="readerForm.zip" :class="{ 'is-invalid': readerForm.errors.has('zip') }" class="form-control" type="text" name="zip" :readonly="!isUpdating">
+        <has-error :form="readerForm" field="zip" />
+      </div>
+
+      <div class="form-group col-md-11 mx-auto mx-auto  ">
+        <label>{{ $t('Country') }}</label>
+        <input  v-model="readerForm.country" :class="{ 'is-invalid': readerForm.errors.has('country') }" class="form-control" type="text" name="country" :readonly="!isUpdating">
+        <has-error :form="readerForm" field="country" />
+      </div>
 
       <!-- Submit Button -->
-       <div class="form-group row col-md-7 mx-auto mt-3">
+     
+      </div>
+        <div class="form-group row  col-md-6 mx-auto mt-3">
         <div class="col-md-6 px-0 pr-lg-1"  v-if="isUpdating">
           <!-- Bac Button -->
           <button type="button" class="btn btn-secondary w-100" @click.prevent="cancelUpdate()"  >
@@ -152,6 +169,7 @@
           </v-button>
         </div>
       </div>
+      </div>
     </form>
   </card>
 </template>
@@ -162,6 +180,7 @@ import { mapGetters } from 'vuex'
 import { swalOops, swalSuccess } from "~/helpers"
 import Swal from 'sweetalert2';
 import InputSwitch from 'primevue/inputswitch';
+import birthDatepicker from 'vue-birth-datepicker/src/birth-datepicker';
 
 export default {
   scrollToTop: false,
@@ -171,7 +190,8 @@ export default {
   },
 
   components: {
-    InputSwitch
+    InputSwitch,
+    birthDatepicker
   },
 
   data: () => ({
@@ -179,7 +199,7 @@ export default {
     sync_banned: false,
     sync_visible: false,
     sync_approved: false,
-    gender: [
+    genders: [
       {
         id: 0,
         name: 'Male'

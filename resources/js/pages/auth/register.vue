@@ -34,6 +34,7 @@
               <input  v-model="form.username" :class="{ 'is-invalid': form.errors.has('username') }" class="form-control" type="text" name="username">
               <has-error :form="form" field="username" />
             </div>
+         
 
             <div class="form-group col-md-7 mx-auto">
               <label>Gender</label>
@@ -46,8 +47,6 @@
               </select>
               <has-error :form="form" field="gender" />
             </div>
-
-            
 
             <!-- Role -->
             <div class="form-group col-md-7 mx-auto">
@@ -187,7 +186,7 @@ const initializeData = () => ({
       password: '',
       password_confirmation: '',
       role_id: null,
-      validate: null,
+      validate: null
     }),
     phone_number: '',
     validPhoneNumber: false,
@@ -231,7 +230,7 @@ export default {
     LoginWithGithub,
     VueHcaptcha,
     SecurityQuestion,
-    VuePhoneNumberInput,
+    VuePhoneNumberInput
   },
 
   metaInfo () {

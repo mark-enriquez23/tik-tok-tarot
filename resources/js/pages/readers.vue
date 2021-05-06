@@ -25,9 +25,13 @@
                   <div class="pic"><img :src="testimonialImage5" class="img-fluid" alt=""></div>
                   <div class="member-info">
                     <h4>{{reader.name}}</h4>
+                   
                     <p class="text-success mb-0">{{ reader.is_active == 1 ? 'Online' : 'Offline' }}</p>
                     <p>{{reader.description}}</p>
                     <span class="mt-3" >Health</span>
+                     <div class="col-md-6 mx-auto mt-3">
+                     <star-rating v-bind:star-size="20"/>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -60,10 +64,11 @@ import { mapGetters } from 'vuex'
 import Footer from '../components/Utilities/Footer.vue'
 import Form from 'vform'
 import Swal from 'sweetalert2';
-import axios from "axios"
+import axios from "axios";
+import StarRating from 'vue-star-rating'
 
 export default {
-  components: { Footer },
+  components: { Footer, StarRating },
   layout: 'default',
 
   metaInfo () {
