@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\PhoneVerification;
 use App\Mail\SendEmail;
 use App\User;
 use Mail;
@@ -26,14 +27,27 @@ class SendEmailController extends Controller
             $user->userSecurityQuestions[$key]['_security_question'] = $userSecurityQuestion->security_question->question;
         }
 
+        // Generate Random Code
+        $uniqid = uniqid();
+        $randStart = rand(1,5);
+        $generatedCode = substr($uniqid,$randStart,6);
+
+        $phoneVerificationData = [
+            "user_id" => $user->id,
+            "code" => $generatedCode
+        ];
+
+        PhoneVerification::create($phoneVerificationData);
+
         // Define data that will send to Mailer
         $data = [
-            'fullName' => $request->data['fullName'], 
+            'fullName' => $request->data['fullName'],
             'userName' => $request->data['userName'],
             'email' => $request->data['email'],
             'phone_number' => $user->phone_number,
-            'securityQuestions' => $user->userSecurityQuestions
-        ];  
+            'securityQuestions' => $user->userSecurityQuestions,
+            'verification_code' => $generatedCode
+        ];
 
         Mail::to($request->email)->send(new SendEmail($data)); // Send an Email
 
