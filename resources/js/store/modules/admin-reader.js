@@ -17,6 +17,7 @@ export const state = {
     is_banned: 0,
     is_active: 0,
     visible: 0,
+    is_approved: "PENDING"
   }),
 };
 
@@ -39,6 +40,7 @@ export const mutations = {
     state.readerForm.fill(reader)
     state.readerForm.is_banned = reader.is_banned
     state.readerForm.visible = reader.visible
+    state.readerForm.is_approved = reader.is_approved
 
     state.uploads = reader.uploads
   },
@@ -87,15 +89,4 @@ export const actions = {
       return e;
     }
   },
-
-  isBannedChange(){
-    state.is_banned = !state.is_banned 
-  },
-
-  isVisibleChange(){
-    state.visible = !state.visible
-  }
-
-
-
 };
