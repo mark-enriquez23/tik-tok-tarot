@@ -2,7 +2,7 @@
 <html lang="en-US">
   <head>
     <meta charset="utf-8" />
-    
+
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
 
@@ -45,6 +45,10 @@
     <table>
       <tr>
         <td style="text-align: left; width:120px"></td>
+        <th style="text-align: left;"><h1><b>VERFICIATION CODE: {{ $verificationCode }}</b></h1></th>
+      </tr>
+      <tr>
+        <td style="text-align: left; width:120px"></td>
         <th style="text-align: left;"><h3><b>Basic Info</b></h3></th>
       </tr>
       <tr>
@@ -77,7 +81,7 @@
           <th style="text-align: left;">{{ $securityQuestion->answer }}</th>
         </tr>
       @endforeach
-      
+
     </table>
   </body>
 </html>

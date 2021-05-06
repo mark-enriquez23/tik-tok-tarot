@@ -5,6 +5,9 @@
             <div id="my-video-chat-window">
               <button @click='getAccessToken' v-if="!accessToken && name"> Start Broadcasting </button>
             </div>
+
+            <div id="spectator-video-window">
+            </div>
         </div>
     </div>
 </template>
@@ -39,11 +42,30 @@ export default {
             });
         }
     ,
+    joinAsParticipant : function () {
+        console.log('Video chat room loading...');
+
+        const _this = this
+        const axios = require('axios')
+
+        // Request a new token
+        axios.get(`/api/video/access_token/${this.name}`)
+            .then(function (response) {
+                _this.accessToken = response.data
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
+            .then(function () {
+                _this.joinToRoom();
+            });
+        }
+    ,
     connectToRoom : function () {
 
         const axios = require('axios');
 
-        const { connect, createLocalVideoTrack } = require('twilio-video');
+        const { connect, createLocalVideoTrack,  } = require('twilio-video');
 
         connect( this.accessToken, { name:this.name }).then(room => {
 
@@ -89,8 +111,67 @@ export default {
         }, error => {
             console.error(`Unable to connect to Room: ${error.message}`);
         });
+      },
+
+      joinToRoom : function () {
+
+      const axios = require('axios')
+
+      const { connect } = require('twilio-video');
+
+      connect( this.accessToken, { name:this.name, video:false, audio:false }).then(room => {
+
+          console.log(`Successfully joined a Room: ${room}`);
+          console.log("Data::", room.sid);
+          this.roomSid = room.sid;
+
+          const videoChatWindow = document.getElementById('my-video-chat-window');
+
+          // createLocalVideoTrack().then(track => {
+          //     videoChatWindow.appendChild(track.attach());
+          // });
+
+          const localParticipant = room.localParticipant;
+          console.log(`Connected to the Room as LocalParticipant "${localParticipant.identity}"`);
+
+          // room.participants.forEach(participant => {
+          //   console.log(`Participant "${participant.identity}" is connected to the Room`);
+          //   console.log(participant);
+
+          //     participant.tracks.forEach(publication => {
+          //       if(publication !== undefined){
+          //         const track = publication.track;
+          //         console.log("RENDER VIDEO");
+          //         videoChatWindow.appendChild(track.attach());
+          //       }
+          //     });
+
+          // });
+
+          room.participants.forEach(participant => {
+            participant.tracks.forEach(publication => {
+              if (publication.track) {
+                console.log("adding video v1");
+                document.getElementById('my-video-chat-window').appendChild(publication.track.attach());
+              }
+            });
+
+          participant.on('trackSubscribed', track => {
+              console.log("adding video v2");
+              console.log(track);
+              document.getElementById('my-video-chat-window').appendChild(track.attach());
+            });
+
+          });
+
+        }, error => {
+            console.error(`Unable to connect to Room: ${error.message}`);
+        });
       }
+
     },
+
+
 
     mounted : function () {
       const axios = require('axios');
@@ -99,6 +180,7 @@ export default {
       axios.get(`/api/video/${this.name}`)
       .then((response) =>{
         console.log(response);
+        this.joinAsParticipant();
       })
       .catch((err)=>{
         console.log(err.response);
