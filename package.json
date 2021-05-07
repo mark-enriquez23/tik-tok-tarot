@@ -27,6 +27,7 @@
     "primevue": "^2.4.1",
     "sweetalert2": "^8.19.0",
     "twilio-video": "^2.0.0",
+    "v-clipboard": "^2.2.3",
     "vform": "^1.0.1",
     "video-metadata-thumbnails": "^1.0.22",
     "vue": "^2.6.12",

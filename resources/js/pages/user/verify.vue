@@ -11,7 +11,7 @@
             <div class="mx-auto">
               <CodeInput style="width: 100% !important" :type="'text'" :loading="false" class="input" v-on:change="onChange" v-on:complete="onComplete" />
             </div>
-            <p class="col-md-12 mb-0 mt-3">Please enter the code we've sent to your phone number for your account verification.</p>
+            <p class="col-md-12 mb-0 mt-3">Please enter the code we've sent to your email for your account verification.</p>
             <div class="col-md-12 mt-3">
               <v-button class="btn btn-primary w-100" :disabled="!form.code">Verify Code</v-button>
             </div>

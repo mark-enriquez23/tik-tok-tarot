@@ -18,14 +18,14 @@
     <div class="mb-2">
       <div class="row">
         <div class="col-lg-5 mb-2">
-          <input :value="'http://tik-tok-tarot-master.test/register?&referral_code='+referral.referral_code" class="form-control w-20" disabled>
+          <input :value="'https://testsite.tiktok-tarot.live/register?referral_code=' + referral_code" class="form-control w-20" disabled id="referral-code">
         </div>
         <div class="col-lg-3 mb-2">
-           <v-button class="btn btn-primary w-10">Copy</v-button>
+           <button class="btn btn-primary w-10" @click.prevent="copy()">Copy</button>
         </div>
       </div>
       <div>
-        <p class="refresh">Refresh Referral Code</p>
+        <a class="refresh" @click.prevent="refresh()">Refresh Referral Code</a>
       </div>
     </div> 
   </card>
@@ -34,6 +34,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import axios from 'axios'
+import Clipboard from 'v-clipboard'
 
 export default {
   scrollToTop: false,
@@ -43,35 +44,50 @@ export default {
   },
 
   components: {
+    Clipboard
   },
 
-  data: () => ({
-    referral:""
-  }),
-
-  computed: mapGetters({
+   computed: mapGetters({
     user: 'auth/user',
     readers: 'admin-reader/readers',
   }),
 
+  data: () => ({
+    referral_code:String
+  }),
+
+ 
+
   created () {
-    this.fetchReferral();
+     
   },
 
   methods: {
-      async fetchReferral() {
+      async refresh() {
+        console.log("button-called")
         var referral = await axios.get("/api/user/refresh-code/"+this.user.id);
-        this.referral = referral.data.data;
+        console.log(referral)
+        this.referral_code = referral.data.data.referral_code;
+        console.log(this.referral_code)
     },
 
     getValue(){
-      return 'http://tik-tok-tarot-master.test/register'+ this.referral.referral_code;
+      return 'http://tik-tok-tarot-master.test/register'+ this.referral_code;
+    },
+
+    copy(){
+      console.log("copied-text")
+      let value = 'https://testsite.tiktok-tarot.live/register?referral_code=' + this.referral_code;
+      this.$clipboard(value)
     }
   },
 
   beforeMount(){
       this.$store.dispatch('auth/fetchUser');
+      console.log(this.user);
       console.log(this.user.id);
+      this.referral_code = this.user.referral_code;
+      console.log(this.user.referral_code)
       if (!this.user){
         this.$router.push({ name: 'home' })
       }

@@ -17,7 +17,8 @@ export const state = {
     is_banned: 0,
     is_active: 0,
     visible: 0,
-    is_approved: "PENDING"
+    is_approved: "PENDING",
+
   }),
 };
 
@@ -61,7 +62,7 @@ export const actions = {
 
   async viewReader({ commit }, id) {
     try {
-      const { data } = await axios.get(`/api/auth-reader/fetch-reader-by-id/${id}`);
+      const { data } = await axios.get(`/api/user/details/${id}`);
 
       commit(types.EDIT_READER, { reader: data.data });
     } catch (e) {
@@ -71,7 +72,7 @@ export const actions = {
 
   async editReader({ commit }, reader) {
     try {
-      const { data } = await axios.post('/api/auth-reader/update-reader',reader)
+      const { data } = await axios.post('/api/user/details',reader)
 
       commit(types.EDIT_READER, { reader: data.data });
       return data;

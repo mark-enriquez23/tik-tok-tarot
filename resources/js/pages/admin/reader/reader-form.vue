@@ -55,13 +55,13 @@
 
       <div class="form-group col-md-11 mx-auto mx-auto">
         <label>{{ $t('Birthdate') }}</label>
-        <birth-datepicker  v-model="readerForm.birthdate" :class="{ 'is-invalid': readerForm.errors.has('birthdate') }" class="form-control" name="birthdate" :readonly="!isUpdating" />
+        <birth-datepicker  v-model="readerForm.birthdate" :class="{ 'is-invalid': readerForm.errors.has('birthdate') }" class="form-control" name="birthdate" :disabled="!isUpdating" />
         <has-error :form="form" field="birthdate" />
       </div>
 
       <div class="form-group col-md-11 mx-auto mx-auto">
         <label>Gender</label>
-        <select id="gender" class="form-control"  v-model="readerForm.gender" required :readonly="!isUpdating">
+        <select id="gender" class="form-control"  v-model="readerForm.gender" required :disabled="!isUpdating">
           <option :value="gender.id"
             v-for="(gender) in genders"
             :key="gender.id">
@@ -120,7 +120,7 @@
       <div class="form-group col-md-11 mx-auto mt-5">
         <label>{{ $t('Address') }}</label>
         <input  v-model="readerForm.address" :class="{ 'is-invalid': readerForm.errors.has('address') }" class="form-control" type="text" name="address" :readonly="!isUpdating">
-        <has-error :form="readerForm" field="address" />
+        <has-error :form="readerForm" field="address1" />
       </div>
 
       <div class="form-group col-md-11 mx-auto mx-auto  ">
