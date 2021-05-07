@@ -5,7 +5,7 @@ function page(path) {
 export default [
   { path: '/', redirect: 'landing' },
   { path: '/landing', name: 'welcome', component: page('welcome.vue') },
-  { path: '/test-video', name: 'video-room', component: page('video/VideoChat.vue') },
+  { path: '/test-video/:roomName', name: 'video-room', component: page('video/VideoChat.vue') },
   { path: '/prices', name: 'prices', component: page('pricing.vue') },
   { path: '/readers', name: 'readers', component: page('readers.vue') },
   { path: '/search', name: 'search', component: page('search.vue') },

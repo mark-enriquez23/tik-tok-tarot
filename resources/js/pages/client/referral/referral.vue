@@ -1,7 +1,20 @@
 <template>
-  <card class="py-3 m-4">
-    <h4 class="mb-3">My Referrals</h4>
-    <p class="mb-5">Necessitatibus eius consequatur ex aliquid fuga eum quidem.</p>
+  <card class="p-6 m-4">
+    <div class="row">
+    <div class="col-lg-7">
+      <h4 class="mb-3">My Referrals</h4>
+      <p class="mb-5">Necessitatibus eius consequatur ex aliquid fuga eum quidem.</p>
+    </div>
+
+    <div class="col-lg-5 mt-4 mt-lg-0">
+      <div class="member red-background" data-aos="zoom-in" data-aos-delay="100">
+        <div class="member-info">
+          <h5 class="credits p-3 m-2" >My Points: 15</h5>
+        </div>
+      </div>
+    </div>
+    </div>
+
     <div class="mb-2">
       <div class="row">
         <div class="col-lg-5 mb-2">
@@ -49,15 +62,6 @@ export default {
       async fetchReferral() {
         var referral = await axios.get("/api/user/refresh-code/"+this.user.id);
         this.referral = referral.data.data;
-        console.log(this.referral)
-        // console.log(this.vlogs);
-        // if (!this.vlogs.success) {
-        //   Swal.fire({
-        //   title: 'Fetching Vlogs Failed',
-        //   text: "An error has occurred. Please try again.",
-        //   type: 'error'
-        // })
-      //}
     },
 
     getValue(){
@@ -92,5 +96,12 @@ export default {
 .refresh:hover{
   text-decoration:underline;
   cursor:pointer;
+}
+
+.credits{
+  background-color: #C82333;
+  color:white;
+  float:right;
+  border-radius:10px;
 }
 </style>

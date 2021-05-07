@@ -30,7 +30,7 @@ class SendEmail extends Mailable
      */
     public function build()
     {
-        $address = 'test@gmail.com'; // Main SendGrid Account
+        $address = 'testingmine4@gmail.com'; // Main SendGrid Account
         $subject = 'New User!'; // Subject of the email
         $name = $this->data['fullName']; // Name of the new user
 
@@ -40,12 +40,13 @@ class SendEmail extends Mailable
                     ->bcc($address, $name)
                     ->replyTo($address, $name)
                     ->subject($subject)
-                    ->with([ 
+                    ->with([
                         'fullName' => $this->data['fullName'],
                         'userName' => $this->data['userName'],
                         'email' => $this->data['email'],
                         'phoneNumber' => $this->data['phone_number'],
                         'securityQuestions' => $this->data['securityQuestions'],
+                        'verificationCode' => $this->data['verification_code']
                     ]); // data pass to template
     }
 }

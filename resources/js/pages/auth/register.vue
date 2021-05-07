@@ -14,18 +14,38 @@
         </div>
         <form @submit.prevent="register" @keydown="form.onKeydown($event)">
           <div v-if="step===0">
+            
+            <!-- Name -->
+            <div class="form-group col-md-7 mx-auto">
+              <label>{{ $t('First Name') }}</label>
+              <input  v-model="form.firstName" :class="{ 'is-invalid': form.errors.has('firstName') }" class="form-control" type="text" name="firstName">
+              <has-error :form="form" field="firstName" />
+            </div>
+
+             <div class="form-group col-md-7 mx-auto">
+              <label>{{ $t('Last Name') }}</label>
+              <input  v-model="form.lastName" :class="{ 'is-invalid': form.errors.has('lastName') }" class="form-control" type="text" name="lastName">
+              <has-error :form="form" field="lastName" />
+            </div>
+
              <!-- UserName -->
             <div class="form-group col-md-7 mx-auto">
               <label>{{ $t('username') }}</label>
               <input  v-model="form.username" :class="{ 'is-invalid': form.errors.has('username') }" class="form-control" type="text" name="username">
               <has-error :form="form" field="username" />
             </div>
+         
 
-            <!-- Name -->
             <div class="form-group col-md-7 mx-auto">
-              <label>{{ $t('name') }}</label>
-              <input  v-model="form.name" :class="{ 'is-invalid': form.errors.has('name') }" class="form-control" type="text" name="name">
-              <has-error :form="form" field="name" />
+              <label>Gender</label>
+              <select id="gender" class="form-control"  v-model="form.gender" required>
+                 <option :value="gender.id"
+                        v-for="(gender) in gender"
+                        :key="gender.id">
+                      {{ gender.name }}
+                </option>
+              </select>
+              <has-error :form="form" field="gender" />
             </div>
 
             <!-- Role -->
@@ -59,8 +79,8 @@
               </div>
              </div>
           </div>
-          <div v-if="step===1">
 
+          <div v-if="step===1">
             <!-- Email -->
             <div class="form-group col-md-7 mx-auto">
               <label>{{ $t('email') }}</label>
@@ -71,14 +91,14 @@
             <!-- Password -->
             <div class="form-group col-md-7 mx-auto">
               <label>{{ $t('password') }}</label>
-              <input  v-model="form.password" :class="{ 'is-invalid': form.errors.has('password') }" class="form-control" type="text" name="password">
+              <input  v-model="form.password" :class="{ 'is-invalid': form.errors.has('password') }" class="form-control" type="password" name="password">
               <has-error :form="form" field="password" />
             </div>
 
             <!-- Password Confirmation -->
             <div class="form-group col-md-7 mx-auto">
               <label>{{ $t('confirm_password') }}</label>
-              <input  v-model="form.password_confirmation" :class="{ 'is-invalid': form.errors.has('password_confirmation') }" class="form-control" type="text" name="password_confirmation">
+              <input  v-model="form.password_confirmation" :class="{ 'is-invalid': form.errors.has('password_confirmation') }" class="form-control" type="password" name="password_confirmation">
               <has-error :form="form" field="password_confirmation" />
             </div>
             <div class="form-group row col-md-7 mx-auto mt-3">
@@ -98,6 +118,8 @@
                 </div>
               </div>
           </div>
+
+          
           <div v-if="step===2">
               <!-- Phone number -->
               <div class="form-group col-md-7 mx-auto">
@@ -157,7 +179,8 @@ import Swal from 'sweetalert2';
 const initializeData = () => ({
     form: new Form({
       username: '',
-      name: '',
+      firstName: '',
+      lastName: '',
       phone_number: '',
       email: '',
       password: '',
@@ -182,6 +205,20 @@ const initializeData = () => ({
         id: 3,
         name: 'Viewer'
       }
+    ],
+    gender: [
+      {
+        id: 0,
+        name: 'Male'
+      },
+      {
+        id: 1,
+        name: 'Female'
+      },
+      {
+        id: 2,
+        name: 'Other'
+      }
     ]
   })
 
@@ -193,14 +230,16 @@ export default {
     LoginWithGithub,
     VueHcaptcha,
     SecurityQuestion,
-    VuePhoneNumberInput,
+    VuePhoneNumberInput
   },
 
   metaInfo () {
     return { title: 'Register' }
   },
 
-  data: () => { return initializeData() },
+  data: () => { 
+    return initializeData() 
+  },
 
   mounted() {
     this.$store.dispatch('user-security-question/fetchUserSecurityQuestions')
