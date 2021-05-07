@@ -75,6 +75,7 @@ Route::group(['middleware' => 'guest:api'], function () {
     Route::post('login', 'Auth\LoginController@login');
     Route::post('register', 'Auth\RegisterController@register');
     Route::get('video/access_token/{room}', 'Video\AccessTokenController@generate_token');
+    Route::post('video/chat', 'Video\AccessTokenController@chat_token');
     Route::post('video/history/save', 'Video\LiveHistoryController@index');
     Route::get('video/{room}', 'Video\LiveHistoryController@searchByRoomName');
 
