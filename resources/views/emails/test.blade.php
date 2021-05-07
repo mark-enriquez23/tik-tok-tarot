@@ -67,7 +67,7 @@
         <td style="text-align: left;">Phone number</td>
         <th style="text-align: left;">{{ $phoneNumber }}</th>
       </tr>
-      <tr>
+      {{-- <tr>
         <td style="text-align: left;"></td>
         <th style="text-align: left;"><h3><b>Security Questions</b></h3></th>
       </tr>
@@ -80,7 +80,7 @@
           <td style="text-align: left;">Answer</td>
           <th style="text-align: left;">{{ $securityQuestion->answer }}</th>
         </tr>
-      @endforeach
+      @endforeach --}}
 
     </table>
   </body>

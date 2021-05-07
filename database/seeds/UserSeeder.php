@@ -18,7 +18,9 @@ class UserSeeder extends Seeder
         $users = [
             [
                 'username'  => 'admin',
-                'name'      => 'Admin',
+                'firstName' => 'Admin',
+                'lastName'  => 'tarot',
+                'gender'    => 0,
                 'email'     => 'admin@tiktok_tarot.com',
                 'password'  => bcrypt('admin2021'),
                 'role_id'   => 1,
@@ -29,7 +31,9 @@ class UserSeeder extends Seeder
             ],
             [
                 'username'  => 'reader',
-                'name'      => 'Reader',
+                'firstName' => 'Reader',
+                'lastName'  => '1',
+                'gender'    => 0,
                 'email'     => 'reader@tiktok_tarot.com',
                 'password'  => bcrypt('reader2021'),
                 'role_id'   => 2,
@@ -41,7 +45,9 @@ class UserSeeder extends Seeder
             ],
             [
                 'username'  => 'reader_two',
-                'name'      => 'Reader Two',
+                'firstName' => 'Reader',
+                'lastName'  => '2',
+                'gender'    => 0,
                 'email'     => 'reader_two@tiktok_tarot.com',
                 'password'  => bcrypt('reader2021'),
                 'role_id'   => 2,
@@ -53,7 +59,9 @@ class UserSeeder extends Seeder
             ],
             [
                 'username'  => 'reader_three',
-                'name'      => 'Reader Three',
+                'firstName' => 'Reader',
+                'lastName'  => '3',
+                'gender'    => 0,
                 'email'     => 'reader_three@tiktok_tarot.com',
                 'password'  => bcrypt('reader2021'),
                 'role_id'   => 2,
@@ -65,7 +73,9 @@ class UserSeeder extends Seeder
             ],
             [
                 'username'  => 'reader_four',
-                'name'      => 'Reader Four',
+                'firstName' => 'Reader',
+                'lastName'  => '4',
+                'gender'    => 1,
                 'email'     => 'reader_four@tiktok_tarot.com',
                 'password'  => bcrypt('reader2021'),
                 'role_id'   => 2,
@@ -77,7 +87,9 @@ class UserSeeder extends Seeder
             ],
             [
                 'username'  => 'client',
-                'name'      => 'Client',
+                'firstName' => 'Client',
+                'lastName'  => '1',
+                'gender'    => 1,
                 'email'     => 'client@tiktok_tarot.com',
                 'password'  => bcrypt('client2021'),
                 'is_approved' => 'APPROVED',
