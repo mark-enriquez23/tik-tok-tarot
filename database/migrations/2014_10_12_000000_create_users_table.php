@@ -15,7 +15,9 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('firstName');
+            $table->string('lastName');
+            $table->string('gender');
             $table->string('username')->nullable();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
@@ -23,6 +25,7 @@ class CreateUsersTable extends Migration
             $table->tinyInteger('is_active')->default(1);
             $table->string('is_approved')->default("PENDING");
             $table->tinyInteger('is_locked')->default(0);
+            $table->tinyInteger('is_profile_done')->default(0);
             $table->string('referral_code')->nullable();
             $table->rememberToken();
             $table->timestamps();

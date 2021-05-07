@@ -60,10 +60,11 @@ class RegisterController extends Controller
         // Validator of Fields
         return Validator::make($data, [
             'username' => 'required|unique:users|regex:/^[a-zA-Z0-9_.-]*$/',
-            'name' => 'required|max:255',
+            'firstName' => 'required|max:255',
+            'lastName' => 'required|max:255',
+            'gender' => 'required',
             'email' => 'required|email|max:255|unique:users',
-            'password' => 'required|min:6|confirmed|regex:/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/',
-            'validate' => 'required'
+            'password' => 'required|min:6|confirmed|regex:/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/'
         ], $validatorCustomMessage);
     }
 
@@ -78,7 +79,9 @@ class RegisterController extends Controller
         if($data['role_id'] === 2){
             $user = User::create([
                 'username' => $data['username'],
-                'name' => $data['name'],
+                'firstName' => $data['firstName'],
+                'lastName' => $data['lastName'],
+                'gender' => $data['gender'],
                 'phone_number' => $data['phone_number'],
                 'email' => $data['email'],
                 'referral_code' => \Str::random(6),
@@ -88,9 +91,12 @@ class RegisterController extends Controller
         }else{
             $user = User::create([
                 'username' => $data['username'],
-                'name' => $data['name'],
+                'firstName' => $data['firstName'],
+                'lastName' => $data['lastName'],
+                'gender' => $data['gender'],
                 'phone_number' => $data['phone_number'],
                 'email' => $data['email'],
+                'referral_code' => \Str::random(6),
                 'password' => bcrypt($data['password']),
                 'role_id' => $data['role_id'],
             ]);
