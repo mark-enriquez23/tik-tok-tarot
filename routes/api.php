@@ -11,7 +11,9 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('/user', 'Auth\UserController@current');
     Route::get('/user/refresh-code/{id}','Auth\UserController@refreshInvitationCode');
     Route::get('/user/referral/{id}', 'Auth\InvitationController@index');
-
+    Route::post('/user/details', 'UserDetailController@store');
+    Route::get('/user/details/{id}', 'UserDetailController@show');
+    Route::patch('/user/details/update', 'UserDetailController@update');
 
     Route::patch('settings/profile', 'Settings\ProfileController@update');
     Route::patch('settings/password', 'Settings\PasswordController@update');

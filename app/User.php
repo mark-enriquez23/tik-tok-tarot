@@ -108,6 +108,10 @@ class User extends Authenticatable implements JWTSubject //, MustVerifyEmail
         return $this->hasMany('App\PhoneVerification');
     }
 
+    public function userDetails() {
+        return $this->hasMany('App\UserDetail');
+    }
+
     /**
      * @return int
      */
