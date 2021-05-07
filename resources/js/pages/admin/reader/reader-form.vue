@@ -23,11 +23,55 @@
         <has-error :form="readerForm" field="username" />
       </div>
 
-      <!-- Name -->
+      <!-- First Name -->
       <div class="form-group col-md-7 mx-auto">
-        <label>{{ $t('name') }}</label>
-        <input  v-model="readerForm.name" :class="{ 'is-invalid': readerForm.errors.has('name') }" class="form-control" type="text" name="name" :readonly="!isUpdating">
-        <has-error :form="readerForm" field="name" />
+        <label>{{ $t('First Name') }}</label>
+        <input  v-model="readerForm.firstName" :class="{ 'is-invalid': readerForm.errors.has('firstName') }" class="form-control" type="text" name="firstName" :readonly="!isUpdating">
+        <has-error :form="readerForm" field="firstName" />
+      </div>
+
+      <!-- Last Name -->
+      <div class="form-group col-md-7 mx-auto">
+        <label>{{ $t('Last Name') }}</label>
+        <input  v-model="readerForm.lastName" :class="{ 'is-invalid': readerForm.errors.has('lastName') }" class="form-control" type="text" name="lastName" :readonly="!isUpdating">
+        <has-error :form="readerForm" field="lastName" />
+      </div>
+
+      <!-- <div class="form-group col-md-7 mx-auto">
+        <label>Gender</label>
+          <select id="gender" class="form-control"  v-model="form.gender" required>
+            <option :value="gender.id"
+              v-for="(gender) in gender"
+              :key="gender.id"
+              :readonly="!isUpdating">
+              {{ gender.name }}
+            </option>
+          </select>
+       <has-error :form="form" field="gender" />
+      </div> -->
+
+      <div class="form-group col-md-7 mx-auto">
+        <label>{{ $t('Address') }}</label>
+        <input  v-model="readerForm.address" :class="{ 'is-invalid': readerForm.errors.has('address') }" class="form-control" type="text" name="address" :readonly="!isUpdating">
+        <has-error :form="readerForm" field="address" />
+      </div>
+
+      <div class="form-group col-md-7 mx-auto">
+        <label>{{ $t('State/Province') }}</label>
+        <input  v-model="readerForm.state" :class="{ 'is-invalid': readerForm.errors.has('state') }" class="form-control" type="text" name="state" :readonly="!isUpdating">
+        <has-error :form="readerForm" field="state" />
+      </div>
+
+      <div class="form-group col-md-7 mx-auto">
+        <label>{{ $t('ZIP/Postal Code') }}</label>
+        <input  v-model="readerForm.zip" :class="{ 'is-invalid': readerForm.errors.has('zip') }" class="form-control" type="text" name="zip" :readonly="!isUpdating">
+        <has-error :form="readerForm" field="zip" />
+      </div>
+
+      <div class="form-group col-md-7 mx-auto">
+        <label>{{ $t('Country') }}</label>
+        <input  v-model="readerForm.country" :class="{ 'is-invalid': readerForm.errors.has('country') }" class="form-control" type="text" name="country" :readonly="!isUpdating">
+        <has-error :form="readerForm" field="country" />
       </div>
 
       <!-- Phone Number -->
@@ -37,12 +81,22 @@
         <has-error :form="readerForm" field="phone_number" />
       </div>
 
+
+
       <!-- Email -->
       <div class="form-group col-md-7 mx-auto">
         <label>{{ $t('email') }}</label>
         <input  v-model="readerForm.email" :class="{ 'is-invalid': readerForm.errors.has('email') }" class="form-control" type="text" name="email" :readonly="!isUpdating">
         <has-error :form="readerForm" field="email" />
       </div>
+
+      <div class="form-group col-md-7 mx-auto">
+        <label>{{ $t('email') }}</label>
+        <input  v-model="readerForm.email" :class="{ 'is-invalid': readerForm.errors.has('email') }" class="form-control" type="text" name="email" :readonly="!isUpdating">
+        <has-error :form="readerForm" field="email" />
+      </div>
+      
+
       <div class="form-group col-md-7 mx-auto">
         <label>Banned?</label>
         <InputSwitch v-model="sync_banned" class="mr-2" :disabled="!isUpdating" />
@@ -125,6 +179,20 @@ export default {
     sync_banned: false,
     sync_visible: false,
     sync_approved: false,
+    gender: [
+      {
+        id: 0,
+        name: 'Male'
+      },
+      {
+        id: 1,
+        name: 'Female'
+      },
+      {
+        id: 2,
+        name: 'Other'
+      }
+    ]
   }),
 
   computed: mapGetters({
@@ -215,17 +283,7 @@ export default {
         })
         }
       })
-    },    
-
-    isBannedChange(){
-      this.sync_banned = false
-      this.$store.dispatch('admin-reader/isBannedChange')
-    },
-
-    isVisibleChange(){
-      this.sync_visible = false
-      this.$store.dispatch('admin-reader/isVisibleChange')
-    },
+    },   
 
     goBack(){
       this.$router.back()
