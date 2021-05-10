@@ -8,7 +8,8 @@
           <th scope="col">ID</th>
           <td></td>
           <th scope="col">Username</th>
-          <th scope="col">Name</th>
+          <th scope="col">First Name</th>
+          <th scope="col">Last Name</th>
           <th scope="col">Email</th>
           <th scope="col">Visible?</th>
           <th scope="col">Banned?</th>
@@ -23,7 +24,8 @@
               <img class="reader-img" :src="reader.photo_url">
             </td>
             <td>{{ reader.username }}</td>
-            <td>{{ reader.name }}</td>
+            <td>{{ reader.firstName }}</td>
+            <td>{{ reader.lastName }}</td>
             <td>{{ reader.email }}</td>
             <td>{{ reader.visible ? 'Yes' : 'No' }}</td>
             <td>{{ reader.is_banned == 0 ? 'No' : 'Yes' }}</td>
