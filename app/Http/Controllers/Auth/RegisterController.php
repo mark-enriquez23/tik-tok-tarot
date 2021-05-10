@@ -91,6 +91,7 @@ class RegisterController extends Controller
                 'name' => $data['name'],
                 'phone_number' => $data['phone_number'],
                 'email' => $data['email'],
+                'referral_code' => \Str::random(6),
                 'password' => bcrypt($data['password']),
                 'role_id' => $data['role_id'],
             ]);
