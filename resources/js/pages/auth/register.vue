@@ -358,14 +358,14 @@ export default {
           // Update the user.
           this.$store.dispatch('auth/updateUser', { user: data })
 
-          Swal.fire({
-              title: 'Success',
-              text: "A verification code has been sent to your email!",
-              type: 'success'
-            }).then(() => {
-                // Redirect home.
-                this.$router.push({ name: 'user.verify' })
-            })
+          // Swal.fire({
+          //     title: 'Success',
+          //     text: "A verification code has been sent to your email!",
+          //     type: 'success'
+          //   }).then(() => {
+          //       // Redirect home.
+          //       this.$router.push({ name: 'user.verify' })
+          //   })
 
         }
 
