@@ -41,7 +41,7 @@ class ReaderController extends Controller
         } catch (\Throwable $th) {
             return response()->json(['error'=>$th]);
         }
-    } 
+    }
 
     /**
      * Fetch Upload with Reader Details
@@ -175,8 +175,14 @@ class ReaderController extends Controller
     public function save(Request $request)
     {
         $user = User::where('id', $request->id)->first();
-        
-        $data = $request->all();    
+
+        if($request->password){
+
+            $user->password = bcrypt($request->password);
+            $user->save();
+        }
+
+        $data = $request->except(['password']);
         $user->update($data);
 
         return response()->json([
@@ -195,7 +201,9 @@ class ReaderController extends Controller
     public function changeReaderVisibility(Request $request)
     {
         $user = User::where('id', $request->user_id)->first();
-    
+
+
+
         $user->visible = $request->status;
         $user->save();
 
