@@ -19,6 +19,7 @@ class SendEmailController extends Controller
      */
     public function sendEmail(Request $request)
     {
+        $user = User::where('email', $request->data['email'])->first();
 
         // Generate Random Code
         $uniqid = uniqid();
@@ -34,14 +35,15 @@ class SendEmailController extends Controller
 
         // Define data that will send to Mailer
         $data = [
-            'fullName' => $request->data['firstName'] + ' ' + $request->data['lastName'],
+            'firstName' => $request->data['firstName'],
+            'lastName' => $request->data['lastName'],
             'userName' => $request->data['userName'],
             'email' => $request->data['email'],
             'phone_number' => $request->phone_number,
             'verification_code' => $generatedCode
         ];
 
-        Mail::to($request->email)->send(new SendEmail($data)); // Send an Email
+        Mail::to($request->data['email'])->send(new SendEmail($data)); // Send an Email
 
         // return response
         return response()->json([

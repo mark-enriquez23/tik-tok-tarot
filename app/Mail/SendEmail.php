@@ -32,7 +32,7 @@ class SendEmail extends Mailable
     {
         $address = 'testingmine4@gmail.com'; // Main SendGrid Account
         $subject = 'New User!'; // Subject of the email
-        $name = $this->data['fullName']; // Name of the new user
+        $name = $this->data['firstName'] . ' ' . $this->data['lastName']; // Name of the new user
 
         return $this->view('emails.test') // template of email
                     ->from($address, $name) // email of the sender
@@ -41,7 +41,7 @@ class SendEmail extends Mailable
                     ->replyTo($address, $name)
                     ->subject($subject)
                     ->with([
-                        'fullName' => $this->data['fullName'],
+                        'fullName' => $name,
                         'userName' => $this->data['userName'],
                         'email' => $this->data['email'],
                         'phoneNumber' => $this->data['phone_number'],

@@ -10,6 +10,7 @@ class PhoneVerification extends Model
         'user_id',
         'code',
         'metadata',
+        'email'
     ];
 
     public function user(){
