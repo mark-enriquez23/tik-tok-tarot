@@ -39,7 +39,10 @@ export const FETCH_ROLE = 'FETCH_ROLE'
 
 // admin-reader.js
 export const FETCH_READER = 'FETCH_READER'
+
 export const EDIT_READER = 'EDIT_READER'
+
+export const FETCH_ADDITIONAL = 'FETCH_ADDITIONAL'
 
 // approval upload
 export const FETCH_APPROVAL_UPLOAD = 'FETCH_APPROVAL_UPLOAD'

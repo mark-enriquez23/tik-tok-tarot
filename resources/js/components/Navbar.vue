@@ -44,7 +44,7 @@
                 Referrals
               </router-link>
 
-              <router-link :to="{ name: 'reader.referral' }" class="dropdown-item pl-3" v-if="user && roleId == 2">
+              <router-link :to="{ name: 'reader.referrals' }" class="dropdown-item pl-3" v-if="user && roleId == 2">
                 <fa icon="user-plus" fixed-width />
                 Referrals
               </router-link>

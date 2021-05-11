@@ -11,6 +11,8 @@ export const state = {
   readerForm: new Form({
     id: '',
     username: '',
+    firstName: '',
+    lastName: '',
     name: '',
     phone_number: '',
     email: '',
@@ -18,7 +20,14 @@ export const state = {
     is_active: 0,
     visible: 0,
     is_approved: "PENDING",
-
+  }),
+  additionalForm: new Form({
+    id: 2,
+    address1: '',
+    state: '',
+    zip: '',
+    country: '',
+    birthdate: '',
   }),
 };
 
@@ -26,6 +35,7 @@ export const state = {
 export const getters = {
   readers: state => state.readers,
   readerForm: state => state.readerForm,
+  additionalForm: state => state.additionalForm,
   is_banned: state => state.is_banned,
   visible: state => state.visible,
   uploads: state => state.uploads,
@@ -45,6 +55,10 @@ export const mutations = {
 
     state.uploads = reader.uploads
   },
+
+  [types.FETCH_ADDITIONAL](state, { reader }) {
+    state.additionalForm.fill(reader)
+  },
 };
 
 // actions
@@ -62,7 +76,7 @@ export const actions = {
 
   async viewReader({ commit }, id) {
     try {
-      const { data } = await axios.get(`/api/user/details/${id}`);
+      const { data } = await axios.get(`/api/auth-reader/fetch-reader-by-id/${id}`);
 
       commit(types.EDIT_READER, { reader: data.data });
     } catch (e) {
@@ -70,11 +84,32 @@ export const actions = {
     }
   },
 
+  async viewAdditional({ commit }, id) {
+    try {
+      const { data } = await axios.get(`/api/user/details/${id}`);
+
+      commit(types.FETCH_ADDITIONAL, { reader: data.data });
+    } catch (e) {
+      return e;
+    }
+  },
+
   async editReader({ commit }, reader) {
     try {
-      const { data } = await axios.post('/api/user/details',reader)
+      const { data } = await axios.post('/api/auth-reader/update-reader',reader)
 
       commit(types.EDIT_READER, { reader: data.data });
+      return data;
+    } catch (e) {
+      return e;
+    }
+  },
+
+  async editAdditional({ commit }, reader) {
+    try {
+      const { data } = await axios.patch('/api/user/details/update',reader)
+
+      commit(types.FETCH_ADDITIONAL, { reader: data.data });
       return data;
     } catch (e) {
       return e;
