@@ -11,65 +11,57 @@
 
 
         <!-- chat box starts here -->
-        <div class="row justify-content-center">
-            <div class="col-md-10">
-                <div class="card">
-                    <div class="row">
-                        <div class="card-body">
+        <div class="container">
+          <div class="row justify-content-center">
+              <div class="col-md-10">
+                  <div class="card">
+                      <div class="row">
                           <div class="col-md-4 channel-list" v-show="connected">
-                            <ul>
-                                <li v-for="(channel) in tc.channelArray" :key="channel.id" ref="channelList" :data-sid="channel.sid">
-                                <a href="#!" @click="selectChannel(channel)"> {{channel.friendlyName}} </a>
+                              <ul>
+                                  <li v-for="(channel) in tc.channelArray" :key="channel.id" ref="channelList" :data-sid="channel.sid">
+                                  <a href="#!" @click="selectChannel(channel)"> {{channel.friendlyName}} </a>
 
 
-                                </li>
-                                <a href="#!" @click="createChannel"> Add Channel</a>
-                                <input v-if="showAddChannelInput" class="form-control" type="text" v-model="newChannel" v-on:keyup.13="handleNewChannelInputKeypress" placeholder="New Channel">
-                            </ul>
-                        </div>
-                        <div class="col-md-8">
-                            <div class="message-box">
-                              <div class="message-div" v-show="showMessages">
-                              <div v-for="message in tc.messagesArray" :key="message.id" class="row msg">
-                                  <div class="media-body">
-                                      <small class="pull-right time"><i class="fa fa-clock-o"></i>{{moment(message.timestamp).fromNow()}}</small>
-                                      <h5 class="media-heading">{{message.author}}</h5>
-                                      <small class="col-sm-11">{{message.body}}</small>
-                                  </div>
-                              </div>
-                              </div>
-                              <p v-if="notification">{{notificationMsg}}</p>
-                              </div>
-                              <input v-if="userNotJoined" class="form-control" type="text" v-model="username" v-on:keyup.13="connectClientWithUsername" placeholder="Your username">
-                              <input v-else class="form-control" type="text" v-model="message" v-on:keyup.13="handleInputTextKeypress" placeholder="Your message">
+                                  </li>
+                                  <a href="#!" @click="createChannel"> Add Channel</a>
+                                  <input v-if="showAddChannelInput" class="form-control" type="text" v-model="newChannel" v-on:keyup.13="handleNewChannelInputKeypress" placeholder="New Channel">
+                              </ul>
                           </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                          <div class="col-md-8">
+                              <div class="card-body">
+                                <div class="message-box">
+                                    <div class="message-div" v-show="showMessages">
+                                    <div v-for="message in tc.messagesArray" :key="message.id" class="row msg">
+                                        <div class="media-body">
+                                            <small class="pull-right time"><i class="fa fa-clock-o"></i>{{moment(message.timestamp).fromNow()}}</small>
+                                            <h5 class="media-heading">{{message.author}}</h5>
+                                            <small class="col-sm-11">{{message.body}}</small>
+                                        </div>
+                                    </div>
+                                    </div>
+                                    <p v-if="notification">{{notificationMsg}}</p>
+                                </div>
+                                <input v-if="userNotJoined" class="form-control" type="text" v-model="username" v-on:keyup.13="connectClientWithUsername" placeholder="Your username">
+                                <input v-else class="form-control" type="text" v-model="message" v-on:keyup.13="handleInputTextKeypress" placeholder="Your message">
+                            </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
         </div>
     </div>
 </template>
 
 <script>
+var moment = require('moment');
+const axios = require('axios')
+const _ = require('lodash');
+
 export default {
     name: 'video-chat',
     data: function () {
       return {
-        accessToken: '',
-        roomSid: '',
-        name: this.$route.params.roomName,
-        username: '',
-        connected: false,
-        selected: false,
-        showMessages: false,
-        moment: moment,
-        message: null,
-        userNotJoined: true,
-        newChannel: '',
-        showAddChannelInput: false,
-        notification: false,
-        notificationMsg: '',
         tc: {
             accessManager: null,
             messagingClient: null,
@@ -81,18 +73,31 @@ export default {
             activeChannelIndex: null,
             messagesArray: [],
         },
-
+        username: '',
+        connected: false,
+        selected: false,
+        showMessages: false,
+        moment: moment,
+        message: null,
+        userNotJoined: true,
+        newChannel: '',
+        showAddChannelInput: false,
+        notification: false,
+        notificationMsg: '',
+        accessToken: '',
+        roomSid: '',
+        name: this.$route.params.roomName,
       }
     },
     methods : {
     //CHAT METHODS
     connectClientWithUsername(){
-      if (this.username == '') {
-        alert('Username cannot be empty');
-        return;
-      }
-      this.tc.username = this.username;
-      this.fetchAccessToken(this.tc.username, this.connectMessagingClient);
+        if (this.username == '') {
+            alert('Username cannot be empty');
+            return;
+        }
+        this.tc.username = this.username;
+        this.fetchAccessToken(this.tc.username, this.connectMessagingClient);
     },
     fetchAccessToken(username, handler) {
         let vm = this;
@@ -101,6 +106,7 @@ export default {
             device: 'browser'
         })
         .then(function (response) {
+            console.log("TOKEN??", response.data);
             handler(response.data);
             vm.username = '';
         })
@@ -132,7 +138,6 @@ export default {
     setNewToken(tokenResponse) {
         this.tc.accessManager.updateToken(tokenResponse.token);
     },
-
     loadChannelList(handler){
         if (this.tc.messagingClient === undefined) {
             console.log('Client is not initialized');
@@ -164,7 +169,6 @@ export default {
             return a.friendlyName.localeCompare(b.friendlyName);
         });
     },
-
     joinGeneralChannel() {
         console.log('Attempting to join "general" chat channel...');
         let vm = this;
@@ -189,7 +193,6 @@ export default {
             this.tc.generalChannel = channel;
         }
     },
-
     setupChannel(channel){
         let vm = this;
         return this.leaveCurrentChannel()
@@ -311,7 +314,6 @@ export default {
         //    vm.loadMessages();
         //  }, 3000);
     },
-
     handleNewChannelInputKeypress(event) {
         let vm = this;
         if (this.newChannel == '') {
@@ -326,7 +328,6 @@ export default {
         }).then(this.hideAddChannelInput);
         this.newChannel = '';
     },
-
     selectChannel(channel) {
         let channelSid = channel.sid;
         var selectedChannel = this.tc.channelArray.filter(function(channel) {
@@ -343,7 +344,6 @@ export default {
     createChannel(){
         this.showAddChannelInput = true;
     },
-
     deleteChannel() {
         if (this.tc.currentChannel.sid === this.tc.generalChannel.sid) {
             alert('You cannot delete the general channel');
@@ -360,7 +360,6 @@ export default {
         console.log('Video chat room loading...');
 
         const _this = this
-        const axios = require('axios')
 
         // Request a new token
         axios.get(`/api/video/access_token/${this.name}`)
@@ -448,8 +447,6 @@ export default {
 
       joinToRoom : function () {
 
-      const axios = require('axios')
-
       const { connect } = require('twilio-video');
 
       connect( this.accessToken, { name:this.name, video:false, audio:false }).then(room => {
@@ -486,7 +483,6 @@ export default {
 
 
     mounted : function () {
-      const axios = require('axios');
       const _this = this;
       console.log("NAME:",_this.name)
 
