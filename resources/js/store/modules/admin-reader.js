@@ -22,7 +22,8 @@ export const state = {
     is_approved: "PENDING",
   }),
   additionalForm: new Form({
-    id: 2,
+    id: '',
+    user_id: '',
     reader_bio:'',
     expertise:'',
     address1: '',
