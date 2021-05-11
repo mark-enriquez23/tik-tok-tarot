@@ -128,12 +128,7 @@ class UserDetailController extends Controller
 
         }
 
-        if($request->expertise){
-            $details->expertise = serialize($request->expertise);
-            $details->save();
-        }
-
-        $data = $request->except(['profile_photo','expertise']);
+        $data = $request->except(['profile_photo']);
         $details->update($data);
 
         return response()->json([
