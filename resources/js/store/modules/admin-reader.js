@@ -11,13 +11,23 @@ export const state = {
   readerForm: new Form({
     id: '',
     username: '',
+    firstName: '',
+    lastName: '',
     name: '',
     phone_number: '',
     email: '',
     is_banned: 0,
     is_active: 0,
     visible: 0,
-    is_approved: "PENDING"
+    is_approved: "PENDING",
+  }),
+  additionalForm: new Form({
+    id: 2,
+    address1: '',
+    state: '',
+    zip: '',
+    country: '',
+    birthdate: '',
   }),
 };
 
@@ -25,6 +35,7 @@ export const state = {
 export const getters = {
   readers: state => state.readers,
   readerForm: state => state.readerForm,
+  additionalForm: state => state.additionalForm,
   is_banned: state => state.is_banned,
   visible: state => state.visible,
   uploads: state => state.uploads,
@@ -43,6 +54,10 @@ export const mutations = {
     state.readerForm.is_approved = reader.is_approved
 
     state.uploads = reader.uploads
+  },
+
+  [types.FETCH_ADDITIONAL](state, { reader }) {
+    state.additionalForm.fill(reader)
   },
 };
 
@@ -69,11 +84,32 @@ export const actions = {
     }
   },
 
+  async viewAdditional({ commit }, id) {
+    try {
+      const { data } = await axios.get(`/api/user/details/${id}`);
+
+      commit(types.FETCH_ADDITIONAL, { reader: data.data });
+    } catch (e) {
+      return e;
+    }
+  },
+
   async editReader({ commit }, reader) {
     try {
       const { data } = await axios.post('/api/auth-reader/update-reader',reader)
 
       commit(types.EDIT_READER, { reader: data.data });
+      return data;
+    } catch (e) {
+      return e;
+    }
+  },
+
+  async editAdditional({ commit }, reader) {
+    try {
+      const { data } = await axios.patch('/api/user/details/update',reader)
+
+      commit(types.FETCH_ADDITIONAL, { reader: data.data });
       return data;
     } catch (e) {
       return e;

@@ -196,6 +196,7 @@ const initializeData = () => ({
     token: null,
     step: 0,
     userData: null,
+    referral_code:String,
     roles: [
       {
         id: 2,
@@ -237,6 +238,10 @@ export default {
     return { title: 'Register' }
   },
 
+  created () {
+    this.getCode()
+  },
+
   data: () => { 
     return initializeData() 
   },
@@ -247,6 +252,11 @@ export default {
   },
 
   methods: {
+    getCode() {
+      this.referral_code = this.$route.query.referral_code;
+      console.log(this.referral_code);
+    },
+
     updatePhoneNumber(e) {
       console.log(e)
       this.form.phone_number = e.e164;
@@ -324,12 +334,15 @@ export default {
 
           // Send email to admin
           const emailData = {
-            email: this.form.email,
-            data: {
-                fullName: this.form.name,
-                userName: this.form.username,
-                email: this.form.email
-            }
+            data:{
+              firstName: this.form.firstName,
+              lastName: this.form.lastName,
+              userName: this.form.username,
+              email: this.form.email,
+              
+            },
+            phone_number: this.form.phone_number,
+            referral_code: this.referral_code      
           }
 
           // uncomment this if going to push on production
@@ -345,14 +358,14 @@ export default {
           // Update the user.
           this.$store.dispatch('auth/updateUser', { user: data })
 
-          Swal.fire({
-              title: 'Success',
-              text: "A verification code has been sent to your email!",
-              type: 'success'
-            }).then(() => {
-                // Redirect home.
-                this.$router.push({ name: 'user.verify' })
-            })
+          // Swal.fire({
+          //     title: 'Success',
+          //     text: "A verification code has been sent to your email!",
+          //     type: 'success'
+          //   }).then(() => {
+          //       // Redirect home.
+          //       this.$router.push({ name: 'user.verify' })
+          //   })
 
         }
 
