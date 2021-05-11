@@ -10,27 +10,45 @@
       </div>
     </div>
     <hr>
+
+    <!-- <div id="app">
+	<a class="btn" @click="toggleShow">set avatar</a>
+	<my-upload field="img"
+  langType ="en"
+        @crop-success="cropSuccess"
+        @crop-upload-success="cropUploadSuccess"
+        @crop-upload-fail="cropUploadFail"
+        v-model="show"
+		:width="300"
+		:height="300"
+		url="/upload"
+		:params="params"
+		:headers="headers"
+		img-format="png"></my-upload>
+	<img :src="imgDataUrl">
+</div> -->
     
     <h5 class="mb-3">Account Information</h5>
     <form @submit.prevent="update" @keydown="readerForm.onKeydown($event)">
       <div class="row">
+        
         <div class="col-md-6">
           <!-- Username -->
-          <div class="form-group col-md-11 mx-auto mx-auto  ">
+          <div class="form-group col-md-10 mx-auto mx-auto  ">
             <label>{{ $t('username') }}</label>
             <input  v-model="readerForm.username" :class="{ 'is-invalid': readerForm.errors.has('username') }" class="form-control" type="text" name="username" :readonly="!isUpdating">
             <has-error :form="readerForm" field="username" />
           </div>
 
           <!-- First Name -->
-          <div class="form-group col-md-11 mx-auto mx-auto  ">
+          <div class="form-group col-md-10 mx-auto mx-auto  ">
             <label>{{ $t('First Name') }}</label>
             <input  v-model="readerForm.firstName" :class="{ 'is-invalid': readerForm.errors.has('firstName') }" class="form-control" type="text" name="firstName" :readonly="!isUpdating">
             <has-error :form="readerForm" field="firstName" />
           </div>
 
           <!-- Last Name -->
-          <div class="form-group col-md-11 mx-auto mx-auto  ">
+          <div class="form-group col-md-10 mx-auto mx-auto  ">
             <label>{{ $t('Last Name') }}</label>
             <input  v-model="readerForm.lastName" :class="{ 'is-invalid': readerForm.errors.has('lastName') }" class="form-control" type="text" name="lastName" :readonly="!isUpdating">
             <has-error :form="readerForm" field="lastName" />
@@ -41,20 +59,20 @@
         <div class="col-md-6">
       
           <!-- Email -->
-          <div class="form-group col-md-11 mx-auto">
+          <div class="form-group col-md-10 mx-auto">
             <label>{{ $t('email') }}</label>
             <input  v-model="readerForm.email" :class="{ 'is-invalid': readerForm.errors.has('email') }" class="form-control" type="text" name="email" :readonly="!isUpdating">
             <has-error :form="readerForm" field="email" />
           </div>
 
           <!-- Phone Number -->
-          <div class="form-group col-md-11 mx-auto mx-auto  ">
+          <div class="form-group col-md-10 mx-auto mx-auto  ">
             <label>{{ $t('Phone Number') }}</label>
             <input  v-model="readerForm.phone_number" :class="{ 'is-invalid': readerForm.errors.has('phone_number') }" class="form-control" type="text" name="phone_number" :readonly="!isUpdating">
             <has-error :form="readerForm" field="phone_number" />
           </div>
 
-          <div class="form-group col-md-11 mx-auto ml-2">
+          <div class="form-group col-md-10 mx-auto ml-2">
             <label>Banned?</label>
             <InputSwitch v-model="sync_banned" class="mr-2" :disabled="!isUpdating" />
       
@@ -102,43 +120,35 @@
     <h5 class="mb-3">Additional Information</h5>
     <form @submit.prevent="updateAdditional" @keydown="additionalForm.onKeydown($event)">
       <div class="row">
-        <div class="col-md-6">   
-          
+        <div class="col-md-12">
           <div class="form-group col-md-11 mx-auto">
-            <label>{{ $t('Address') }}</label>
-            <input  v-model="additionalForm.address" :class="{ 'is-invalid': additionalForm.errors.has('address') }" class="form-control" type="text" name="address" :readonly="!isAdditionalUpdating">
-            <has-error :form="additionalForm" field="address1" />
+            <label>{{ $t('Biography') }}</label>
+            <textarea v-model="additionalForm.reader_bio" :class="{ 'is-invalid': additionalForm.errors.has('reader_bio') }" class="form-control" type="text" name="reader_bio" :readonly="!isAdditionalUpdating"></textarea>
+            <has-error :form="additionalForm" field="reader_bio" />
           </div>
-
-          <div class="form-group col-md-11 mx-auto mx-auto  ">
-            <label>{{ $t('State/Province') }}</label>
-            <input  v-model="additionalForm.state" :class="{ 'is-invalid': additionalForm.errors.has('state') }" class="form-control" type="text" name="state" :readonly="!isAdditionalUpdating">
-            <has-error :form="additionalForm" field="state" />
-          </div>
-
-          <div class="form-group col-md-11 mx-auto mx-auto  ">
-            <label>{{ $t('ZIP/Postal Code') }}</label>
-            <input  v-model="additionalForm.zip" :class="{ 'is-invalid': additionalForm.errors.has('zip') }" class="form-control" type="text" name="zip" :readonly="!isAdditionalUpdating">
-            <has-error :form="additionalForm" field="zip" />
-          </div>
-
         </div>
-        
-        <div class="col-md-6">
-
-          <div class="form-group col-md-11 mx-auto mx-auto  ">
-            <label>{{ $t('Country') }}</label>
-            <input  v-model="additionalForm.country" :class="{ 'is-invalid': additionalForm.errors.has('country') }" class="form-control" type="text" name="country" :readonly="!isAdditionalUpdating">
-            <has-error :form="additionalForm" field="country" />
+      </div>
+      <div class="row">
+        <div class="col-md-6">   
+          <div class="form-group col-md-10 mx-auto">
+            <label>{{ $t('Category') }}</label>
+            <select  v-model="additionalForm.category" :class="{ 'is-invalid': additionalForm.errors.has('category') }" class="form-control" type="text" name="category" :disabled="!isAdditionalUpdating">
+              <option :value="category.name"
+                v-for="(category) in categories"
+                :key="category.name">
+                {{ category.name }}
+              </option>
+            </select>
+            <has-error :form="additionalForm" field="category" />
           </div>
-
-          <div class="form-group col-md-11 mx-auto">
+           
+          <div class="form-group col-md-10 mx-auto">
             <label>{{ $t('Birthdate') }}</label>
             <birth-datepicker  v-model="additionalForm.birthdate" :class="{ 'is-invalid': additionalForm.errors.has('birthdate') }" class="form-control" name="birthdate" :disabled="!isAdditionalUpdating" />
             <has-error :form="additionalform" field="birthdate" />
           </div>
 
-          <div class="form-group col-md-11 mx-auto">
+          <div class="form-group col-md-10 mx-auto">
             <label>Gender</label>
             <select id="gender" class="form-control"  v-model="additionalForm.gender" required :disabled="!isAdditionalUpdating">
               <option :value="gender.id"
@@ -149,6 +159,36 @@
             </select>
             <has-error :form="additionalForm" field="gender" />
           </div>     
+
+          <div class="form-group col-md-10 mx-auto mx-auto  ">
+            <label>{{ $t('ZIP/Postal Code') }}</label>
+            <input  v-model="additionalForm.zip" :class="{ 'is-invalid': additionalForm.errors.has('zip') }" class="form-control" type="text" name="zip" :readonly="!isAdditionalUpdating">
+            <has-error :form="additionalForm" field="zip" />
+          </div>       
+
+        </div>
+        
+        <div class="col-md-6">
+
+          <div class="form-group col-md-10 mx-auto mx-auto  ">
+            <label>{{ $t('Country') }}</label>
+            <input  v-model="additionalForm.country" :class="{ 'is-invalid': additionalForm.errors.has('country') }" class="form-control" type="text" name="country" :readonly="!isAdditionalUpdating">
+            <has-error :form="additionalForm" field="country" />
+          </div>
+
+          <div class="form-group col-md-10 mx-auto">
+            <label>{{ $t('Address') }}</label>
+            <input  v-model="additionalForm.address1" :class="{ 'is-invalid': additionalForm.errors.has('address1') }" class="form-control" type="text" name="address1" :readonly="!isAdditionalUpdating">
+            <has-error :form="additionalForm" field="address1" />
+          </div>
+
+          <div class="form-group col-md-10 mx-auto mx-auto  ">
+            <label>{{ $t('State/Province') }}</label>
+            <input  v-model="additionalForm.state" :class="{ 'is-invalid': additionalForm.errors.has('state') }" class="form-control" type="text" name="state" :readonly="!isAdditionalUpdating">
+            <has-error :form="additionalForm" field="state" />
+          </div>
+
+        
         
         </div>
 
@@ -184,42 +224,36 @@
 
     <hr class=" mt-5">
     <h5 class="mb-3">Update Password</h5>
-    <form @submit.prevent="update" @keydown="readerForm.onKeydown($event)">
+    <form @submit.prevent="updateAdditional" @keydown="additionalForm.onKeydown($event)">
       <div class="row">
         <div class="col-md-6">   
           
           <!-- Password -->
-          <div class="form-group col-md-11 mx-auto mx-auto  ">
+          <div class="form-group col-md-10 mx-auto mx-auto  ">
             <label>{{ $t('password') }}</label>
-            <input  v-model="readerForm.password" :class="{ 'is-invalid': readerForm.errors.has('password') }" class="form-control" type="password" name="password" :readonly="!isUpdating">
-            <has-error :form="readerForm" field="password" />
-          </div>
-
-          <!-- Confirm Password -->
-          <div class="form-group col-md-11 mx-auto mx-auto  ">
-            <label>{{ $t('Confirm Password') }}</label>
-            <input :class="{ 'is-invalid': readerForm.errors.has('confirm-password') }" class="form-control" type="password" name="confirmPassword" :readonly="!isUpdating">
-            <has-error :form="readerForm" field="confirmPassword" />
+            <input  v-model="additionalForm.password" :class="{ 'is-invalid': additionalForm.errors.has('password') }" class="form-control" type="password" name="password" :readonly="!isPasswordUpdating">
+            <has-error :form="additionalForm" field="password" />
           </div>
 
         </div>
         
         <div class="col-md-6">
 
-          <div class="form-group col-md-11 mx-auto mx-auto  ">
-            <label>{{ $t('Current Password') }}</label>
-            <input :class="{ 'is-invalid': readerForm.errors.has('current-password') }" class="form-control" type="password" name="currentPassword" :readonly="!isUpdating">
-            <has-error :form="readerForm" field="currentPassword" />
+          <!-- Confirm Password -->
+          <div class="form-group col-md-10 mx-auto mx-auto  ">
+            <label>{{ $t('Confirm Password') }}</label>
+            <input :class="{ 'is-invalid': additionalForm.errors.has('confirm-password') }" class="form-control" type="password" name="confirmPassword" :readonly="!isPasswordUpdating">
+            <has-error :form="additionalForm" field="confirmPassword" />
           </div>
         
         </div>
 
        
         <!-- Submit Button -->
-        <div class="form-group row  col-md-4 mx-auto mt-3" v-if="isAdditionalUpdating">
+        <div class="form-group row  col-md-4 mx-auto mt-3" v-if="isPasswordUpdating">
           <div class="col-md-6 px-0 pr-lg-1"  >
             <!-- Bac Button -->
-            <button type="button" class="btn btn-danger w-100" @click.prevent="cancelAdditionalUpdate()"  >
+            <button type="button" class="btn btn-danger w-100" @click.prevent="cancelPasswordUpdate()"  >
             <!-- <v-button :loading="form.busy"> -->
             Cancel
             </button>
@@ -235,7 +269,7 @@
         <div class="form-group row  col-md-4 mx-auto mt-3"  v-else>
           <div class="col-md-8 px-0 pr-lg-1 mx-auto"  >
             <!-- Bac Button -->
-            <button type="button" class="btn btn-primary w-100" @click.prevent="isAdditionalUpdating = true">
+            <button type="button" class="btn btn-primary w-100" @click.prevent="isPasswordUpdating = true">
             <!-- <v-button :loading="form.busy"> -->
             Update
             </button>
@@ -256,6 +290,7 @@ import { swalOops, swalSuccess } from "~/helpers"
 import Swal from 'sweetalert2';
 import InputSwitch from 'primevue/inputswitch';
 import birthDatepicker from 'vue-birth-datepicker/src/birth-datepicker';
+import myUpload from 'vue-image-crop-upload';
 
 export default {
   scrollToTop: false,
@@ -266,12 +301,14 @@ export default {
 
   components: {
     InputSwitch,
-    birthDatepicker
+    birthDatepicker,
+    'my-upload': myUpload
   },
 
   data: () => ({
     isUpdating: false,
     isAdditionalUpdating: false,
+    isPasswordUpdating: false,
     sync_banned: false,
     sync_visible: false,
     sync_approved: false,
@@ -288,7 +325,42 @@ export default {
         id: 2,
         name: 'Other'
       }
-    ]
+    ],
+    categories: [
+      {
+        name: 'All'
+      },
+      {
+        name: 'Numerology'
+      },
+      {
+        name: 'Astrology'
+      },
+      {
+        name: 'Tarot Reader'
+      },
+      {
+        name: 'Clairvoyant'
+      },
+      {
+        name: 'Love & Relationships'
+      },
+      {
+        name: 'Career'
+      },
+      {
+        name: 'Spiritual Healer'
+      }
+    ],
+    show: false,
+			params: {
+				token: '123456798',
+				name: 'avatar'
+			},
+			headers: {
+				smail: '*_~'
+			},
+			imgDataUrl: '' // the datebase64 url of created image
   }),
 
   computed: mapGetters({
@@ -393,6 +465,13 @@ export default {
       this.isAdditionalUpdating = false;
     },
 
+    cancelPasswordUpdate() {
+      this.additionalForm.keys().forEach(key => {
+        this.additionalForm[key] = this.user[key]
+      })
+      this.isPasswordUpdating = false;
+    },
+
     removeAccount(){
       Swal.fire({
         title: 'Are you sure?',
@@ -418,7 +497,38 @@ export default {
 
     goBack(){
       this.$router.back()
-    }
+    },
+
+    cropSuccess(imgDataUrl, field){
+				console.log('-------- crop success --------');
+				this.imgDataUrl = imgDataUrl;
+			},
+			/**
+			 * upload success
+			 *
+			 * [param] jsonData  server api return data, already json encode
+			 * [param] field
+			 */
+			cropUploadSuccess(jsonData, field){
+				console.log('-------- upload success --------');
+				console.log(jsonData);
+				console.log('field: ' + field);
+			},
+			/**
+			 * upload fail
+			 *
+			 * [param] status    server api return error status, like 500
+			 * [param] field
+			 */
+			cropUploadFail(status, field){
+				console.log('-------- upload fail --------');
+				console.log(status);
+				console.log('field: ' + field);
+      },
+      
+      toggleShow() {
+				this.show = !this.show;
+			},
   }
 }
 </script>

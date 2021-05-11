@@ -23,6 +23,8 @@ export const state = {
   }),
   additionalForm: new Form({
     id: 2,
+    reader_bio:'',
+    expertise:'',
     address1: '',
     state: '',
     zip: '',
@@ -107,7 +109,7 @@ export const actions = {
 
   async editAdditional({ commit }, reader) {
     try {
-      const { data } = await axios.patch('/api/user/details/update',reader)
+      const { data } = await axios.patch('/api/user/details/update?_method=PATCH',reader)
 
       commit(types.FETCH_ADDITIONAL, { reader: data.data });
       return data;

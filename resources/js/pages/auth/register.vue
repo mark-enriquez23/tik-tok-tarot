@@ -186,7 +186,8 @@ const initializeData = () => ({
       password: '',
       password_confirmation: '',
       role_id: null,
-      validate: null
+      validate: null,
+      referral_code: ''
     }),
     phone_number: '',
     validPhoneNumber: false,
@@ -297,6 +298,8 @@ export default {
       }
     },
     async register () {
+      this.form.referral_code = this.referral_code;
+      console.log(this.form)
       // Register the user.
         const { data } = await this.form.post('/api/register').catch((err) => {
           const size = Object.keys(err.response.data.errors).length
@@ -358,15 +361,16 @@ export default {
           // Update the user.
           this.$store.dispatch('auth/updateUser', { user: data })
 
-          // Swal.fire({
-          //     title: 'Success',
-          //     text: "A verification code has been sent to your email!",
-          //     type: 'success'
-          //   }).then(() => {
-          //       // Redirect home.
-          //       this.$router.push({ name: 'user.verify' })
-          //   })
-
+          
+            Swal.fire({
+              title: 'Success',
+              text: "A verification code has been sent to your email!",
+              type: 'success'
+            }).then(() => {
+                // Redirect home.
+                this.$router.push({ name: 'user.verify' })
+            })
+          
         }
 
     },
