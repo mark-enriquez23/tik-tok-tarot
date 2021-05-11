@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\User;
 use App\Credit;
+use App\UserDetail;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
@@ -105,6 +106,18 @@ class RegisterController extends Controller
         // Create initial Credit
         $credit = Credit::create([
             'user_id'   => $user->id,
+        ]);
+
+        $details = UserDetail::create([
+            'user_id' => $user->id,
+            'reader_bio' => '',
+            'expertise' => '',
+            'address1' => '',
+            'state' => '',
+            'zip' => '',
+            'country' => '',
+            'birthdate' => '',
+            'profile_photo' => '',
         ]);
 
         // send sms code
