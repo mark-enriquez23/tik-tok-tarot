@@ -87,11 +87,7 @@ Route::group(['middleware' => 'guest:api'], function () {
     Route::post('oauth/{driver}', 'Auth\OAuthController@redirectToProvider');
     Route::get('oauth/{driver}/callback', 'Auth\OAuthController@handleProviderCallback')->name('oauth.callback');
 
-    //VIDEO CHAT AUTH
-    Route::get('video/access_token/{room}', 'Video\AccessTokenController@generate_token');
-    Route::get('video/{room}', 'Video\LiveHistoryController@searchByRoomName');
-    Route::post('video/chat', 'Video\AccessTokenController@chat_token');
-    Route::post('video/history/save', 'Video\LiveHistoryController@index');
+
 });
 
 ########### * Public Routes *###########
@@ -101,6 +97,12 @@ Route::group(['prefix' => 'security-question'], function () {
     Route::post('/save', 'Auth\SecurityQuestionController@save');
     Route::post('/delete', 'Auth\SecurityQuestionController@delete');
 });
+
+//VIDEO CHAT AUTH
+Route::get('video/access_token/{room}', 'Video\AccessTokenController@generate_token');
+Route::get('video/{room}', 'Video\LiveHistoryController@searchByRoomName');
+Route::post('video/chat', 'Video\AccessTokenController@chat_token');
+Route::post('video/history/save', 'Video\LiveHistoryController@index');
 
 // UserSecurityQuestion api
 Route::group(['prefix' => 'user-security-question'], function () {

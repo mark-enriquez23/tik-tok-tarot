@@ -5,7 +5,7 @@
         <!-- video chat div here -->
         <div class="grid grid-flow-row grid-cols-3 grid-rows-3 gap-4 bg-black">
             <div id="my-video-chat-window">
-              <button @click='getVideoToken' v-if="!accessToken && name"> Start Broadcasting </button>
+              <button @click='getVideoToken(); connectClientWithUsername();' v-if="!accessToken && name === username "> Start Broadcasting </button>
             </div>
         </div>
 
@@ -41,8 +41,8 @@
                                     </div>
                                     <p v-if="notification">{{notificationMsg}}</p>
                                 </div>
-                                <input v-if="userNotJoined" class="form-control" type="text" v-model="username" v-on:keyup.13="connectClientWithUsername" placeholder="Your username">
-                                <input v-else class="form-control" type="text" v-model="message" v-on:keyup.13="handleInputTextKeypress" placeholder="Your message">
+                                <!-- <input v-if="userNotJoined" class="form-control" type="text" v-model="username" v-on:keyup.13="connectClientWithUsername" placeholder="Your username"> -->
+                                <input v-if="!userNotJoined" class="form-control" type="text" v-model="message" v-on:keyup.13="handleInputTextKeypress" placeholder="Your message">
                             </div>
                           </div>
                       </div>
@@ -74,7 +74,7 @@ export default {
             activeChannelIndex: null,
             messagesArray: [],
         },
-        username: '',
+        username: this.user?.username,
         connected: false,
         selected: false,
         showMessages: false,
@@ -98,12 +98,13 @@ export default {
     methods : {
     //CHAT METHODS
     connectClientWithUsername(){
-        if (this.username == '') {
-            alert('Username cannot be empty');
-            return;
+        if (this.username !== undefined) {
+          this.tc.username = this.user?.username;
+          this.fetchAccessToken(this.tc.username, this.connectMessagingClient);
+        }else{
+          alert("NOT LOGGED IN");
+          return;
         }
-        this.tc.username = this.username;
-        this.fetchAccessToken(this.tc.username, this.connectMessagingClient);
     },
     fetchAccessToken(username, handler) {
         let vm = this;
@@ -181,10 +182,10 @@ export default {
         if (this.tc.generalChannel == null) {
             // If it doesn't exist, let's create it
             this.tc.messagingClient.createChannel({
-            uniqueName: 'general',
-            friendlyName: 'General Channel'
+            uniqueName: vm.name,
+            friendlyName: vm.name
             }).then(function(channel) {
-            console.log('Created general channel');
+            console.log(`Created ${vm.name} channel`);
             vm.tc.generalChannel = channel;
             vm.loadChannelList(vm.joinGeneralChannel);
 
@@ -214,12 +215,12 @@ export default {
         let vm = this;
         if (this.tc.currentChannel) {
             return this.tc.currentChannel.leave().then(function(leftChannel) {
-            console.log('left ' + leftChannel.friendlyName);
-            leftChannel.removeListener('messageAdded', vm.addMessageToList);
-            leftChannel.removeListener('typingStarted', vm.showTypingStarted);
-            leftChannel.removeListener('typingEnded', vm.hideTypingStarted);
-            leftChannel.removeListener('memberJoined', vm.notifyMemberJoined);
-            leftChannel.removeListener('memberLeft', vm.notifyMemberLeft);
+              console.log('left ' + leftChannel.friendlyName);
+              leftChannel.removeListener('messageAdded', vm.addMessageToList);
+              leftChannel.removeListener('typingStarted', vm.showTypingStarted);
+              leftChannel.removeListener('typingEnded', vm.hideTypingStarted);
+              leftChannel.removeListener('memberJoined', vm.notifyMemberJoined);
+              leftChannel.removeListener('memberLeft', vm.notifyMemberLeft);
             });
         } else {
             console.log("resolving");
@@ -384,7 +385,6 @@ export default {
         console.log('Video chat room loading...');
 
         const _this = this
-        const axios = require('axios')
 
         // Request a new token
         axios.get(`/api/video/access_token/${this.name}`)
@@ -490,11 +490,14 @@ export default {
 
     mounted : function () {
       const _this = this;
-      console.log("NAME:",_this.name);
-      console.log("user", this.user);
+      // console.log("NAME:",_this.name);
+      // console.log("USERNAME:",_this.user?.username);
+
+      _this.username = _this.user?.username ? _this.user?.username : "";
       axios.get("/api/video/"+_this.name)
       .then((response) =>{
         console.log(response);
+        this.connectClientWithUsername();
         this.joinAsParticipant();
       })
       .catch((err)=>{
