@@ -17,5 +17,4 @@ class UserDetail extends Model
     public static function getUserByID(int $id){
         return static::where('user_id', $id)->with('user')->get();
     }
-
 }
