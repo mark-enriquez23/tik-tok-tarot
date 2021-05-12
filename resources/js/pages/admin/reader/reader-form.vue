@@ -10,25 +10,60 @@
       </div>
     </div>
     <hr>
-
-    <!-- <div id="app">
-	<a class="btn" @click="toggleShow">set avatar</a>
-	<my-upload field="img"
-  langType ="en"
-        @crop-success="cropSuccess"
-        @crop-upload-success="cropUploadSuccess"
-        @crop-upload-fail="cropUploadFail"
-        v-model="show"
-		:width="300"
-		:height="300"
-		url="/upload"
-		:params="params"
-		:headers="headers"
-		img-format="png"></my-upload>
-	<img :src="imgDataUrl">
-</div> -->
     
-    <h5 class="mb-3">Account Information</h5>
+    <h5 class="mb-3">Profile Photo</h5>
+    <div class="">
+      <img class="reader-img mx-auto" :src="additionalForm.profile_photo == ''? 'https://www.gravatar.com/avatar/69e607c9dfb0e95a6ee53ea55f47a507.jpg?s=200&d=mm': profile_photo">
+    </div>
+
+    <form @submit.prevent="updateProfile" @keydown="additionalForm.onKeydown($event)">
+      <div class="row">      
+
+        <div class="col-md-12">
+          <!-- Username -->
+          <div class="form-group col-md-10 mx-auto mx-auto  " hidden>
+            <input :class="{ 'is-invalid': additionalForm.errors.has('profile_photo') }" class="form-control" type="file" name="profile_photo" @change="previewFile"  ref="file" accept="image/x-png,image/gif,image/jpeg">
+            <has-error :form="additionalForm" field="profile_photo" />
+          </div>
+        </div>
+
+         <!-- Submit Button -->
+        <div class="form-group row col-md-4 mx-auto mt-3" v-if="isProfileUpdating">
+          <div class="col-md-6 px-0 pr-lg-1"  >
+            <!-- Bac Button -->
+            <button type="button" class="btn btn-danger w-100" @click.prevent="cancelProfileUpdate()"  >
+            <!-- <v-button :loading="form.busy"> -->
+            Cancel
+            </button>
+          </div>
+
+          <div class="col-md-6 px-0 pl-lg-1 ml-md-auto">
+            <v-button class="btn btn-primary w-100" >
+              Confirm
+            </v-button>
+          </div>
+        </div>
+        
+        <div class="form-group row  col-md-4 mx-auto mt-3"  v-else>
+          <div class="col-md-8 px-0 pr-lg-1 mx-auto"  >
+            <!-- Bac Button -->
+            <button type="button" class="btn btn-primary w-100" @click.prevent="clickFileInput">
+            <!-- <v-button :loading="form.busy"> -->
+            Update
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </form>
+
+
+    <hr>
+
+
+    
+    <h5 class="mb-3">Account Information</h5>    
+
     <form @submit.prevent="update" @keydown="readerForm.onKeydown($event)">
       <div class="row">
         
@@ -53,6 +88,18 @@
             <input  v-model="readerForm.lastName" :class="{ 'is-invalid': readerForm.errors.has('lastName') }" class="form-control" type="text" name="lastName" :readonly="!isUpdating">
             <has-error :form="readerForm" field="lastName" />
           </div>
+
+          <div class="form-group col-md-10 mx-auto">
+            <label>Gender</label>
+            <select id="gender" class="form-control" v-model="readerForm.gender" required :disabled="!isUpdating">
+              <option :value="gender.name"
+                v-for="(gender) in genders"
+                :key="gender.name">
+                {{ gender.name }}
+              </option>
+            </select>
+            <has-error :form="readerForm" field="gender" />
+          </div>     
 
         </div>
         
@@ -132,7 +179,7 @@
         <div class="col-md-6">   
           <div class="form-group col-md-10 mx-auto">
             <label>{{ $t('Category') }}</label>
-            <select  v-model="additionalForm.category" :class="{ 'is-invalid': additionalForm.errors.has('category') }" class="form-control" type="text" name="category" :disabled="!isAdditionalUpdating">
+            <select  v-model="additionalForm.expertise" :class="{ 'is-invalid': additionalForm.errors.has('expertise') }" class="form-control" type="text" name="expertise" :disabled="!isAdditionalUpdating">
               <option :value="category.name"
                 v-for="(category) in categories"
                 :key="category.name">
@@ -144,21 +191,9 @@
            
           <div class="form-group col-md-10 mx-auto">
             <label>{{ $t('Birthdate') }}</label>
-            <birth-datepicker  v-model="additionalForm.birthdate" :class="{ 'is-invalid': additionalForm.errors.has('birthdate') }" class="form-control" name="birthdate" :disabled="!isAdditionalUpdating" />
+            <birth-datepicker  v-model="additionalForm.birthdate" :class="{ 'is-invalid': additionalForm.errors.has('birthdate') }" class="form-control" name="birthdate" valueIsString="true" :disabled="!isAdditionalUpdating" />
             <has-error :form="additionalform" field="birthdate" />
           </div>
-
-          <div class="form-group col-md-10 mx-auto">
-            <label>Gender</label>
-            <select id="gender" class="form-control"  v-model="additionalForm.gender" required :disabled="!isAdditionalUpdating">
-              <option :value="gender.id"
-                v-for="(gender) in genders"
-                :key="gender.id">
-                {{ gender.name }}
-              </option>
-            </select>
-            <has-error :form="additionalForm" field="gender" />
-          </div>     
 
           <div class="form-group col-md-10 mx-auto mx-auto  ">
             <label>{{ $t('ZIP/Postal Code') }}</label>
@@ -224,14 +259,14 @@
 
     <hr class=" mt-5">
     <h5 class="mb-3">Update Password</h5>
-    <form @submit.prevent="updateAdditional" @keydown="additionalForm.onKeydown($event)">
+    <form @submit.prevent="updatePassword" @keydown="additionalForm.onKeydown($event)">
       <div class="row">
         <div class="col-md-6">   
           
           <!-- Password -->
           <div class="form-group col-md-10 mx-auto mx-auto  ">
             <label>{{ $t('password') }}</label>
-            <input  v-model="additionalForm.password" :class="{ 'is-invalid': additionalForm.errors.has('password') }" class="form-control" type="password" name="password" :readonly="!isPasswordUpdating">
+            <input  v-model="password" :class="{ 'is-invalid': additionalForm.errors.has('password') }" class="form-control" type="password" name="password" :readonly="!isPasswordUpdating">
             <has-error :form="additionalForm" field="password" />
           </div>
 
@@ -242,7 +277,7 @@
           <!-- Confirm Password -->
           <div class="form-group col-md-10 mx-auto mx-auto  ">
             <label>{{ $t('Confirm Password') }}</label>
-            <input :class="{ 'is-invalid': additionalForm.errors.has('confirm-password') }" class="form-control" type="password" name="confirmPassword" :readonly="!isPasswordUpdating">
+            <input  v-model="confirmPassword" :class="{ 'is-invalid': additionalForm.errors.has('confirm-password') }" class="form-control" type="password" name="confirmPassword" :readonly="!isPasswordUpdating">
             <has-error :form="additionalForm" field="confirmPassword" />
           </div>
         
@@ -291,6 +326,8 @@ import Swal from 'sweetalert2';
 import InputSwitch from 'primevue/inputswitch';
 import birthDatepicker from 'vue-birth-datepicker/src/birth-datepicker';
 import myUpload from 'vue-image-crop-upload';
+import bcrypt from 'bcryptjs';
+
 
 export default {
   scrollToTop: false,
@@ -309,9 +346,12 @@ export default {
     isUpdating: false,
     isAdditionalUpdating: false,
     isPasswordUpdating: false,
+    isProfileUpdating: false,
     sync_banned: false,
     sync_visible: false,
     sync_approved: false,
+    password:'',
+    confirmPassword:'',
     genders: [
       {
         id: 0,
@@ -382,6 +422,7 @@ export default {
     });
     this.$store.dispatch("admin-reader/viewAdditional", id).then(()=>{
       console.log(this.additionalForm);
+      this.profile_photo = this.additionalForm.profile_photo;
     });
   },
 
@@ -439,16 +480,68 @@ export default {
       }).then((result) => {
         console.log(result.value);
         if (result.value) {
-         
-          this.$store.dispatch('admin-reader/editAdditional', this.additionalForm).then(({success, message}) => {
-          if (success) {
+          this.$store.dispatch('admin-reader/editAdditional', this.additionalForm).then(res => {
+           // console.log(res);
             swalSuccess("Reader Updated").then(() =>{
                this.isAdditionalUpdating = false;
             })
-          }
+          
         })
         }
       })
+    },
+
+     async updateProfile () {
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "You are about to update this reader",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Confirm'
+      }).then((result) => {
+        console.log(result.value);
+        console.log(this.additionalForm);
+        if (result.value) {
+          this.$store.dispatch('admin-reader/editAdditional', this.additionalForm).then(res => {
+           // console.log(res);
+            swalSuccess("Reader Updated").then(() =>{
+               this.isProfileUpdating = false;
+            })
+          
+        })
+        }
+      })
+    },
+
+    async updatePassword () {
+      if (this. password == this.confirmPassword){
+        Swal.fire({
+        title: 'Are you sure?',
+        text: "You are about to update this reader",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Confirm'
+      }).then((result) => {
+        console.log(result.value);
+        if (result.value) {
+          console.log(this.additionalForm)
+          const salt = bcrypt.genSaltSync(10)
+          this.additionalForm.password = bcrypt.hashSync(this.password, salt)
+          this.$store.dispatch('admin-reader/editAdditional', this.additionalForm).then(res => {
+           // console.log(res);
+            swalSuccess("Reader Updated").then(() =>{
+               this.isPasswordUpdating = false;
+            })
+        })
+        }
+      })
+      }else{
+         swalOops('Password not match')
+      }      
     },
 
     cancelUpdate() {
@@ -459,17 +552,21 @@ export default {
     },
 
     cancelAdditionalUpdate() {
-      this.additionalForm.keys().forEach(key => {
-        this.additionalForm[key] = this.user[key]
-      })
+      // this.additionalForm.keys().forEach(key => {
+      //   this.additionalForm[key] = this.user[key]
+      // })
       this.isAdditionalUpdating = false;
     },
 
     cancelPasswordUpdate() {
-      this.additionalForm.keys().forEach(key => {
-        this.additionalForm[key] = this.user[key]
-      })
+      // this.additionalForm.keys().forEach(key => {
+      //   this.additionalForm[key] = this.user[key]
+      // })
       this.isPasswordUpdating = false;
+    },
+
+    cancelProfileUpdate(){
+      this.isProfileUpdating = false;
     },
 
     removeAccount(){
@@ -499,36 +596,36 @@ export default {
       this.$router.back()
     },
 
-    cropSuccess(imgDataUrl, field){
-				console.log('-------- crop success --------');
-				this.imgDataUrl = imgDataUrl;
-			},
-			/**
-			 * upload success
-			 *
-			 * [param] jsonData  server api return data, already json encode
-			 * [param] field
-			 */
-			cropUploadSuccess(jsonData, field){
-				console.log('-------- upload success --------');
-				console.log(jsonData);
-				console.log('field: ' + field);
-			},
-			/**
-			 * upload fail
-			 *
-			 * [param] status    server api return error status, like 500
-			 * [param] field
-			 */
-			cropUploadFail(status, field){
-				console.log('-------- upload fail --------');
-				console.log(status);
-				console.log('field: ' + field);
-      },
-      
-      toggleShow() {
-				this.show = !this.show;
-			},
+    clickFileInput(){
+      this.isProfileUpdating = true
+      let fileInputElement = this.$refs.file;
+      fileInputElement.click();
+    },
+
+    previewFile(event){
+      this.additionalForm.profile_photo = event.target.files[0];
+      this.profile_photo = URL.createObjectURL( this.additionalForm.profile_photo);
+      // var reader = new FileReader();
+      // reader.addEventListener('load', readFile);
+      // reader.readAsText(file);
+      // console.log(this.additionalForm.profile_photo)
+      // reader.readAsText(this.additionalForm.profile_photo);
+    },
+
+    readFile(event) {
+      console.log(event.target.result);
+    }
   }
 }
 </script>
+<style>
+.reader-img{
+  border-radius: 50%;
+  display:block;
+  width:250px;
+}
+.hired-tag{
+  font-size: 12px;
+  font-weight: bolder;
+}
+</style>

@@ -20,6 +20,7 @@ export const state = {
     is_active: 0,
     visible: 0,
     is_approved: "PENDING",
+    gender:''
   }),
   additionalForm: new Form({
     id: '',
@@ -31,6 +32,8 @@ export const state = {
     zip: '',
     country: '',
     birthdate: '',
+    password:'',
+    profile_photo:Blob,
   }),
 };
 
@@ -80,6 +83,7 @@ export const actions = {
   async viewReader({ commit }, id) {
     try {
       const { data } = await axios.get(`/api/auth-reader/fetch-reader-by-id/${id}`);
+      console.log(data.data)
 
       commit(types.EDIT_READER, { reader: data.data });
     } catch (e) {
@@ -90,8 +94,9 @@ export const actions = {
   async viewAdditional({ commit }, id) {
     try {
       const { data } = await axios.get(`/api/user/details/${id}`);
+      console.log(data.data[0])
 
-      commit(types.FETCH_ADDITIONAL, { reader: data.data });
+      commit(types.FETCH_ADDITIONAL, { reader: data.data[0] });
     } catch (e) {
       return e;
     }
@@ -112,7 +117,7 @@ export const actions = {
     try {
       const { data } = await axios.patch('/api/user/details/update?_method=PATCH',reader)
 
-      commit(types.FETCH_ADDITIONAL, { reader: data.data });
+      commit(types.FETCH_ADDITIONAL, { reader: data.data[0] });
       return data;
     } catch (e) {
       return e;

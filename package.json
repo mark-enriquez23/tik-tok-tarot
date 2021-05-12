@@ -19,6 +19,8 @@
     "@fortawesome/vue-fontawesome": "^0.1.10",
     "@hcaptcha/vue-hcaptcha": "^0.3.0",
     "axios": "^0.18.1",
+    "bcrypt": "^5.0.1",
+    "bcryptjs": "^2.4.3",
     "bootstrap": "^4.6.0",
     "browserslist": "^4.16.4",
     "jquery": "^3.6.0",
