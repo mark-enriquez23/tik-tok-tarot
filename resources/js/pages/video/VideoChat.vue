@@ -57,6 +57,7 @@
 var moment = require('moment');
 const axios = require('axios')
 const _ = require('lodash');
+import { mapGetters} from 'vuex';
 
 export default {
     name: 'video-chat',
@@ -89,6 +90,11 @@ export default {
         name: this.$route.params.roomName,
       }
     },
+
+    computed: mapGetters({
+      user: 'auth/user',
+    }),
+
     methods : {
     //CHAT METHODS
     connectClientWithUsername(){
@@ -484,8 +490,8 @@ export default {
 
     mounted : function () {
       const _this = this;
-      console.log("NAME:",_this.name)
-
+      console.log("NAME:",_this.name);
+      console.log("user", this.user);
       axios.get("/api/video/"+_this.name)
       .then((response) =>{
         console.log(response);
