@@ -5,8 +5,11 @@
         <!-- video chat div here -->
         <div class="grid grid-flow-row grid-cols-3 grid-rows-3 gap-4 bg-black">
             <div id="my-video-chat-window">
-              <button @click='getVideoToken(); connectClientWithUsername();' v-if="!accessToken && name === username "> Start Broadcasting </button>
+              <button @click='getVideoToken(); connectClientWithUsername();' v-if="!accessToken && name === tc.username "> Start Broadcasting </button>
             </div>
+        </div>
+        <div>
+            <button @click='stopBroadcasting();' v-if="accessToken && name === tc.username "> Stop Broadcasting </button>
         </div>
 
 
@@ -16,7 +19,7 @@
               <div class="col-md-10">
                   <div class="card">
                       <div class="row">
-                          <div class="col-md-4 channel-list" v-show="connected">
+                          <!-- <div class="col-md-4 channel-list" v-show="connected">
                               <ul>
                                   <li v-for="(channel) in tc.channelArray" :key="channel.id" ref="channelList" :data-sid="channel.sid">
                                   <a href="#!" @click="selectChannel(channel)"> {{channel.friendlyName}} </a>
@@ -26,7 +29,7 @@
                                   <a href="#!" @click="createChannel"> Add Channel</a>
                                   <input v-if="showAddChannelInput" class="form-control" type="text" v-model="newChannel" v-on:keyup.13="handleNewChannelInputKeypress" placeholder="New Channel">
                               </ul>
-                          </div>
+                          </div> -->
                           <div class="col-md-8">
                               <div class="card-body">
                                 <div class="message-box">
@@ -67,10 +70,10 @@ export default {
             accessManager: null,
             messagingClient: null,
             channel: [],
-            generalChannel: null,
             username: '',
             channelArray: [],
             currentChannel: null,
+            generalChannel: null,
             activeChannelIndex: null,
             messagesArray: [],
         },
@@ -113,7 +116,6 @@ export default {
             device: 'browser'
         })
         .then(function (response) {
-            console.log("TOKEN??", response.data);
             handler(response.data);
             vm.username = '';
         })
@@ -127,7 +129,7 @@ export default {
 
         this.tc.accessManager = new Twilio.AccessManager(token);
 
-        new Twilio.Chat.Client.create(token).then(function(client) {
+        Twilio.Chat.Client.create(token).then(function(client) {
             vm.tc.messagingClient = client;
             vm.updateConnectedUI();
             vm.loadChannelList(vm.joinGeneralChannel);
@@ -165,51 +167,55 @@ export default {
         });
     },
     sortChannelsByName(channels) {
-        return channels.sort(function(a, b) {
+        let vm = this;
 
-            if (a.friendlyName === 'general') {
+        return channels.sort(function(a, b) {
+            if (a.friendlyName === vm.name) {
             return -1;
             }
-            if (b.friendlyName === 'General Channel') {
+            if (b.friendlyName === vm.name) {
             return 1;
             }
             return a.friendlyName.localeCompare(b.friendlyName);
         });
     },
     joinGeneralChannel() {
-        console.log('Attempting to join "general" chat channel...');
         let vm = this;
-        if (this.tc.generalChannel == null) {
+        console.log('Attempting to join "general" chat channel...',vm.name);
+        if (vm.tc.generalChannel === null) {
             // If it doesn't exist, let's create it
-            this.tc.messagingClient.createChannel({
+            vm.tc.messagingClient.createChannel({
             uniqueName: vm.name,
-            friendlyName: vm.name
+            friendlyName: vm.name,
             }).then(function(channel) {
-            console.log(`Created ${vm.name} channel`);
+
             vm.tc.generalChannel = channel;
             vm.loadChannelList(vm.joinGeneralChannel);
-
             });
         }else {
-            console.log('Found general channel:');
-            this.setupChannel(this.tc.generalChannel);
+            console.log('Found general channel:', vm.tc.generalChannel);
+            vm.setupChannel(vm.tc.generalChannel);
         }
     },
     addChannel(channel){
-        if (channel.uniqueName === 'general') {
+        let vm = this;
+        console.log("ADD CHANNEL",channel.uniqueName === vm.name)
+        if (channel.uniqueName === vm.name) {
             this.tc.generalChannel = channel;
         }
     },
     setupChannel(channel){
         let vm = this;
-        return this.leaveCurrentChannel()
+        return vm.leaveCurrentChannel()
             .then(function() {
             return vm.initChannel(channel);
             })
             .then(function(_channel) {
-            return vm.joinChannel(_channel);
+              vm.tc.currentChannel = _channel;
+              vm.loadMessages();
+              return vm.joinChannel(_channel);
             })
-            .then(this.initChannelEvents);
+            .then(vm.initChannelEvents);
     },
     leaveCurrentChannel() {
         let vm = this;
@@ -269,37 +275,37 @@ export default {
         scrollToMessageListBottom();
     },
     joinChannel(_channel) {
-        console.log(_channel);
         let vm = this;
         return _channel.join()
             .then(function(joinedChannel) {
             console.log('Joined channel ' + joinedChannel.friendlyName);
-            vm.updateChannelUI(_channel);
+            // vm.updateChannelUI(_channel);
             vm.tc.currentChannel = _channel;
             vm.loadMessages();
             return joinedChannel;
             })
             .catch(function(err) {
-            alert("Couldn't join channel " + _channel.friendlyName + ' because ' + err);
+
+            // alert("Couldn't join channel " + _channel.friendlyName + ' because ' + err);
             });
     },
-    updateChannelUI(selectedChannel) {
-        let channelLists = this.$refs.channelList;
+    // updateChannelUI(selectedChannel) {
+    //     let channelLists = this.$refs.channelList;
 
-        let activeChannelList = channelLists.filter(function(element) {
-        return element.dataset.sid === selectedChannel.sid;
-        });
+    //     let activeChannelList = channelLists.filter(function(element) {
+    //     return element.dataset.sid === selectedChannel.sid;
+    //     });
 
-        activeChannelList = activeChannelList[0];
-        if (this.tc.currentChannelContainer === undefined && selectedChannel.uniqueName === 'general') {
+    //     activeChannelList = activeChannelList[0];
+    //     if (this.tc.currentChannelContainer === undefined && selectedChannel.friendlyName === vm.name) {
 
-        this.tc.currentChannelContainer = activeChannelList;
-        }
+    //     this.tc.currentChannelContainer = activeChannelList;
+    //     }
 
-        this.tc.currentChannelContainer.classList.remove('selected-channel');
-        this.tc.currentChannelContainer = activeChannelList;
-        this.tc.currentChannelContainer.classList.add('selected-channel');
-    },
+    //     this.tc.currentChannelContainer.classList.remove('selected-channel');
+    //     this.tc.currentChannelContainer = activeChannelList;
+    //     this.tc.currentChannelContainer.classList.add('selected-channel');
+    // },
     loadMessages() {
         let vm = this;
         this.tc.currentChannel.getMessages(50).then(function (messages) {
@@ -352,13 +358,13 @@ export default {
         this.showAddChannelInput = true;
     },
     deleteChannel() {
-        if (this.tc.currentChannel.sid === this.tc.generalChannel.sid) {
-            alert('You cannot delete the general channel');
-            return;
-        }
+        // if (this.tc.currentChannel.sid === this.tc.generalChannel.sid) {
+        //     alert('You cannot delete the general channel');
+        //     return;
+        // }
         this.tc.currentChannel.delete().then(function(channel) {
             console.log('channel: '+ channel.friendlyName + ' deleted');
-            setupChannel(this.tc.generalChannel);
+            // setupChannel(this.tc.generalChannel);
         });
     },
 
@@ -482,27 +488,55 @@ export default {
         }, error => {
             console.error(`Unable to connect to Room: ${error.message}`);
         });
+      },
+
+      stopBroadcasting: function () {
+        let vm = this;
+        vm.accessToken = "";
+        let request = {
+          room_name: this.name,
+          room_sid: room.sid,
+          room_status: "COMPLETED"
+        }
+
+        axios.post(`/api/video/history/save`, request)
+        .then((response) =>{
+          console.log(response);
+          window.addEventListener('unload', this.deleteChannel());
+
+        })
+        .catch((err)=>{
+          console.log(err);
+        })
+
       }
 
     },
-
-
 
     mounted : function () {
       const _this = this;
       // console.log("NAME:",_this.name);
       // console.log("USERNAME:",_this.user?.username);
 
+      //ASSIGNING USERNAME
       _this.username = _this.user?.username ? _this.user?.username : "";
+
+      //CHECKING IF BROADCAST IS ONGOING
+
       axios.get("/api/video/"+_this.name)
       .then((response) =>{
-        console.log(response);
-        this.connectClientWithUsername();
-        this.joinAsParticipant();
+        console.log(response.data.success);
+        if(response.data.success){
+          _this.username !== "" ? this.connectClientWithUsername() : null;
+          _this.username !== _this.name ? this.joinAsParticipant() : null;
+        }
       })
       .catch((err)=>{
         console.log(err.response);
       })
+      // this.connectClientWithUsername();
+
+
     }
 }
 </script>

@@ -16,7 +16,8 @@ $config = [
   <title>{{ config('app.name') }}</title>
 
   <link rel="stylesheet" href="{{ mix('dist/css/app.css') }}">
-
+  <script src="//media.twiliocdn.com/sdk/js/common/v0.1/twilio-common.min.js"></script>
+  <script src="//media.twiliocdn.com/sdk/js/chat/v4.0/twilio-chat.min.js"></script>
 </head>
 <body>
   <div id="app"></div>
@@ -28,7 +29,6 @@ $config = [
 
   {{-- Load the application scripts --}}
   <script src="{{ mix('dist/js/app.js') }}"></script>
-  <script src="//media.twiliocdn.com/sdk/js/common/v0.1/twilio-common.min.js"></script>
-  <script src="//media.twiliocdn.com/sdk/js/chat/v3.0/twilio-chat.min.js"></script>
+
 </body>
 </html>

@@ -103,6 +103,8 @@ Route::get('video/access_token/{room}', 'Video\AccessTokenController@generate_to
 Route::get('video/{room}', 'Video\LiveHistoryController@searchByRoomName');
 Route::post('video/chat', 'Video\AccessTokenController@chat_token');
 Route::post('video/history/save', 'Video\LiveHistoryController@index');
+Route::post('video/history/update', 'Video\LiveHistoryController@update');
+Route::post('video/history/chat', 'Video\LiveHistoryController@addChatObjByRoomName');
 
 // UserSecurityQuestion api
 Route::group(['prefix' => 'user-security-question'], function () {
