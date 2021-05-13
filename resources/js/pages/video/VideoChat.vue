@@ -5,61 +5,79 @@
         <!-- video chat div here -->
         <div class="grid grid-flow-row grid-cols-3 grid-rows-3 gap-4 bg-black">
             <div id="my-video-chat-window">
-              <button @click='getVideoToken' v-if="!accessToken && name"> Start Broadcasting </button>
+              <button @click='getVideoToken(); connectClientWithUsername();' v-if="!accessToken && name === tc.username "> Start Broadcasting </button>
             </div>
+        </div>
+        <div>
+            <button @click='stopBroadcasting();' v-if="accessToken && name === tc.username "> Stop Broadcasting </button>
         </div>
 
 
         <!-- chat box starts here -->
-        <div class="row justify-content-center">
-            <div class="col-md-10">
-                <div class="card">
-                    <div class="row">
-                        <div class="card-body">
-                          <div class="col-md-4 channel-list" v-show="connected">
-                            <ul>
-                                <li v-for="(channel) in tc.channelArray" :key="channel.id" ref="channelList" :data-sid="channel.sid">
-                                <a href="#!" @click="selectChannel(channel)"> {{channel.friendlyName}} </a>
+        <div class="container">
+          <div class="row justify-content-center">
+              <div class="col-md-10">
+                  <div class="card">
+                      <div class="row">
+                          <!-- <div class="col-md-4 channel-list" v-show="connected">
+                              <ul>
+                                  <li v-for="(channel) in tc.channelArray" :key="channel.id" ref="channelList" :data-sid="channel.sid">
+                                  <a href="#!" @click="selectChannel(channel)"> {{channel.friendlyName}} </a>
 
 
-                                </li>
-                                <a href="#!" @click="createChannel"> Add Channel</a>
-                                <input v-if="showAddChannelInput" class="form-control" type="text" v-model="newChannel" v-on:keyup.13="handleNewChannelInputKeypress" placeholder="New Channel">
-                            </ul>
-                        </div>
-                        <div class="col-md-8">
-                            <div class="message-box">
-                              <div class="message-div" v-show="showMessages">
-                              <div v-for="message in tc.messagesArray" :key="message.id" class="row msg">
-                                  <div class="media-body">
-                                      <small class="pull-right time"><i class="fa fa-clock-o"></i>{{moment(message.timestamp).fromNow()}}</small>
-                                      <h5 class="media-heading">{{message.author}}</h5>
-                                      <small class="col-sm-11">{{message.body}}</small>
-                                  </div>
-                              </div>
-                              </div>
-                              <p v-if="notification">{{notificationMsg}}</p>
-                              </div>
-                              <input v-if="userNotJoined" class="form-control" type="text" v-model="username" v-on:keyup.13="connectClientWithUsername" placeholder="Your username">
-                              <input v-else class="form-control" type="text" v-model="message" v-on:keyup.13="handleInputTextKeypress" placeholder="Your message">
+                                  </li>
+                                  <a href="#!" @click="createChannel"> Add Channel</a>
+                                  <input v-if="showAddChannelInput" class="form-control" type="text" v-model="newChannel" v-on:keyup.13="handleNewChannelInputKeypress" placeholder="New Channel">
+                              </ul>
+                          </div> -->
+                          <div class="col-md-8">
+                              <div class="card-body">
+                                <div class="message-box">
+                                    <div class="message-div" v-show="showMessages">
+                                    <div v-for="message in tc.messagesArray" :key="message.id" class="row msg">
+                                        <div class="media-body">
+                                            <small class="pull-right time"><i class="fa fa-clock-o"></i>{{moment(message.timestamp).fromNow()}}</small>
+                                            <h5 class="media-heading">{{message.author}}</h5>
+                                            <small class="col-sm-11">{{message.body}}</small>
+                                        </div>
+                                    </div>
+                                    </div>
+                                    <p v-if="notification">{{notificationMsg}}</p>
+                                </div>
+                                <!-- <input v-if="userNotJoined" class="form-control" type="text" v-model="username" v-on:keyup.13="connectClientWithUsername" placeholder="Your username"> -->
+                                <input v-if="!userNotJoined" class="form-control" type="text" v-model="message" v-on:keyup.13="handleInputTextKeypress" placeholder="Your message">
+                            </div>
                           </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
         </div>
     </div>
 </template>
 
 <script>
+var moment = require('moment');
+const axios = require('axios')
+const _ = require('lodash');
+import { mapGetters} from 'vuex';
+
 export default {
     name: 'video-chat',
     data: function () {
       return {
-        accessToken: '',
-        roomSid: '',
-        name: this.$route.params.roomName,
-        username: '',
+        tc: {
+            accessManager: null,
+            messagingClient: null,
+            channel: [],
+            username: '',
+            channelArray: [],
+            currentChannel: null,
+            generalChannel: null,
+            activeChannelIndex: null,
+            messagesArray: [],
+        },
+        username: this.user?.username,
         connected: false,
         selected: false,
         showMessages: false,
@@ -70,29 +88,26 @@ export default {
         showAddChannelInput: false,
         notification: false,
         notificationMsg: '',
-        tc: {
-            accessManager: null,
-            messagingClient: null,
-            channel: [],
-            generalChannel: null,
-            username: '',
-            channelArray: [],
-            currentChannel: null,
-            activeChannelIndex: null,
-            messagesArray: [],
-        },
-
+        accessToken: '',
+        roomSid: '',
+        name: this.$route.params.roomName,
       }
     },
+
+    computed: mapGetters({
+      user: 'auth/user',
+    }),
+
     methods : {
     //CHAT METHODS
     connectClientWithUsername(){
-      if (this.username == '') {
-        alert('Username cannot be empty');
-        return;
-      }
-      this.tc.username = this.username;
-      this.fetchAccessToken(this.tc.username, this.connectMessagingClient);
+        if (this.username !== undefined) {
+          this.tc.username = this.user?.username;
+          this.fetchAccessToken(this.tc.username, this.connectMessagingClient);
+        }else{
+          alert("NOT LOGGED IN");
+          return;
+        }
     },
     fetchAccessToken(username, handler) {
         let vm = this;
@@ -114,7 +129,7 @@ export default {
 
         this.tc.accessManager = new Twilio.AccessManager(token);
 
-        new Twilio.Chat.Client.create(token).then(function(client) {
+        Twilio.Chat.Client.create(token).then(function(client) {
             vm.tc.messagingClient = client;
             vm.updateConnectedUI();
             vm.loadChannelList(vm.joinGeneralChannel);
@@ -132,7 +147,6 @@ export default {
     setNewToken(tokenResponse) {
         this.tc.accessManager.updateToken(tokenResponse.token);
     },
-
     loadChannelList(handler){
         if (this.tc.messagingClient === undefined) {
             console.log('Client is not initialized');
@@ -153,64 +167,66 @@ export default {
         });
     },
     sortChannelsByName(channels) {
-        return channels.sort(function(a, b) {
+        let vm = this;
 
-            if (a.friendlyName === 'general') {
+        return channels.sort(function(a, b) {
+            if (a.friendlyName === vm.name) {
             return -1;
             }
-            if (b.friendlyName === 'General Channel') {
+            if (b.friendlyName === vm.name) {
             return 1;
             }
             return a.friendlyName.localeCompare(b.friendlyName);
         });
     },
-
     joinGeneralChannel() {
-        console.log('Attempting to join "general" chat channel...');
         let vm = this;
-        if (this.tc.generalChannel == null) {
+        console.log('Attempting to join "general" chat channel...',vm.name);
+        if (vm.tc.generalChannel === null) {
             // If it doesn't exist, let's create it
-            this.tc.messagingClient.createChannel({
-            uniqueName: 'general',
-            friendlyName: 'General Channel'
+            vm.tc.messagingClient.createChannel({
+            uniqueName: vm.name,
+            friendlyName: vm.name,
             }).then(function(channel) {
-            console.log('Created general channel');
+
             vm.tc.generalChannel = channel;
             vm.loadChannelList(vm.joinGeneralChannel);
-
             });
         }else {
-            console.log('Found general channel:');
-            this.setupChannel(this.tc.generalChannel);
+            console.log('Found general channel:', vm.tc.generalChannel);
+            vm.setupChannel(vm.tc.generalChannel);
         }
     },
     addChannel(channel){
-        if (channel.uniqueName === 'general') {
+        let vm = this;
+        console.log("ADD CHANNEL",channel.uniqueName === vm.name)
+        if (channel.uniqueName === vm.name) {
             this.tc.generalChannel = channel;
         }
     },
-
     setupChannel(channel){
         let vm = this;
-        return this.leaveCurrentChannel()
+        return vm.leaveCurrentChannel()
             .then(function() {
             return vm.initChannel(channel);
             })
             .then(function(_channel) {
-            return vm.joinChannel(_channel);
+              vm.tc.currentChannel = _channel;
+              vm.loadMessages();
+              return vm.joinChannel(_channel);
             })
-            .then(this.initChannelEvents);
+            .then(vm.initChannelEvents);
     },
     leaveCurrentChannel() {
         let vm = this;
         if (this.tc.currentChannel) {
             return this.tc.currentChannel.leave().then(function(leftChannel) {
-            console.log('left ' + leftChannel.friendlyName);
-            leftChannel.removeListener('messageAdded', vm.addMessageToList);
-            leftChannel.removeListener('typingStarted', vm.showTypingStarted);
-            leftChannel.removeListener('typingEnded', vm.hideTypingStarted);
-            leftChannel.removeListener('memberJoined', vm.notifyMemberJoined);
-            leftChannel.removeListener('memberLeft', vm.notifyMemberLeft);
+              console.log('left ' + leftChannel.friendlyName);
+              leftChannel.removeListener('messageAdded', vm.addMessageToList);
+              leftChannel.removeListener('typingStarted', vm.showTypingStarted);
+              leftChannel.removeListener('typingEnded', vm.hideTypingStarted);
+              leftChannel.removeListener('memberJoined', vm.notifyMemberJoined);
+              leftChannel.removeListener('memberLeft', vm.notifyMemberLeft);
             });
         } else {
             console.log("resolving");
@@ -259,37 +275,37 @@ export default {
         scrollToMessageListBottom();
     },
     joinChannel(_channel) {
-        console.log(_channel);
         let vm = this;
         return _channel.join()
             .then(function(joinedChannel) {
             console.log('Joined channel ' + joinedChannel.friendlyName);
-            vm.updateChannelUI(_channel);
+            // vm.updateChannelUI(_channel);
             vm.tc.currentChannel = _channel;
             vm.loadMessages();
             return joinedChannel;
             })
             .catch(function(err) {
-            alert("Couldn't join channel " + _channel.friendlyName + ' because ' + err);
+
+            // alert("Couldn't join channel " + _channel.friendlyName + ' because ' + err);
             });
     },
-    updateChannelUI(selectedChannel) {
-        let channelLists = this.$refs.channelList;
+    // updateChannelUI(selectedChannel) {
+    //     let channelLists = this.$refs.channelList;
 
-        let activeChannelList = channelLists.filter(function(element) {
-        return element.dataset.sid === selectedChannel.sid;
-        });
+    //     let activeChannelList = channelLists.filter(function(element) {
+    //     return element.dataset.sid === selectedChannel.sid;
+    //     });
 
-        activeChannelList = activeChannelList[0];
-        if (this.tc.currentChannelContainer === undefined && selectedChannel.uniqueName === 'general') {
+    //     activeChannelList = activeChannelList[0];
+    //     if (this.tc.currentChannelContainer === undefined && selectedChannel.friendlyName === vm.name) {
 
-        this.tc.currentChannelContainer = activeChannelList;
-        }
+    //     this.tc.currentChannelContainer = activeChannelList;
+    //     }
 
-        this.tc.currentChannelContainer.classList.remove('selected-channel');
-        this.tc.currentChannelContainer = activeChannelList;
-        this.tc.currentChannelContainer.classList.add('selected-channel');
-    },
+    //     this.tc.currentChannelContainer.classList.remove('selected-channel');
+    //     this.tc.currentChannelContainer = activeChannelList;
+    //     this.tc.currentChannelContainer.classList.add('selected-channel');
+    // },
     loadMessages() {
         let vm = this;
         this.tc.currentChannel.getMessages(50).then(function (messages) {
@@ -311,7 +327,6 @@ export default {
         //    vm.loadMessages();
         //  }, 3000);
     },
-
     handleNewChannelInputKeypress(event) {
         let vm = this;
         if (this.newChannel == '') {
@@ -326,7 +341,6 @@ export default {
         }).then(this.hideAddChannelInput);
         this.newChannel = '';
     },
-
     selectChannel(channel) {
         let channelSid = channel.sid;
         var selectedChannel = this.tc.channelArray.filter(function(channel) {
@@ -343,15 +357,14 @@ export default {
     createChannel(){
         this.showAddChannelInput = true;
     },
-
     deleteChannel() {
-        if (this.tc.currentChannel.sid === this.tc.generalChannel.sid) {
-            alert('You cannot delete the general channel');
-            return;
-        }
+        // if (this.tc.currentChannel.sid === this.tc.generalChannel.sid) {
+        //     alert('You cannot delete the general channel');
+        //     return;
+        // }
         this.tc.currentChannel.delete().then(function(channel) {
             console.log('channel: '+ channel.friendlyName + ' deleted');
-            setupChannel(this.tc.generalChannel);
+            // setupChannel(this.tc.generalChannel);
         });
     },
 
@@ -360,7 +373,6 @@ export default {
         console.log('Video chat room loading...');
 
         const _this = this
-        const axios = require('axios')
 
         // Request a new token
         axios.get(`/api/video/access_token/${this.name}`)
@@ -379,7 +391,6 @@ export default {
         console.log('Video chat room loading...');
 
         const _this = this
-        const axios = require('axios')
 
         // Request a new token
         axios.get(`/api/video/access_token/${this.name}`)
@@ -448,8 +459,6 @@ export default {
 
       joinToRoom : function () {
 
-      const axios = require('axios')
-
       const { connect } = require('twilio-video');
 
       connect( this.accessToken, { name:this.name, video:false, audio:false }).then(room => {
@@ -479,25 +488,55 @@ export default {
         }, error => {
             console.error(`Unable to connect to Room: ${error.message}`);
         });
+      },
+
+      stopBroadcasting: function () {
+        let vm = this;
+        vm.accessToken = "";
+        let request = {
+          room_name: this.name,
+          room_sid: room.sid,
+          room_status: "COMPLETED"
+        }
+
+        axios.post(`/api/video/history/save`, request)
+        .then((response) =>{
+          console.log(response);
+          window.addEventListener('unload', this.deleteChannel());
+
+        })
+        .catch((err)=>{
+          console.log(err);
+        })
+
       }
 
     },
 
-
-
     mounted : function () {
-      const axios = require('axios');
       const _this = this;
-      console.log("NAME:",_this.name)
+      // console.log("NAME:",_this.name);
+      // console.log("USERNAME:",_this.user?.username);
+
+      //ASSIGNING USERNAME
+      _this.username = _this.user?.username ? _this.user?.username : "";
+
+      //CHECKING IF BROADCAST IS ONGOING
 
       axios.get("/api/video/"+_this.name)
       .then((response) =>{
-        console.log(response);
-        this.joinAsParticipant();
+        console.log(response.data.success);
+        if(response.data.success){
+          _this.username !== "" ? this.connectClientWithUsername() : null;
+          _this.username !== _this.name ? this.joinAsParticipant() : null;
+        }
       })
       .catch((err)=>{
         console.log(err.response);
       })
+      // this.connectClientWithUsername();
+
+
     }
 }
 </script>

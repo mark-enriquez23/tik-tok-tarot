@@ -21,16 +21,35 @@ class LiveHistoryController extends Controller
             'room_status' => 'required',
         ]);
 
-        $History = new LiveHistory;
+        $History = LiveHistory::updateOrCreate(
+            ['room_name' => $data["room_name"]],
+            [
+                'room_sid' => $data["room_sid"],
+                'room_status' => $data["room_status"]
+            ],
+        );
 
-        $History->room_name     = $data['room_name'];
-        $History->room_sid      = $data['room_sid'];
+        return response()->json([
+            'success' => true,
+            'data' => $History
+        ]);
+    }
+
+    public function update(Request $request)
+    {
+        $data = $request->validate([
+            'room_name' => 'required',
+            'room_status' => 'required',
+        ]);
+
+        $History = LiveHistory::where("room_name", $data['room_name'])->get();
+
         $History->room_status   = $data['room_status'];
         $History->save();
 
         return response()->json([
             'success' => true,
-            'data' => $data
+            'data' => $History
         ]);
     }
 
@@ -44,7 +63,13 @@ class LiveHistoryController extends Controller
                 'message' => 'missing parameters'
             ]);
         }
-        $History = LiveHistory::where('room_name', $room)->firstOrFail();
+        $History = LiveHistory::where('room_name', $room)->where('room_status', 'ON_GOING')->first();
+        if(!$History){
+            return response()->json([
+                'success' => false,
+                'message' => 'room not in progress'
+            ]);
+        }
 
         return response()->json([
             'success' => true,
