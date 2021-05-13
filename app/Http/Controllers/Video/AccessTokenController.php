@@ -49,6 +49,7 @@ class AccessTokenController extends Controller
         $accountSid = getenv('TWILIO_ACCOUNT_SID');
         $apiKeySid = getenv('TWILIO_API_KEY_SID');
         $apiKeySecret = getenv('TWILIO_API_KEY_SECRET');
+        $apiChatService = getenv('TWILIO_CHAT_SERVICE_SECRET');
 
         // Create an Access Token
         $token = new AccessToken(
@@ -61,7 +62,7 @@ class AccessTokenController extends Controller
 
         // Grant access to Chat
         $grant = new ChatGrant();
-        $grant->setServiceSid($apiKeySid);
+        $grant->setServiceSid($apiChatService);
 
         $token->addGrant($grant);
 

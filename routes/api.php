@@ -18,6 +18,8 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::patch('settings/profile', 'Settings\ProfileController@update');
     Route::patch('settings/password', 'Settings\PasswordController@update');
 
+
+
     // SecurityQuestion api
     Route::group(['prefix' => 'authenticated-security-question'], function () {
         Route::get('/', 'Auth\SecurityQuestionController@authenticated');
@@ -74,10 +76,6 @@ Route::group(['middleware' => 'auth:api'], function () {
 Route::group(['middleware' => 'guest:api'], function () {
     Route::post('login', 'Auth\LoginController@login');
     Route::post('register', 'Auth\RegisterController@register');
-    Route::get('video/access_token/{room}', 'Video\AccessTokenController@generate_token');
-    Route::post('video/chat', 'Video\AccessTokenController@chat_token');
-    Route::post('video/history/save', 'Video\LiveHistoryController@index');
-    Route::get('video/{room}', 'Video\LiveHistoryController@searchByRoomName');
 
     // User api
     Route::group(['prefix' => 'user'], function () {
@@ -88,6 +86,8 @@ Route::group(['middleware' => 'guest:api'], function () {
 
     Route::post('oauth/{driver}', 'Auth\OAuthController@redirectToProvider');
     Route::get('oauth/{driver}/callback', 'Auth\OAuthController@handleProviderCallback')->name('oauth.callback');
+
+
 });
 
 ########### * Public Routes *###########
@@ -97,6 +97,14 @@ Route::group(['prefix' => 'security-question'], function () {
     Route::post('/save', 'Auth\SecurityQuestionController@save');
     Route::post('/delete', 'Auth\SecurityQuestionController@delete');
 });
+
+//VIDEO CHAT AUTH
+Route::get('video/access_token/{room}', 'Video\AccessTokenController@generate_token');
+Route::get('video/{room}', 'Video\LiveHistoryController@searchByRoomName');
+Route::post('video/chat', 'Video\AccessTokenController@chat_token');
+Route::post('video/history/save', 'Video\LiveHistoryController@index');
+Route::post('video/history/update', 'Video\LiveHistoryController@update');
+Route::post('video/history/chat', 'Video\LiveHistoryController@addChatObjByRoomName');
 
 // UserSecurityQuestion api
 Route::group(['prefix' => 'user-security-question'], function () {
