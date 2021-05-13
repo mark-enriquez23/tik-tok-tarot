@@ -33,7 +33,7 @@ export const state = {
     country: '',
     birthdate: '',
     password:'',
-    profile_photo:Blob,
+    profile_photo:'',
   }),
 };
 
@@ -116,6 +116,22 @@ export const actions = {
   async editAdditional({ commit }, reader) {
     try {
       const { data } = await axios.patch('/api/user/details/update?_method=PATCH',reader)
+
+      commit(types.FETCH_ADDITIONAL, { reader: data.data[0] });
+      return data;
+    } catch (e) {
+      return e;
+    }
+  },
+
+  async editProfilePic({ commit }, reader) {
+    var formData = new FormData;
+    formData.append("profile_photo", reader.profile_photo)
+    formData.append("user_id", reader.user_id)
+    formData.append("id", reader.id)
+    console.log(formData)
+    try {
+      const { data } = await axios.post('/api/user/details/update?_method=PATCH',formData)
 
       commit(types.FETCH_ADDITIONAL, { reader: data.data[0] });
       return data;

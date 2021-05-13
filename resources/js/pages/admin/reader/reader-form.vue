@@ -13,7 +13,7 @@
     
     <h5 class="mb-3">Profile Photo</h5>
     <div class="">
-      <img class="reader-img mx-auto" :src="additionalForm.profile_photo == ''? 'https://www.gravatar.com/avatar/69e607c9dfb0e95a6ee53ea55f47a507.jpg?s=200&d=mm': profile_photo">
+      <img class="reader-img mx-auto" :src="additionalForm.profile_photo == ''? 'http://tik-tok-tarot-master.test/images/profile.jpg' : profile_photo">
     </div>
 
     <form @submit.prevent="updateProfile" @keydown="additionalForm.onKeydown($event)">
@@ -351,6 +351,7 @@ export default {
     sync_visible: false,
     sync_approved: false,
     password:'',
+    profile_photo:'',
     confirmPassword:'',
     genders: [
       {
@@ -422,7 +423,7 @@ export default {
     });
     this.$store.dispatch("admin-reader/viewAdditional", id).then(()=>{
       console.log(this.additionalForm);
-      this.profile_photo = this.additionalForm.profile_photo;
+      this.profile_photo = 'http://tik-tok-tarot-master.test/images/' + this.additionalForm.profile_photo;
     });
   },
 
@@ -504,7 +505,7 @@ export default {
         console.log(result.value);
         console.log(this.additionalForm);
         if (result.value) {
-          this.$store.dispatch('admin-reader/editAdditional', this.additionalForm).then(res => {
+          this.$store.dispatch('admin-reader/editProfilePic', this.additionalForm).then(res => {
            // console.log(res);
             swalSuccess("Reader Updated").then(() =>{
                this.isProfileUpdating = false;
@@ -552,16 +553,16 @@ export default {
     },
 
     cancelAdditionalUpdate() {
-      // this.additionalForm.keys().forEach(key => {
-      //   this.additionalForm[key] = this.user[key]
-      // })
+      this.additionalForm.keys().forEach(key => {
+        this.additionalForm[key] = this.user[key]
+      })
       this.isAdditionalUpdating = false;
     },
 
     cancelPasswordUpdate() {
-      // this.additionalForm.keys().forEach(key => {
-      //   this.additionalForm[key] = this.user[key]
-      // })
+      this.additionalForm.keys().forEach(key => {
+        this.additionalForm[key] = this.user[key]
+      })
       this.isPasswordUpdating = false;
     },
 
