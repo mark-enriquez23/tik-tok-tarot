@@ -112,6 +112,10 @@ class User extends Authenticatable implements JWTSubject //, MustVerifyEmail
         return $this->hasMany('App\UserDetail');
     }
 
+    public static function getUserWithDetails(int $id){
+        return static::where('id', $id)->with('userDetails')->get();
+    }
+
     /**
      * @return int
      */
