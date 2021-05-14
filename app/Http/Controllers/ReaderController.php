@@ -106,7 +106,7 @@ class ReaderController extends Controller
      */
     public function fetchReaders()
     {
-        $user = User::where([['role_id', '2']])->get();
+        $user = User::where([['role_id', '2']])->with('userDetails')->get();
 
         return response()->json([
             "success" => $user ? true : false,
@@ -123,7 +123,7 @@ class ReaderController extends Controller
      */
     public function fetchVisibleReaders()
     {
-        $user = User::where([['role_id', '2'], ['visible', 1]])->get();
+        $user = User::where([['role_id', '2'], ['visible', 1]])->with('userDetails')->get();
 
         return response()->json([
             "success" => $user ? true : false,
@@ -140,7 +140,7 @@ class ReaderController extends Controller
      */
     public function fetchReaderById($id)
     {
-        $user = User::where('id', $id)->with(['uploads.uploadType'])->first();
+        $user = User::where('id', $id)->with(['uploads.uploadType'])->with('userDetails')->first();
 
         return response()->json([
             "success" => $user ? true : false,

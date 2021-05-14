@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use App\User;
+use App\UserDetail;
 use App\FeaturedUser;
 use App\UserSecurityQuestion;
 use App\Credit;
@@ -118,6 +119,19 @@ class UserSeeder extends Seeder
         // save
         foreach ($users as $user) {
             $registeredUser = User::create($user);
+
+            $userDetail = new UserDetail;
+            $userDetail->user_id = $registeredUser->id;
+            $userDetail->reader_bio = "Example Bio";
+            $userDetail->expertise = "love life";
+            $userDetail->address1 = "Sample Address1";
+            $userDetail->address2 = "Sample Address2";
+            $userDetail->state = "State";
+            $userDetail->zip = "country";
+            $userDetail->country = "UK";
+            $userDetail->birthdate = "12/16/1994";
+            $userDetail->profile_photo = "1620364222.jpg";
+            $userDetail->save();
 
             // save reader as featured
             if ($registeredUser->role_id === 2) {
