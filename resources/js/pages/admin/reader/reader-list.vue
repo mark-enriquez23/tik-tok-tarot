@@ -21,7 +21,7 @@
         <tr v-for="reader in readers" :key="reader.id">
             <th scope="row">{{reader.id}}</th>
             <td>
-              <img class="reader-img" :src="reader.photo_url">
+              <img class="reader-img" :src="reader.user_details[0].profile_photo == ''? 'http://tik-tok-tarot-master.test/images/profile.jpg' : 'http://tik-tok-tarot-master.test/images/'+reader.user_details[0].profile_photo">
             </td>
             <td>{{ reader.username }}</td>
             <td>{{ reader.firstName }}</td>
@@ -89,6 +89,8 @@ export default {
 <style>
 .reader-img{
   border-radius: 50%;
+  width: 250px;
+  height: 250px;
 }
 .hired-tag{
   font-size: 12px;

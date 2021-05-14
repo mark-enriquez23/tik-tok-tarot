@@ -126,7 +126,7 @@ export default {
       // Fetch the user.
       await this.$store.dispatch('auth/fetchUser')
 
-      console.log(this.user.role_id);
+      console.log(this.user);
       switch (this.user.role_id){
         case 1:
           this.$router.push({ name: 'admin.readers' });
