@@ -6,7 +6,6 @@ use Illuminate\Support\Facades\Route;
 Route::group(['middleware' => 'auth:api'], function () {
     Route::post('logout', 'Auth\LoginController@logout');
 
-
     //user auth route
     Route::get('/user', 'Auth\UserController@current');
     Route::get('/user/refresh-code/{id}','Auth\UserController@refreshInvitationCode');
@@ -17,7 +16,6 @@ Route::group(['middleware' => 'auth:api'], function () {
 
     Route::patch('settings/profile', 'Settings\ProfileController@update');
     Route::patch('settings/password', 'Settings\PasswordController@update');
-
 
 
     // SecurityQuestion api
