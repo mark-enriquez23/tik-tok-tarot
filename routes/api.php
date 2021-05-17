@@ -99,6 +99,8 @@ Route::group(['prefix' => 'security-question'], function () {
 //VIDEO CHAT AUTH
 Route::get('video/access_token/{room}', 'Video\AccessTokenController@generate_token');
 Route::get('video/{room}', 'Video\LiveHistoryController@searchByRoomName');
+Route::get('video/done/{sid}', 'Video\AccessTokenController@streamingDone');
+Route::get('video/fetch/{status}', 'Video\fetchChannelsController@index');
 Route::post('video/chat', 'Video\AccessTokenController@chat_token');
 Route::post('video/history/save', 'Video\LiveHistoryController@index');
 Route::post('video/history/update', 'Video\LiveHistoryController@update');

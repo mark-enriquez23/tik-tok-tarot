@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Video;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Twilio\Rest\Client;
 use Twilio\Jwt\AccessToken;
 use Twilio\Jwt\Grants\VideoGrant;
 use Twilio\Jwt\Grants\ChatGrant;
@@ -68,5 +69,18 @@ class AccessTokenController extends Controller
 
         // Serialize the token as a JWT
         echo $token->toJWT();
+    }
+
+    public function streamingDone($roomSid){
+
+        $sid = getenv("TWILIO_ACCOUNT_SID");
+        $token = getenv("TWILIO_AUTH_TOKEN");
+        $twilio = new Client($sid, $token);
+
+        $room = $twilio->video->v1->rooms($roomSid)
+                          ->update("completed");
+
+        print($room->uniqueName);
+
     }
 }

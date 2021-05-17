@@ -5,12 +5,10 @@
         <!-- video chat div here -->
         <div class="grid grid-flow-row grid-cols-3 grid-rows-3 gap-4 bg-black">
             <div id="my-video-chat-window">
-              <button @click='getVideoToken(); connectClientWithUsername();' v-if="!accessToken && name === tc.username "> Start Broadcasting </button>
+              <button @click='getVideoToken(); connectClientWithUsername();' v-if="currentStatus!=='ON_GOING' && name === username"> Start Broadcasting </button>
             </div>
         </div>
-        <div>
-            <button @click='stopBroadcasting();' v-if="accessToken && name === tc.username "> Stop Broadcasting </button>
-        </div>
+
 
 
         <!-- chat box starts here -->
@@ -53,6 +51,9 @@
               </div>
           </div>
         </div>
+        <div>
+            <button @click='stopBroadcasting();' v-if="currentStatus ==='ON_GOING' && name === tc.username"> Stop Broadcasting </button>
+        </div>
     </div>
 </template>
 
@@ -90,7 +91,10 @@ export default {
         notificationMsg: '',
         accessToken: '',
         roomSid: '',
+        dataSid: '',
         name: this.$route.params.roomName,
+        currentStatus: 'not-started',
+        videoRoom: []
       }
     },
 
@@ -103,6 +107,7 @@ export default {
     connectClientWithUsername(){
         if (this.username !== undefined) {
           this.tc.username = this.user?.username;
+          this.username = this.user?.username;
           this.fetchAccessToken(this.tc.username, this.connectMessagingClient);
         }else{
           alert("NOT LOGGED IN");
@@ -378,6 +383,8 @@ export default {
         axios.get(`/api/video/access_token/${this.name}`)
             .then(function (response) {
                 _this.accessToken = response.data
+                _this.currentStatus = "ON_GOING";
+
             })
             .catch(function (error) {
                 console.log(error);
@@ -415,7 +422,9 @@ export default {
 
             console.log(`Successfully joined a Room: ${room}`);
             console.log("Data::", room.sid);
-            this.roomSid = room.sid;
+            this.dataSid = room.sid;
+            this.videoRoom = room;
+
 
             let request = {
               room_name: this.name,
@@ -452,6 +461,14 @@ export default {
                     });
                 });
 
+            room.on('disconnected', room => {
+            // Detach the local media elements
+              room.localParticipant.tracks.forEach(publication => {
+                const attachedElements = publication.track.detach();
+                attachedElements.forEach(element => element.remove());
+              });
+            });
+
         }, error => {
             console.error(`Unable to connect to Room: ${error.message}`);
         });
@@ -465,7 +482,7 @@ export default {
 
           console.log(`Successfully joined a Room: ${room}`);
           console.log("Data::", room.sid);
-          this.roomSid = room.sid;
+          this.dataSid = room.sid;
 
           const videoChatWindow = document.getElementById('my-video-chat-window');
 
@@ -485,6 +502,14 @@ export default {
 
           });
 
+          room.on('disconnected', room => {
+            // Detach the local media elements
+            room.localParticipant.tracks.forEach(publication => {
+              const attachedElements = publication.track.detach();
+              attachedElements.forEach(element => element.remove());
+            });
+          });
+
         }, error => {
             console.error(`Unable to connect to Room: ${error.message}`);
         });
@@ -492,17 +517,24 @@ export default {
 
       stopBroadcasting: function () {
         let vm = this;
+        const { createLocalVideoTrack } = require('twilio-video');
         vm.accessToken = "";
         let request = {
-          room_name: this.name,
-          room_sid: room.sid,
+          room_name: vm.name,
+          room_sid: vm.dataSid,
           room_status: "COMPLETED"
         }
 
         axios.post(`/api/video/history/save`, request)
         .then((response) =>{
           console.log(response);
-          window.addEventListener('unload', this.deleteChannel());
+          vm.currentStatus = "COMPLETED";
+          vm.userNotJoined = true;
+          vm.showMessages = false;
+          vm.videoRoom.disconnect();
+          var list = document.getElementById('my-video-chat-window');
+          list.removeChild(list.childNodes[0]);
+          console.log("CONSOLE LIST", list.childNodes[0]);
 
         })
         .catch((err)=>{
@@ -525,8 +557,10 @@ export default {
 
       axios.get("/api/video/"+_this.name)
       .then((response) =>{
-        console.log(response.data.success);
+        console.log("ROOM::::",response.data.data.room_sid);
         if(response.data.success){
+          _this.dataSid = response.data.data.room_sid;
+          _this.currentStatus = response.data.data.room_status;
           _this.username !== "" ? this.connectClientWithUsername() : null;
           _this.username !== _this.name ? this.joinAsParticipant() : null;
         }
