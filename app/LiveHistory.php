@@ -11,4 +11,9 @@ class LiveHistory extends Model
         'room_sid',
         'room_status',
     ];
+
+    public function user(){
+        return $this->belongsTo('App\User', 'room_name', 'username');
+    }
+
 }

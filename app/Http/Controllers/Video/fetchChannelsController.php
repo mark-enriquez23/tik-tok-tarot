@@ -9,7 +9,7 @@ use App\LiveHistory;
 class fetchChannelsController extends Controller
 {
     public function index($status){
-        $History = LiveHistory::where('room_status', $status)->get();
+        $History = LiveHistory::where('room_status', $status)->with('user', 'user.userDetails')->get();
 
         return response()->json([
             'success' => true,
