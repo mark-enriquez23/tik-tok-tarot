@@ -26,9 +26,7 @@ class DatabaseSeeder extends Seeder
         $this->call(PriceSeeder::class);
         $this->call(RoleSeeder::class);
         $this->call(UserSeeder::class);
-        $this->call(UploadTypeSeeder::class);
+        $this->call(VideoSeeder::class);
         $this->call(TestimonialSeeder::class);
-        $this->call(UploadSeeder::class);
-        $this->call(UploadReviewRatingSeeder::class);
     }
 }

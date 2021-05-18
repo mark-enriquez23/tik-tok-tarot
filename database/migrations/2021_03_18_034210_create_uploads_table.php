@@ -13,19 +13,7 @@ class CreateUploadsTable extends Migration
      */
     public function up()
     {
-        Schema::create('uploads', function (Blueprint $table) {
-            $table->id();
-            $table->bigInteger('user_id');
-            $table->string('thumbnail')->nullable();
-            $table->string('src')->nullable();
-            $table->bigInteger('upload_type_id');
-            $table->longText('content');
-            $table->tinyInteger('is_active')->default(0);
-            $table->enum('status', ['streaming', 'ended'])->nullable();
-            $table->tinyInteger('is_featured')->default(0);
-            $table->longText('metadata')->nullable();
-            $table->timestamps();
-        });
+
     }
 
     /**

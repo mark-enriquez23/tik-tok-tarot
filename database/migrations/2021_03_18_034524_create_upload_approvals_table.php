@@ -13,14 +13,7 @@ class CreateUploadApprovalsTable extends Migration
      */
     public function up()
     {
-        Schema::create('upload_approvals', function (Blueprint $table) {
-            $table->id();
-            $table->bigInteger('user_id');
-            $table->bigInteger('upload_id');
-            $table->tinyInteger('is_pending')->default(0);
-            $table->tinyInteger('is_approved')->default(0);
-            $table->timestamps();
-        });
+
     }
 
     /**

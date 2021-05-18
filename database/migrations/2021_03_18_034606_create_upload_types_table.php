@@ -13,11 +13,7 @@ class CreateUploadTypesTable extends Migration
      */
     public function up()
     {
-        Schema::create('upload_types', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->timestamps();
-        });
+
     }
 
     /**
