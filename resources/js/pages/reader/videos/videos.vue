@@ -8,81 +8,64 @@
     </div>
 
     <div class="mb-2">
-      <form @submit.prevent="updateProfile" @keydown="additionalForm.onKeydown($event)">
-        <div class="row">      
-          <div class="col-md-12">
-            <!-- Username -->
-            <div class="form-group col-md-10 mx-auto mx-auto  " hidden>
-              <input type="file" name="profile_photo" @change="previewFile"  ref="file" accept="video/*">
-              <has-error :form="additionalForm" field="profile_photo" />
-            </div>
-          </div>
-
-          <!-- Submit Button -->
-      
-        
-          <div class="form-group row  col-md-4 mt-3">
-            <div class="col-md-8 px-0 pr-lg-1 mx-auto"  >
-              <!-- Bac Button -->
-              <button type="button" class="btn btn-primary w-100" @click.prevent="clickFileInput">
-              <!-- <v-button :loading="form.busy"> -->
-              <fa icon="plus-circle" fixed-width /> Select Video File
-              </button>
-            </div>
-          </div>
-        </div>
-         
+      <form @submit.prevent="updateProfile" @keydown="videoForm.onKeydown($event)">
         <div class="row">
+
           <div class="col-md-6">   
-          
-            <!-- Password -->
-            <div class="form-group col-md-10 mx-auto mx-auto  ">
-              <label>{{ $t('password') }}</label>
-              <input  v-model="password" :class="{ 'is-invalid': additionalForm.errors.has('password') }" class="form-control" type="password" name="password" :readonly="!isPasswordUpdating">
-              <has-error :form="additionalForm" field="password" />
+            <div class="form-group col-md-12 mx-auto mx-auto  ">
+              <label>{{ $t('Title') }}</label>
+              <input  v-model="title" :class="{ 'is-invalid': videoForm.errors.has('title') }" class="form-control" type="text" name="title">
+              <has-error :form="videoForm" field="title" />
             </div>
 
+            <div class="form-group col-md-12 mt-3 mx-auto">
+              <label>{{ $t('Description') }}</label>
+              <textarea  v-model="description" :class="{ 'is-invalid': videoForm.errors.has('description') }" class="form-control" type="text" name="description"></textarea>
+              <has-error :form="videoForm" field="description" />
+            </div>
           </div>
         
           <div class="col-md-6">
-
-            <!-- Confirm Password -->
-            <div class="form-group col-md-10 mx-auto mx-auto  ">
-              <label>{{ $t('Confirm Password') }}</label>
-              <input  v-model="confirmPassword" :class="{ 'is-invalid': additionalForm.errors.has('confirm-password') }" class="form-control" type="password" name="confirmPassword" :readonly="!isPasswordUpdating">
-              <has-error :form="additionalForm" field="confirmPassword" />
+            <div class="form-group col-md-8 mx-auto mx-auto  " hidden>
+              <input type="file" name="file" @change="previewFile" ref="file" accept="video/*">
+                <has-error :form="videoForm" field="file" />
             </div>
-        
-          </div>
 
-       
-          <!-- Submit Button -->
-          <div class="form-group row  col-md-4 mx-auto mt-3" v-if="isPasswordUpdating">
-            <div class="col-md-6 px-0 pr-lg-1"  >
-              <!-- Bac Button -->
-              <button type="button" class="btn btn-danger w-100" @click.prevent="cancelPasswordUpdate()"  >
-              <!-- <v-button :loading="form.busy"> -->
-              Cancel
+            <div class="form-group col-md-6">
+              <label>{{ $t('Video File') }}</label>
+              <button type="button" class="btn btn-primary w-100" @click.prevent="clickFileInput">
+                <fa icon="plus-circle" fixed-width />Select Video File
               </button>
             </div>
 
-            <div class="col-md-6 px-0 pl-lg-1 ml-md-auto">
-              <v-button class="btn btn-primary w-100" >
-                Confirm
-              </v-button>
+            <div class="form-group col-md-12 mt-3">
+              <label>{{ $t('File Name') }}</label>
+              <input v-model="filename" class="form-control" type="text" name="filename" :disabled="true">
             </div>
           </div>
+        </div>    
+       
+        <div class="form-group row col-md-2 mx-auto mt-3">
+         
+            <v-button class="btn btn-primary w-100" >
+              Upload
+            </v-button>
+          
+        </div>
         
-      </div>
-    </form>
+        
+       
+         
+      
+      </form>
     </div> 
   </card>
 </template>
 
 <script>
+import Form from 'vform'
 import { mapGetters } from 'vuex'
 import axios from 'axios'
-import Clipboard from 'v-clipboard'
 
 export default {
   scrollToTop: false,
@@ -91,51 +74,42 @@ export default {
     return { title: this.$t('settings') }
   },
 
-  components: {
-    Clipboard
-  },
+  components: {  },
 
    computed: mapGetters({
     user: 'auth/user',
-    readers: 'admin-reader/readers',
   }),
 
   data: () => ({
-    referral_code:String
-  }),
+    videoForm: new Form ({
+      user_id:'',
+      title:'',
+      description:'',
+      file:''
+    }),
+    filename:''
+  }), 
 
- 
-
-  created () {
-     
-  },
+  created () {},
 
   methods: {
-      async refresh() {
-        console.log("button-called")
-        var referral = await axios.get("/api/user/refresh-code/"+this.user.id);
-        console.log(referral)
-        this.referral_code = referral.data.data.referral_code;
-        console.log(this.referral_code)
+    clickFileInput(){
+      this.isProfileUpdating = true
+      let fileInputElement = this.$refs.file;
+      fileInputElement.click();
     },
 
-    getValue(){
-      return 'http://tik-tok-tarot-master.test/register'+ this.referral_code;
+    previewFile(event){
+      this.videoForm.file = event.target.files[0];
+      this.filename = this.videoForm.file.name;
+      console.log(event.target.files[0])
+      console.log(event.target.files[0].name)
+      //this.profile_photo = URL.createObjectURL( this.additionalForm.profile_photo);
     },
-
-    copy(){
-      console.log("copied-text")
-      let value = 'https://testsite.tiktok-tarot.live/register?referral_code=' + this.referral_code;
-      this.$clipboard(value)
-    }
   },
 
   beforeMount(){
       this.$store.dispatch('auth/fetchUser');
-      console.log(this.user);
-      console.log(this.user.id);
-      this.referral_code = this.user.referral_code;
-      console.log(this.user.referral_code)
       if (!this.user){
         this.$router.push({ name: 'home' })
       }
