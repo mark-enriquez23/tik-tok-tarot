@@ -144,5 +144,13 @@ export default [
       title       : 'Readers'
     }
   },
+  {
+    path: '/reader/videos', name: 'reader.videos', component: page('reader/videos/videos.vue'),
+    meta          : {
+      requiresAuth: true,
+      role        : [2],
+      title       : 'Readers'
+    }
+  },
   { path: '*', component: page('errors/404.vue') }
 ]

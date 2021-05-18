@@ -49,6 +49,11 @@
                 Referrals
               </router-link>
 
+              <router-link :to="{ name: 'reader.videos' }" class="dropdown-item pl-3" v-if="user && roleId == 2">
+                <fa icon="photo-video" fixed-width />
+                Videos
+              </router-link>
+
               <div class="dropdown-divider" />
               <a href="#" class="dropdown-item pl-3" @click.prevent="logout">
                 <fa icon="sign-out-alt" fixed-width />
