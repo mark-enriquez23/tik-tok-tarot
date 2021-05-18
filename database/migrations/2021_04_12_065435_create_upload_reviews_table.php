@@ -13,16 +13,7 @@ class CreateUploadReviewsTable extends Migration
      */
     public function up()
     {
-        Schema::create('upload_reviews', function (Blueprint $table) {
-            $table->id();
-            $table->bigInteger('user_id');
-            $table->bigInteger('upload_id');
-            $table->string('comment')->nullable();
-            $table->string('rate');
-            $table->tinyInteger('status')->default(0);
-            $table->longText('metadata')->nullable();
-            $table->timestamps();
-        });
+
     }
 
     /**

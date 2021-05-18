@@ -13,14 +13,7 @@ class CreateUploadFilesTable extends Migration
      */
     public function up()
     {
-        Schema::create('upload_files', function (Blueprint $table) {
-            $table->id();
-            $table->string('title');
-            $table->string('type');
-            $table->string('url');
-            $table->bigInteger('upload_id');
-            $table->timestamps();
-        });
+
     }
 
     /**

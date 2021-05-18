@@ -13,9 +13,7 @@ class AddNameToUploadsTable extends Migration
      */
     public function up()
     {
-        Schema::table('uploads', function (Blueprint $table) {
-            $table->string('name')->nullable();
-        });
+
     }
 
     /**

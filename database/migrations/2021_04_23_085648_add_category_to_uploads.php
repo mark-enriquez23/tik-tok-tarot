@@ -13,9 +13,7 @@ class AddCategoryToUploads extends Migration
      */
     public function up()
     {
-        Schema::table('uploads', function (Blueprint $table) {
-            $table->string('category')->nullable();
-        });
+
     }
 
     /**
