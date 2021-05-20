@@ -49,6 +49,16 @@ Route::group(['middleware' => 'auth:api'], function () {
     //     Route::post('/viewer/leave', 'ViewerController@leaveFromViewing');
     // });
 
+    //FREEBIE API
+    Route::group(['prefix' => 'freebie'], function () {
+        Route::get('/', 'FreebieController@index');
+        Route::get('/{id}', 'FreebieController@getByID');
+        Route::get('/fetch/{status}', 'FreebieController@getByStatus');
+        Route::post('/create', 'FreebieController@create');
+        Route::patch('/update', 'FreebieController@update');
+        Route::delete('/delete/{id}', 'FreebieController@destroy');
+    });
+
     // Reader api
     Route::group(['prefix' => 'auth-reader'], function () {
         Route::post('/update-reader', 'ReaderController@save');
@@ -93,7 +103,6 @@ Route::group(['middleware' => 'guest:api'], function () {
 
     Route::post('oauth/{driver}', 'Auth\OAuthController@redirectToProvider');
     Route::get('oauth/{driver}/callback', 'Auth\OAuthController@handleProviderCallback')->name('oauth.callback');
-
 
 });
 

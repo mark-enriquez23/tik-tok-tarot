@@ -39,6 +39,7 @@ class UserDetailController extends Controller
         $data = $request->validate([
             'user_id' => 'required',
             'reader_bio' => 'required',
+            'expertise' => 'required',
             'address1' => 'required',
             'state' => 'required',
             'zip' => 'required',
@@ -57,7 +58,7 @@ class UserDetailController extends Controller
             $details->address2 = $request->address2;
         }
 
-        $details->expertise     = serialize($request->expertise);
+        $details->expertise     = $request->expertise;
         $details->user_id       = $data["user_id"];
         $details->reader_bio    = $data["reader_bio"];
         $details->address1      = $data["address1"];
