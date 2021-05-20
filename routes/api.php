@@ -67,6 +67,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     // Ratings
     Route::group(['prefix' => 'rating'], function () {
         Route::post('/save', 'RatingController@save');
+        Route::get('/fetch/{id}/{category}', 'RatingController@getById');
     });
 
     //VIDEO API

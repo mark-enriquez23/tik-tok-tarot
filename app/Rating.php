@@ -8,7 +8,8 @@ class Rating extends Model
 {
     protected $fillable = [
         'user_id',
-        'upload_id',
+        'reference_id',
+        'category',
         'description',
         'rate',
         'metadata',

@@ -13,17 +13,30 @@ class RatingController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @return json
-    * @return \Illuminate\Http\RedirectResponse
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function save(Request $request)
     {
         // scenario when the client rate the readers, client will earn points from rating the readers
         // id = id of rating
         // user_id = id of client the submitted ratings to readers
+        // CATEGORY ACCEPTS ONLY VIDEO / LIVE
+        $user = $request->user()->id;
+        $credit = Credit::where('user_id', $user)->first();
+
+        $data = $request->validate([
+            'reference_id' => 'required',
+            'category' => 'required',
+            'rate' => 'required',
+        ]);
+
+        $data['user_id'] = $user;
+
+
+        // fetch credits of client
 
         try {
-            $rating = Rating::where('id', $request->id)->first();
-            $data = $request->all();
+            $rating = Rating::where('id', $user)->first();
             // temporary points to be earned by reader
             $points = 1;
             $error = array();
@@ -32,8 +45,7 @@ class RatingController extends Controller
                 // update existing rate
                 $rating->update($data);
 
-                // fetch credits of client
-                $credit = Credit::where('user_id', $rating->user_id)->first();
+
 
                 if ($credit) {
                     $credit->earned_points = (int)$credit->earned_points + $points;
@@ -54,9 +66,8 @@ class RatingController extends Controller
             }else{
                 // Create Rating
                 $rating = Rating::create($data);
-
-                // fetch credits of client
-                $credit = Credit::where('user_id', $rating->user_id)->first();
+                // temporary points to be earned by reader
+                $points = 1;
 
                 if ($credit) {
                     $credit->earned_points = (int)$credit->earned_points + $points;
@@ -83,4 +94,36 @@ class RatingController extends Controller
             ]);
         }
     }
+
+    public function getById(int $id, string $category)
+    {
+        $rating = Rating::where('user_id', $id)->where('category', $category)->get();
+
+         //IF RATING IS NOT EXISTING RETURN 404
+         if($rating->isEmpty()){
+            return response()->json([
+                'success'   => false,
+                'data'      => []
+            ],404);
+        }
+
+        //CALCULATIONS
+        $numberOfRate    = $rating->count();
+        $totalRate       = 0;
+
+        //SUM OF RATES
+        foreach($rating as $rates){
+            $totalRate += $rates->rate;
+        }
+
+        //TOTAL
+        (float)$total = $totalRate / $numberOfRate;
+
+        return response()->json([
+            'success'       => true,
+            'data'          => $rating,
+            'totalRatings'  => $total
+        ]);
+    }
+
 }
