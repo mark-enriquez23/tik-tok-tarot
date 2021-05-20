@@ -2,59 +2,25 @@
   <card class="p-6 m-4">
     <div class="row">
       <div class="col-lg-8">
-        <h4 class="mb-3">Upload Video</h4>
+        <h4 class="mb-3">My Videos</h4>
         <p class="mb-5">Necessitatibus eius consequatur ex aliquid fuga eum quidem.</p>
       </div>
        <div class="col-md-4 text-right">
-        <button class="btn btn-danger btn-lg" @click="goBack">Back</button>
+        <button class="btn btn-primary btn-lg" @click="goBack"> <fa icon="plus-circle" fixed-width />Upload Video</button>
       </div>
     </div>
 
     <div class="mb-2">
-      <form @submit.prevent="uploadVideo" @keydown="videoForm.onKeydown($event)">
-        <div class="row">
-
-          <div class="col-md-6">   
-            <div class="form-group col-md-12 mx-auto mx-auto  ">
-              <label>{{ $t('Title') }}</label>
-              <input  v-model="videoForm.title" :class="{ 'is-invalid': videoForm.errors.has('title') }" class="form-control" type="text" name="title" required>
-              <has-error :form="videoForm" field="title" />
-            </div>
-
-            <div class="form-group col-md-12 mt-3 mx-auto">
-              <label>{{ $t('Description') }}</label>
-              <textarea  v-model="videoForm.description" :class="{ 'is-invalid': videoForm.errors.has('description') }" class="form-control" type="text" name="description" required></textarea>
-              <has-error :form="videoForm" field="description" />
-            </div>
+      <div class="row">
+        <div class="col-md-4 my-2" v-for="video in 8">
+          <div>
+            <img class="img-thumbnail p-0 mr-5" src="https://images.unsplash.com/photo-1535025639604-9a804c092faa?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6cb0ceb620f241feb2f859e273634393&auto=format&fit=crop&w=500&q=80">
+            <img class="reader-img m-3" align="left" src="http://tik-tok-tarot-master.test/images/profile.jpg">
+            <h6 class="mt-3"><b>Lorem ipsum dolor sit amet, consectetur adipiscing elit. </b></h6>
+            <p class="uploader-name mt-1">Sample Uploader</p>
           </div>
-        
-          <div class="col-md-6">
-            <div class="form-group col-md-8 mx-auto mx-auto" hidden>
-              <input type="file" name="file" @change="previewFile" ref="file" accept="video/*">
-                <has-error :form="videoForm" field="file" />
-            </div>
-
-            <div class="form-group col-md-6">
-              <label>{{ $t('Video File') }}</label>
-              <button type="button" class="btn btn-primary w-100" @click.prevent="clickFileInput">
-                <fa icon="plus-circle" fixed-width />Select Video File
-              </button>
-            </div>
-
-            <div class="form-group col-md-12 mt-3">
-              <label>{{ $t('File Name') }}</label>
-              <input v-model="filename" class="form-control" type="text" disabled>
-            </div>
-          </div>
-        </div>    
-       
-        <div class="form-group row col-md-2 mx-auto mt-3">
-          <v-button class="btn btn-primary w-100">
-            Upload
-          </v-button>
-        </div>
-
-      </form>
+        </div>   
+      </div>           
     </div> 
   </card>
 </template>
@@ -117,10 +83,19 @@ export default {
       formData.append("title", this.videoForm.title)
       const { data } = axios.post('/api/vlog/upload',formData).then(res=>{
         console.log(res)
+        if (res.data.success){
+          swalSuccess("Video successfully updated").then(() =>{
+               console.log("back")
+            })
+        }
       }).catch((e)=>{
-        console.log(e);
+        swalOops('A problem occurred')
       })
       }
+    },
+
+    goBack(){
+      console.log("Back")
     },
   },
 
@@ -135,14 +110,21 @@ export default {
 <style>
 .reader-img{
   border-radius: 50%;
+  height:45px;
+  width:45px;
+}
+
+.uploader-name{
+  font-size:15px;
 }
 .hired-tag{
   font-size: 12px;
   font-weight: bolder;
 }
 .img-thumbnail{
-  width: 50%;
-  height: 50%;
+  width: 100%;
+  height: 100%;
+  object-fit:cover;
 }
 .refresh{
   color:#007BFF;

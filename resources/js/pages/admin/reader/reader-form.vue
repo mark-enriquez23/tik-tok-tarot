@@ -541,7 +541,7 @@ export default {
         }
       })
       }else{
-         swalOops('Password not match')
+         swalOops('Passwords do not match')
       }      
     },
 
