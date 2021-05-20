@@ -36,9 +36,8 @@ class RatingController extends Controller
         // fetch credits of client
 
         try {
-            $rating = Rating::where('id', $user)->first();
+            $rating = Rating::where('user_id', $user)->where('reference_id', $data['reference_id'])->first();
             // temporary points to be earned by reader
-            $points = 1;
             $error = array();
 
             if ($rating) {
@@ -46,16 +45,16 @@ class RatingController extends Controller
                 $rating->update($data);
 
 
-
-                if ($credit) {
-                    $credit->earned_points = (int)$credit->earned_points + $points;
-                    $credit->save();
-                }else{
-                    // credit not found
-                    $error[] = [
-                        'message'   => 'credit not found'
-                    ];
-                }
+                //CREDIT WILL NOT EARN POINTS WHEN ITS ALREADY RATED
+                // if ($credit) {
+                //     $credit->earned_points = (int)$credit->earned_points + $points;
+                //     $credit->save();
+                // }else{
+                //     // credit not found
+                //     $error[] = [
+                //         'message'   => 'credit not found'
+                //     ];
+                // }
 
                 return response()->json([
                     'success'   => true,
