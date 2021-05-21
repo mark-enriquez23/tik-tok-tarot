@@ -1,7 +1,15 @@
 <template>
   <card class="py-3 m-4">
-    <h4 class="mb-3">My History</h4>
-    <p class="mb-5">Necessitatibus eius consequatur ex aliquid fuga eum quidem.</p>
+     <div class="row">
+      <div class="col-lg-8">
+        <h4 class="mb-3">My Videos</h4>
+        <p class="mb-5">Necessitatibus eius consequatur ex aliquid fuga eum quidem.</p>
+      </div>
+       <div class="col-md-4 text-right">
+        <button class="btn btn-danger btn-lg"> Clear History</button>
+      </div>
+    </div>
+
     <div class="mb-2">
       <div class="row">
         <div class="col-lg-12 mb-2">
