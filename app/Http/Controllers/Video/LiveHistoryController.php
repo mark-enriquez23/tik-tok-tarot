@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Video;
 
 use App\Http\Controllers\Controller;
 use App\LiveHistory;
+use App\Notifications\GoLive;
+use App\User;
 use Illuminate\Http\Request;
 
 class LiveHistoryController extends Controller
@@ -15,6 +17,8 @@ class LiveHistoryController extends Controller
      */
     public function index(Request $request)
     {
+
+        $users = User::where('role_id', 3)->where('is_active', 1)->get();
         $data = $request->validate([
             'room_name' => 'required',
             'room_sid' => 'required',
@@ -28,6 +32,13 @@ class LiveHistoryController extends Controller
                 'room_status' => $data["room_status"]
             ],
         );
+
+        if($data['room_status'] === 'ON_GOING'){
+            foreach($users as $user){
+               $user->notify(new GoLive($request->user()));
+            }
+        }
+
 
         return response()->json([
             'success' => true,

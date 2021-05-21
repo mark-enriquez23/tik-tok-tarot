@@ -25,6 +25,34 @@ class UserController extends Controller
         return response()->json($result);
     }
 
+    public function getAllNotifications(Request $request){
+        $user = $request->user()->notifications;
+
+        return response()->json([
+            'success'       => true,
+            'notifications' => $user,
+            'total_count'   => $user->count()
+        ]);
+    }
+
+    public function getUnreadNotifications(Request $request){
+        $user = $request->user()->unreadNotifications;
+
+        return response()->json([
+            'success'       => true,
+            'notifications' => $user,
+            'unread_count'  => $user->count()
+        ]);
+    }
+
+    public function markAsReadNotifications(Request $request){
+        $user = $request->user()->unreadNotifications->markAsRead();
+
+        return response()->json([
+            'success'       => true,
+        ]);
+    }
+
     /**
      * Validate username.
      *

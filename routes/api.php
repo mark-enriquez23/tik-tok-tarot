@@ -8,6 +8,9 @@ Route::group(['middleware' => 'auth:api'], function () {
 
     //user auth route
     Route::get('/user', 'Auth\UserController@current');
+    Route::get('/user/notifications', 'Auth\UserController@getAllNotifications');
+    Route::get('/user/notifications/unread', 'Auth\UserController@getUnreadNotifications');
+    Route::get('/user/notifications/view', 'Auth\UserController@markAsReadNotifications');
     Route::get('/user/refresh-code/{id}','Auth\UserController@refreshInvitationCode');
     Route::get('/user/referral/{id}', 'Auth\InvitationController@index');
     Route::post('/user/details', 'UserDetailController@store');

@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Notifications\NewVlog;
 use App\User;
 use App\Video;
 use App\UserHistory;
@@ -77,6 +79,12 @@ class VideoController extends Controller
         if($video->save()){
             //move file to path
             $original_file->move(public_path().$basePath, $fileName);
+
+            $users = User::where('role_id', 3)->where('is_active', 1)->get();
+
+            foreach($users as $user){
+                $user->notify(new NewVlog($request->user(), $video));
+             }
         }else{
             //return 500 error if did not save
             return response()->json([
