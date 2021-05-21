@@ -4,7 +4,7 @@
     <p class="mb-5">Necessitatibus eius consequatur ex aliquid fuga eum quidem.</p>
     <div class="mb-2">
       <div class="row">
-        <div class="col-lg-8 mb-2">
+        <div class="col-lg-12 mb-2">
           <table class="table">
             <tbody>
               <tr class="mb-2" v-for="history in 5">
@@ -13,11 +13,16 @@
                     <img class="img-thumbnail p-0 mr-5" align="left" src="https://images.unsplash.com/photo-1535025639604-9a804c092faa?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6cb0ceb620f241feb2f859e273634393&auto=format&fit=crop&w=500&q=80">
                   </div>
                   <div>
-                    <h3>Lorem ipsum dolor sit amet, consectetur adipiscing elit. </h3>
-                    <h6 class="mt-1">Sample Uploader</h6>
-                    <p class="mt-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi ultrices diam et nibh pellentesque, nec facilisis odio dapibus. Sed mi erat, pretium eget feugiat vel, </p>
+                    <h4>Lorem ipsum dolor sit amet, consectetur adipiscing elit. </h4>
+                    <div>
+                      <img class="reader-img mx-2" align="left" src="http://tik-tok-tarot-master.test/images/profile.jpg">
+                      <p class="mt-3">Sample Uploader</p>
+                    </div>
+                    </br>
+                    <p class="mt-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi ultrices diam et nibh pellentesque, nec facilisis odio dapibus. Sed mi erat, pretium eget feugiat vel, </p>
                   </div>
                 </td>
+                <td><fa icon="times-circle" fixed-width /></td>
               </tr>
             </tbody>
           </table>
@@ -31,7 +36,10 @@
 </template>
 
 <script>
+import Form from 'vform'
 import { mapGetters } from 'vuex'
+import axios from 'axios'
+import { swalOops, swalSuccess } from "~/helpers"
 
 export default {
   scrollToTop: false,
@@ -44,6 +52,7 @@ export default {
   },
 
   data: () => ({
+    videos:[]
   }),
 
   computed: mapGetters({
@@ -52,17 +61,20 @@ export default {
   }),
 
   created () {
+    this.fetchHistory();
   },
 
   methods: {
-      view(id){
-        this.$router.push({
-            name: "admin.reader-form",
-            params: {
-                id: id
-            }
-        });
-      }
+      fetchHistory(){
+        axios.get('/api/user-history/'+ this.user.id).then(res=>{
+        this.videos = res.data;
+        console.log(res);
+        console.log(this.videos);
+       
+      }).catch((e)=>{
+        swalOops('A problem occurred');
+      })
+    },
   },
 
   beforeMount(){
@@ -78,13 +90,16 @@ export default {
 <style>
 .reader-img{
   border-radius: 50%;
+  height:35px;
+  width:35px;
 }
 .hired-tag{
   font-size: 12px;
   font-weight: bolder;
 }
 .img-thumbnail{
-  width: 50%;
-  height: 50%;
+  width: 35%;
+  height: 35%;
+  object-fit:cover;
 }
 </style>

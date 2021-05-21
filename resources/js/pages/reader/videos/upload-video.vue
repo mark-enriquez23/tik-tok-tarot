@@ -129,7 +129,9 @@ export default {
     },
 
     goBack(){
-      console.log("Back")
+       this.$router.push({
+        name: "reader.videos",
+      });
     },
   },
 
