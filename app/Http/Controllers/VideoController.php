@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\User;
 use App\Video;
+use App\UserHistory;
 use Illuminate\Http\Request;
 
 class VideoController extends Controller
@@ -135,6 +136,9 @@ class VideoController extends Controller
         $video = Video::find($id);
 
         if($video->delete()){
+
+            $userhistory = UserHistory::where('video_id', $id)->delete();
+
             return response()->json([
                 'success'   => true,
                 'message'   => "ID " . $id . " has been deleted."

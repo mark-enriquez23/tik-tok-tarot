@@ -35,20 +35,6 @@ Route::group(['middleware' => 'auth:api'], function () {
         Route::post('/verify-user', 'PhoneVerificationController@verifyUser');
     });
 
-    // Upload api
-    // Route::group(['prefix' => 'upload'], function () {
-    //     Route::post('/upload-video', 'UploadController@uploadVideo');
-    //     Route::post('/save-review', 'UploadController@saveReview');
-    //     Route::get('/pending', 'UploadController@fetchPendingUploads');
-    //     Route::get('/approval-by-id/{id}', 'UploadController@fetchPendingUploadById');
-    //     Route::get('/approve/{id}', 'UploadController@approveUpload');
-    //     Route::get('/disapprove/{id}', 'UploadController@disApproveUpload');
-
-    //     // viewer
-    //     Route::post('/viewer/start', 'ViewerController@startFromViewing');
-    //     Route::post('/viewer/leave', 'ViewerController@leaveFromViewing');
-    // });
-
     //FREEBIE API
     Route::group(['prefix' => 'freebie'], function () {
         Route::get('/', 'FreebieController@index');
@@ -57,6 +43,15 @@ Route::group(['middleware' => 'auth:api'], function () {
         Route::post('/create', 'FreebieController@create');
         Route::patch('/update', 'FreebieController@update');
         Route::delete('/delete/{id}', 'FreebieController@destroy');
+    });
+
+    // USER HISTORY
+    Route::group(['prefix' => 'user-history'], function () {
+       Route::get('/', 'UserHistoryController@index');
+       Route::get('/{id}', 'UserHistoryController@getByID');
+       Route::post('/', 'UserHistoryController@create');
+       Route::delete('/{id}', 'UserHistoryController@delete');
+       Route::delete('/clear/{id}', 'UserHistoryController@deleteAllByUser');
     });
 
     // Reader api
@@ -168,15 +163,6 @@ Route::group(['prefix' => 'vlog'], function (){
     Route::get('/all', 'VideoController@index');
     Route::get('/{status}/{featured?}', 'VideoController@fetchByStatus');
 });
-
-// // Upload api
-// Route::group(['prefix' => 'upload'], function () {
-//     Route::get('/featured-vlogs', 'UploadController@fetchFeaturedVlogs'); // return all featured vlogs
-//     Route::get('/latest-vlogs', 'UploadController@fetchLatestVlog'); // return the latest vlog descending order and limit by 7
-//     Route::get('/all-vlogs', 'UploadController@fetchAllVlogs'); // return all vlogs
-//     Route::post('/save', 'UploadController@save');
-//     Route::get('/upload-review/{uploadId}', 'UploadController@uploadReview'); // return uploads reviews
-// });
 
 // Contact us api
 Route::group(['prefix' => 'contact-us'], function () {
