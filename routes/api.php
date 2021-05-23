@@ -85,6 +85,11 @@ Route::group(['middleware' => 'auth:api'], function () {
         Route::delete('/delete/{id}', 'VideoController@destroy');
     });
 
+
+    // LIVE API
+    Route::post('video/history/save', 'Video\LiveHistoryController@index');
+    Route::post('video/history/update', 'Video\LiveHistoryController@update');
+
 });
 
 ########### * Guest Routes *###########
@@ -118,8 +123,7 @@ Route::get('video/{room}', 'Video\LiveHistoryController@searchByRoomName');
 Route::get('video/done/{sid}', 'Video\AccessTokenController@streamingDone');
 Route::get('video/fetch/{status}', 'Video\fetchChannelsController@index');
 Route::post('video/chat', 'Video\AccessTokenController@chat_token');
-Route::post('video/history/save', 'Video\LiveHistoryController@index');
-Route::post('video/history/update', 'Video\LiveHistoryController@update');
+
 Route::post('video/history/chat', 'Video\LiveHistoryController@addChatObjByRoomName');
 
 // UserSecurityQuestion api
