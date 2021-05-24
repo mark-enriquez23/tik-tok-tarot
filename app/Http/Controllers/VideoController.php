@@ -21,6 +21,28 @@ class VideoController extends Controller
 
         return response()->json([
             'success'   => true,
+            'total'     => $data->count(),
+            'data'      => $data,
+        ]);
+    }
+
+    public function showByID($id){
+
+        $data = Video::where('id', $id)->with('user')->get();
+
+        return response()->json([
+            'success'   => true,
+            'data'      => $data,
+        ]);
+    }
+
+    public function showByUser($uid){
+
+        $data = Video::where('user_id', $uid)->with('user')->get();
+
+        return response()->json([
+            'success'   => true,
+            'total'     => $data->count(),
             'data'      => $data,
         ]);
     }
@@ -32,6 +54,7 @@ class VideoController extends Controller
 
         return response()->json([
             'success'   => true,
+            'total'     => $data->count(),
             'data'      => $data,
         ]);
     }

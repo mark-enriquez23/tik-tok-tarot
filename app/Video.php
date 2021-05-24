@@ -14,9 +14,12 @@ class Video extends Model
         return $this->belongsTo('App\User');
     }
 
-    public static function GetAllVideos($status, $featured){
-        $featParams = !$featured ? 0 : $featured;
+    public function suggestions(){
+        return $this->hasMany('App\Suggestion');
+    }
 
+    public static function GetAllVideos($status, $featured = null){
+        $featParams = !$featured? 0 : $featured;
         return static::where('is_approved', $status)->where('is_featured', $featParams)->with('user');
     }
 }
