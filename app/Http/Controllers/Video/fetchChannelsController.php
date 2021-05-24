@@ -13,6 +13,7 @@ class fetchChannelsController extends Controller
 
         return response()->json([
             'success' => true,
+            'total' => $History->count(),
             'data' => $History
         ]);
 

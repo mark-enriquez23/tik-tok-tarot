@@ -118,13 +118,26 @@ Route::group(['prefix' => 'security-question'], function () {
 });
 
 //VIDEO CHAT AUTH
-Route::get('video/access_token/{room}', 'Video\AccessTokenController@generate_token');
-Route::get('video/{room}', 'Video\LiveHistoryController@searchByRoomName');
-Route::get('video/done/{sid}', 'Video\AccessTokenController@streamingDone');
-Route::get('video/fetch/{status}', 'Video\fetchChannelsController@index');
-Route::post('video/chat', 'Video\AccessTokenController@chat_token');
+Route::group(['prefix' => 'video'], function (){
+    Route::get('/access_token/{room}', 'Video\AccessTokenController@generate_token');
+    Route::get('/{room}', 'Video\LiveHistoryController@searchByRoomName');
+    Route::get('/done/{sid}', 'Video\AccessTokenController@streamingDone');
+    Route::get('/fetch/{status}', 'Video\fetchChannelsController@index');
+    Route::post('/chat', 'Video\AccessTokenController@chat_token');
 
-Route::post('video/history/chat', 'Video\LiveHistoryController@addChatObjByRoomName');
+    Route::post('/history/chat', 'Video\LiveHistoryController@addChatObjByRoomName');
+});
+
+// Suggestions
+Route::group(['prefix' => 'suggestions'], function () {
+    Route::get('/', 'SuggestionController@index');
+    Route::get('/{id}', 'SuggestionController@showByID');
+    Route::get('/video/{id}', 'SuggestionController@showByVideoID');
+    Route::get('/user/{id}', 'SuggestionController@showByUserID');
+    Route::post('/create', 'SuggestionController@create');
+    Route::patch('/update', 'SuggestionController@update');
+    Route::delete('/delete/{id}', 'SuggestionController@delete');
+});
 
 // UserSecurityQuestion api
 Route::group(['prefix' => 'user-security-question'], function () {
@@ -167,8 +180,10 @@ Route::post('/faq/save', 'FaqController@save');
 
 // Video API
 Route::group(['prefix' => 'vlog'], function (){
-    Route::get('/all', 'VideoController@index');
-    Route::get('/{status}/{featured?}', 'VideoController@fetchByStatus');
+    Route::get('/', 'VideoController@index');
+    Route::get('/{id}', 'VideoController@showByID');
+    Route::get('/user/{uid}', 'VideoController@showByUser');
+    Route::get('/status/{status}/{featured?}', 'VideoController@fetchByStatus');
 });
 
 // Contact us api
