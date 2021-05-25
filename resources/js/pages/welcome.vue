@@ -453,7 +453,7 @@ export default {
     },
 
     async fetchTotalSessions() {
-        this.totalSession = await axios.get("/api/homepage/live-sessions");
+        this.totalSession = await axios.get("/api/video/fetch/ongoing");
         // if (!this.totalSession.data.success) {
         //   Swal.fire({
         //   title: 'Fetching Total Session Failed',
@@ -464,7 +464,7 @@ export default {
     },
 
     async fetchTotalVlogs() {
-        this.totalVlogs = await axios.get("/api/homepage/vlogs");
+        this.totalVlogs = await axios.get("/api/vlog/status/approved/1");
         // if (!this.totalVlogs.data.success) {
         //   Swal.fire({
         //   title: 'Fetching Total Vlogs Failed',
