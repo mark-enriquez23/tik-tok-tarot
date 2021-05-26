@@ -53,6 +53,16 @@ export default [
       title       : 'Readers'
     }
   },
+
+  {
+    path: '/admin/freebie', name: 'admin.readers', component: page('admin/freebie/'),
+    meta          : {
+      requiresAuth: true,
+      role        : [1],
+      title       : 'Freebie'
+    }
+  },
+
   {
     path: '/admin/reader-form/:id', name: 'admin.reader-form', component: page('admin/reader/reader-form.vue'),
     meta          : {

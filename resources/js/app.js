@@ -10,6 +10,7 @@ import VuePhoneNumberInput from 'vue-phone-number-input';
 import birthDatepicker from 'vue-birth-datepicker';
 import Clipboard from 'v-clipboard'
 import ImageUploader from 'vue-image-upload-resize'
+import { BootstrapVue, IconsPlugin } from 'bootstrap-vue';
 
 import 'vue-birth-datepicker/dist/vueBirthDatepicker.css';
 import 'vue-phone-number-input/dist/vue-phone-number-input.css';
@@ -17,11 +18,15 @@ import 'vue-phone-number-input/dist/vue-phone-number-input.css';
 import '~/plugins'
 import '~/components'
 import 'vue-cool-lightbox/dist/vue-cool-lightbox.min.css'
+import './sass/app.scss'
 
 Vue.use(ToggleButton)
+Vue.use(BootstrapVue)
+Vue.use(IconsPlugin)
 Vue.use(Clipboard)
 Vue.component('vue-phone-number-input', VuePhoneNumberInput);
 Vue.use(ImageUploader);
+
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
