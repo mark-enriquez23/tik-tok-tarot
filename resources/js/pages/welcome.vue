@@ -402,7 +402,7 @@ export default {
     },
 
     async fetchVlogs() {
-        var vlogs = await axios.get("/api/upload/featured-vlogs");
+        var vlogs = await axios.get("/api/vlog/approved");
         this.vlogs = vlogs.data;
         // console.log(this.vlogs);
         // if (!this.vlogs.success) {

@@ -151,10 +151,7 @@ export default {
   font-size: 12px;
   font-weight: bolder;
 }
-.img-thumbnail{
-  width: 50%;
-  height: 50%;
-}
+
 .refresh{
   color:#007BFF;
 }

@@ -42,7 +42,7 @@ export const actions = {
 
 	async fetchApprovalUploads({ commit }) {
 		try {
-			const { data } = await axios.get("/api/upload/pending");
+			const { data } = await axios.get("/api/vlog/pending");
 			commit(types.FETCH_APPROVAL_UPLOAD, { uploads: data.data });
 		} catch (e) {
 			return e;

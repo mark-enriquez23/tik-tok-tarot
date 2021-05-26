@@ -14,7 +14,9 @@
       <div class="row">
         <div class="col-md-4 my-2" v-for="video in videos.data">
           <div>
-            <img class="img-thumbnail p-0 mr-5" src="https://images.unsplash.com/photo-1535025639604-9a804c092faa?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6cb0ceb620f241feb2f859e273634393&auto=format&fit=crop&w=500&q=80">
+            <div>
+            <img class="img-thumbnail p-0" src="https://images.unsplash.com/photo-1535025639604-9a804c092faa?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6cb0ceb620f241feb2f859e273634393&auto=format&fit=crop&w=500&q=80">
+            </div> 
             <img class="reader-img m-3" align="left" src="http://tik-tok-tarot-master.test/images/profile.jpg">
             <h6 class="mt-3"><b>{{video.title}}</b></h6>
             <p class="uploader-name mt-1">{{video.user.username}}</p>
@@ -53,8 +55,10 @@ export default {
   },
 
   methods: {
+    
     fetchVideos(){
-        axios.get('/api/vlog/all').then(res=>{
+        console.log(this.user.id);
+        axios.get('/api/vlog/user/' + this.user.id ).then(res=>{
         this.videos = res.data;
         console.log(res);
         console.log(this.videos);
