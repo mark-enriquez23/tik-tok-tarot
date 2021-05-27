@@ -55,7 +55,7 @@ export default [
   },
 
   {
-    path: '/admin/freebie', name: 'admin.readers', component: page('admin/freebie/'),
+    path: '/admin/freebie', name: 'admin.freebie', component: page('admin/freebie/'),
     meta          : {
       requiresAuth: true,
       role        : [1],
@@ -124,6 +124,14 @@ export default [
   },
   {
     path: '/client/history', name: 'client.history', component: page('client/history/history-list.vue'),
+    meta          : {
+      requiresAuth: true,
+      role        : [3],
+      title       : 'Clients'
+    }
+  },
+  {
+    path: '/client/credit', name: 'client.credit', component: page('client/credit/'),
     meta          : {
       requiresAuth: true,
       role        : [3],
