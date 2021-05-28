@@ -178,7 +178,7 @@
       </div>
 
       <!-- Reader Navbar -->
-      <div id="navbarToggler" class="collapse navbar-collapse" v-if="roleId == 2">
+      <!-- <div id="navbarToggler" class="collapse navbar-collapse" v-if="roleId == 2">
         <ul class="navbar-nav ml-auto ">
             <li class="nav-item">
               <router-link :to="{ name: 'home' }" class="nav-link" active-class="active">
@@ -186,7 +186,7 @@
               </router-link>
             </li>
         </ul>
-      </div>
+      </div> -->
     </div>
   </nav>
 </div>

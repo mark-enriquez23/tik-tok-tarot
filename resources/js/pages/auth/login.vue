@@ -133,7 +133,7 @@ export default {
           break;
 
         case 2:
-           this.$router.push({ name: 'home' });
+           this.$router.push({ name: 'reader.videos' });
            break
 
         case 3:

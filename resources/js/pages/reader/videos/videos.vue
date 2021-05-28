@@ -5,14 +5,17 @@
         <h4 class="mb-3">My Videos</h4>
         <p class="mb-5">Necessitatibus eius consequatur ex aliquid fuga eum quidem.</p>
       </div>
-       <div class="col-md-4 text-right">
-        <button class="btn btn-primary btn-lg" @click="uploadVideo"> <fa icon="plus-circle" fixed-width />Upload Video</button>
+       <div class="col-md-2 text-right">
+        <button class="btn btn-danger btn-lg" @click="goLive"> <fa icon="podcast" fixed-width />Go Live</button>
+      </div>
+      <div class="col-md-2 text-right">
+        <button class="btn btn-danger btn-lg" @click="uploadVideo"> <fa icon="plus-circle" fixed-width />Upload Video</button>
       </div>
     </div>
 
     <div class="mb-2">
       <div class="row">
-        <div class="col-md-4 my-2" v-for="video in videos.data">
+        <div class="col-md-4 my-2" v-for="video in videos.data"  :key="video">
           <div>
             <div>
             <img class="img-thumbnail p-0" src="https://images.unsplash.com/photo-1535025639604-9a804c092faa?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6cb0ceb620f241feb2f859e273634393&auto=format&fit=crop&w=500&q=80">
@@ -71,6 +74,15 @@ export default {
     uploadVideo(){
       this.$router.push({
         name: "reader.upload-video",
+      });
+    },
+
+    goLive(){
+      this.$router.push({
+        name: "reader.go-live",
+        params: {
+          roomName:this.user.username
+        }
       });
     },
   },
