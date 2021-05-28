@@ -10,4 +10,7 @@ class Redeem extends Model
         'freebie_id',
         'user_id'
     ];
+
+    protected $table = 'redeem';
+
 }

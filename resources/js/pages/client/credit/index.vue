@@ -42,11 +42,13 @@
           <b-row>
             <b-col cols="3" v-for="freebie in freebies" :key="freebie.id">
             <card-image
+              :id="freebie.id"
               :title="freebie.freebie_name"
               :img="'/images/'+freebie.photo"
               :alt="freebie.freebie_name + 'picture'"
               :description="freebie.description"
               :points="freebie.points"
+              @clicked="redeemSubmit"
             />
             </b-col>
           </b-row>
@@ -57,10 +59,11 @@
 </template>
 
 <script>
-import CardNumber from "../../../components/CardNumber";
-import CardImage from "../../../components/CardImage";
-import axios from 'axios';
-import { mapGetters } from 'vuex';
+import CardNumber       from "../../../components/CardNumber";
+import CardImage        from "../../../components/CardImage";
+import { swalOops, swalSuccess }  from "../../../helpers/index";
+import { mapGetters }   from 'vuex';
+import axios            from 'axios';
 
 export default {
   components:{
@@ -75,22 +78,32 @@ export default {
 
   computed: mapGetters({
     user: 'auth/user',
-    readers: 'admin-reader/readers',
   }),
 
   methods:{
 
+    redeemSubmit: function(id){
+      axios.post(`/api/redeem`, {
+        freebie_id: id
+      }).then(()=> swalSuccess("Redeem successful")
+      ).catch((err)=> swalOops("Not enough points")
+      ).then(()=> this.fetchAll());
+    },
+
+    fetchAll:function(){
+      axios.get(`/api/freebie`).then((response)=>{
+        this.freebies = response.data.data;
+      });
+
+      axios.get(`/api/credit/list-by-id/${this.user.id}`).then((response)=>{
+        this.currentCredit = response.data.data;
+      });
+    }
+
   },
 
   beforeMount(){
-    axios.get(`/api/freebie`).then((response)=>{
-      this.freebies = response.data.data;
-    });
-
-    axios.get(`/api/credit/list-by-id/${this.user.id}`).then((response)=>{
-      this.currentCredit = response.data.data;
-    });
-
+    this.fetchAll();
   }
 
 }
