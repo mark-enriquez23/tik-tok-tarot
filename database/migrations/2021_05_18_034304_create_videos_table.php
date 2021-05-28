@@ -19,6 +19,7 @@ class CreateVideosTable extends Migration
             $table->string('title');
             $table->string('description');
             $table->string('file_name');
+            $table->string('thumbnail');
             $table->tinyInteger('is_featured')->default(0);
             $table->string('is_approved')->default('PENDING');
             $table->timestamps();
