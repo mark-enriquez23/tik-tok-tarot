@@ -48,6 +48,14 @@ Route::group(['middleware' => 'auth:api'], function () {
         Route::delete('/delete/{id}', 'FreebieController@destroy');
     });
 
+    //REDEEM API
+    Route::group(['prefix' => 'redeem'], function() {
+        Route::get('/', 'RedeemController@index');
+        Route::get('/user/{id}', 'RedeemController@fetchByUserID');
+        Route::get('/freebie/{id}', 'RedeemController@fetchByFreebieID');
+        Route::post('/', 'RedeemController@save');
+    });
+
     // USER HISTORY
     Route::group(['prefix' => 'user-history'], function () {
        Route::get('/', 'UserHistoryController@index');
