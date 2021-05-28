@@ -2,21 +2,21 @@
     <div class="p-5 text-center">
 
         <h1 class="text-2xl mb-4">Laravel Video Chat</h1>
-        <!-- video chat div here -->
-        <div class="grid grid-flow-row grid-cols-3 grid-rows-3 gap-4 bg-black">
-            <div id="my-video-chat-window">
-              <button @click='getVideoToken(); connectClientWithUsername();' v-if="currentStatus!=='ON_GOING' && name === username"> Start Broadcasting </button>
-            </div>
-        </div>
-
-
+      
 
         <!-- chat box starts here -->
         <div class="container">
           <div class="row justify-content-center">
-              <div class="col-md-10">
-                  <div class="card">
+              <div class="col-md-12">
+                
                       <div class="row">
+                          <div class="col-md-7">
+                            <!-- video chat div here -->
+        <div class="video grid grid-flow-row grid-cols-3 grid-rows-3 gap-4 bg-black">
+            <div id="my-video-chat-window">
+              <button @click='getVideoToken(); connectClientWithUsername();' v-if="currentStatus!=='ON_GOING' && name === username"> Start Broadcasting </button>
+            </div>
+        </div>
                           <!-- <div class="col-md-4 channel-list" v-show="connected">
                               <ul>
                                   <li v-for="(channel) in tc.channelArray" :key="channel.id" ref="channelList" :data-sid="channel.sid">
@@ -28,15 +28,17 @@
                                   <input v-if="showAddChannelInput" class="form-control" type="text" v-model="newChannel" v-on:keyup.13="handleNewChannelInputKeypress" placeholder="New Channel">
                               </ul>
                           </div> -->
-                          <div class="col-md-8">
-                              <div class="card-body">
+                          </div>
+                          <div class="col-md-5">
+                              <div class="card">
+                              <div class="card-body p-0">
                                 <div class="message-box">
-                                    <div class="message-div" v-show="showMessages">
+                                    <div class="message-div p-4" v-show="showMessages">
                                     <div v-for="message in tc.messagesArray" :key="message.id" class="row msg">
                                         <div class="media-body">
-                                            <small class="pull-right time"><i class="fa fa-clock-o"></i>{{moment(message.timestamp).fromNow()}}</small>
-                                            <h5 class="media-heading">{{message.author}}</h5>
-                                            <small class="col-sm-11">{{message.body}}</small>
+                                            <p class="message-author">{{message.author}}</p>
+                                            <br>
+                                            <p class="message-body">{{message.body}}</p>
                                         </div>
                                     </div>
                                     </div>
@@ -45,12 +47,15 @@
                                 <!-- <input v-if="userNotJoined" class="form-control" type="text" v-model="username" v-on:keyup.13="connectClientWithUsername" placeholder="Your username"> -->
                                 <input v-if="!userNotJoined" class="form-control" type="text" v-model="message" v-on:keyup.13="handleInputTextKeypress" placeholder="Your message">
                             </div>
+                              </div>
                           </div>
                       </div>
-                  </div>
+                  
               </div>
           </div>
         </div>
+        <br>
+        <br>
         <div>
             <button @click='stopBroadcasting();' v-if="currentStatus ==='ON_GOING' && name === tc.username"> Stop Broadcasting </button>
         </div>
@@ -574,3 +579,48 @@ export default {
     }
 }
 </script>
+<style>
+.video{
+    float:left;
+}
+
+.message-box{
+    height: 420px;
+}
+
+.message-div{
+    height: 420px;
+    width:100%;
+     overflow-y: scroll;
+}
+
+.card-body{
+    height: 450px;
+}
+
+.message-author{
+    font-size: 12px;
+    color:gray;
+    float:right;
+    margin-bottom: 0px;
+}
+
+.message-body{
+    font-size: 14px;
+    color:white;
+    background-color: #373E4C;
+    border-radius: 10px;
+    float:right;
+    padding: 5px 15px;
+    text-align:left;
+    margin-bottom: 20px;
+}
+
+.message-time{
+    font-size: 12px;
+    color:gray;
+    float:right;
+    margin-bottom: 20px;
+}
+
+</style>
