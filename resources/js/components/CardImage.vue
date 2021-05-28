@@ -8,7 +8,7 @@
     <b-card-text>
       <b> POINTS: {{points}} </b>
     </b-card-text>
-    <b-button size="sm" variant="secondary"> Redeem </b-button>
+    <b-button size="sm" variant="secondary" @click="$emit('clicked', id)"> Redeem </b-button>
   </b-card>
 </template>
 
@@ -18,10 +18,11 @@ export default {
 
   props: {
     title       : String,
-    img        : String,
+    img         : String,
     alt         : String,
     description : String,
-    points      : Number
-  }
+    points      : Number,
+    id          : Number
+  },
 }
 </script>
