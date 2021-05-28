@@ -59,6 +59,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     // USER HISTORY
     Route::group(['prefix' => 'user-history'], function () {
        Route::get('/', 'UserHistoryController@index');
+       Route::get('/me', 'UserHistoryController@getByCurrent');
        Route::get('/{id}', 'UserHistoryController@getByID');
        Route::post('/', 'UserHistoryController@create');
        Route::delete('/{id}', 'UserHistoryController@delete');

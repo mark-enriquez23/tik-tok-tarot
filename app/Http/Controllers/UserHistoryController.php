@@ -32,6 +32,16 @@ class UserHistoryController extends Controller
         ]);
     }
 
+    public function getByCurrent(Request $request)
+    {
+        $userhistory = UserHistory::where('user_id', $request->user()->id)->orderby('created_at', 'asc')->with('user')->with('video')->get();
+
+        return response()->json([
+            'success'   => true,
+            'data'      => $userhistory
+        ]);
+    }
+
     public function create(Request $request){
 
         $data = $request->validate([

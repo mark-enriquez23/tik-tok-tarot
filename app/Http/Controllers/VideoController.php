@@ -7,6 +7,7 @@ use App\User;
 use App\Video;
 use App\UserHistory;
 use Illuminate\Http\Request;
+use VideoThumbnail;
 
 class VideoController extends Controller
 {
@@ -66,7 +67,6 @@ class VideoController extends Controller
      */
     public function create(Request $request)
     {
-
         // Validations
         $data = $request->validate([
             'title' => 'required',
@@ -82,14 +82,20 @@ class VideoController extends Controller
         // Upload file
         $original_file  = $data['file'];
         $basePath       = "/uploads/vlog/";
+        $thumbnails     = "/uploads/vlog/thumbnails/";
         // $file           = FileRequest::file('file');
 
         // final file path
         $fileName = 'VLOG_' . $time->timestamp . '.' . $original_file->getClientOriginalExtension();
+        $thumbnailName = 'thumbnail_' . $time->timestamp . '.jpg';
 
         // Check if dir exists
         if(!file_exists(public_path() . $basePath)) {
             mkdir(public_path() . $basePath, 0777, true);
+        }
+
+        if(!file_exists(public_path() . $thumbnails)) {
+            mkdir(public_path() . $thumbnails, 0777, true);
         }
 
         // Save to db first
@@ -97,14 +103,16 @@ class VideoController extends Controller
         $video->title           = $data['title'];
         $video->description     = $data['description'];
         $video->file_name       = $fileName;
-
+        $video->thumbnail       = $thumbnailName;
+        
         // If details was save
         if($video->save()){
-            //move file to path
-            $original_file->move(public_path().$basePath, $fileName);
-
             $users = User::where('role_id', 3)->where('is_active', 1)->get();
-
+            
+            $original_file->move(public_path().$basePath, $fileName);
+            
+            VideoThumbnail::createThumbnail(public_path($basePath . $fileName) , public_path($thumbnails), $thumbnailName, 2);
+            
             foreach($users as $user){
                 $user->notify(new NewVlog($request->user(), $video));
              }

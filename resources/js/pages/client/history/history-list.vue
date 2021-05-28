@@ -2,41 +2,36 @@
   <card class="py-3 m-4">
      <div class="row">
       <div class="col-lg-8">
-        <h4 class="mb-3">My Videos</h4>
-        <p class="mb-5">Necessitatibus eius consequatur ex aliquid fuga eum quidem.</p>
-      </div>
-       <div class="col-md-4 text-right">
-        <button class="btn btn-danger btn-lg"> Clear History</button>
+        <h4 class="mb-3">Watch History</h4>
       </div>
     </div>
 
     <div class="mb-2">
       <div class="row">
         <div class="col-lg-12 mb-2">
+          <div v-if="!history">
+            The list has no videos.
+          </div>
           <table class="table">
             <tbody>
-              <tr class="mb-2" v-for="history in 5">
+              <tr class="mb-2" v-for="history in histories" :key="history.id">
                 <td>
                   <div>
-                    <img class="img-thumbnail p-0 mr-5" align="left" src="https://images.unsplash.com/photo-1535025639604-9a804c092faa?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6cb0ceb620f241feb2f859e273634393&auto=format&fit=crop&w=500&q=80">
+                    <img class="img-thumbnail p-0 mr-5" align="left" :src="'/uploads/vlog/thumbnails/'+history.video.thumbnail">
                   </div>
                   <div>
-                    <h4>Lorem ipsum dolor sit amet, consectetur adipiscing elit. </h4>
+                    <h4>{{history.video.title}}</h4>
                     <div>
-                      <img class="reader-img mx-2" align="left" src="http://tik-tok-tarot-master.test/images/profile.jpg">
-                      <p class="mt-3">Sample Uploader</p>
+                      <img class="reader-img mx-2" align="left" src="/images/profile.jpg">
+                      <p class="mt-3">{{history.user.username}}</p>
                     </div>
                     </br>
-                    <p class="mt-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi ultrices diam et nibh pellentesque, nec facilisis odio dapibus. Sed mi erat, pretium eget feugiat vel, </p>
+                    <p class="mt-4">{{history.video.description}}</p>
                   </div>
                 </td>
-                <td><fa icon="times-circle" fixed-width /></td>
               </tr>
             </tbody>
           </table>
-        </div>
-         <div class="col-lg-4">
-           <!-- <card>Sample</card> -->
         </div>
       </div>
     </div> 
@@ -60,7 +55,7 @@ export default {
   },
 
   data: () => ({
-    videos:[]
+    histories:[]
   }),
 
   computed: mapGetters({
@@ -68,26 +63,17 @@ export default {
     readers: 'admin-reader/readers',
   }),
 
-  created () {
-    this.fetchHistory();
-  },
-
   methods: {
       fetchHistory(){
-        axios.get('/api/user-history/'+ this.user.id).then(res=>{
-        this.videos = res.data;
-        console.log(res);
-        console.log(this.videos);
-       
-      }).catch((e)=>{
-        swalOops('A problem occurred');
-      })
+        axios.get('/api/user-history/me').then((res)=>{
+        // console.log(res.data.data);
+        this.histories = res.data.data;
+      });
     },
   },
 
   beforeMount(){
-      this.$store.dispatch("admin-reader/fetchReaders");
-      this.$store.dispatch('auth/fetchUser');
+      this.fetchHistory();
 
       if (!this.user){
         this.$router.push({ name: 'home' })
