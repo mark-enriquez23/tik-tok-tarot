@@ -58,7 +58,7 @@ class NewVlog extends Notification
     public function toArray($notifiable)
     {
         return [
-            'type'  => 'New Vlog',
+            'type'  => 'VLOG',
             'video' => $this->video,
             'user'  => $this->user,
         ];

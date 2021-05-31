@@ -57,7 +57,7 @@ class GoLive extends Notification
     public function toArray($notifiable)
     {
         return [
-            'type'      => 'Reader is live',
+            'type'      => 'LIVE',
             'reader'    => $this->user,
         ];
     }

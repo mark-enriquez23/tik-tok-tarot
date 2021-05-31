@@ -1,37 +1,35 @@
 <template>
   <card class="py-3 m-4">
-    <h4 class="mb-3">My History</h4>
-    <p class="mb-5">Necessitatibus eius consequatur ex aliquid fuga eum quidem.</p>
+    <h4 class="mb-3">Notifications</h4>
     <div class="mb-2">
       <div class="row">
-        <div class="col-lg-8 mb-2">
-          <table class="table">
+        <div class="mb-2">
+          <table class="table table-responsive" >
             <tbody>
-              <tr class="mb-2" v-for="history in 5">
-                <td>
+              <tr class="mb-2" v-for="notification in notifications" :key="notification.id">
+                <td v-if="notification.data.type === 'VLOG'">
                   <div>
-                    <img class="img-thumbnail p-0 mr-5" align="left" src="https://images.unsplash.com/photo-1535025639604-9a804c092faa?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6cb0ceb620f241feb2f859e273634393&auto=format&fit=crop&w=500&q=80">
+                    <img class="img-thumbnail p-0 mr-5" align="left" :src="`/uploads/vlog/thumbnails/${notification.data.video.thumbnail}`">
                   </div>
                   <div>
-                    <h3>Lorem ipsum dolor sit amet, consectetur adipiscing elit. </h3>
-                    <h6 class="mt-1">Sample Uploader</h6>
-                    <p class="mt-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi ultrices diam et nibh pellentesque, nec facilisis odio dapibus. Sed mi erat, pretium eget feugiat vel, </p>
+                    <!-- <h3>{{notification.data.type}}</h3>
+                    <h6 class="mt-1">{{notification.data.video.title}}</h6>
+                    <p class="mt-3">{{notification.data.user.username}} has uploaded a new vlog</p> -->
+                    <h3>{{capitalizeFirstLetter(notification.data.user.username)}} uploaded: {{notification.data.video.title}}</h3>
                   </div>
                 </td>
               </tr>
             </tbody>
           </table>
         </div>
-         <div class="col-lg-4">
-           <!-- <card>Sample</card> -->
-        </div>
       </div>
-    </div> 
+    </div>
   </card>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
+import axios from 'axios';
 
 export default {
   scrollToTop: false,
@@ -44,6 +42,7 @@ export default {
   },
 
   data: () => ({
+    notifications : []
   }),
 
   computed: mapGetters({
@@ -62,12 +61,14 @@ export default {
                 id: id
             }
         });
+      },
+      capitalizeFirstLetter(string) {
+          return string.charAt(0).toUpperCase() + string.slice(1);
       }
   },
 
   beforeMount(){
-      this.$store.dispatch("admin-reader/fetchReaders");
-      this.$store.dispatch('auth/fetchUser');
+    axios.get('/api/user/notifications').then((response) => this.notifications = response?.data?.notifications);
 
       if (!this.user){
         this.$router.push({ name: 'home' })
