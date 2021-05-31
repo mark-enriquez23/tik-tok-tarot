@@ -35,8 +35,11 @@
                           </div> -->
                           </div>
                           <div class="col-md-5">
-                              <div class="card" v-if="accessToken != ''">
-                              <div class="card-body p-0">
+                                <div class="card" v-if="accessToken != ''">
+                                    <div class="viewer-header px-2 py-1">
+                                      <p class="m-0 px-2 viewers"><fa icon="eye"/> 45</p>
+                                    </div>
+                                <div class="card-body p-0">
                                 <div class="message-box">
                                     <div class="message-div p-4" v-show="showMessages">
                                     <div v-for="message in tc.messagesArray" :key="message.id" class="row msg">
@@ -597,11 +600,11 @@ export default {
 }
 
 .message-box{
-    height: 440px;
+    height: 410px;
 }
 
 .message-div{
-    height: 440px;
+    height: 410px;
     width:100%;
     overflow-y: scroll;
 }
@@ -634,7 +637,6 @@ export default {
     margin-bottom: 0px;
 }
 
-
 .message-time{
     font-size: 12px;
     color:gray;
@@ -660,7 +662,6 @@ export default {
     margin-bottom: 0px;
 }
 
-
 .message-time{
     font-size: 12px;
     color:gray;
@@ -670,6 +671,19 @@ export default {
 
 .video{
     contain:cover;
+}
+
+.viewer-header{
+    border-bottom: 1px solid #DFDFDF;
+    text-align: left;
+}
+
+.viewers{
+    color:white;
+    background-color: #DC3545;
+    width: 70px;
+    text-align:center;
+    border-radius: 5px;
 }
 
 
