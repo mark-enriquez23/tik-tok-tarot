@@ -66,7 +66,7 @@ async function beforeEach (to, from, next) {
 
       var roles = [];
       to.matched.some(record => roles = record.meta.role)
-      
+
       // check if route belongs to logged in user
       if (to.matched.some(record => record.meta.role)) {
         var isAuthenticated = false
@@ -86,15 +86,21 @@ async function beforeEach (to, from, next) {
           }else if (data.role_id == 2) {
             next({ name: "home" })
           }
-          
+
         }
-        
+
       }
 
     });
-  
+
+
+
   }else {
     next()
+  }
+
+  if(store.state.auth.user){
+    await store.dispatch("notifications/getNotification");
   }
 
 

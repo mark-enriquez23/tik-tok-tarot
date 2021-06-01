@@ -8,6 +8,8 @@ use App\Video;
 use App\UserHistory;
 use Illuminate\Http\Request;
 use VideoThumbnail;
+use FFMpeg\FFMpeg;
+
 
 class VideoController extends Controller
 {
@@ -67,12 +69,13 @@ class VideoController extends Controller
      */
     public function create(Request $request)
     {
+
         // Validations
         $data = $request->validate([
             'title' => 'required',
             'description' => 'required',
             'file' => 'required|mimes:mp4,mov,ogg,qt'
-        ]);
+            ]);
 
         // Init models
         $user   = $request->user()->id;
@@ -104,15 +107,16 @@ class VideoController extends Controller
         $video->description     = $data['description'];
         $video->file_name       = $fileName;
         $video->thumbnail       = $thumbnailName;
-        
+
+
         // If details was save
         if($video->save()){
             $users = User::where('role_id', 3)->where('is_active', 1)->get();
-            
+
             $original_file->move(public_path().$basePath, $fileName);
-            
+
             VideoThumbnail::createThumbnail(public_path($basePath . $fileName) , public_path($thumbnails), $thumbnailName, 2);
-            
+
             foreach($users as $user){
                 $user->notify(new NewVlog($request->user(), $video));
              }

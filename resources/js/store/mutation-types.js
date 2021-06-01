@@ -55,3 +55,7 @@ export const FETCH_FREEBIE                  = 'FETCH_FREEBIE'
 export const CREATE_FREEBIE                 = 'CREATE_FREEBIE'
 export const UPDATE_FREEBIE                 = 'UPDATE_FREEBIE'
 export const DELETE_FREEBIE                 = 'DELETE_FREEBIE'
+
+//notification
+export const SAVE_NOTIF                     = 'SAVE_NOTIF'
+export const EMPTY_NOTIF                    = 'EMPTY_NOTIF'

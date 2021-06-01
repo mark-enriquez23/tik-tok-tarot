@@ -17,6 +17,7 @@
            <li v-if="user && roleId == 3" class="nav-item">
              <router-link :to="{ name: 'client.notification' }" class="bell px-3">
                 <fa icon="bell"/>
+                <span class="badge badge-danger number-notif p-1" v-if="notif">{{notif}}</span>
               </router-link>
           </li>
 
@@ -28,7 +29,7 @@
               <!-- {{ user.name }} -->
             </a>
             <div class="dropdown-menu">
-              
+
               <router-link :to="{ name: 'settings.profile' }" class="dropdown-item pl-3">
                 <fa icon="cog" fixed-width />
                 Settings
@@ -81,7 +82,7 @@
 
   <nav class="navbar navbar-expand-lg navbar-light bg-white" v-if="!isLoggedIn || roleId == 3">
     <div class="container">
-  
+
     <form class="form-inline col-8 col-md-4 px-0" action="" method="post" @submit.prevent="siteSearch">
         <input v-model="searchForm['key']" class="form-control mr-sm-2 w-50" type="text" name="reader" placeholder="Search Site" aria-label="Search" >
         <v-button class="btn btn-danger" :disabled="!searchForm.key">Search</v-button>
@@ -212,15 +213,18 @@ export default {
     }),
     results:[],
     isLoggedIn: false,
-    roleId: null
+    roleId: null,
   }),
 
   computed: mapGetters({
-    user: 'auth/user'
+    user: 'auth/user',
+    notif: 'notifications/notification'
   }),
 
   mounted() {
-    
+
+    this.$store.dispatch("notifications/getNotification");
+
     // check if have user logged in
     if (this.user) {
 
@@ -241,7 +245,7 @@ export default {
 
     async siteSearch() {
       this.$router.push({name: 'search', query: { key: this.searchForm.key } });
-    }
+    },
 
     // async siteSearch() {
     //     var results = await this.searchForm.post("/api/homepage/search-tool");
@@ -254,6 +258,8 @@ export default {
     //       })
     //     }
     //   }
+
+
   }
 }
 </script>
@@ -270,6 +276,12 @@ export default {
 
 .bell{
   font-size:30px;
+}
+
+.number-notif{
+  font-size:13px;
+  margin-left: -18px;
+
 }
 
 @media (max-width: 771px) {
