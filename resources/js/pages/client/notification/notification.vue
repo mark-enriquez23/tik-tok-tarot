@@ -4,6 +4,7 @@
     <div class="mb-2">
       <div class="row">
         <div class="mb-2">
+          <div v-if="!notifications.length" class="pl-3"><p> No notifications for now </p></div>
           <table class="table table-responsive" >
             <tbody>
               <tr class="mb-2" v-for="notification in notifications" :key="notification.id">
@@ -12,9 +13,6 @@
                     <img class="img-thumbnail p-0 mr-5" align="left" :src="`/uploads/vlog/thumbnails/${notification.data.video.thumbnail}`">
                   </div>
                   <div>
-                    <!-- <h3>{{notification.data.type}}</h3>
-                    <h6 class="mt-1">{{notification.data.video.title}}</h6>
-                    <p class="mt-3">{{notification.data.user.username}} has uploaded a new vlog</p> -->
                     <h3>{{capitalizeFirstLetter(notification.data.user.username)}} uploaded: {{notification.data.video.title}}</h3>
                   </div>
                 </td>
@@ -50,8 +48,6 @@ export default {
     readers: 'admin-reader/readers',
   }),
 
-  created () {
-  },
 
   methods: {
       view(id){
@@ -68,7 +64,9 @@ export default {
   },
 
   beforeMount(){
-    axios.get('/api/user/notifications').then((response) => this.notifications = response?.data?.notifications);
+    axios.get('/api/user/notifications/unread').then((response) => this.notifications = response?.data?.notifications);
+
+    this.$store.dispatch("notifications/readNotification");
 
       if (!this.user){
         this.$router.push({ name: 'home' })
