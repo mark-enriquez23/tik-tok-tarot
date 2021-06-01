@@ -1,7 +1,7 @@
 <template>
   
     
-      <div class="row m-4">
+     <div class="row m-4">
         <div class="col-lg-8">
           <div class="row">
             <div class="col-12 p-0">
@@ -29,8 +29,19 @@
             </div>
           </div>
         </div>
+         <div class="col-lg-8">
+          <div class="row p-2 pt-4 video-info" v-for="item of 5" :key="item">
+            <div class="col-12">
+                <img class="comment-img mr-4" align="left" src="http://tik-tok-tarot-master.test/images/profile.jpg">
+             
+                <p class="mb-0"><b>Sample Uploader</b></p>
+                <p class="white">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi ultrices diam et nibh pellentesque, nec facilisis odio dapibus. Sed mi erat, pretium eget feugiat vel, </p>   
+              
+            </div>
+          </div>  
+        </div>
       </div>
-
+ 
 </template>
 
 <script>
@@ -84,6 +95,13 @@ export default {
   height:75px;
   border-radius: 50%;
 }
+
+.comment-img{
+  width:45px;
+  height:45px;
+  border-radius: 50%;
+}
+
 .hired-tag{
   font-size: 12px;
   font-weight: bolder;
@@ -91,6 +109,10 @@ export default {
 .img-thumbnail{
   width: 100%;
   height: auto;
+}
+
+.white{
+  overflow: hidden;
 }
 
 hr{
