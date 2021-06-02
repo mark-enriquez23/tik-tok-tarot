@@ -128,6 +128,9 @@ export default {
         if (this.username !== undefined) {
           this.tc.username = this.user?.username;
           this.username = this.user?.username;
+          var live = axios.get("/api/video/view/" + this.user?.username);
+          console.log(live);
+          
           this.fetchAccessToken(this.tc.username, this.connectMessagingClient);
         }else{
           alert("NOT LOGGED IN");

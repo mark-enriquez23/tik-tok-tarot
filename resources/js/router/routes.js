@@ -180,11 +180,6 @@ export default [
   },
   {
     path: '/reader/go-live/:roomName', name: 'reader.go-live', component: page('reader/live/go-live.vue'),
-    meta          : {
-      requiresAuth: true,
-      role        : [2],
-      title       : 'Readers'
-    }
   },
   { path: '*', component: page('errors/404.vue') }
 ]

@@ -354,7 +354,7 @@ export default {
     this.fetchVlogs(),
     this.fetchTestimonials(),
     this.fetchReaders(),
-    this.fetchSessions(),
+    //this.fetchSessions(),
     this.fetchTotalSessions(),
     this.fetchTotalViewers(),
     this.fetchTotalVlogs()
@@ -414,18 +414,18 @@ export default {
       //}
     },
 
-    async fetchSessions() {
-        var sessions = await axios.get("/api/homepage/live-sessions");
-        this.sessions = sessions.data;
-        // console.log("session",this.sessions);
-        // if (!this.sessions.success) {
-        //   Swal.fire({
-        //   title: 'Fetching Sessions Failed',
-        //   text: "An error has occurred. Please try again.",
-        //   type: 'error'
-        // })
-      //}
-    },
+    // async fetchSessions() {
+    //     var sessions = await axios.get("/api/video/fetch/ongoing");
+    //     this.sessions = sessions.data;
+    //     // console.log("session",this.sessions);
+    //     // if (!this.sessions.success) {
+    //     //   Swal.fire({
+    //     //   title: 'Fetching Sessions Failed',
+    //     //   text: "An error has occurred. Please try again.",
+    //     //   type: 'error'
+    //     // })
+    //   //}
+    // },
 
     async fetchTestimonials() {
         this.testimonials = await axios.get("/api/testimonial");
@@ -454,6 +454,7 @@ export default {
 
     async fetchTotalSessions() {
         this.totalSession = await axios.get("/api/video/fetch/ongoing");
+        this.sessions = this.totalSessions.data;
         // if (!this.totalSession.data.success) {
         //   Swal.fire({
         //   title: 'Fetching Total Session Failed',

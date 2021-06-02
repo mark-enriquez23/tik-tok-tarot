@@ -13,7 +13,7 @@
             </div>
           </div>
 
-          <div class="col-lg-8">
+          <div class="col-lg-8" v-if="sessions.total != 0">
             <div class="row">
               <div class="col-lg-6"  v-for="session in sessions.data" v-bind:key="session.id">
                 <div class="member" data-aos="zoom-in" data-aos-delay="100">
@@ -23,6 +23,16 @@
                     <p class="text-success mb-0">{{ session.is_active == 1 ? 'Online' : 'Offline' }}</p>
                     <p>{{session.description}}</p>
                   </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-8" v-else>
+            <div class="row">
+              <div class="col-lg-12 mt-4 mt-lg-0">
+                <div class="member" data-aos="zoom-in" data-aos-delay="100">
+                  <h3>No Sessions found</h3>
                 </div>
               </div>
             </div>
@@ -74,7 +84,7 @@ export default {
   
   methods: {
     async fetchSessions() {
-        var sessions = await axios.get("/api/homepage/live-sessions");
+        var sessions = await axios.get("/api/video/fetch/ongoing");
         this.sessions = sessions.data;
         console.log(this.sessions);
         if (!this.sessions.success) {
