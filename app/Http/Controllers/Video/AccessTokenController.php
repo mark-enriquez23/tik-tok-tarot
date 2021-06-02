@@ -83,4 +83,19 @@ class AccessTokenController extends Controller
         print($room->uniqueName);
 
     }
+
+    public function getParticipants($room){
+
+        $sid = getenv("TWILIO_ACCOUNT_SID");
+        $token = getenv("TWILIO_AUTH_TOKEN");
+        $client = new Client($sid, $token);
+
+        $participants = $client->video->rooms($room)
+                ->participants->read(array("status" => "connected"));
+
+        return response()->json([
+            'status'    => true,
+            'data'      => count($participants)-1
+        ]);
+    }
 }

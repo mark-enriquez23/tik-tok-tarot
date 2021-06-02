@@ -137,6 +137,7 @@ Route::group(['prefix' => 'video'], function (){
     Route::post('/chat', 'Video\AccessTokenController@chat_token');
 
     Route::post('/history/chat', 'Video\LiveHistoryController@addChatObjByRoomName');
+    Route::get('/view/{room}', 'Video\AccessTokenController@getParticipants');
 });
 
 // Suggestions
