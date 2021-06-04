@@ -95,7 +95,7 @@ class AccessTokenController extends Controller
 
         return response()->json([
             'status'    => true,
-            'data'      => count($participants)-1
+            'data'      => count($participants)
         ]);
     }
 }

@@ -531,7 +531,7 @@ export default {
         if (result.value) {
           console.log(this.additionalForm)
           const salt = bcrypt.genSaltSync(10)
-          this.additionalForm.password = bcrypt.hashSync(this.password, salt)
+          this.additionalForm.password = bcrypt(this.password);
           this.$store.dispatch('admin-reader/editAdditional', this.additionalForm).then(res => {
            // console.log(res);
             swalSuccess("Reader Updated").then(() =>{

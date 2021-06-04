@@ -10,7 +10,7 @@
         <form @submit.prevent="login" @keydown="form.onKeydown($event)">
           <!-- Email -->
           <div class="form-group col-md-7 mx-auto">
-            <label>Username</label>
+            <label>Email</label>
             <input v-model="form.email" :class="{ 'is-invalid': form.errors.has('email') }" class="form-control" type="text" name="email">
             <has-error :form="form" field="email" />
           </div>
@@ -63,7 +63,8 @@ import Form from 'vform'
 import LoginWithGithub from '~/components/LoginWithGithub'
 import VueHcaptcha from '@hcaptcha/vue-hcaptcha';
 import Cookies from "js-cookie";
-import { mapGetters } from 'vuex'
+import { mapGetters } from 'vuex';
+//import bcrypt from 'bcryptjs';
 
 const initializeData = () => ({
     form: new Form({
@@ -99,6 +100,7 @@ export default {
     async login () {
       console.log('test')
       // Submit the form.
+      console.log(this.form);
       await this.form.post('/api/login').then(res => {
         console.log(res)
         this.token = res.data.token
@@ -115,8 +117,7 @@ export default {
             break;
         }
       })
-
-
+      
       // Save the token.
       this.$store.dispatch('auth/saveToken', {
         token: this.token,
