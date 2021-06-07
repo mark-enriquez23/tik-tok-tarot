@@ -24,7 +24,7 @@
                 <div class="member" data-aos="zoom-in" data-aos-delay="100">
                   <div class="pic"><img :src="testimonialImage5" class="img-fluid" alt=""></div>
                   <div class="member-info">
-                    <h4>{{reader.name}}</h4>
+                    <h4>{{reader.username}}</h4>
                    
                     <p class="text-success mb-0">{{ reader.is_active == 1 ? 'Online' : 'Offline' }}</p>
                     <p>{{reader.description}}</p>

@@ -624,6 +624,7 @@ export default {
   border-radius: 50%;
   display:block;
   width:250px;
+  Height:250px;
 }
 .hired-tag{
   font-size: 12px;

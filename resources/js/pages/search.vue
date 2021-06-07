@@ -20,7 +20,7 @@
                 <div class="member" data-aos="zoom-in" data-aos-delay="100">
                   <div class="pic"><img :src="testimonialImage5" class="img-fluid" alt=""></div>
                   <div class="member-info">
-                    <h4>{{result.name}}</h4>
+                    <h4>{{result.username}}</h4>
                     <p class="text-success mb-0">{{ result.is_active == 1 ? 'Online' : 'Offline' }}</p>
                     <!-- <p>{{reader.description}}</p>
                     <span class="mt-3" >Health</span> -->

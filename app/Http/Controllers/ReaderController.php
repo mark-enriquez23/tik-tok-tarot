@@ -28,9 +28,9 @@ class ReaderController extends Controller
             $user = User::where('role_id', $role->id)
             ->where('visible', 1)
             ->where('username','LIKE','%'.$search.'%')
-            ->where('name','LIKE','%'.$search.'%')
+            ->orWhere('firstName','LIKE','%'.$search.'%')
             // ->orWhere('name','LIKE','%'.$search.'%')
-            ->with(['uploads'])
+           // ->with(['uploads'])
             ->get();
 
             return response()->json([
@@ -140,7 +140,7 @@ class ReaderController extends Controller
      */
     public function fetchReaderById($id)
     {
-        $user = User::where('id', $id)->with(['uploads.uploadType'])->with('userDetails')->first();
+        $user = User::where('id', $id)->get();
 
         return response()->json([
             "success" => $user ? true : false,

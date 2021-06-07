@@ -85,7 +85,7 @@ export const actions = {
       const { data } = await axios.get(`/api/auth-reader/fetch-reader-by-id/${id}`);
       console.log(data.data)
 
-      commit(types.EDIT_READER, { reader: data.data });
+      commit(types.EDIT_READER, { reader: data.data[0] });
     } catch (e) {
       return e;
     }
