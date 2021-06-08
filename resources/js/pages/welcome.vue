@@ -26,17 +26,16 @@
       <div class="container">
 
         <div class="row">
-          <div class="col-lg-4">
-          </div>
-          <div class="col-lg-8">
-            <div class="row">
+        
+         
 
               <div class="col-lg-4 mt-4 mt-lg-0" v-if="totalViewers !== null">
                 <router-link :to="{ name: 'readers' }" class="nav-link" active-class="active">
+                  <h5 class="black-text">VIEWERS</h5>
                 <div class="member red-background" data-aos="zoom-in" data-aos-delay="100">
                   <div class="member-info">
 
-                      <h5 class="white-text">Viewers: {{totalViewers.data.total}} </h5>
+                      <h5 class="white-text">{{totalViewers.data.total}} </h5>
 
                   </div>
                 </div>
@@ -45,10 +44,11 @@
 
               <div class="col-lg-4 mt-4 mt-lg-0" v-if="totalVlogs !== null">
                  <router-link :to="{ name: 'vlogs.list' }" class="nav-link" active-class="active">
+                   <h5 class="black-text">VLOGS</h5>
                 <div class="member red-background" data-aos="zoom-in" data-aos-delay="100">
                   <div class="member-info">
 
-                        <h5 class="white-text">Vlogs: {{totalVlogs.data.total}} </h5>
+                        <h5 class="white-text">{{totalVlogs.data.total}} </h5>
 
                   </div>
                 </div>
@@ -57,18 +57,17 @@
 
               <div class="col-lg-4 mt-4 mt-lg-0" v-if="totalSession !== null">
                 <router-link :to="{ name: 'sessions' }" class="nav-link" active-class="active">
+                <h5 class="black-text">SESSIONS</h5>
                 <div class="member red-background" data-aos="zoom-in" data-aos-delay="100">
                   <div class="member-info">
 
-                         <h5 class="white-text">Sessions: {{totalSession.data.total}} </h5>
+                         <h5 class="white-text">{{totalSession.data.total}} </h5>
 
                   </div>
                 </div>
                 </router-link>
               </div>
-
-            </div>
-          </div>
+              
         </div>
       </div>
     </section>
@@ -312,7 +311,7 @@
     <h1>Join Our Newsletter</h1>
     <p>Subscribe to our weekly Newsletter and stay tuned.</p>
     <form action="" method="post" @submit.prevent="subscribe">
-        <div class="col-lg-5  mx-auto">
+        <div class="col-lg-4  mx-auto">
           <div class="input-group mb-3">
             <div class="input-group-prepend">
               <fa :icon="['fas', 'envelope']" class="input-group-text" id="basic-addon1" style="font-size: 38px" />
@@ -520,7 +519,7 @@ export default {
 }
 
 .masthead {
-  padding-top: 10.5rem;
+  padding-top: 5.5rem;
   padding-bottom: 10.5rem;
   text-align: center;
   background-image: radial-gradient(at top center, rgba(25,7,0,0) 28%, #000000 100%), url('/images/tarot2.jpg');
@@ -559,6 +558,10 @@ export default {
 
 .red-background{
   background-color:#DC3545;
+  height: 120px;
+  width: 120px;
+  margin: 0 auto;
+  border-radius: 50%;
 }
 
 .red-background:hover{
@@ -567,7 +570,15 @@ export default {
 
 .white-text{
   color:white;
-  font-weight: bolder;
+  font-size: 3em;
+  text-align: center;
+}
+
+.black-text{
+  color:gray;
+  font-size: 1.5em;
+  font-weight:bolder;
+  text-align: center;
 }
 
 </style>
