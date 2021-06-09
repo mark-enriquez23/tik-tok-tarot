@@ -171,6 +171,22 @@ export default [
     }
   },
   {
+    path: '/reader/pending', name: 'reader.pending', component: page('reader/videos/pending.vue'),
+    meta          : {
+      requiresAuth: true,
+      role        : [2],
+      title       : 'Readers'
+    }
+  },
+  {
+    path: '/reader/rejected', name: 'reader.rejected', component: page('reader/videos/rejected.vue'),
+    meta          : {
+      requiresAuth: true,
+      role        : [2],
+      title       : 'Readers'
+    }
+  },
+  {
     path: '/reader/upload-video', name: 'reader.upload-video', component: page('reader/videos/upload-video.vue'),
     meta          : {
       requiresAuth: true,

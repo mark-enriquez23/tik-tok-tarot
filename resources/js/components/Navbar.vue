@@ -179,15 +179,25 @@
       </div>
 
       <!-- Reader Navbar -->
-      <!-- <div id="navbarToggler" class="collapse navbar-collapse" v-if="roleId == 2">
+      <div id="navbarToggler" class="collapse navbar-collapse" v-if="roleId == 2">
         <ul class="navbar-nav ml-auto ">
             <li class="nav-item">
-              <router-link :to="{ name: 'home' }" class="nav-link" active-class="active">
-                Home
+              <router-link :to="{ name: 'reader.videos' }" class="nav-link" active-class="active">
+                My Videos
+              </router-link>
+            </li>
+            <li class="nav-item">
+              <router-link :to="{ name: 'reader.pending' }" class="nav-link" active-class="active">
+                Pending
+              </router-link>
+            </li>
+            <li class="nav-item">
+              <router-link :to="{ name: 'reader.rejected' }" class="nav-link" active-class="active">
+                Rejected
               </router-link>
             </li>
         </ul>
-      </div> -->
+      </div>
     </div>
   </nav>
 </div>

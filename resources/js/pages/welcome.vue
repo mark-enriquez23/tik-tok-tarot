@@ -401,7 +401,7 @@ export default {
     },
 
     async fetchVlogs() {
-        var vlogs = await axios.get("/api/vlog/user/2");
+        var vlogs = await axios.get("/api/vlog/status/approved");
         this.vlogs = vlogs.data;
         // console.log(this.vlogs);
         // if (!this.vlogs.success) {
