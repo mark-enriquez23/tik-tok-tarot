@@ -93,8 +93,8 @@
                       <fa class="quote-icon-right" :icon="['fas', 'quote-right']" />
                     </p>
                     <img :src="testimonialImage1" class="testimonial-img" alt="">
-                    <h3>{{ testimonials.data.data[0].user.name }}</h3>
-                    <h4 class="testimonial-title">Client</h4>
+                    <h3>{{ testimonials.data.data[0].user.firstName }} {{ testimonials.data.data[0].user.lastName }}</h3>
+                    <!-- <h4 class="testimonial-title">Client</h4> -->
                     <p class="client-review-stars">
                       <fa :icon="['fas', 'star']" v-for="index in testimonials.data.data[0].rate" :key="index" />
                     </p>
