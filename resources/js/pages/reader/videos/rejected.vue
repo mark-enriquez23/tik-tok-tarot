@@ -14,7 +14,7 @@
     </div>
 
     <div class="mb-2">
-      <div class="row" v-if="videos.data.is_approved == 'REJECTED' ? videos.data.length != 0 : false">
+      <div class="row">
         <div class="col-md-4 my-2" v-for="video in videos.data"  :key="video">
           <div v-if="videos.data.is_approved == 'REJECTED' ? true : false">
             <div>
@@ -27,7 +27,7 @@
         </div>   
       </div> 
 
-      <div class="col-lg-8" v-else>
+      <!-- <div class="col-lg-8" v-else>
         <div class="row">
           <div class="col-lg-12 mt-4 mt-lg-0">
             <div data-aos="zoom-in" data-aos-delay="100">
@@ -35,7 +35,7 @@
             </div>
           </div>
         </div>
-      </div>          
+      </div>           -->
     </div> 
   </card>
 </template>
