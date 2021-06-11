@@ -175,6 +175,11 @@
                 Credits
               </router-link>
             </li>
+            <li class="nav-item">
+              <router-link :to="{ name: 'admin.freebie' }" class="nav-link" active-class="active">
+                Freebie Manager
+              </router-link>
+            </li>
         </ul>
       </div>
 

@@ -18,14 +18,14 @@ class FreebieSeeder extends Seeder
                 'photo'             =>  '1620364222.jpg',
                 'description'       =>  'This bird is claimable',
                 'points'            =>  100,
-                'is_active'         =>  0,
+                'is_active'         =>  'false',
             ],
             [
                 'freebie_name'      => 'Parrot',
                 'photo'             =>  '1620364222.jpg',
                 'description'       =>  'This parrot is claimable',
                 'points'            =>  300,
-                'is_active'         =>  1,
+                'is_active'         =>  'true',
             ],
 
         ];

@@ -19,7 +19,7 @@ class CreateFreebieTable extends Migration
             $table->string('photo');
             $table->longText('description');
             $table->integer('points');
-            $table->tinyInteger('is_active')->default(0);
+            $table->string('is_active')->default('false');
             $table->timestamps();
         });
     }

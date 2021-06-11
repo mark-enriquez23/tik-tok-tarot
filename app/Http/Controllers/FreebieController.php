@@ -91,7 +91,7 @@ class FreebieController extends Controller
             }
 
             $imageName = time().'.'.$request->photo->extension();
-            $request->photo->move(public_path('images'), $imageName);
+            $request->photo->move(public_path('images/freebies/'), $imageName);
             $freebie->photo = $imageName;
             $freebie->save();
 
