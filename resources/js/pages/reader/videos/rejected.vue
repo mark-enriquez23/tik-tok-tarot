@@ -15,8 +15,8 @@
 
     <div class="mb-2">
       <div class="row">
-        <div class="col-md-4 my-2" v-for="video in videos.data" :key="video">
-          <div v-if="video.is_approved == 'APPROVED' ? true : false">
+        <div class="col-md-4 my-2" v-for="video in videos.data"  :key="video">
+          <div v-if="videos.data.is_approved == 'REJECTED' ? true : false">
             <div>
             <img class="img-thumbnail p-0" src="https://images.unsplash.com/photo-1535025639604-9a804c092faa?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6cb0ceb620f241feb2f859e273634393&auto=format&fit=crop&w=500&q=80">
             </div> 
@@ -31,12 +31,11 @@
         <div class="row">
           <div class="col-lg-12 mt-4 mt-lg-0">
             <div data-aos="zoom-in" data-aos-delay="100">
-              <h5> You have no approved videos yet.</h5>
+              <h5> You have no rejected videos.</h5>
             </div>
           </div>
         </div>
-      </div> -->
-
+      </div>           -->
     </div> 
   </card>
 </template>

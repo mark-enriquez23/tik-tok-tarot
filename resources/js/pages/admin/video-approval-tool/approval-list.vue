@@ -8,7 +8,7 @@
           <th scope="col">ID</th>
           <th scope="col">User Name</th>
           <th scope="col">User Email</th>
-          <th scope="col">Upload Name</th>
+          <th scope="col">Title</th>
           <th scope="col">Status</th>
           <th scope="col">Action</th>
         </tr>
@@ -16,11 +16,11 @@
     <tbody>
         <tr v-for="u in uploads" :key="u.id">
             <th scope="row">{{u.id}}</th>
-            <td>{{ u.user.name }}</td>  
+            <td>{{ u.user.username }}</td>  
             <td>{{ u.user.email }}</td>
-            <td>{{ u.upload.name }}</td>
-            <td v-if='u.is_pending == 0' class="text-warning">Pending</td>
-            <td v-else :class="u.is_approved ? 'text-success' : 'text-danger'">{{ u.is_approved ? 'Approved' : 'Rejected' }}</td>
+            <td>{{ u.title }}</td>
+            <td v-if='u.is_approved == "PENDING"' class="text-warning">Pending</td>
+            <td v-else :class="u.is_approved == 'APPROVED' ? 'text-success' : 'text-danger'">{{ u.is_approved == 'APPROVED' ? 'Approved' : 'Rejected' }}</td>
             <td><div class="cursor-pointer link" @click="view(u.id)">Manage</div></td>
         </tr>
         <tr>

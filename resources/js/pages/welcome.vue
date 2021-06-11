@@ -93,8 +93,7 @@
                       <fa class="quote-icon-right" :icon="['fas', 'quote-right']" />
                     </p>
                     <img :src="testimonialImage1" class="testimonial-img" alt="">
-                    <h3>{{ testimonials.data.data[0].user.name }}</h3>
-                    <h4 class="testimonial-title">Client</h4>
+                    <h3>{{ testimonials.data.data[0].user.firstName }} {{ testimonials.data.data[0].user.lastName }}</h3>
                     <p class="client-review-stars">
                       <fa :icon="['fas', 'star']" v-for="index in testimonials.data.data[0].rate" :key="index" />
                     </p>
@@ -107,8 +106,7 @@
                       <fa class="quote-icon-right" :icon="['fas', 'quote-right']" />
                     </p>
                     <img :src="testimonialImage2" class="testimonial-img" alt="">
-                    <h3>{{ testimonials.data.data[1].user.name }}</h3>
-                    <h4 class="testimonial-title">Client</h4>
+                    <h3>{{ testimonials.data.data[1].user.firstName }} {{ testimonials.data.data[1].user.lastName }}</h3>
                     <p class="client-review-stars">
                       <fa :icon="['fas', 'star']" v-for="index in testimonials.data.data[1].rate" :key="index" />
                     </p>
@@ -121,8 +119,7 @@
                       <fa class="quote-icon-right" :icon="['fas', 'quote-right']" />
                     </p>
                     <img :src="testimonialImage3" class="testimonial-img" alt="">
-                    <h3>{{ testimonials.data.data[2].user.name }}</h3>
-                    <h4 class="testimonial-title">Client</h4>
+                    <h3>{{ testimonials.data.data[2].user.firstName }} {{ testimonials.data.data[2].user.lastName }}</h3>
                     <p class="client-review-stars">
                       <fa :icon="['fas', 'star']" v-for="index in testimonials.data.data[2].rate" :key="index" />
                     </p>
@@ -135,8 +132,7 @@
                       <fa class="quote-icon-right" :icon="['fas', 'quote-right']" />
                     </p>
                     <img :src="testimonialImage4" class="testimonial-img" alt="">
-                    <h3>{{ testimonials.data.data[3].user.name }}</h3>
-                    <h4 class="testimonial-title">Client</h4>
+                    <h3>{{ testimonials.data.data[3].user.firstName }} {{ testimonials.data.data[3].user.lastName }}</h3>
                     <p class="client-review-stars">
                       <fa :icon="['fas', 'star']" v-for="index in testimonials.data.data[3].rate" :key="index" />
                     </p>
@@ -267,19 +263,19 @@
 
                 <div class="testimonial-item carousel-item active">
                     <img :src="testimonialImage1" class="slider-img" alt="">
-                    <h3>{{ readers.data.data[0].user.name }}</h3>
+                    <h3>{{ readers.data.data[0].user.firstName }} {{ readers.data.data[0].user.lastName }}</h3>
                     <h4 class="reader-title">Client</h4>
                   </div>
 
                   <div class="testimonial-item carousel-item">
                     <img :src="testimonialImage2" class="slider-img" alt="">
-                    <h3>John Doe</h3>
+                    <h3>{{ readers.data.data[1].user.firstName }} {{ readers.data.data[1].user.lastName }}</h3>
                     <h4 class="reader-title">Client</h4>
                   </div>
 
                   <div class="testimonial-item carousel-item">
                     <img :src="testimonialImage3" class="slider-img" alt="">
-                    <h3>John Doe</h3>
+                    <h3>{{ readers.data.data[2].user.firstName }} {{ readers.data.data[2].user.lastName }}</h3>
                     <h4 class="reader-title">Client</h4>
                   </div>
               </div>
@@ -401,7 +397,7 @@ export default {
     },
 
     async fetchVlogs() {
-        var vlogs = await axios.get("/api/vlog/user/2");
+        var vlogs = await axios.get("/api/vlog/status/approved");
         this.vlogs = vlogs.data;
         // console.log(this.vlogs);
         // if (!this.vlogs.success) {
