@@ -49,6 +49,20 @@ class VideoController extends Controller
             'data'      => $data,
         ]);
     }
+
+    /**
+     * Display a listing by STATUS
+     */
+    public function fetchbyUserStatus($uid, $status){
+        $data = Video::where('user_id', $uid)->where('is_approved', $status)->with('user', 'user.userDetails')->get();
+
+        return response()->json([
+            'success'   => true,
+            'total'     => $data->count(),
+            'data'      => $data,
+        ]);
+    }
+
     /**
      * Display a listing by STATUS
      */

@@ -2,7 +2,7 @@
   <card class="py-3 m-4">
     <h4 class="mb-3">Readers List</h4>
     <p class="mb-5">Necessitatibus eius consequatur ex aliquid fuga eum quidem.</p>
-   <table class="table">
+   <!-- <table class="table">
     <thead>
         <tr>
           <th scope="col">ID</th>
@@ -21,7 +21,7 @@
         <tr v-for="reader in readers" :key="reader.id">
             <th scope="row">{{reader.id}}</th>
             <td>
-              <img class="reader-img" :src="reader.user_details[0].profile_photo == ''? 'http://tik-tok-tarot-master.test/images/profile.jpg' : 'http://tik-tok-tarot-master.test/images/'+reader.user_details[0].profile_photo">
+              <img class="reader-img" :src="reader.user_details.profile_photo == ''? 'http://tik-tok-tarot-master.test/images/profile.jpg' : 'http://tik-tok-tarot-master.test/images/'+reader.user_details[0].profile_photo">
             </td>
             <td>{{ reader.username }}</td>
             <td>{{ reader.firstName }}</td>
@@ -37,7 +37,7 @@
           <td colspan="7" class="text-center" v-if="readers ? readers.length <= 0 : false">No Reader found</td>
         </tr>
     </tbody>
-    </table>
+    </table> -->
   </card>
 </template>
 

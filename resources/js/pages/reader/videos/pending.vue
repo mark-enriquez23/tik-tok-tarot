@@ -2,8 +2,8 @@
   <card class="p-6 m-4">
     <div class="row">
       <div class="col-lg-8">
-        <h4 class="mb-3">My Videos</h4>
-        <p class="mb-5">Necessitatibus eius consequatur ex aliquid fuga eum quidem.</p>
+        <h4 class="mb-3">Pending Videos</h4>
+        <p>Please patiently wait for the admin to approve your videos</p>
       </div>
        <div class="col-md-2 text-right">
         <button class="btn btn-danger btn-lg" @click="goLive"> <fa icon="podcast" fixed-width />Go Live</button>
@@ -14,30 +14,28 @@
     </div>
 
     <div class="mb-2">
-      <div class="row">
-        <div class="col-md-4 my-2" v-for="video in videos.data"  :key="video">
-          <div v-if="videos.data.is_approved == 'PENDING' ? true : false">
+      <!-- if video exist here -->
+      <div class="row" v-if="videos">
+        <div class="col-md-4 my-2" v-for="video in videos"  :key="video.id">
+          <div>
             <div>
-            <img class="img-thumbnail p-0" src="https://images.unsplash.com/photo-1535025639604-9a804c092faa?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6cb0ceb620f241feb2f859e273634393&auto=format&fit=crop&w=500&q=80">
-            </div> 
-            <img class="reader-img m-3" align="left" src="http://tik-tok-tarot-master.test/images/profile.jpg">
+            <img class="img-thumbnail p-0" :src="`/uploads/vlog/thumbnails/${video.thumbnail}`">
+            </div>
+            <img class="reader-img m-3" align="left" :src="`/images/${video.user.user_details.profile_photo}`">
             <h6 class="mt-3"><b>{{video.title}}</b></h6>
             <p class="uploader-name mt-1">{{video.user.username}}</p>
           </div>
-        </div>   
+        </div>
       </div>
-
-      <!-- <div class="col-lg-8" v-else>
-        <div class="row">
-          <div class="col-lg-12 mt-4 mt-lg-0">
-            <div data-aos="zoom-in" data-aos-delay="100">
-              <h5> You have no pending videos.</h5>
-            </div>
+      <!-- if not, show this message -->
+      <div class="row" v-else>
+        <div class="col-lg-12 mt-4 mt-lg-0">
+          <div data-aos="zoom-in" data-aos-delay="100">
+            <h5> You have no pending videos.</h5>
           </div>
         </div>
-      </div> -->
-
-    </div> 
+      </div>
+    </div>
   </card>
 </template>
 
@@ -62,21 +60,15 @@ export default {
 
   data: () => ({
     videos:[]
-  }), 
-
-  created () {
-    this.fetchVideos();
-  },
+  }),
 
   methods: {
-    
+
     fetchVideos(){
         console.log(this.user.id);
-        axios.get('/api/vlog/user/' + this.user.id ).then(res=>{
-        this.videos = res.data;
-        console.log(res);
-        console.log(this.videos);
-       
+        axios.get('/api/vlog/user/' + this.user.id + '/PENDING').then(res=>{
+        this.videos = res.data.data;
+
       }).catch((e)=>{
         swalOops('A problem occurred');
       })
@@ -103,6 +95,7 @@ export default {
       if (!this.user){
         this.$router.push({ name: 'home' })
       }
+      this.fetchVideos();
   }
 }
 </script>

@@ -195,6 +195,7 @@ Route::group(['prefix' => 'vlog'], function (){
     Route::get('/', 'VideoController@index');
     Route::get('/{id}', 'VideoController@showByID');
     Route::get('/user/{uid}', 'VideoController@showByUser');
+    Route::get('/user/{uid}/{status}', 'VideoController@fetchbyUserStatus');
     Route::get('/status/{status}/{featured?}', 'VideoController@fetchByStatus');
 });
 
