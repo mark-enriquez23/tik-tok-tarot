@@ -6,74 +6,59 @@
         <p class="mb-5">Necessitatibus eius consequatur ex aliquid fuga eum quidem.</p>
       </div>
     </div>
-
     <div class="mb-2">
      <div class="text-center">
-
         <!-- chat box starts here -->
-        <div class="container">
+        <div class="container pb-5">
           <div class="row justify-content-center">
-              <div class="col-md-12">  
+              <div class="col-md-12">
                 <div class="row">
-                          <div class="col-md-7 video-div">
-                            <!-- video chat div here -->
-        <div class="video grid grid-flow-row bg-black">
-            <div id="my-video-chat-window" >
-              <button class="broadcast btn btn-danger btn-lg" @click='getVideoToken(); connectClientWithUsername();' v-if="currentStatus!=='ON_GOING' && name === username"> Start Broadcasting </button>
-            </div>
-        </div>
-                          <!-- <div class="col-md-4 channel-list" v-show="connected">
-                              <ul>
-                                  <li v-for="(channel) in tc.channelArray" :key="channel.id" ref="channelList" :data-sid="channel.sid">
-                                  <a href="#!" @click="selectChannel(channel)"> {{channel.friendlyName}} </a>
-
-
-                                  </li>
-                                  <a href="#!" @click="createChannel"> Add Channel</a>
-                                  <input v-if="showAddChannelInput" class="form-control" type="text" v-model="newChannel" v-on:keyup.13="handleNewChannelInputKeypress" placeholder="New Channel">
-                              </ul>
-                          </div> -->
-                          </div>
-                          <div class="col-md-5">
-                                <div class="card" v-if="accessToken != ''">
-                                    <div class="viewer-header px-2 py-1">
-                                      <p class="m-0 px-2 viewers"><fa icon="eye"/> 45</p>
-                                    </div>
-                                <div class="card-body p-0">
-                                <div class="message-box">
-                                    <div class="message-div p-4" v-show="showMessages">
-                                    <div v-for="message in tc.messagesArray" :key="message.id" class="row msg">
-                                        <div class="media-body" v-if="message.author == user.username">
-                                            <p class="message-host-author">{{message.author}}</p>
-                                            <br>
-                                            <p class="message-host-body">{{message.body}}</p>
-                                        </div>
-                                        <div class="media-body" v-else>
-                                            <p class="message-author">{{message.author}}</p>
-                                            <br>
-                                            <p class="message-body">{{message.body}}</p>
-                                        </div>
-                                    </div>
-                                    </div>
-                                    <p v-if="notification">{{notificationMsg}}</p>
-                                </div>
-                                <!-- <input v-if="userNotJoined" class="form-control" type="text" v-model="username" v-on:keyup.13="connectClientWithUsername" placeholder="Your username"> -->
-                                <input v-if="!userNotJoined" class="form-control" type="text" v-model="message" v-on:keyup.13="handleInputTextKeypress" placeholder="Your message">
-                            </div>
+                  <div class="col-md-7 video-div">
+                    <!-- video chat div here -->
+                    <div class="video grid grid-flow-row bg-black">
+                        <div id="my-video-chat-window" >
+                          <button class="broadcast btn btn-danger btn-lg" @click='getVideoToken(); connectClientWithUsername();' v-if="currentStatus!=='ON_GOING' && name === username"> Start Broadcasting </button>
+                        </div>
+                    </div>
+                  </div>
+                  <div class="col-md-5">
+                    <div class="card" v-if="accessToken != ''">
+                        <div class="viewer-header px-2 py-1">
+                          <p class="m-0 px-2 viewers"><fa icon="eye"/> {{viewerCount}} </p>
+                        </div>
+                        <div class="card-body p-0">
+                          <div class="message-box">
+                              <div class="message-div p-4" v-show="showMessages">
+                              <div v-for="message in tc.messagesArray" :key="message.id" class="row msg">
+                                  <div class="media-body" v-if="message.author == user.username">
+                                      <p class="message-host-author">{{message.author}}</p>
+                                      <br>
+                                      <p class="message-host-body">{{message.body}}</p>
+                                  </div>
+                                  <div class="media-body" v-else>
+                                      <p class="message-author">{{message.author}}</p>
+                                      <br>
+                                      <p class="message-body">{{message.body}}</p>
+                                  </div>
                               </div>
+                              </div>
+                              <p v-if="notification">{{notificationMsg}}</p>
                           </div>
+                        <!-- <input v-if="userNotJoined" class="form-control" type="text" v-model="username" v-on:keyup.13="connectClientWithUsername" placeholder="Your username"> -->
+                        <input v-if="!userNotJoined" class="form-control" type="text" v-model="message" v-on:keyup.13="handleInputTextKeypress" placeholder="Your message">
                       </div>
-                  
+                    </div>
+                  </div>
               </div>
+            </div>
           </div>
         </div>
-        <br>
-        <br>
+        <star-rating/>
         <div>
             <button class="btn btn-danger btn-lg" @click='stopBroadcasting();' v-if="currentStatus ==='ON_GOING' && name === tc.username"> Stop Broadcasting </button>
         </div>
     </div>
-    </div> 
+    </div>
   </card>
 </template>
 
@@ -82,9 +67,15 @@ var moment = require('moment');
 const axios = require('axios')
 const _ = require('lodash');
 import { mapGetters} from 'vuex';
+import StarRating from 'vue-star-rating';
 
 export default {
     name: 'video-chat',
+
+    components:{
+      StarRating
+    },
+
     data: function () {
       return {
         tc: {
@@ -114,7 +105,8 @@ export default {
         dataSid: '',
         name: this.$route.params.roomName,
         currentStatus: 'not-started',
-        videoRoom: []
+        videoRoom: [],
+        viewerCount: 0
       }
     },
 
@@ -130,7 +122,7 @@ export default {
           this.username = this.user?.username;
           var live = axios.get("/api/video/view/" + this.user?.username);
           console.log(live);
-          
+
           this.fetchAccessToken(this.tc.username, this.connectMessagingClient);
         }else{
           alert("NOT LOGGED IN");
@@ -471,7 +463,7 @@ export default {
 
             room.on('participantConnected', participant => {
                     console.log(`Participant "${participant.identity}" connected`);
-
+                    this.getViewerCount();
                     participant.tracks.forEach(publication => {
                         if (publication.isSubscribed) {
                             const track = publication.track;
@@ -486,6 +478,7 @@ export default {
 
             room.on('disconnected', room => {
             // Detach the local media elements
+                this.getViewerCount();
               room.localParticipant.tracks.forEach(publication => {
                 const attachedElements = publication.track.detach();
                 attachedElements.forEach(element => element.remove());
@@ -512,6 +505,7 @@ export default {
           const localParticipant = room.localParticipant;
           console.log(`Connected to the Room as LocalParticipant "${localParticipant.identity}"`);
 
+          this.getViewerCount();
           room.participants.forEach(participant => {
             participant.tracks.forEach(publication => {
               if (publication.track) {
@@ -564,14 +558,21 @@ export default {
           console.log(err);
         })
 
+      },
+
+       getViewerCount: function () {
+          let vm = this;
+          axios.get(`/api/video/view/${vm.name}`)
+          .then((result) => {
+              console.log("VIEWERS", result.data.data);
+              vm.viewerCount = result.data.data;
+          })
       }
 
     },
 
-    mounted : function () {
+    beforeMount : function () {
       const _this = this;
-      // console.log("NAME:",_this.name);
-      // console.log("USERNAME:",_this.user?.username);
 
       //ASSIGNING USERNAME
       _this.username = _this.user?.username ? _this.user?.username : "";
@@ -586,6 +587,7 @@ export default {
           _this.currentStatus = response.data.data.room_status;
           _this.username !== "" ? this.connectClientWithUsername() : null;
           _this.username !== _this.name ? this.joinAsParticipant() : null;
+          _this.getViewerCount();
         }
       })
       .catch((err)=>{
@@ -697,17 +699,17 @@ export default {
 
 /* Track */
 ::-webkit-scrollbar-track {
-  background: #f1f1f1; 
+  background: #f1f1f1;
 }
- 
+
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #888; 
+  background: #888;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #555; 
+  background: #555;
 }
 
 </style>
