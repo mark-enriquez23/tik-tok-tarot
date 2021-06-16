@@ -9,7 +9,7 @@
     <div class="mb-2">
      <div class="text-center">
         <!-- chat box starts here -->
-        <div class="container pb-5">
+        <div class="container pb-2">
           <div class="row justify-content-center">
               <div class="col-md-12">
                 <div class="row">
@@ -53,12 +53,54 @@
             </div>
           </div>
         </div>
-        <star-rating/>
+        <!-- <star-rating/> -->
+        <div class="m-3"  v-if="!userNotJoined && name !== username">
+          <b-button variant="primary" @click="$bvModal.show('rate-modal');"> <b-icon-star-fill/> Rate me </b-button>
+        </div>
         <div>
             <button class="btn btn-danger btn-lg" @click='stopBroadcasting();' v-if="currentStatus ==='ON_GOING' && name === tc.username"> Stop Broadcasting </button>
         </div>
     </div>
     </div>
+
+    <!-- MODAL HERE -->
+    <b-modal id="rate-modal" hide-footer>
+      <template #modal-title>
+        <span class="h3 text-center"> Rate  <strong> {{username}} </strong> </span>
+      </template>
+      <div class="d-block text-center">
+        <b-row class="p-3 text-center">
+          <b-col>
+            <star-rating v-model="ratingCount"/>
+          </b-col>
+        </b-row>
+        <b-row class="p-2">
+          <b-col class="d-flex justify-content-center">
+            <b-button
+              variant="link"
+              size="sm"
+              @click="()=>{
+                $bvModal.hide('rate-modal');
+              }"
+            >
+              Cancel
+            </b-button>
+
+            <b-button
+              variant="danger"
+              size="sm"
+              class="float-right"
+              @click="()=>{
+                handleSubmitRating();
+                $bvModal.hide('rate-modal');
+                }"
+            >
+                Submit
+            </b-button>
+          </b-col>
+        </b-row>
+      </div>
+    </b-modal>
   </card>
 </template>
 
@@ -68,6 +110,7 @@ const axios = require('axios')
 const _ = require('lodash');
 import { mapGetters} from 'vuex';
 import StarRating from 'vue-star-rating';
+import { swalOops, swalSuccess } from '../../../helpers';
 
 export default {
     name: 'video-chat',
@@ -106,7 +149,10 @@ export default {
         name: this.$route.params.roomName,
         currentStatus: 'not-started',
         videoRoom: [],
-        viewerCount: 0
+        viewerCount: 0,
+        showRateModal: false,
+        ratingCount: 0,
+        roomId: '',
       }
     },
 
@@ -115,6 +161,29 @@ export default {
     }),
 
     methods : {
+
+    //MODAL METHODS
+
+    resetRatingForms(){
+      vm = this;
+      vm.ratingCount = 0;
+    },
+
+    handleSubmitRating(){
+      let vm = this;
+
+      let data = {
+        'reference_id': vm.roomId,
+        'category': 'LIVE',
+        'rate': vm.ratingCount
+      }
+
+      axios.post(`/api/rating/save`, data).then((response)=>{
+        swalSuccess("Rating submitted!");
+        this.resetRatingForms();
+      })
+    },
+
     //CHAT METHODS
     connectClientWithUsername(){
         if (this.username !== undefined) {
@@ -583,6 +652,7 @@ export default {
       .then((response) =>{
         console.log("ROOM::::",response.data.data.room_sid);
         if(response.data.success){
+          _this.roomId = response.data.data.id;
           _this.dataSid = response.data.data.room_sid;
           _this.currentStatus = response.data.data.room_status;
           _this.username !== "" ? this.connectClientWithUsername() : null;
