@@ -140,6 +140,12 @@ Route::group(['prefix' => 'video'], function (){
     Route::get('/view/{room}', 'Video\AccessTokenController@getParticipants');
 });
 
+// Reviews
+Route::group( ['prefix' => 'reviews'], function () {
+    Route::get('/', 'ReviewController@index');
+    Route::post('add', 'ReviewController@store');
+} );
+
 // Suggestions
 Route::group(['prefix' => 'suggestions'], function () {
     Route::get('/', 'SuggestionController@index');

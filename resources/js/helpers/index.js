@@ -1,5 +1,6 @@
-import Swal from 'sweetalert2';
-import { getMetadata, getThumbnails } from 'video-metadata-thumbnails';
+import Swal from 'sweetalert2'
+import { getMetadata, getThumbnails } from 'video-metadata-thumbnails'
+import moment from 'moment'
 
 export const swalOops = (message = 'Something went wrong!') => {
     return Swal.fire({
@@ -33,4 +34,20 @@ export const blobVideoToBlobThumbnail = async (blob) => {
     });
 
     return thumbnails[0]['blob']
+}
+
+export const setPagination = ( data ) => {
+    let pagination = {
+        current_page: data.current_page,
+        last_page: data.last_page,
+        next_url: data.next_page_url,
+        prev_url: data.prev_page_url,
+        total: data.total
+    }
+
+    return pagination
+}
+
+export const momentFormat = ( date, format = 'D MMM YYYY' ) => {
+    return moment( date ).format( format )
 }

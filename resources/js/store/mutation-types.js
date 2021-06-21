@@ -59,3 +59,7 @@ export const DELETE_FREEBIE                 = 'DELETE_FREEBIE'
 //notification
 export const SAVE_NOTIF                     = 'SAVE_NOTIF'
 export const EMPTY_NOTIF                    = 'EMPTY_NOTIF'
+
+// reviews.js
+export const FETCH_REVIEWS                  = 'FETCH_REVIEWS'
+export const STORE_REVIEWS                  = 'STORE_REVIEWS'
