@@ -2,7 +2,7 @@
 /.idea
 /storage/*.key
 /vendor
-
+/public/uploads/vlog/*.mp4
 .env
 .phpunit.result.cache
 Homestead.json

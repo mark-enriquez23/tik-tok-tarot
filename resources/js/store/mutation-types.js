@@ -63,3 +63,6 @@ export const EMPTY_NOTIF                    = 'EMPTY_NOTIF'
 // reviews.js
 export const FETCH_REVIEWS                  = 'FETCH_REVIEWS'
 export const STORE_REVIEWS                  = 'STORE_REVIEWS'
+
+// vlogs.js
+export const FETCH_SINGLE_VLOG              = 'FETCH_SINGLE_VLOG'

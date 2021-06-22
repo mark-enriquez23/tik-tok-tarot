@@ -1,25 +1,25 @@
 <template>
    <section class="py-5">
       <div class="container text-center">
-        <h1 class="text-danger font-weight-bold">Vlog one - Lorem Ipsum</h1>
+        <h1 class="text-danger font-weight-bold">{{ vlog.title }}</h1>
         <p class="mb-3">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quis aliquid</p>
         <ul class="list-inline small text-uppercase mb-0">
           <li class="list-inline-item align-middle"><img class="rounded-circle shadow-sm" src="img/person-1.jpg" alt="" width="40"/></li>
           <li class="list-inline-item mr-0 text-muted align-middle">By </li>
-          <li class="list-inline-item align-middle mr-0"><a class="font-weight-bold reset-anchor text-danger" href="#">Jason Doe</a></li>
+          <li class="list-inline-item align-middle mr-0"><a class="font-weight-bold reset-anchor text-danger" href="#">{{ vlog.user.firstName + ' ' + vlog.user.lastName }}</a></li>
           <li class="list-inline-item text-muted align-middle mr-0">|</li>
-          <li class="list-inline-item text-muted align-middle mr-0">June 15, 2021</li>
+          <li class="list-inline-item text-muted align-middle mr-0">{{ dateFormat( vlog.created_at, 'LL' ) }}</li>
           <li class="list-inline-item text-muted align-middle mr-0">|</li>
-          <li class="list-inline-item text-muted align-middle">10 Reviews</li>
+          <li class="list-inline-item text-muted align-middle">{{ reviews.length }} Reviews</li>
         </ul>
       </div>
       <div class="player-container  py-5">
-        <vue-core-video-player :autoplay="false" class="w-100" src="https://r2---sn-jvhja5g3-hoaee.googlevideo.com/videoplayback?expire=1617270103&ei=90BlYM7cBcu24wL63odQ&ip=111.125.110.227&id=o-ACc_E-nfCgbg-6IAUVdC05GnBPUcjWNUmcqZFegpBBpB&itag=22&source=youtube&requiressl=yes&mh=Px&mm=31%2C29&mn=sn-jvhja5g3-hoaee%2Csn-i3b7knlk&ms=au%2Crdu&mv=m&mvi=2&pl=22&initcwndbps=377500&vprv=1&mime=video%2Fmp4&ns=NIkIS0XjZp2mrqzu4lThi4cF&cnr=14&ratebypass=yes&dur=4701.994&lmt=1614049250163820&mt=1617248203&fvip=4&fexp=24001373%2C24007246&c=WEB&txp=5535432&n=xr6PBs8JOsFyQFICYV&sparams=expire%2Cei%2Cip%2Cid%2Citag%2Csource%2Crequiressl%2Cvprv%2Cmime%2Cns%2Ccnr%2Cratebypass%2Cdur%2Clmt&sig=AOq0QJ8wRQIgZep9VFZVGJFdI2j8OhinVB1a7MG8BBwLTFFGkDNDbbICIQDF7tmPkZBnlf1aiaoQg-OtnF_yDHOgITDRNV5gcmM1Bg%3D%3D&lsparams=mh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpl%2Cinitcwndbps&lsig=AG3C_xAwRQIgHIA4jUrGrgHfP7qp95b5b7RuRQQw2oKnZxviIHoUOfACIQCGxWEyk74O_xIl-6ORTGVyYCm5wOJURH9nLYq4iFJmag%3D%3D"></vue-core-video-player>
+        <vue-core-video-player :autoplay="false" class="w-100" :src="'/uploads/vlog/' + vlog.file_name"></vue-core-video-player>
       </div>
       <div class="container">
         <div class="row">
           <div class="col-lg-8 mb-5 mb-lg-0">
-           <div class="vlog-content">
+            <!-- <div class="vlog-content">
               <h2>Heading level two</h2>
               <p class="text-muted mb-4">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata.</p><img class="img-fluid mb-4" src="img/post-img-1.jpg" alt="">
               <p class="text-muted mb-5">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata.</p>
@@ -32,7 +32,8 @@
               </ul>
               <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
               <p class="mb-5">Possimus animi modi praesentium quis delectus libero architecto ipsum sint iure amet rerum incidunt, harum facere voluptatibus eligendi. Velit sapiente omnis earum, facilis harum est debitis tenetur deserunt tempora explicabo!</p>
-            </div>
+            </div> -->
+            <div class="vlog-content text-break pb-5" v-html="vlog.description"></div>
             <ul class="nav nav-pills mb-3 review-suggestions" id="pills-tab" role="tablist">
               <li class="nav-item" role="presentation">
                 <a class="nav-link active" id="pills-review-tab" data-toggle="pill" href="#pills-review" role="tab" aria-controls="pills-review" aria-selected="true">Review</a>
@@ -83,41 +84,14 @@
                         <div class="pl-2">
                           <p class="small mb-0 text-danger">{{ dateFormat( review.created_at ) }}</p>
                           <h5>{{ review.name }} <star-rating :starSize="20" :showRating="false" :readOnly="true" :rating="review.stars" /></h5>
-                          <p class="text-muted text-small mb-2">{{ review.message }}</p>
+                          <p class="text-muted text-small mb-2 text-break">{{ review.message }}</p>
                         </div>
                       </div>
                     </li>
                   </template>
                   <template v-else>
                     <li>
-                      <div class="d-flex mb-4">
-                        <div class="pr-2 flex-grow-1" style="width: 75px; min-width: 75px;"><img class="rounded-circle shadow-sm img-fluid img-thumbnail" :src="userImageeUrl + 'testimonials-1.jpg'" alt=""></div>
-                        <div class="pl-2">
-                          <p class="small mb-0 text-danger">15 Aug 2019</p>
-                          <h5>John Doe <star-rating :starSize="20" :showRating="false" :readOnly="true" :rating="2" /></h5>
-                          <p class="text-muted text-small mb-2">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At.</p>
-                        </div>
-                      </div>
-                    </li>
-                    <li>
-                      <div class="d-flex mb-4">
-                        <div class="pr-2 flex-grow-1" style="width: 75px; min-width: 75px;"><img class="rounded-circle shadow-sm img-fluid img-thumbnail" :src="userImageeUrl + 'testimonials-2.jpg'" alt=""></div>
-                        <div class="pl-2">
-                          <p class="small mb-0 text-danger">15 Aug 2019</p>
-                          <h5>John Doe <star-rating :starSize="20" :showRating="false" :readOnly="true" :rating="3" /></h5>
-                          <p class="text-muted text-small mb-2">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At.</p>
-                        </div>
-                      </div>
-                    </li>
-                    <li>
-                      <div class="d-flex mb-4">
-                        <div class="pr-2 flex-grow-1" style="width: 75px; min-width: 75px;"><img class="rounded-circle shadow-sm img-fluid img-thumbnail" :src="userImageeUrl + 'testimonials-3.jpg'" alt=""></div>
-                        <div class="pl-2">
-                          <p class="small mb-0 text-danger">15 Aug 2019</p>
-                          <h5>John Doe <star-rating :starSize="20" :showRating="false" :readOnly="true" :rating="5" /></h5>
-                          <p class="text-muted text-small mb-2">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At.</p>
-                        </div>
-                      </div>
+                      <div class="text-cent">No review(s) yet</div>
                     </li>
                   </template>
                 </ul>
@@ -233,7 +207,6 @@ import Vue from 'vue'
 import { mapGetters } from 'vuex'
 import VueCoreVideoPlayer from 'vue-core-video-player'
 import StarRating from 'vue-star-rating'
-import axios from 'axios'
 import { swalSuccess, swalOops, momentFormat } from '~/helpers'
 
 Vue.use(VueCoreVideoPlayer, {
@@ -250,7 +223,8 @@ export default {
 
   beforeCreate() {
     this.$store.dispatch( 'about-us/fetchAboutUsData' )
-    this.$store.dispatch( 'reviews/reviews' )
+    this.$store.dispatch( 'reviews/reviews', { pagUrl: null, id: this.$route.params.id } )
+    this.$store.dispatch( 'vlogs/getVlog', this.$route.params.id )
   },
 
   data: () => ({
@@ -263,6 +237,7 @@ export default {
   computed: mapGetters({
     authenticated: 'auth/check',
     aboutUs: 'about-us/aboutUs',
+    vlog: 'vlogs/vlog',
     reviews: 'reviews/reviews',
     reviewsPagination: 'reviews/reviewsPagination',
     reviewForm: 'reviews/reviewForm',
@@ -277,6 +252,7 @@ export default {
     },
 
     async suggestionFormSubmit() {
+      this.suggestionForm.video_id = this.$route.params.id
       const { data } = await this.suggestionForm.post( '/api/suggestions/create' )
 
       if ( data.success ) {
@@ -289,6 +265,7 @@ export default {
     
     async reviewFormSubmit() {
       this.reviewForm.user = this.authenticated
+      this.reviewForm.vlog_id = this.$route.params.id
       const { data } = await this.reviewForm.post( '/api/reviews/add' )
 
       if ( data.success ) {
@@ -300,11 +277,11 @@ export default {
     },
 
     fetchReviews( page_url ) {
-      this.$store.dispatch( 'reviews/reviews', page_url )
+      this.$store.dispatch( 'reviews/reviews', { page_url: page_url, id: this.$route.params.id } )
     },
 
-    dateFormat( date ) {
-      return momentFormat( date )
+    dateFormat( date, format = null ) {
+      return momentFormat( date, format )
     }
   }
 }

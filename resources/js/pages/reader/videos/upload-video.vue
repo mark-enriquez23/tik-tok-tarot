@@ -16,14 +16,14 @@
 
           <div class="col-md-6">   
             <div class="form-group col-md-12 mx-auto mx-auto  ">
-              <label>{{ $t('Title') }}</label>
+              <label>Title</label>
               <input  v-model="videoForm.title" :class="{ 'is-invalid': videoForm.errors.has('title') }" class="form-control" type="text" name="title" required>
               <has-error :form="videoForm" field="title" />
             </div>
 
             <div class="form-group col-md-12 mt-3 mx-auto">
-              <label>{{ $t('Description') }}</label>
-              <textarea  v-model="videoForm.description" :class="{ 'is-invalid': videoForm.errors.has('description') }" class="form-control" type="text" name="description" required></textarea>
+              <label>Description</label>
+              <vue-editor v-model="videoForm.description" :class="{ 'is-invalid': videoForm.errors.has('description') }"></vue-editor>
               <has-error :form="videoForm" field="description" />
             </div>
           </div>
@@ -35,14 +35,14 @@
             </div>
 
             <div class="form-group col-md-6">
-              <label>{{ $t('Video File') }}</label>
+              <label>Video File</label>
               <button type="button" class="btn btn-primary w-100" @click.prevent="clickFileInput">
                 <fa icon="plus-circle" fixed-width />Select Video File
               </button>
             </div>
 
             <div class="form-group col-md-12 mt-3">
-              <label>{{ $t('File Name') }}</label>
+              <label>File Name</label>
               <input v-model="filename" class="form-control" type="text" disabled>
             </div>
           </div>
@@ -64,6 +64,7 @@ import Form from 'vform'
 import { mapGetters } from 'vuex'
 import axios from 'axios'
 import { swalOops, swalSuccess } from "~/helpers"
+import { VueEditor } from "vue2-editor"
 
 export default {
   scrollToTop: false,
@@ -72,7 +73,7 @@ export default {
     return { title: this.$t('settings') }
   },
 
-  components: {  },
+  components: { VueEditor },
 
    computed: mapGetters({
     user: 'auth/user',
@@ -105,26 +106,26 @@ export default {
       //this.profile_photo = URL.createObjectURL( this.additionalForm.profile_photo);
     },
 
-    uploadVideo(){
-      if (!this.videoForm.file)
-        swalOops("Please select a video file.")
-      else
-      {
-      var formData = new FormData;
-      formData.append("file", this.videoForm.file)
-      formData.append("user_id", this.user.user_details[0].user_id)
-      formData.append("description", this.videoForm.description)
-      formData.append("title", this.videoForm.title)
-      const { data } = axios.post('/api/vlog/upload',formData).then(res=>{
-        console.log(res)
-        if (res.data.success){
-          swalSuccess("Video successfully updated").then(() =>{
-               console.log("back")
-            })
-        }
-      }).catch((e)=>{
-        swalOops('A problem occurred')
-      })
+    uploadVideo() {
+      if ( ! this.videoForm.file ) {
+        swalOops( "Please select a video file." )
+
+      } else {
+        var formData = new FormData
+        formData.append( "file", this.videoForm.file )
+        formData.append( "user_id", this.user.id )
+        formData.append( "description", this.videoForm.description )
+        formData.append( "title", this.videoForm.title )
+        const { data } = axios.post( '/api/vlog/upload', formData ).then( res => {
+          
+          if ( res.data.success ){
+            swalSuccess( "Video successfully updated" ).then( () => {
+              this.$router.push({ name: 'vlogs.list' })
+            } )
+          }
+        } ).catch( ( e ) => {
+          swalOops( 'A problem occurred' )
+        } )
       }
     },
 

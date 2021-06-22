@@ -49,5 +49,6 @@ export const setPagination = ( data ) => {
 }
 
 export const momentFormat = ( date, format = 'D MMM YYYY' ) => {
-    return moment( date ).format( format )
+    let f = format ? format : 'D MMM YYYY'
+    return moment( date ).format( f )
 }

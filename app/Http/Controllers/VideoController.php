@@ -31,7 +31,7 @@ class VideoController extends Controller
 
     public function showByID($id){
 
-        $data = Video::where('id', $id)->with('user')->get();
+        $data = Video::where('id', $id)->with('user')->first();
 
         return response()->json([
             'success'   => true,

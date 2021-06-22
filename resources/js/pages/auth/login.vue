@@ -17,7 +17,7 @@
 
           <!-- Password -->
           <div class="form-group col-md-7 mx-auto">
-            <label for="exampleInputEmail1">{{ $t('password') }}</label>
+            <label for="exampleInputEmail1">Password</label>
             <input  v-model="form.password" :class="{ 'is-invalid': form.errors.has('password') }" class="form-control" type="password" name="password">
               <has-error :form="form" field="password" />
           </div>
@@ -26,11 +26,11 @@
           <div class="form-group row no-gutters col-md-7 mx-auto">
             <div class="col-md-12 d-flex">
               <checkbox v-model="remember" name="remember">
-                {{ $t('remember_me') }}
+                Remember Me
               </checkbox>
 
               <router-link :to="{ name: 'password.request' }" class="small ml-auto my-auto">
-                {{ $t('forgot_password') }}
+                Forgot Password
               </router-link>
             </div>
           </div>
@@ -45,11 +45,11 @@
             <div class="col-md-12 px-0">
               <!-- Submit Button -->
               <v-button class="btn btn-primary w-100" :disabled="!captchaDisabled && !token" :loading="form.busy">
-                {{ $t('login') }}
+                Login
               </v-button>
 
               <!-- GitHub Login Button -->
-              <login-with-github />
+              <!-- <login-with-github /> -->
             </div>
           </div>
         </form>

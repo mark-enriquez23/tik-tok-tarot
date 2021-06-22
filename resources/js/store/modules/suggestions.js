@@ -6,7 +6,7 @@ import { setPagination } from '~/helpers'
 // state
 export const state = {
     suggestionForm: new Form({
-        video_id: 1,
+        video_id: '',
         message: ''
     }),
     reviews: [],

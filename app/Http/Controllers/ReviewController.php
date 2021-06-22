@@ -7,8 +7,8 @@ use Illuminate\Http\Request;
 
 class ReviewController extends Controller
 {
-    public function index() {
-        $reviews = Review::where( 'vlog_id', 1 )->orderBy( 'created_at', 'DESC' )->paginate( 5 );
+    public function index( Request $request ) {
+        $reviews = Review::where( 'vlog_id', $request->id )->orderBy( 'created_at', 'DESC' )->paginate( 5 );
 
         return response()->json( [
             'reviews' => $reviews
@@ -39,7 +39,7 @@ class ReviewController extends Controller
         $temp_avatar = $tempAvatars[ array_rand( $tempAvatars ) ];
 
         $review = new Review;
-        $review->vlog_id = 1;
+        $review->vlog_id = $request->vlog_id;
         $review->stars = $request->stars;
         $review->name = $request->name;
         $review->email = $request->email;

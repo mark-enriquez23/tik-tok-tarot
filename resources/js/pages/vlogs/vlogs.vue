@@ -23,28 +23,25 @@
       <div class="card-columns">
         <div class="card" v-for="vlog in vlogs" :key="vlog.id" >
           <div class="thumb-container">
-
-            <img class="card-img-top" :src="vlogImage" :alt="vlog.thumbnail">
-            <div class="overlay">
-            </div>
+            <img class="card-img-top" :src="vlogImage" :alt="vlogImage">
+            <div class="overlay"></div>
           </div>
             <div class="card-body">
-              <h4 class="card-title text-danger mb-0">{{ vlog.name }}</h4>
+              <h4 class="card-title text-danger mb-0">{{ vlog.title }}</h4>
               <!-- <p class="text-muted">By {{ vlog.author }}</p> -->
               <!-- <p class="meta mb-2">
               <span class="mr-2"><fa class="" :icon="['fas', 'calendar-alt']" /> {{ vlog.created_at }}</span>
               <!-- <span><fa class="" :icon="['fas', 'comment']" /> {{vlog.comments}} Comments</span>
               </p> -->
               <p class="card-text text-muted">
-                {{ vlog.content }}
+                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Harum quos hic, suscipit...
               </p>
               <p class="client-review-stars">
                 <fa :icon="['fas', 'star']" v-for="index in vlog.rate" :key="index" />
-                    
               </p>
-              <!-- <router-link :to="{ name: 'vlog.view' }">
-              <a href="" class="text-danger">Continue Reading</a>
-              </router-link> -->
+              <router-link :to="{ name: 'vlog.view', params: { id: vlog.id } }" class="text-danger">
+                Continue Reading
+              </router-link>
           </div>
         </div>
       </div>

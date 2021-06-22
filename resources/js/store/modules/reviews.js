@@ -6,6 +6,7 @@ import { setPagination } from '~/helpers'
 // state
 export const state = {
     reviewForm: new Form({
+        vlog_id: '',
         user: '',
         stars: 0,
         name: '',
@@ -39,9 +40,9 @@ export const actions = {
         return data
     },
 
-    async reviews({ commit }, page_url) {
+    async reviews({ commit }, { page_url, id }) {
         page_url = page_url || '/api/reviews'
-        const { data } = await axios.get( page_url )
+        const { data } = await axios.get( page_url, { params: { id: id } } )
         commit( types.FETCH_REVIEWS, data )
 
         return data

@@ -11,7 +11,7 @@ export default [
   { path: '/search', name: 'search', component: page('search.vue') },
   { path: '/sessions', name: 'sessions', component: page('sessions.vue') },
   { path: '/vlogs/list', name: 'vlogs.list', component: page('vlogs/vlogs.vue') },
-  { path: '/vlogs/view', name: 'vlog.view', component: page('vlogs/vlog-post.vue') },
+  { path: '/vlogs/view/:id', name: 'vlog.view', component: page('vlogs/vlog-post.vue') },
   { path: '/vlogs/review', name: 'vlogs.review', component: page('vlogs/vlog-review.vue') },
   { path: '/testimonials', name: 'testimonials', component: page('welcome.vue') },
   { path: '/about-us', name: 'about.us', component: page('about-us.vue') },
