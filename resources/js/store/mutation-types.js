@@ -66,3 +66,5 @@ export const STORE_REVIEWS                  = 'STORE_REVIEWS'
 
 // vlogs.js
 export const FETCH_SINGLE_VLOG              = 'FETCH_SINGLE_VLOG'
+export const FETCH_VLOGS                    = 'FETCH_VLOGS'
+export const FETCH_VLOGS_FEATURED           = 'FETCH_VLOGS_FEATURED'
