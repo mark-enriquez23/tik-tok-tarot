@@ -13,4 +13,9 @@ class Review extends Model
     protected $casts = [
         'metadata' => 'array'
     ];
+
+    public function vlog(){
+        return $this->belongsTo('App\Video');
+    }
+
 }

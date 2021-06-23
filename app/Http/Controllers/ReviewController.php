@@ -53,4 +53,12 @@ class ReviewController extends Controller
             'review' => $review
         ]);
     }
+
+    public function getAllReview(){
+        $reviews = Review::with('vlog', 'vlog.review')->orderBy( 'created_at', 'DESC' )->paginate(5);
+
+        return response()->json( [
+            $reviews
+        ] );
+    }
 }

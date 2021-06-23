@@ -143,6 +143,7 @@ Route::group(['prefix' => 'video'], function (){
 // Reviews
 Route::group( ['prefix' => 'reviews'], function () {
     Route::get('/', 'ReviewController@index');
+    Route::get('/all', 'ReviewController@getAllReview');
     Route::post('add', 'ReviewController@store');
 } );
 

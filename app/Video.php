@@ -14,6 +14,10 @@ class Video extends Model
         return $this->belongsTo('App\User');
     }
 
+    public function review(){
+        return $this->hasMany('App\Review', 'vlog_id', 'id');
+    }
+
     public function suggestions(){
         return $this->hasMany('App\Suggestion');
     }

@@ -8,23 +8,24 @@
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
         </div>
         <div class="card py-5">
-          <div class="px-5" v-for="(review, index) in vlog_reviews" :key="index">
+          <div class="px-5" v-for="(review, index) in vlog_reviews.data" :key="index">
             <div class="blog-entry ftco-animate d-md-flex fadeInUp ftco-animated text-md-left text-center" >
-            <img class="rounded-circle img-thumbnail shadow-sm" :src="review.author_img" alt="" width="150">
-            <div class="text text-2 pl-md-4 review-content">
-            <h2 class="mb-2 text-danger review-data">{{ review.title }}</h2>
-            <div class="meta-wrap">
-            <p class="meta mb-2">
-            <span class="mr-2"><fa class="" :icon="['fas', 'calendar-alt']" /> {{ review.date_created }}</span>
-            <span><fa class="" :icon="['fas', 'comment']" />{{ review.comments }} Reviews</span>
-            </p>
-            </div>
-            <p class="mb-2 review-data">{{ review.description }}</p>
-                <div class="btn btn-danger rounded-pill">
-                  <div class=" row no-gutters mx-auto justify-content-center">
-                    <div class="my-auto mr-2">Show Vlog</div> <fa :icon="['fas', 'chevron-right']" class="my-auto" />
-                  </div>
+              <img class="rounded-circle img-thumbnail shadow-sm" :src="`/images/testimonials/${review.avatar}`" alt="" width="200">
+              <div class="text text-2 pl-md-4 review-content">
+                <h2 class="mb-2 text-danger review-data">{{ review.vlog.title }}</h2>
+                <div class="meta-wrap">
+                  <p class="meta mb-2">
+                  <span class="mr-2"><fa class="" :icon="['fas', 'calendar-alt']" /> {{ review.created_at | moment("dddd, MMMM Do YYYY") }}</span>
+                  <span><fa class="" :icon="['fas', 'comment']" />{{ review.vlog.review ? review.vlog.review.length : 0  }} Reviews</span>
+                  </p>
                 </div>
+                <p class="mb-2 review-data">{{ review.message }}</p>
+                <p class="mb-2 review-data blockquote-footer">{{ review.name }}</p>
+                    <div class="btn btn-danger rounded-pill" @click="viewVlog(review.vlog.id)">
+                      <div class=" row no-gutters mx-auto justify-content-center" >
+                        <div class="my-auto mr-2">Show Vlog</div> <fa :icon="['fas', 'chevron-right']" class="my-auto" />
+                      </div>
+                    </div>
               </div>
             </div>
             <hr style="height: 10px">
@@ -89,8 +90,9 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import moment from 'moment'
+import { mapGetters } from 'vuex';
+import moment         from 'moment';
+import axios          from 'axios';
 
 export default {
   components: { },
@@ -99,8 +101,10 @@ export default {
   metaInfo () {
     return { title: this.$t('home') }
   },
-  beforeCreate() {
+  beforeMount() {
     this.$store.dispatch('about-us/fetchAboutUsData')
+    this.getReviews();
+
   },
 
   data: () => ({
@@ -108,50 +112,36 @@ export default {
     imageUrl: window.config.assetURL + 'images/',
     userImageeUrl: window.config.assetURL + 'images/testimonials/',
     srcLogoOnly: window.config.assetURL + 'images/sample-logo.png',
-    vlog_reviews: [
-       {
-        title: 'Lorem Impsum',
-        author: 'John Doe',
-        author_img: window.config.assetURL + 'images/testimonials/testimonials-4.jpg',
-        id: 0,
-        description: 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
-        comments: 5,
-        date_created: moment().format('MMMM DD, YYYY')
-      },
-      {
-        title: 'Duis aute irure dolor',
-        author: 'John Doe',
-        author_img: window.config.assetURL + 'images/testimonials/testimonials-5.jpg',
-        id: 0,
-        description: 'Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-        comments: 2,
-        date_created: moment().format('MMMM DD, YYYY')
-      },
-      {
-        title: 'Ut enim ad minim veniam',
-        author: 'John Doe',
-        author_img: window.config.assetURL + 'images/testimonials/testimonials-2.jpg',
-        id: 0,
-        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ',
-        comments: 3,
-        date_created: moment().format('MMMM DD, YYYY')
-      },
-      {
-        title: 'Deserunt mollit anim id est laborum',
-        author: 'John Doe',
-        author_img: window.config.assetURL + 'images/testimonials/testimonials-3.jpg',
-        id: 0,
-        description: 'Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-        comments: 8,
-        date_created: moment().format('MMMM DD, YYYY')
-      },
-    ]
+    vlog_reviews: [],
   }),
 
   computed: mapGetters({
     authenticated: 'auth/check',
     aboutUs: 'about-us/aboutUs'
-  })
+  }),
+
+  methods:{
+    getReviews() {
+          axios.get('/api/reviews/all').then((response) => {
+            console.log("RESPONSE", response.data[0])
+            this.vlog_reviews = response.data[0];
+          });
+        },
+
+    viewVlog(id){
+      this.$router.push(`/vlogs/view/${id}`)
+    }
+  },
+
+  filters: {
+    truncate: function (text, length, suffix) {
+        if (text.length > length) {
+            return text.substring(0, length) + suffix;
+        } else {
+            return text;
+        }
+    },
+  }
 }
 </script>
 
