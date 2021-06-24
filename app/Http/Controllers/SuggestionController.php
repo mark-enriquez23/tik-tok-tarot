@@ -17,7 +17,7 @@ class SuggestionController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => $suggestion
+            'data' => $suggestion
         ]);
     }
 
@@ -31,7 +31,7 @@ class SuggestionController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => $suggestion
+            'data' => $suggestion
         ]);
     }
 
@@ -45,7 +45,7 @@ class SuggestionController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => $suggestion
+            'data' => $suggestion
         ]);
     }
 
@@ -57,7 +57,7 @@ class SuggestionController extends Controller
     {
         $suggestions = Suggestion::with(array('video' => function($query) use ($id) {
             return $query->where('user_id', $id)->with('user')->get();
-        }))->get();
+        }))->paginate(5);
 
         $data = array();
 
@@ -69,7 +69,7 @@ class SuggestionController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => $data
+            'data' => $suggestions
         ]);
     }
 

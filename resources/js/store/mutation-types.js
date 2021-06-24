@@ -68,3 +68,8 @@ export const STORE_REVIEWS                  = 'STORE_REVIEWS'
 export const FETCH_SINGLE_VLOG              = 'FETCH_SINGLE_VLOG'
 export const FETCH_VLOGS                    = 'FETCH_VLOGS'
 export const FETCH_VLOGS_FEATURED           = 'FETCH_VLOGS_FEATURED'
+
+// suggestions
+export const FETCH_ALL_SUGGESTIONS          = 'FETCH_ALL_SUGGESTIONS'
+export const FETCH_USER_SUGGESTIONS         = 'FETCH_USER_SUGGESTIONS'
+export const FETCH_VIDEO_SUGGESTIONS        = 'FETCH_VIDEO_SUGGESTIONS'

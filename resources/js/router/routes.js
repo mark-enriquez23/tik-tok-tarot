@@ -187,6 +187,14 @@ export default [
     }
   },
   {
+    path: '/reader/suggestions', name: 'reader.suggestions', component: page('reader/suggestions/List.vue'),
+    meta          : {
+      requiresAuth: true,
+      role        : [2],
+      title       : 'Readers'
+    }
+  },
+  {
     path: '/reader/upload-video', name: 'reader.upload-video', component: page('reader/videos/upload-video.vue'),
     meta          : {
       requiresAuth: true,

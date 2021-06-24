@@ -201,6 +201,11 @@
                 Rejected
               </router-link>
             </li>
+            <li class="nav-item">
+              <router-link :to="{ name: 'reader.suggestions' }" class="nav-link" active-class="active">
+                Suggestions
+              </router-link>
+            </li>
         </ul>
       </div>
     </div>
@@ -212,8 +217,6 @@
 import { mapGetters } from 'vuex'
 import LocaleDropdown from './LocaleDropdown'
 import Form from 'vform'
-import Swal from 'sweetalert2';
-import axios from "axios"
 
 export default {
   components: {

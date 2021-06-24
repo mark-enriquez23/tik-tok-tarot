@@ -11,7 +11,7 @@ export const state = {
 // getters
 export const getters = {
     vlogList: state => state.vlogList,
-    vlogListFeaturedDataList: state => state.vlogList,
+    vlogListFeaturedDataList: state => state.vlogListFeaturedDataList,
 };
 
 // mutations
@@ -27,11 +27,11 @@ export const mutations = {
 // actions
 export const actions = {
   async fetchVlogData({ commit }) {
-      const { data } = await axios.get("/api/vlog/status/approved/0");
+      const { data } = await axios.get("/api/vlog/status/APPROVED/0");
       commit(types.FETCH_VLOGS, { vlogListData: data.data });
   },
   async fetchVlogfeaturedData({ commit }) {
-    const { data } = await axios.get("/api/vlog/status/approved/1");
+    const { data } = await axios.get("/api/vlog/status/APPROVED/1");
     // console.log(data)
     // debugger
     commit(types.FETCH_VLOGS_FEATURED, { vlogListFeaturedDataList: data.data });

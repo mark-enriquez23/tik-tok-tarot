@@ -26,8 +26,8 @@ Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
 Vue.use(Clipboard)
 Vue.use(moment);
-Vue.component('vue-phone-number-input', VuePhoneNumberInput);
 Vue.use(ImageUploader);
+Vue.component('vue-phone-number-input', VuePhoneNumberInput);
 
 Vue.config.productionTip = false
 

@@ -26,8 +26,8 @@
       <div class="container">
 
         <div class="row">
-        
-         
+
+
 
               <div class="col-lg-4 mt-4 mt-lg-0" v-if="totalViewers !== null">
                 <router-link :to="{ name: 'readers' }" class="nav-link" active-class="active">
@@ -67,7 +67,7 @@
                 </div>
                 </router-link>
               </div>
-              
+
         </div>
       </div>
     </section>
@@ -229,7 +229,7 @@
             </p>
             <p class="client-review-stars">
                       <fa :icon="['fas', 'star']" v-for="index in vlog.rate" :key="index" />
-                    
+
             </p>
           </div>
           </a>
@@ -397,7 +397,7 @@ export default {
     },
 
     async fetchVlogs() {
-        var vlogs = await axios.get("/api/vlog/status/approved");
+        var vlogs = await axios.get("/api/vlog/status/APPROVED/1");
         this.vlogs = vlogs.data;
         // console.log(this.vlogs);
         // if (!this.vlogs.success) {

@@ -26,9 +26,7 @@
           </template>
           <h6 class="mt-0 mb-1">{{ featuredVlog.title }}</h6>
           <small class="vlog-author">{{ featuredVlog.user.firstName + featuredVlog.user.lastName }}</small>
-          <p class="mb-0 vlog-description">
-            {{ featuredVlog.description }}
-          </p>
+          <p class="mb-0 vlog-description" v-html="featuredVlog.description" />
         </b-media>
       </div>
     </div>
@@ -55,9 +53,7 @@
           </template>
           <h6 class="mt-0 mb-0">{{ vlog.title }}</h6>
           <small class="vlog-author">{{ vlog.user.firstName + vlog.user.lastName }}</small>
-          <p class="mb-0 vlog-description">
-            {{ vlog.description }}
-          </p>
+          <p class="mb-0 vlog-description" v-html="vlog.description" />
         </b-media>
       </div>
      <!-- <div class="view">15.4k views</div> -->
@@ -70,17 +66,10 @@
 
 <script>
 import Vue from 'vue';
-import vmodal from 'vue-js-modal'
 import { mapGetters } from 'vuex'
-import moment from 'moment'
 import CoolLightBox from 'vue-cool-lightbox';
-import Swal from 'sweetalert2';
-import axios from "axios"
 import VueCoreVideoPlayer from 'vue-core-video-player'
 // import SuggestionForm from '../../components/Vlogs/VlogSuggestionForm.vue'
-
-
-Vue.use(vmodal)
 
 
 export default {
@@ -112,20 +101,11 @@ export default {
   }),
 
   methods: {
-    // async fetchVlogs() {
-    //     var vlogs = await axios.get("/api/vlog/status/approved");
-    //     this.vlogs = vlogs.data.data;
-    //     console.log(vlogs.data.data);
-    //     if (!vlogs.data.success) {
-    //       Swal.fire({
-    //       title: 'Fetching Vlogs Failed',
-    //       text: "An error has occurred. Please try again.",
-    //       type: 'error'
-    //     })
-    //   }
-    // },
+
   },
-  mounted(){
+
+
+  beforeMount(){
     this.$store.dispatch('vlogs-list/fetchVlogData')
     this.$store.dispatch('vlogs-list/fetchVlogfeaturedData')
   }
@@ -712,7 +692,7 @@ body {
  text-overflow: ellipsis;
  white-space: nowrap;
  font-weight: bold;
-} 
+}
 
 .view {
  padding: 10px;
@@ -735,10 +715,10 @@ body {
  }
   &:hover svg{
    animation: load 0.9s linear infinite;
-  } 
+  }
 }
 
-@keyframes load 
+@keyframes load
 {
   0%{
     transform: rotate(0deg);
@@ -746,7 +726,7 @@ body {
   100%{
     transform: rotate(360deg);
   }
-} 
+}
 
 .language {
  margin-bottom: 8px;
@@ -817,7 +797,7 @@ body {
   padding: 20px 10px;
   font-size: 14px;
  }
- 
+
  .trends {
   padding: 40px 10px;
  }
@@ -831,7 +811,7 @@ body {
   }
   .button {
    display: none;
-  } 
+  }
  }
 }
 
@@ -878,7 +858,7 @@ body {
   display: block;
   margin-bottom: 10px;
   margin-top: 6px;
- } 
+ }
  .profile-menu {
   flex-direction: column;
  }
@@ -936,7 +916,7 @@ body {
  .user-settings svg {
   display: none;
  }
- 
+
  .videos{
   grid-template-columns:1fr;
  }
