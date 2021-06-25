@@ -14,10 +14,10 @@
               <div class="col-md-12">
                 <div class="row">
                   <div class="col-md-7 video-div">
+
                     <!-- video chat div here -->
                     <div class="video grid grid-flow-row bg-black">
                         <div id="my-video-chat-window" >
-                          <button class="broadcast btn btn-danger btn-lg" @click='getVideoToken(); connectClientWithUsername();' v-if="currentStatus!=='ON_GOING' && name === username"> Start Broadcasting </button>
                         </div>
                     </div>
                   </div>
@@ -54,11 +54,24 @@
           </div>
         </div>
         <!-- <star-rating/> -->
-        <div class="m-3"  v-if="!userNotJoined && name !== username">
-          <b-button variant="primary" @click="$bvModal.show('rate-modal');"> <b-icon-star-fill/> Rate me </b-button>
+        <div class="m-3">
+          <b-button variant="primary" v-if="!userNotJoined && (name !== username || name === tc.username)" @click="$bvModal.show('rate-modal');"> <b-icon-star-fill/> Rate me </b-button>
         </div>
         <div>
-            <button class="btn btn-danger btn-lg" @click='stopBroadcasting();' v-if="currentStatus ==='ON_GOING' && name === tc.username"> Stop Broadcasting </button>
+            <button
+              class="broadcast btn btn-danger btn-lg"
+              @click='getVideoToken(); connectClientWithUsername();'
+              v-show="currentStatus !=='ON_GOING' && (name === username || name === tc.username)"
+            >
+                Start Broadcasting
+            </button>
+            <button
+            class="btn btn-danger btn-lg"
+            @click='stopBroadcasting();'
+            v-if="currentStatus ==='ON_GOING' && name === tc.username"
+            >
+              Stop Broadcasting
+            </button>
         </div>
     </div>
     </div>
@@ -190,7 +203,6 @@ export default {
           this.tc.username = this.user?.username;
           this.username = this.user?.username;
           var live = axios.get("/api/video/view/" + this.user?.username);
-          console.log(live);
 
           this.fetchAccessToken(this.tc.username, this.connectMessagingClient);
         }else{
@@ -500,7 +512,7 @@ export default {
 
         const axios = require('axios');
 
-        const { connect, createLocalVideoTrack,  } = require('twilio-video');
+        const { connect, createLocalTracks } = require('twilio-video');
 
         connect( this.accessToken, { name:this.name }).then(room => {
 
@@ -525,32 +537,57 @@ export default {
             })
 
             const videoChatWindow = document.getElementById('my-video-chat-window');
+            this.viewerCount = room.participants.size;
 
-            createLocalVideoTrack().then(track => {
-                videoChatWindow.appendChild(track.attach());
+            let localTrack
+            createLocalTracks().then(track => {
+              console.log(track);
+              localTrack = track;
+              track.forEach((media) => {
+                videoChatWindow.appendChild(media.attach());
+              })
             });
 
             room.on('participantConnected', participant => {
                     console.log(`Participant "${participant.identity}" connected`);
-                    this.getViewerCount();
-                    participant.tracks.forEach(publication => {
-                        if (publication.isSubscribed) {
-                            const track = publication.track;
-                            videoChatWindow.appendChild(track.attach());
-                        }
-                    });
+                    this.viewerCount = room.participants.size;
 
-                    participant.on('trackSubscribed', track => {
-                        videoChatWindow.appendChild(track.attach());
-                    });
+                    // participant.tracks.forEach(publication => {
+                    //     if (publication.isSubscribed) {
+                    //         const track = publication.track;
+                    //         videoChatWindow.appendChild(track.attach());
+                    //     }
+                    // });
+
+                    // participant.on('trackSubscribed', track => {
+                    //     videoChatWindow.appendChild(track.attach());
+                    // });
                 });
 
             room.on('disconnected', room => {
             // Detach the local media elements
-                this.getViewerCount();
+              console.log("Host disconnected");
+              console.log("localParticipant", room.localParticipant);
+              console.log("videoChatWindow", videoChatWindow.childNodes[0]);
+              const child = videoChatWindow.lastElementChild;
+              videoChatWindow.removeChild(child)
+              // videoChatWindow.innerHTML ="";
+              console.log("DC TRACKS", localTrack)
+              localTrack.forEach(track =>{
+                  track.stop();
+                  track.detach();
+              })
+
+            });
+
+            room.on('participantDisconnected', room => {
+              // Detach the local media elements
+              console.log("Someone disconnected");
+              this.viewerCount = this.viewerCount - 1
               room.localParticipant.tracks.forEach(publication => {
                 const attachedElements = publication.track.detach();
                 attachedElements.forEach(element => element.remove());
+
               });
             });
 
@@ -574,26 +611,46 @@ export default {
           const localParticipant = room.localParticipant;
           console.log(`Connected to the Room as LocalParticipant "${localParticipant.identity}"`);
 
-          this.getViewerCount();
           room.participants.forEach(participant => {
+            console.log("existing");
             participant.tracks.forEach(publication => {
               if (publication.track) {
                 videoChatWindow.appendChild(publication.track.attach());
               }
             });
 
-          participant.on('trackSubscribed', track => {
-              videoChatWindow.appendChild(track.attach());
-            });
+          this.viewerCount = room.participants.size;
+
+
 
           });
 
-          room.on('disconnected', room => {
+          room.on('participantConnected', participant => {
+            console.log("new");
+            this.viewerCount = room.participants.size;
+              console.log(`Participant "${participant.identity}" connected`);
+
+                participant.tracks.forEach(publication => {
+                  if (publication.isSubscribed) {
+                    const track = publication.track;
+                    videoChatWindow.appendChild(track.attach());
+                  }
+                });
+
+                participant.on('trackSubscribed', track => {
+                  videoChatWindow.appendChild(track.attach());
+                });
+          });
+
+          room.on('participantDisconnected', room => {
             // Detach the local media elements
-            room.localParticipant.tracks.forEach(publication => {
+            this.viewerCount = this.viewerCount - 1
+            console.log("Someone disconnected");
+            room.participants.tracks.forEach(publication => {
               const attachedElements = publication.track.detach();
               attachedElements.forEach(element => element.remove());
             });
+
           });
 
         }, error => {
@@ -603,7 +660,6 @@ export default {
 
       stopBroadcasting: function () {
         let vm = this;
-        const { createLocalVideoTrack } = require('twilio-video');
         vm.accessToken = "";
         let request = {
           room_name: vm.name,
@@ -618,24 +674,17 @@ export default {
           vm.userNotJoined = true;
           vm.showMessages = false;
           vm.videoRoom.disconnect();
-          var list = document.getElementById('my-video-chat-window');
-          list.removeChild(list.childNodes[0]);
-          console.log("CONSOLE LIST", list.childNodes[0]);
+          vm.deleteChannel();
+          vm.username = vm.user?.username ? vm.user?.username : "";
+
+          // list.removeChild(list.childNodes);
+          // console.log("CONSOLE LIST", list.childNodes);
 
         })
         .catch((err)=>{
           console.log(err);
         })
 
-      },
-
-       getViewerCount: function () {
-          let vm = this;
-          axios.get(`/api/video/view/${vm.name}`)
-          .then((result) => {
-              console.log("VIEWERS", result.data.data);
-              vm.viewerCount = result.data.data;
-          })
       }
 
     },
@@ -645,19 +694,17 @@ export default {
 
       //ASSIGNING USERNAME
       _this.username = _this.user?.username ? _this.user?.username : "";
+      _this.username !== "" ? this.connectClientWithUsername() : this.joinAsParticipant();
 
       //CHECKING IF BROADCAST IS ONGOING
 
       axios.get("/api/video/"+_this.name)
       .then((response) =>{
-        console.log("ROOM::::",response.data.data.room_sid);
         if(response.data.success){
           _this.roomId = response.data.data.id;
           _this.dataSid = response.data.data.room_sid;
           _this.currentStatus = response.data.data.room_status;
-          _this.username !== "" ? this.connectClientWithUsername() : null;
-          _this.username !== _this.name ? this.joinAsParticipant() : null;
-          _this.getViewerCount();
+          // _this.username !== _this.name ? this.joinAsParticipant() : this.joinAsParticipant();
         }
       })
       .catch((err)=>{

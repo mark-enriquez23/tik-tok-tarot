@@ -8,7 +8,7 @@
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
         </div>
         <div class="card py-5">
-          <div class="px-5" v-for="(review, index) in vlog_reviews.data" :key="index">
+          <div class="px-5" v-for="(review, index) in vlog_reviews.data" :key="index" id="my-table">
             <div class="blog-entry ftco-animate d-md-flex fadeInUp ftco-animated text-md-left text-center" >
               <img class="rounded-circle img-thumbnail shadow-sm" :src="`/images/testimonials/${review.avatar}`" alt="" width="200">
               <div class="text text-2 pl-md-4 review-content">
@@ -30,6 +30,15 @@
             </div>
             <hr style="height: 10px">
           </div>
+          <b-pagination
+              v-model="vlog_reviews.current_page"
+              :total-rows="vlog_reviews.total"
+              :per-page="vlog_reviews.per_page"
+              align="center"
+              size="sm"
+              aria-controls="my-table"
+              @change="changeData"
+          ></b-pagination>
         </div>
       </div>
           <div class="col-lg-4 ">
@@ -122,7 +131,7 @@ export default {
 
   methods:{
     getReviews() {
-          axios.get('/api/reviews/all').then((response) => {
+          axios.get(`/api/reviews/all?page=1`).then((response) => {
             console.log("RESPONSE", response.data[0])
             this.vlog_reviews = response.data[0];
           });
@@ -130,6 +139,11 @@ export default {
 
     viewVlog(id){
       this.$router.push(`/vlogs/view/${id}`)
+    },
+    changeData(id){
+      axios.get(`/api/reviews/all?page=${id}`).then((response) => {
+            this.vlog_reviews = response.data[0];
+          });
     }
   },
 

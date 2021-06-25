@@ -6,11 +6,12 @@
       <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
     </header>
   <div class="main-container">
+    <div v-show="featuredVlogsList.data.length > 0">
     <div class="featured">
-      <h5>Featured Vlogs</h5>
+      <h3>Featured Vlogs</h3>
     </div>
    <div class="videos">
-    <div v-for="featuredVlog in featuredVlogsList" :key="featuredVlog.id" class="video">
+    <div v-for="featuredVlog in featuredVlogsList.data" :key="featuredVlog.id" class="video" id="feature-vlogs">
      <!-- <div class="video-time">15.13</div> -->
      <a :href="'view/'+featuredVlog.id">
      <div class='thumbnail-container'>
@@ -31,12 +32,24 @@
       </div>
     </div>
    </div>
+   <b-pagination
+        v-model="featuredVlogsList.current_page"
+        :total-rows="featuredVlogsList.total"
+        :per-page="featuredVlogsList.per_page"
+        align="center"
+        size="sm"
+        aria-controls="feature-vlogs"
+        @change="newVideoData"
+    ></b-pagination>
+   </div>
 
+
+    <div v-show="allVlogs.data.length > 0">
     <div class="vlogs-list">
-      <h5 class="mt-5">All Vlogs</h5>
+      <h3 class="mt-5">All Vlogs</h3>
     </div>
     <div class="videos">
-    <div v-for="vlog in allVlogs" :key="vlog.id" class="video">
+    <div v-for="vlog in allVlogs.data" :key="vlog.id" class="video" id="all-vlogs">
      <!-- <div class="video-time">15.13</div> -->
      <a :href="'view/'+vlog.id">
      <div class='thumbnail-container'>
@@ -59,30 +72,31 @@
      <!-- <div class="view">15.4k views</div> -->
     </div>
    </div>
+    <b-pagination
+        v-model="allVlogs.current_page"
+        :total-rows="allVlogs.total"
+        :per-page="allVlogs.per_page"
+        align="center"
+        size="sm"
+        aria-controls="all-vlogs"
+        @change="newFeaturedData"
+    ></b-pagination>
+    </div>
   </div>
  </div>
 <!-- </div> -->
 </template>
 
 <script>
-import Vue from 'vue';
-import { mapGetters } from 'vuex'
-import CoolLightBox from 'vue-cool-lightbox';
-import VueCoreVideoPlayer from 'vue-core-video-player'
-// import SuggestionForm from '../../components/Vlogs/VlogSuggestionForm.vue'
-
+// import { mapGetters } from 'vuex'
+import axios from 'axios';
 
 export default {
-  components: { CoolLightBox, VueCoreVideoPlayer },
   layout: 'default',
 
   metaInfo () {
     return { title: this.$t('home') }
   },
-  // beforeCreate() {
-  //   this.$store.dispatch('vlogs/fetchVlogData'),
-  //   this.$store.dispatch('featured-vlogs/fetchFeaturedVlogsData')
-  // },
 
   data: () => ({
     title: window.config.appName,
@@ -93,21 +107,36 @@ export default {
     userImageeUrl: window.config.assetURL + 'images/testimonials/',
     srcLogoOnly: window.config.assetURL + 'images/sample-logo.png',
     vlogImage: window.config.assetURL + 'images/listing-tnumbnail-3.jpg',
-  }),
-  computed: mapGetters({
-    // authenticated: 'auth/check',
-    allVlogs: 'vlogs-list/vlogList',
-    featuredVlogsList: 'vlogs-list/vlogListFeaturedDataList'
+    allVlogs: [],
+    featuredVlogsList: []
   }),
 
   methods: {
+    getFeaturedData(page){
+      axios.get(`/api/vlog/status/APPROVED/1?page=${page}`).then((response) => {
+            console.log("RESPONSE", response.data[0])
+            this.featuredVlogsList = response.data[0];
+      });
+    },
+    getVideoData(page){
+      axios.get(`/api/vlog/status/APPROVED/0?page=${page}`).then((response) => {
+            console.log("RESPONSE", response.data[0])
+            this.allVlogs = response.data[0];
+      });
+    },
+    newFeaturedData(page){
+      this.getFeaturedData(page);
+    },
+    newVideoData(page){
+      this.getVideoData(page);
+    }
 
   },
 
 
   beforeMount(){
-    this.$store.dispatch('vlogs-list/fetchVlogData')
-    this.$store.dispatch('vlogs-list/fetchVlogfeaturedData')
+    this.getFeaturedData(1);
+    this.getVideoData(1);
   }
 }
 </script>

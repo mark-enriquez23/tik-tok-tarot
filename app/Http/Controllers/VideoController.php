@@ -58,7 +58,6 @@ class VideoController extends Controller
 
         return response()->json([
             'success'   => true,
-            'total'     => $data->count(),
             'data'      => $data,
         ]);
     }
@@ -67,12 +66,10 @@ class VideoController extends Controller
      * Display a listing by STATUS
      */
     public function fetchByStatus($status, $featured = null){
-        $data = Video::GetAllVideos($status, $featured)->get();
+        $data = Video::GetAllVideos($status, $featured)->paginate(12);
 
         return response()->json([
-            'success'   => true,
-            'total'     => $data->count(),
-            'data'      => $data,
+            $data
         ]);
     }
 

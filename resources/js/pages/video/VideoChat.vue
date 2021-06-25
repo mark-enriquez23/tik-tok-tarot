@@ -2,13 +2,13 @@
     <div class="p-5 text-center">
 
         <h1 class="text-2xl mb-4">Laravel Video Chat</h1>
-      
+
 
         <!-- chat box starts here -->
         <div class="container">
           <div class="row justify-content-center">
               <div class="col-md-12">
-                
+
                       <div class="row">
                           <div class="col-md-7">
                             <!-- video chat div here -->
@@ -50,7 +50,7 @@
                               </div>
                           </div>
                       </div>
-                  
+
               </div>
           </div>
         </div>
@@ -493,6 +493,8 @@ export default {
 
           const localParticipant = room.localParticipant;
           console.log(`Connected to the Room as LocalParticipant "${localParticipant.identity}"`);
+
+          console.log("JOINED ROOM?", room.participant);
 
           room.participants.forEach(participant => {
             participant.tracks.forEach(publication => {
