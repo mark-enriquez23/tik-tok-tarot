@@ -20,12 +20,10 @@ class VideoController extends Controller
      */
     public function index()
     {
-        $data = Video::with('user')->get();
+        $data = Video::with('user')->orderBy('created_at', 'DESC')->paginate(12);
 
         return response()->json([
-            'success'   => true,
-            'total'     => $data->count(),
-            'data'      => $data,
+            $data,
         ]);
     }
 
