@@ -6,7 +6,7 @@
           <template #header>
             <h4 class="m-0 text-center">Suggestions</h4>
           </template>
-          <b-card-body v-if="isExist">
+          <b-card-body v-if="tableData.data">
             <b-table
               id="suggestion_tbl"
               :items="tableData.data"
@@ -37,7 +37,7 @@
               size="sm"
             ></b-pagination>
           </b-card-body>
-          <b-card-body v-if="!isExist">
+          <b-card-body v-if="!tableData.data">
             <h1> no suggestions to load </h1>
           </b-card-body>
         </b-card>
@@ -81,7 +81,6 @@ export default {
           }
         ],
       tableData: [],
-      isExist: false,
     }
   },
 
@@ -92,11 +91,9 @@ export default {
   methods: {
     fetchSuggestions(){
       axios.get(`/api/suggestions/user/${this.auth.id}`).then(response =>{
-        console.log("RESPONSE", response.data.data);
-        console.log("CONDITION", response.data.data.data.some(el=> el.video));
-        this.isExist = response.data.data.data.some(el=> el.video);
+        console.log("RESPONSE", response.data);
 
-        this.tableData = response.data.data;
+        this.tableData = response.data[0];
       });
 
     },

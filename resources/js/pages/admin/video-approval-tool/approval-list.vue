@@ -153,7 +153,7 @@ export default {
         }
 
         axios.post(`/api/vlog/update/?_method=PATCH`, formData).then(()=>{
-          this.$store.dispatch("admin-upload-approval/fetchApprovalUploads");
+          this.handleFetchAllVlogs(1)
           this.$bvModal.hide('decision-modal');
           swalSuccess("Updated!");
         })

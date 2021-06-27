@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Suggestion;
 use App\User;
+use App\Video;
 use Illuminate\Http\Request;
+use \Illuminate\Pagination\LengthAwarePaginator;
 
 class SuggestionController extends Controller
 {
@@ -54,11 +56,11 @@ class SuggestionController extends Controller
      * Display a listing of the resource by User ID.
      *
      */
-    public function showByUserID($id)
+    public function showByUserID(Request $request, $id)
     {
         $suggestions = Suggestion::with(array('video' => function($query) use ($id) {
             return $query->where('user_id', $id)->with('user')->get();
-        }))->paginate(5);
+        }))->get();
 
         $data = array();
 
@@ -68,14 +70,23 @@ class SuggestionController extends Controller
             }
         }
 
+        $paginate = 15;
+
+        $page = $request->page;
+
+        $offSet = ($page * $paginate) - $paginate;
+
+        $itemsForCurrentPage = array_slice($data, $offSet, $paginate, true);
+
+        $result = new LengthAwarePaginator ( $itemsForCurrentPage, count($data), $paginate, LengthAwarePaginator::resolveCurrentPage(),array('path' => LengthAwarePaginator::resolveCurrentPath()));
+
         return response()->json([
-            'success' => true,
-            'data' => $suggestions
+            $result
         ]);
     }
 
     // public function showByUserID($id){
-    //     $suggestions = User::where('id', $id)->with('vlogs', 'vlogs.suggestions')->paginate(5);
+    //     $suggestions = Video::where('user_id', $id)->with('suggestions')->paginate(5);
 
 
     //     return response()->json([
