@@ -22,7 +22,7 @@ class CreateReviewsTable extends Migration
             $table->string( 'email' );
             $table->text( 'message' );
             $table->text( 'avatar' )->nullable();
-            $table->json( 'metadata' )->nullable();
+            // $table->json( 'metadata' )->nullable();
             $table->string( 'status' );
             $table->timestamps();
         });
