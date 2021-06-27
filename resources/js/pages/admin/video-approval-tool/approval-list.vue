@@ -144,15 +144,20 @@ export default {
       },
 
       handleDecision(){
-        const formData = new FormData();
-        formData.append("id", this.selectedId);
+        let data;
         if(this.decision === "APPROVE"){
-          formData.append("is_approved", "APPROVED")
+          data = {
+            "id": this.selectedId,
+            "is_approved": "APPROVED"
+          }
         }else{
-          formData.append("is_approved", "REJECTED")
+          data = {
+            "id": this.selectedId,
+            "is_approved": "REJECTED"
+          }
         }
 
-        axios.post(`/api/vlog/update/?_method=PATCH`, formData).then(()=>{
+        axios.patch(`/api/vlog/update`, data).then(()=>{
           this.handleFetchAllVlogs(1)
           this.$bvModal.hide('decision-modal');
           swalSuccess("Updated!");
