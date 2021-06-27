@@ -6,13 +6,13 @@
           <template #header>
             <h4 class="m-0 text-center">Suggestions</h4>
           </template>
-          <b-card-body v-if="suggestions">
+          <b-card-body v-if="isExist">
             <b-table
               id="suggestion_tbl"
-              :items="suggestions.data"
-              :per-page="suggestions.perPage"
+              :items="tableData.data"
+              :per-page="tableData.per_page"
               :fields="fields"
-              :current-page="suggestions.currentPage"
+              :current-page="tableData.current_page"
               small
             >
               <template #cell(created_at)="data">
@@ -25,9 +25,9 @@
 
             </b-table>
             <b-pagination
-              v-model="suggestions.currentPage"
-              :total-rows="suggestions.total"
-              :per-page="perPage"
+              v-model="tableData.currentPage"
+              :total-rows="tableData.total"
+              :per-page="tableData.per_page"
               first-text="First"
               prev-text="Prev"
               next-text="Next"
@@ -37,7 +37,7 @@
               size="sm"
             ></b-pagination>
           </b-card-body>
-          <b-card-body v-if="!suggestions">
+          <b-card-body v-if="!isExist">
             <h1> no suggestions to load </h1>
           </b-card-body>
         </b-card>
@@ -49,6 +49,7 @@
 <script>
 
 import { mapGetters } from 'vuex';
+import axios from 'axios';
 
 export default {
   layout: 'default',
@@ -79,27 +80,34 @@ export default {
             label: 'Action'
           }
         ],
+      tableData: [],
+      isExist: false,
     }
   },
 
   computed: mapGetters({
     auth: 'auth/user',
-    suggestions: 'suggestions/suggestionsData'
   }),
 
   methods: {
     fetchSuggestions(){
-      this.$store.dispatch('suggestions/fetchUserSuggestions', {id: this.auth.id});
+      axios.get(`/api/suggestions/user/${this.auth.id}`).then(response =>{
+        console.log("RESPONSE", response.data.data);
+        console.log("CONDITION", response.data.data.data.some(el=> el.video));
+        this.isExist = response.data.data.data.some(el=> el.video);
+
+        this.tableData = response.data.data;
+      });
+
     },
 
     viewVlogs(id){
       this.$router.push(`/vlogs/view/${id}`)
-    }
+    },
   },
 
-  created() {
+  beforeMount() {
     this.fetchSuggestions()
-
   },
 }
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Suggestion;
+use App\User;
 use Illuminate\Http\Request;
 
 class SuggestionController extends Controller
@@ -72,6 +73,15 @@ class SuggestionController extends Controller
             'data' => $suggestions
         ]);
     }
+
+    // public function showByUserID($id){
+    //     $suggestions = User::where('id', $id)->with('vlogs', 'vlogs.suggestions')->paginate(5);
+
+
+    //     return response()->json([
+    //         $suggestions,
+    //     ]);
+    // }
 
 
     /**

@@ -48,7 +48,7 @@
                 <div class="member red-background" data-aos="zoom-in" data-aos-delay="100">
                   <div class="member-info">
 
-                        <h5 class="white-text">{{totalVlogs.data.total}} </h5>
+                        <h5 class="white-text">{{totalVlogs.total}} </h5>
 
                   </div>
                 </div>
@@ -224,8 +224,7 @@
           <img class="card-img-top" src="https://images.unsplash.com/photo-1535025639604-9a804c092faa?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6cb0ceb620f241feb2f859e273634393&auto=format&fit=crop&w=500&q=80" alt="Card image cap">
           <div class="card-body">
             <h5 class="card-title">{{vlog.title}}</h5>
-            <p class="card-text text-muted">
-              {{vlog.description}}
+            <p class="card-text text-muted" v-html="vlog.description">
             </p>
             <p class="client-review-stars">
                       <fa :icon="['fas', 'star']" v-for="index in vlog.rate" :key="index" />
@@ -398,7 +397,7 @@ export default {
 
     async fetchVlogs() {
         var vlogs = await axios.get("/api/vlog/status/APPROVED/1");
-        this.vlogs = vlogs.data;
+        this.vlogs = vlogs.data[0];
         // console.log(this.vlogs);
         // if (!this.vlogs.success) {
         //   Swal.fire({
@@ -448,7 +447,7 @@ export default {
     },
 
     async fetchTotalSessions() {
-        this.totalSession = await axios.get("/api/video/fetch/ongoing");
+        this.totalSession = await axios.get("/api/video/fetch/ON_GOING");
         this.sessions = this.totalSessions.data;
         // if (!this.totalSession.data.success) {
         //   Swal.fire({
@@ -460,7 +459,8 @@ export default {
     },
 
     async fetchTotalVlogs() {
-        this.totalVlogs = await axios.get("/api/vlog/status/approved/1");
+        const response = await axios.get("/api/vlog/status/APPROVED");
+        this.totalVlogs = response.data[0];
         // if (!this.totalVlogs.data.success) {
         //   Swal.fire({
         //   title: 'Fetching Total Vlogs Failed',
