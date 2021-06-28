@@ -61,7 +61,7 @@
                 <div class="member red-background" data-aos="zoom-in" data-aos-delay="100">
                   <div class="member-info">
 
-                         <h5 class="white-text">{{totalSession.data.total}} </h5>
+                         <h5 class="white-text">{{totalSession}} </h5>
 
                   </div>
                 </div>
@@ -86,55 +86,16 @@
            <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
               <div class="carousel-inner testimonials-carousel">
 
-                <div class="testimonial-item carousel-item active">
+                <div class="testimonial-item carousel-item active" v-for="testimonial in testimonials" :key="testimonial.id">
                     <p>
                       <fa class="quote-icon-left" :icon="['fas', 'quote-left']" />
-                      {{ testimonials.data.data[0].body }}
+                      {{ testimonial.body }}
                       <fa class="quote-icon-right" :icon="['fas', 'quote-right']" />
                     </p>
-                    <img :src="testimonialImage1" class="testimonial-img" alt="">
-                    <h3>{{ testimonials.data.data[0].user.firstName }} {{ testimonials.data.data[0].user.lastName }}</h3>
-                    <p class="client-review-stars">
-                      <fa :icon="['fas', 'star']" v-for="index in testimonials.data.data[0].rate" :key="index" />
-                    </p>
-                  </div>
-
-                  <div class="testimonial-item carousel-item">
-                    <p>
-                      <fa class="quote-icon-left" :icon="['fas', 'quote-left']" />
-                      {{ testimonials.data.data[1].body }}
-                      <fa class="quote-icon-right" :icon="['fas', 'quote-right']" />
-                    </p>
-                    <img :src="testimonialImage2" class="testimonial-img" alt="">
-                    <h3>{{ testimonials.data.data[1].user.firstName }} {{ testimonials.data.data[1].user.lastName }}</h3>
-                    <p class="client-review-stars">
-                      <fa :icon="['fas', 'star']" v-for="index in testimonials.data.data[1].rate" :key="index" />
-                    </p>
-                  </div>
-
-                  <div class="testimonial-item carousel-item">
-                    <p>
-                      <fa class="quote-icon-left" :icon="['fas', 'quote-left']" />
-                      {{ testimonials.data.data[2].body }}
-                      <fa class="quote-icon-right" :icon="['fas', 'quote-right']" />
-                    </p>
-                    <img :src="testimonialImage3" class="testimonial-img" alt="">
-                    <h3>{{ testimonials.data.data[2].user.firstName }} {{ testimonials.data.data[2].user.lastName }}</h3>
-                    <p class="client-review-stars">
-                      <fa :icon="['fas', 'star']" v-for="index in testimonials.data.data[2].rate" :key="index" />
-                    </p>
-                  </div>
-
-                  <div class="testimonial-item carousel-item">
-                    <p>
-                      <fa class="quote-icon-left" :icon="['fas', 'quote-left']" />
-                      {{ testimonials.data.data[3].body }}
-                      <fa class="quote-icon-right" :icon="['fas', 'quote-right']" />
-                    </p>
-                    <img :src="testimonialImage4" class="testimonial-img" alt="">
-                    <h3>{{ testimonials.data.data[3].user.firstName }} {{ testimonials.data.data[3].user.lastName }}</h3>
-                    <p class="client-review-stars">
-                      <fa :icon="['fas', 'star']" v-for="index in testimonials.data.data[3].rate" :key="index" />
+                    <img :src="`/images/${testimonial.user.user_details.profile_photo}`" class="img-responsive" alt="">
+                    <h3>{{ testimonial.user.firstName }} {{ testimonial.user.lastName }}</h3>
+                    <p class="d-flex justify-content-center">
+                      <star-rating :rating="testimonial.rate" :read-only="true" :show-rating="false"></star-rating>
                     </p>
                   </div>
 
@@ -156,7 +117,7 @@
     <!-- End Testimonials Section -->
 
     <!-- ======= Live Session Section ======= -->
-    <section id="team" class="team">
+    <section id="team" class="team" v-if="!sessions">
       <div class="container">
         <div class="row">
           <div class="col-lg-4">
@@ -167,7 +128,7 @@
           </div>
           <div class="col-lg-8">
             <div class="row">
-              <div class="col-lg-6 col-lg-6 my-5 mt-lg-0" v-for="session in sessions.data" v-bind:key="session.id">
+              <div class="col-lg-6 col-lg-6 my-5 mt-lg-0" v-for="session in sessions" v-bind:key="session.id">
                 <div class="member" data-aos="zoom-in" data-aos-delay="100">
                   <div class="pic"><img :src="testimonialImage5" class="img-fluid" alt=""></div>
                   <div class="member-info">
@@ -207,7 +168,7 @@
       </div>
     </section><!-- End Cta Section -->
 
-<section class="container my-5">
+<section class="container my-5" v-if="!vlogs.data">
   <div class="">
     <div class="section-title">
       <h2>Featured Vlogs</h2>
@@ -335,9 +296,11 @@ import HowTo from '../components/Welcome/How-to.vue'
 import Form from 'vform'
 import Swal from 'sweetalert2';
 import axios from "axios"
+import StarRating from 'vue-star-rating';
+
 
 export default {
-  components: { Footer, HowTo, Faq, GeneralInfo },
+  components: { Footer, HowTo, Faq, GeneralInfo, StarRating },
   layout: 'default',
 
   metaInfo () {
@@ -422,7 +385,8 @@ export default {
     // },
 
     async fetchTestimonials() {
-        this.testimonials = await axios.get("/api/testimonial");
+        let response = await axios.get("/api/testimonial");
+        this.testimonials = response.data.data
         // console.log(this.testimonials)
         // console.log(this.testimonials.data.data[0].user);
         // if (!this.testimonials.data.success) {
@@ -447,8 +411,9 @@ export default {
     },
 
     async fetchTotalSessions() {
-        this.totalSession = await axios.get("/api/video/fetch/ON_GOING");
-        this.sessions = this.totalSessions.data;
+        let response = await axios.get("/api/video/fetch/ON_GOING");
+        this.totalSession = response.data.total;
+        this.sessions = response.data.data;
         // if (!this.totalSession.data.success) {
         //   Swal.fire({
         //   title: 'Fetching Total Session Failed',

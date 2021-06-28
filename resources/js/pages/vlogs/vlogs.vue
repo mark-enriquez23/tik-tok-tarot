@@ -6,7 +6,7 @@
       <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
     </header>
   <div class="main-container">
-    <div v-show="featuredVlogsList.data.length > 0">
+    <div v-if="featuredVlogsList.total">
     <div class="featured">
       <h3>Featured Vlogs</h3>
     </div>
@@ -44,7 +44,7 @@
    </div>
 
 
-    <div v-show="allVlogs.data.length > 0">
+    <div v-if="allVlogs.total">
     <div class="vlogs-list">
       <h3 class="mt-5">All Vlogs</h3>
     </div>
@@ -82,6 +82,9 @@
         @change="newFeaturedData"
     ></b-pagination>
     </div>
+    <div v-if="!featuredVlogsList.total && !allVlogs.total">
+      <p> No videos to show </p>
+    </div>
   </div>
  </div>
 <!-- </div> -->
@@ -107,8 +110,12 @@ export default {
     userImageeUrl: window.config.assetURL + 'images/testimonials/',
     srcLogoOnly: window.config.assetURL + 'images/sample-logo.png',
     vlogImage: window.config.assetURL + 'images/listing-tnumbnail-3.jpg',
-    allVlogs: [],
-    featuredVlogsList: []
+    allVlogs: [{
+      data: []
+    }],
+    featuredVlogsList: [{
+      data: []
+    }]
   }),
 
   methods: {
@@ -134,7 +141,7 @@ export default {
   },
 
 
-  beforeMount(){
+  created(){
     this.getFeaturedData(1);
     this.getVideoData(1);
   }

@@ -202,9 +202,11 @@ export default {
         if (this.username !== undefined) {
           this.tc.username = this.user?.username;
           this.username = this.user?.username;
+          this.userNotJoined = false;
           var live = axios.get("/api/video/view/" + this.user?.username);
 
           this.fetchAccessToken(this.tc.username, this.connectMessagingClient);
+          console.log("USERNAME", this.tc.username);
         }else{
           alert("NOT LOGGED IN");
           return;
@@ -300,7 +302,6 @@ export default {
     },
     addChannel(channel){
         let vm = this;
-        console.log("ADD CHANNEL",channel.uniqueName === vm.name)
         if (channel.uniqueName === vm.name) {
             this.tc.generalChannel = channel;
         }
@@ -667,6 +668,7 @@ export default {
           room_status: "COMPLETED"
         }
 
+
         axios.post(`/api/video/history/save`, request)
         .then((response) =>{
           console.log(response);
@@ -676,6 +678,15 @@ export default {
           vm.videoRoom.disconnect();
           vm.deleteChannel();
           vm.username = vm.user?.username ? vm.user?.username : "";
+          vm.tc.accessManager = null;
+          vm.tc.messagingClient = null;
+          vm.tc.channel = [];
+          // vm.tc.username = '';
+          vm.tc.channelArray = null;
+          vm.tc.generalChannel = null;
+          vm.tc.activeChannelIndex = null;
+          vm.tc.messagesArray = [];
+
 
           // list.removeChild(list.childNodes);
           // console.log("CONSOLE LIST", list.childNodes);

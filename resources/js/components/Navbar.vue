@@ -14,7 +14,7 @@
 
         <ul class="navbar-nav ml-auto navbar-nav-auth">
           <!-- Authenticated -->
-           <li v-if="user && roleId == 3" class="nav-item">
+           <li v-if="user" class="nav-item">
              <router-link :to="{ name: 'client.notification' }" class="bell px-3">
                 <fa icon="bell"/>
                 <span class="badge badge-danger number-notif p-1" v-if="notif">{{notif}}</span>
@@ -80,7 +80,7 @@
 
   </nav>
 
-  <nav class="navbar navbar-expand-lg navbar-light bg-white" v-if="!isLoggedIn || roleId == 3">
+  <nav class="navbar navbar-expand-lg navbar-light bg-white" v-if="navIsHomePage()">
     <div class="container">
 
     <form class="form-inline col-8 col-md-4 px-0" action="" method="post" @submit.prevent="siteSearch">
@@ -146,7 +146,7 @@
   </nav>
 
   <!-- Dashboard Navigation -->
-  <nav class="navbar navbar-expand-lg navbar-light bg-white" v-if="isLoggedIn">
+  <nav class="navbar navbar-expand-lg navbar-light bg-white" v-if="isLoggedIn && !navIsHomePage()">
     <div class="container">
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false">
         <span class="navbar-toggler-icon" />
@@ -234,22 +234,11 @@ export default {
     roleId: null,
   }),
 
-  computed: mapGetters({
-    user: 'auth/user',
-    notif: 'notifications/notification'
-  }),
-
-  mounted() {
-
-    this.$store.dispatch("notifications/getNotification");
-
-    // check if have user logged in
-    if (this.user) {
-
-      // check role of logged in user
-      this.isLoggedIn = true
-      this.roleId = this.user.role_id
-    }
+  computed: {
+    ...mapGetters({
+      user: 'auth/user',
+      notif: 'notifications/notification'
+    })
   },
 
   methods: {
@@ -265,20 +254,44 @@ export default {
       this.$router.push({name: 'search', query: { key: this.searchForm.key } });
     },
 
-    // async siteSearch() {
-    //     var results = await this.searchForm.post("/api/homepage/search-tool");
-    //     this.results = results.data;
-    //     if (!this.results.success) {
-    //       Swal.fire({
-    //         title: 'Search Failed',
-    //         text: "An error has occurred. Please try again.",
-    //         type: 'error'
-    //       })
-    //     }
-    //   }
+    navIsHomePage(){
+      console.log(this.$route.path);
+      switch (this.$route.path) {
+        case "/landing":
+        case "/prices":
+        case "/readers":
+        case "/search":
+        case "/sessions":
+        case "/vlogs/list":
+        case "/vlogs/view/:id":
+        case "/vlogs/review":
+        case "/testimonials":
+        case "/about-us":
+        case "/contact-us":
+        case "/login":
+        case "/password":
+        case "/email":
+        case "/password":
+          return true;
+        default:
+          return false;
+      }
+
+    }
+
+  },
+
+  mounted() {
+
+    if (this.user) {
+      this.$store.dispatch("notifications/getNotification");
+      // check role of logged in user
+      this.isLoggedIn = true
+      this.roleId = this.user.role_id
+    }
+  },
 
 
-  }
 }
 </script>
 

@@ -12,9 +12,9 @@ class TestimonialController extends Controller
      *
      * @return json
      */
-    public function index() 
+    public function index()
     {
-        $testimonials = Testimonial::with(['user'])->get();
+        $testimonials = Testimonial::with('user', 'user.userDetails')->get();
 
         return response()->json([
             'success'   => true,
@@ -71,9 +71,9 @@ class TestimonialController extends Controller
         return response()->json([
             'success'   => true,
             'data'      => $deletedIds,
-            'message'   => 
-                $unableToDelete 
-                ? __('messages.testimonial_partially_delete_successfully') 
+            'message'   =>
+                $unableToDelete
+                ? __('messages.testimonial_partially_delete_successfully')
                 : __('messages.testimonial_delete_successfully')
         ]);
     }
