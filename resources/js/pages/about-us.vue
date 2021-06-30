@@ -51,14 +51,16 @@
         </div>
       </div>
     </div>
+    <Footer />
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
+import Footer from '../components/Utilities/Footer.vue'
 
 export default {
-  components: { },
+  components: { Footer },
   layout: 'default', 
 
   metaInfo () {

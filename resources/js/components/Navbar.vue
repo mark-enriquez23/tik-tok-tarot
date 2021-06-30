@@ -4,7 +4,7 @@
   <nav class="navbar navbar-expand-lg navbar-light bg-white bs-none">
     <div class="container">
 
-      <router-link :to="{ name: user ? 'home' : 'welcome' }" class="navbar-brand">
+      <router-link :to="'/landing'" class="navbar-brand">
           <img :src="srcLogoOnly" style="mix-blend-mode: luminosity; width: 90px " srcset="" >
       </router-link>
 

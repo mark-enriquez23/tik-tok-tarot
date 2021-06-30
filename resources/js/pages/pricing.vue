@@ -192,16 +192,18 @@
 
         </div>
     </section>
+    <Footer />
 </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
+import Footer from '../components/Utilities/Footer.vue'
 import axios from "axios"
 import Swal from 'sweetalert2';
 
 export default {
-  components: { },
+  components: { Footer },
   layout: 'default',
 
   metaInfo () {

@@ -35,6 +35,7 @@
 import { mapGetters } from 'vuex'
 import axios from 'axios'
 import Clipboard from 'v-clipboard'
+import { swalSuccess } from '../../../helpers'
 
 export default {
   scrollToTop: false,
@@ -56,8 +57,6 @@ export default {
     referral_code:String
   }),
 
- 
-
   created () {
      
   },
@@ -72,12 +71,13 @@ export default {
     },
 
     getValue(){
-      return 'http://tik-tok-tarot-master.test/register'+ this.referral_code;
+      return 'http://tik-tok-tarot-master.test/register'+ this.referral_code
     },
 
     copy(){
+      swalSuccess('Copied!')
       console.log("copied-text")
-      let value = 'https://testsite.tiktok-tarot.live/register?referral_code=' + this.referral_code;
+      let value = 'https://testsite.tiktok-tarot.live/register?referral_code=' + this.referral_code
       this.$clipboard(value)
     }
   },
