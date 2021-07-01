@@ -1,82 +1,55 @@
 <template>
-  <div class="">
-    <header class="masthead">
-      <div class="container h-100">
-        <div class="row h-100 align-items-center justify-content-center text-center">
-          <div class="col-lg-10 align-self-end">
-            <img :src="srcLogoOnly" style="mix-blend-mode: luminosity; width: 20rem">
-            <h1 class="text-uppercase font-weight-bold text-white mt-2">
+  <b-container fluid class="px-0">
+    <b-row no-gutters>
+      <b-col>
+        <b-jumbotron lead="" header-level="4" text-variant="light" fluid class="d-flex flex-column justify-content-center align-items-center text-center">
+          <template #header>
+            <strong>
               Welcome to TikTok Tarot
-            </h1>
-            <hr class="divider my-2 col-2" style="background: #ffff">
-          </div>
-          <div class="col-lg-8 align-self-baseline">
-            <h4 class="font-weight-light mb-5 text-white">
-              24/7 live psychics at your services
-            </h4>
-            <div class="row no-gutters text-center">
-              <div class="col-lg-6 mx-auto">
-                <router-link :to="{ name: 'register' }" class="nav-link" active-class="active">
-                  <a class="btn btn-danger btn-xl w-lg-50 w-75 text-white">Register</a>
-                </router-link>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </header>
+            </strong>
+          </template>
+          <!-- <p>For more infoh f  rmation visit website</p> -->
 
-    <section id="team" class="team">
-      <div class="container">
-        <div class="row">
-          <div v-if="totalViewers !== null" class="col-lg-4 mt-4 mt-lg-0">
-            <router-link :to="{ name: 'readers' }" class="nav-link" active-class="active">
-              <h5 class="black-text">
-                VIEWERS
-              </h5>
-              <div class="member red-background" data-aos="zoom-in" data-aos-delay="100">
-                <div class="member-info">
-                  <h5 class="white-text">
-                    {{ totalViewers.data.total }}
-                  </h5>
-                </div>
-              </div>
-            </router-link>
-          </div>
-          <div v-if="totalVlogs !== null" class="col-lg-4 mt-4 mt-lg-0">
-            <router-link :to="{ name: 'vlogs.list' }" class="nav-link" active-class="active">
-              <h5 class="black-text">
-                VLOGS
-              </h5>
-              <div class="member red-background" data-aos="zoom-in" data-aos-delay="100">
-                <div class="member-info">
-                  <h5 class="white-text">
-                    {{ totalVlogs.total }}
-                  </h5>
-                </div>
-              </div>
-            </router-link>
-          </div>
-          <div v-if="totalSession !== null" class="col-lg-4 mt-4 mt-lg-0">
-            <router-link :to="{ name: 'sessions' }" class="nav-link" active-class="active">
-              <h5 class="black-text">
-                SESSIONS
-              </h5>
-              <div class="member red-background" data-aos="zoom-in" data-aos-delay="100">
-                <div class="member-info">
-                  <h5 class="white-text">
-                    {{ totalSession }}
-                  </h5>
-                </div>
-              </div>
-            </router-link>
-          </div>
-        </div>
-      </div>
-    </section>
+          <template #lead>
+            This is a simple hero unit, a simple jumbotron-style component for calling extra attention to
+            featured content or information.
+          </template>
+
+          <p>
+            24/7 live psychics at your services.
+          </p>
+          <router-link :to="{ name: 'register' }">
+            <a class="btn btn-danger btn-lg">Register</a>
+          </router-link>
+        </b-jumbotron>
+      </b-col>
+    </b-row>
+
+    <b-container>
+      <b-row class="d-flex flex-row justify-content-center align-items-center my-5">
+        <b-col class="d-flex flex-column justify-content-center align-items-center">
+          <router-link :to="{ name: 'readers' }" class="nav-link d-flex flex-column justify-content-center align-items-center" active-class="active">
+            <span class="h5 font-weight-bold text-muted"> VIEWER </span>
+            <b-avatar variant="danger" :text="viewerCount" size="6rem" />
+          </router-link>
+        </b-col>
+        <b-col class="d-flex flex-column justify-content-center align-items-center">
+          <router-link :to="{ name: 'vlogs.list' }" class="nav-link d-flex flex-column justify-content-center align-items-center" active-class="active">
+            <span class="h5 font-weight-bold text-muted"> VLOGS </span>
+            <b-avatar variant="danger" :text="vlogCount" size="6rem" />
+          </router-link>
+        </b-col>
+        <b-col class="d-flex flex-column justify-content-center align-items-center">
+          <router-link :to="{ name: 'sessions' }" class="nav-link d-flex flex-column justify-content-center align-items-center" active-class="active">
+            <span class="h5 font-weight-bold text-muted"> SESSIONS </span>
+            <b-avatar variant="danger" :text="sessionCount" size="6rem" />
+          </router-link>
+        </b-col>
+      </b-row>
+    </b-container>
 
     <!-- ======= Testimonials Section ======= -->
-    <section id="testimonials" class="testimonials section-bg">
+    <!-- <section id="testimonials" class="testimonials section-bg">
       <div class="container">
         <div class="row">
           <div class="col-lg-4">
@@ -88,7 +61,7 @@
           <div class="col-lg-8">
             <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
               <div class="carousel-inner testimonials-carousel">
-                <div v-for="testimonial in testimonials" :key="testimonial.id" class="testimonial-item carousel-item active" >
+                <div v-for="testimonial in testimonials" :key="testimonial.id" class="testimonial-item carousel-item active">
                   <p>
                     <fa class="quote-icon-left" :icon="['fas', 'quote-left']" />
                     {{ testimonial.body }}
@@ -117,7 +90,54 @@
           </div>
         </div>
       </div>
-    </section>
+    </section> -->
+    <b-container class="section-bg" fluid>
+      <b-row class="rows-min-height py-3">
+        <b-col align-self="start" class="d-flex justify-content-end">
+          <b-card class="w-75">
+            <b-card-title>
+              <h4 class="text-uppercase font-weight-bold">
+                Testimonials
+              </h4>
+            </b-card-title>
+            <b-card-sub-title>
+              <div class="bg-danger" style="height:10px; width:60px;" />
+            </b-card-sub-title>
+            <b-card-text>
+              <p class="my-2 mr-5">
+                Magnam dolores commodi suscipit uisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.
+              </p>
+            </b-card-text>
+          </b-card>
+        </b-col>
+        <b-col>
+          <b-carousel
+            id="carousel-1"
+            v-model="slide"
+            :interval="4000"
+          >
+            <b-carousel-slide v-for="testimonial in testimonials" :key="testimonial.id">
+              <template #img>
+                <b-card class="py-5 d-flex flex-column justify-content-center align-items-center text-center">
+                  <b-card-title>
+                    <star-rating :rating="testimonial.rate" :read-only="true" :show-rating="false" />
+                    <h5 class="font-weight-bold text-uppercase blockquote mt-5">
+                      "{{ testimonial.body }}"
+                    </h5>
+                  </b-card-title>
+                  <b-card-sub-title class="pb-2">
+                    <span class="blockquote-footer">
+                      <b-avatar :src="`/images/${testimonial.user.user_details.profile_photo}`" />
+                      {{ testimonial.user.firstName }} {{ testimonial.user.lastName }}
+                    </span>
+                  </b-card-sub-title>
+                </b-card>
+              </template>
+            </b-carousel-slide>
+          </b-carousel>
+        </b-col>
+      </b-row>
+    </b-container>
     <!-- End Testimonials Section -->
 
     <!-- ======= Live Session Section ======= -->
@@ -132,13 +152,15 @@
           </div>
           <div class="col-lg-8">
             <div class="row">
-              <div v-for="session in sessions" :key="session.id" class="col-lg-6 col-lg-6 my-5 mt-lg-0" >
+              <div v-for="session in sessions" :key="session.id" class="col-lg-6 col-lg-6 my-5 mt-lg-0">
                 <div class="member" data-aos="zoom-in" data-aos-delay="100">
                   <div class="pic">
                     <img :src="testimonialImage5" class="img-fluid">
                     <div class="member-info">
                       <h4>{{ session.name }}</h4>
-                      <p class="text-success mb-0">{{ session.status == 'streaming' ? 'Streaming' : 'Offline' }}</p>
+                      <p class="text-success mb-0">
+                        {{ session.status == 'streaming' ? 'Streaming' : 'Offline' }}
+                      </p>
                       <p>{{ getDescription(session.content) }}</p>
                     </div>
                   </div>
@@ -187,7 +209,7 @@
 
       <div class="mb-2">
         <div class="row">
-          <div class="col-md-4 mb-4" v-for="vlog in vlogs.data" v-bind:key="vlog.id">
+          <div v-for="vlog in vlogs.data" :key="vlog.id" class="col-md-4 mb-4">
             <div class="card ">
               <a href="#">
                 <img class="card-img-top" src="https://images.unsplash.com/photo-1535025639604-9a804c092faa?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6cb0ceb620f241feb2f859e273634393&auto=format&fit=crop&w=500&q=80" alt="Card image cap">
@@ -271,7 +293,7 @@
     <!--FAQ Section-->
     <Faq />
 
-<!--News Letter Section -->
+    <!--News Letter Section -->
     <section class="subscribe-panel cta">
       <div class="container text-center text-white">
         <h1>Join Our Newsletter</h1>
@@ -296,7 +318,7 @@
 
     <!-- Footer Section -->
     <Footer />
-  </div>
+  </b-container>
 </template>
 
 <script>
@@ -335,10 +357,23 @@ export default {
     }),
     totalSession: null,
     totalVlogs: null,
-    totalViewers: null
+    totalViewers: null,
+    slide: 0,
+    sliding: null
   }),
 
-  computed: mapGetters({ authenticated: 'auth/check' }),
+  computed: {
+    ...mapGetters({ authenticated: 'auth/check' }),
+    viewerCount: function () {
+      return this.totalViewers?.data ? (this.totalViewers.data?.total).toString() : '0'
+    },
+    vlogCount: function () {
+      return this.totalVlogs?.total ? this.totalVlogs.total : '0'
+    },
+    sessionCount: function () {
+      return this.totalSession ? this.totalSession : '0'
+    }
+  },
 
   created () {
     this.fetchVlogs()
@@ -438,16 +473,27 @@ export default {
   font-size: 85px;
 }
 
+.rows-min-height {
+  min-height: 20rem;
+}
+
 .cover-bg {
   padding-top: calc(28rem + 74px);
   padding-bottom: 6rem;
+}
+
+.jumbotron {
+  background-image:radial-gradient(at top center, rgba(25,7,0,0) 28%, #000000 100%), url('/images/tarot2.jpg');
+  background-position: center;
+  background-size: cover;
+  height: 100vh !important;
 }
 
 .masthead {
   padding-top: 5.5rem;
   padding-bottom: 10.5rem;
   text-align: center;
-  background-image: radial-gradient(at top center, rgba(25,7,0,0) 28%, #000000 100%), url('/images/tarot2.jpg');
+  background-image: radial-gradient(at center, rgba(25,7,0,0) 28%, #000000 100%), url('/images/tarot2.jpg');
   background-repeat: no-repeat;
   background-attachment: scroll;
   background-position: center center;
@@ -506,10 +552,4 @@ export default {
   text-align: center;
 }
 
-</style>
-
-<style lang="scss">
-  .btn {
-    cursor: pointer;
-  }
 </style>
