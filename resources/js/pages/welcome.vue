@@ -92,9 +92,9 @@
       </div>
     </section> -->
     <b-container class="section-bg" fluid>
-      <b-row class="rows-min-height py-3">
-        <b-col align-self="start" class="d-flex justify-content-end">
-          <b-card class="w-75">
+      <b-row class="rows-min-height py-5">
+        <b-col align-self="start" class="d-flex justify-content-sm-end justify-content-md-end justify-content-lg-end mb-2">
+          <b-card class="w-75 mw-100">
             <b-card-title>
               <h4 class="text-uppercase font-weight-bold">
                 Testimonials
