@@ -49,68 +49,18 @@
     </b-container>
 
     <!-- ======= Testimonials Section ======= -->
-    <!-- <section id="testimonials" class="testimonials section-bg">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-4">
-            <div class="section-title">
-              <h2>Testimonials</h2>
-              <p>Magnam dolores commodi suscipit uisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
-            </div>
-          </div>
-          <div class="col-lg-8">
-            <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-              <div class="carousel-inner testimonials-carousel">
-                <div v-for="testimonial in testimonials" :key="testimonial.id" class="testimonial-item carousel-item active">
-                  <p>
-                    <fa class="quote-icon-left" :icon="['fas', 'quote-left']" />
-                    {{ testimonial.body }}
-                    <fa class="quote-icon-right" :icon="['fas', 'quote-right']" />
-                  </p>
-                  <img :src="`/images/${testimonial.user.user_details.profile_photo}`" class="img-responsive" alt="">
-                  <h3>{{ testimonial.user.firstName }} {{ testimonial.user.lastName }}</h3>
-                  <p class="d-flex justify-content-center">
-                    <star-rating :rating="testimonial.rate" :read-only="true" :show-rating="false" />
-                  </p>
-                </div>
-              </div>
-              <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true" />
-                <span class="sr-only">
-                  Previous
-                </span>
-              </a>
-              <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true" />
-                <span class="sr-only">
-                  Next
-                </span>
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section> -->
     <b-container class="section-bg" fluid>
       <b-row class="rows-min-height py-5">
-        <b-col align-self="start" class="d-flex justify-content-sm-end justify-content-md-end justify-content-lg-end mb-2">
-          <b-card class="w-75 mw-100">
-            <b-card-title>
-              <h4 class="text-uppercase font-weight-bold">
-                Testimonials
-              </h4>
-            </b-card-title>
-            <b-card-sub-title>
-              <div class="bg-danger" style="height:10px; width:60px;" />
-            </b-card-sub-title>
-            <b-card-text>
-              <p class="my-2 mr-5">
-                Magnam dolores commodi suscipit uisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.
-              </p>
-            </b-card-text>
-          </b-card>
+        <b-col align-self="start" sm="12" md="6" offset-lg="1" lg="5" class="d-flex flex-column p-5 mb-2">
+          <h2 class="text-uppercase font-weight-bold">
+            Testimonials
+          </h2>
+          <div class="bg-danger" style="height:10px; width:60px;" />
+          <p class="my-2 mr-5">
+            Magnam dolores commodi suscipit uisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.
+          </p>
         </b-col>
-        <b-col>
+        <b-col sm="12" md="6" lg="4">
           <b-carousel
             id="carousel-1"
             v-model="slide"
@@ -120,8 +70,14 @@
               <template #img>
                 <b-card class="py-5 d-flex flex-column justify-content-center align-items-center text-center">
                   <b-card-title>
-                    <star-rating :rating="testimonial.rate" :read-only="true" :show-rating="false" />
-                    <h5 class="font-weight-bold text-uppercase blockquote mt-5">
+                    <star-rating
+                      :rating="testimonial.rate"
+                      :read-only="true"
+                      :show-rating="false"
+                      :rounded-corners="true"
+                      :star-size="50"
+                    />
+                    <h5 class="font-weight-bold text-uppercase blockquote mt-3">
                       "{{ testimonial.body }}"
                     </h5>
                   </b-card-title>
@@ -141,36 +97,32 @@
     <!-- End Testimonials Section -->
 
     <!-- ======= Live Session Section ======= -->
-    <section v-if="!sessions" id="team" class="team">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-4">
-            <div class="section-title" data-aos="fade-right">
-              <h2>Active Live Sessions</h2>
-              <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem.</p>
-            </div>
-          </div>
-          <div class="col-lg-8">
-            <div class="row">
-              <div v-for="session in sessions" :key="session.id" class="col-lg-6 col-lg-6 my-5 mt-lg-0">
-                <div class="member" data-aos="zoom-in" data-aos-delay="100">
-                  <div class="pic">
-                    <img :src="testimonialImage5" class="img-fluid">
-                    <div class="member-info">
-                      <h4>{{ session.name }}</h4>
-                      <p class="text-success mb-0">
-                        {{ session.status == 'streaming' ? 'Streaming' : 'Offline' }}
-                      </p>
-                      <p>{{ getDescription(session.content) }}</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+    <b-container v-if="!sessions">
+      <b-row class="py-5">
+        <b-col class="d-flex flex-column">
+          <h2 class="text-uppercase font-weight-bold">
+            Active Live Sessions
+          </h2>
+          <div class="bg-danger" style="height:10px; width:60px;" />
+          <p class="my-2 mr-5">
+            Magnam dolores commodi suscipit uisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.
+          </p>
+        </b-col>
+        <b-col>
+          <b-row class="d-flex flex-row-reverse">
+            <b-col v-for="session in sessions" :key="session.id">
+              <router-link :to="`/reader/go-live/${session.room_name}`" class="nav-link" active-class="active">
+                <b-img :src="`/images/${session.user.user_details.profile_photo}`" fluid />
+                <p class="text-muted">
+                  <b-icon icon="play-fill" variant="success" />
+                  {{ session.room_name }}
+                </p>
+              </router-link>
+            </b-col>
+          </b-row>
+        </b-col>
+      </b-row>
+    </b-container>
     <!-- End Live Session Section -->
 
     <!-- ======= Cta Section ======= -->
@@ -409,18 +361,18 @@ export default {
       this.vlogs = vlogs.data[0]
     },
 
-    // async fetchSessions() {
-    //     var sessions = await axios.get("/api/video/fetch/ongoing");
-    //     this.sessions = sessions.data;
-    //     // console.log("session",this.sessions);
-    //     // if (!this.sessions.success) {
-    //     //   Swal.fire({
-    //     //   title: 'Fetching Sessions Failed',
-    //     //   text: "An error has occurred. Please try again.",
-    //     //   type: 'error'
-    //     // })
-    //   //}
-    // },
+    async fetchSessions () {
+      var sessions = await axios.get('/api/video/fetch/ongoing')
+      this.sessions = sessions.data
+      // console.log("session",this.sessions);
+      // if (!this.sessions.success) {
+      //   Swal.fire({
+      //   title: 'Fetching Sessions Failed',
+      //   text: "An error has occurred. Please try again.",
+      //   type: 'error'
+      // })
+      // }
+    },
 
     async fetchTestimonials () {
       let response = await axios.get('/api/testimonial')
