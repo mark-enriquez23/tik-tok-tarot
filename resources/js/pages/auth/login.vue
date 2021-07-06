@@ -5,7 +5,7 @@
         <div class="w-100 text-center mt-2 mb-4">
           <img :src="srcLogoOnly" style="mix-blend-mode: luminosity;" srcset="" class="img-fluid col-12 col-lg-4">
           <hr class="mx-auto line-form-break">
-          <h4 >Log in</h4>
+          <h4>Log in</h4>
         </div>
         <form @submit.prevent="login" @keydown="form.onKeydown($event)">
           <!-- Email -->
@@ -18,8 +18,8 @@
           <!-- Password -->
           <div class="form-group col-md-7 mx-auto">
             <label for="exampleInputEmail1">Password</label>
-            <input  v-model="form.password" :class="{ 'is-invalid': form.errors.has('password') }" class="form-control" type="password" name="password">
-              <has-error :form="form" field="password" />
+            <input v-model="form.password" :class="{ 'is-invalid': form.errors.has('password') }" class="form-control" type="password" name="password">
+            <has-error :form="form" field="password" />
           </div>
 
           <!-- Remember Me -->
@@ -35,9 +35,9 @@
             </div>
           </div>
           <!-- HCaptcha -->
-          <div class="form-group row col-md-7 mx-auto" v-if="!captchaDisabled">
+          <div v-if="!captchaDisabled" class="form-group row col-md-7 mx-auto">
             <div class="col-md-12 px-0">
-              <vue-hcaptcha sitekey="3f7f821f-05b7-486b-a3d9-21395609a73e" @verify="isVerified"></vue-hcaptcha>
+              <vue-hcaptcha sitekey="3f7f821f-05b7-486b-a3d9-21395609a73e" @verify="isVerified" />
             </div>
           </div>
 
@@ -60,47 +60,47 @@
 
 <script>
 import Form from 'vform'
-import LoginWithGithub from '~/components/LoginWithGithub'
-import VueHcaptcha from '@hcaptcha/vue-hcaptcha';
-import Cookies from "js-cookie";
-import { mapGetters } from 'vuex';
-//import bcrypt from 'bcryptjs';
+// import LoginWithGithub from '~/components/LoginWithGithub'
+import VueHcaptcha from '@hcaptcha/vue-hcaptcha'
+import Cookies from 'js-cookie'
+import { mapGetters } from 'vuex'
+// import bcrypt from 'bcryptjs';
 
 const initializeData = () => ({
-    form: new Form({
-      email: '',
-      password: ''
-    }),
-    token: '',
-    captchaDisabled: true,
-    srcLogoOnly: window.config.assetURL + 'images/sample-logo.png',
-    remember: false
-  })
+  form: new Form({
+    email: '',
+    password: ''
+  }),
+  token: '',
+  captchaDisabled: true,
+  srcLogoOnly: window.config.assetURL + 'images/sample-logo.png',
+  remember: false
+})
 
 export default {
   layout: 'auth',
   middleware: 'guest',
 
   components: {
-    LoginWithGithub,
+    // LoginWithGithub,
     VueHcaptcha
   },
 
+  data: () => { return initializeData() },
+
   computed: mapGetters({
-    user: 'auth/user',
+    user: 'auth/user'
   }),
 
   metaInfo () {
     return { title: this.$t('login') }
   },
 
-  data: () => { return initializeData() },
-
   methods: {
     async login () {
       console.log('test')
       // Submit the form.
-      console.log(this.form);
+      console.log(this.form)
       await this.form.post('/api/login').then(res => {
         console.log(res)
         this.token = res.data.token
@@ -108,16 +108,16 @@ export default {
         console.log()
         switch (e.response.status) {
           case 429:
-            this.captchaDisabled = false;
-            break;
+            this.captchaDisabled = false
+            break
 
           default:
             this.token = ''
-            this.captchaDisabled = true;
-            break;
+            this.captchaDisabled = true
+            break
         }
       })
-      
+
       // Save the token.
       this.$store.dispatch('auth/saveToken', {
         token: this.token,
@@ -127,19 +127,19 @@ export default {
       // Fetch the user.
       await this.$store.dispatch('auth/fetchUser')
 
-      console.log(this.user);
-      switch (this.user.role_id){
+      console.log(this.user)
+      switch (this.user.role_id) {
         case 1:
-          this.$router.push({ name: 'admin.readers' });
-          break;
+          this.$router.push({ name: 'admin.readers' })
+          break
 
         case 2:
-           this.$router.push({ name: 'reader.videos' });
-           break
+          this.$router.push({ name: 'reader.videos' })
+          break
 
         case 3:
-            this.$router.push({ name: 'welcome' });
-            break;
+          this.$router.push({ name: 'welcome' })
+          break
       }
       // if (this.user) {
       //   if (this.user.role_id == '1') {
@@ -148,25 +148,21 @@ export default {
       //     this.$router.push({ name: 'home' })
       //   }
       // }
-
-      
-      
     },
-    redirect()
-    {
-      const intendedUrl = Cookies.get("intended_url");
+    redirect () {
+      const intendedUrl = Cookies.get('intended_url')
       console.log(intendedUrl)
       if (intendedUrl) {
-        Cookies.remove("intended_url");
-        this.$router.push({ path: intendedUrl });
+        Cookies.remove('intended_url')
+        this.$router.push({ path: intendedUrl })
       } else {
         // make a condition here and redirect user depends on their role
-        this.$router.push({ name: 'admin.readers' });
+        this.$router.push({ name: 'admin.readers' })
       }
     },
-    
-    isVerified(e) {
-      this.token = e;
+
+    isVerified (e) {
+      this.token = e
     }
   }
 }

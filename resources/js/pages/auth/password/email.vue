@@ -45,7 +45,7 @@
               </div>
               <div class="col-md-6 px-0 pl-lg-1">
                 <!-- Submit Button -->
-                <button type="button" class="btn btn-primary w-100 my-1" :disabled="validateEmail()" @click.prevent="next()">
+                <button type="button" class="btn btn-primary w-100 my-1" @click.prevent="next()">
                   <!-- <v-button :loading="form.busy"> -->
                   Next
                 </button>
@@ -63,7 +63,7 @@
               </div>
               <div class="col-md-12 px-0">
                 <!-- Submit Button -->
-                <button type="button" class="btn btn-primary w-100" :disabled="form.email === ''" @click.prevent="setMethod('usc')">
+                <button type="button" class="btn btn-primary w-100" @click.prevent="setMethod('usc')">
                   Username Confirmation
                 </button>
               </div>
@@ -145,7 +145,7 @@ export default {
       this.step--
     },
     next () {
-      this.form.post('/api/user/validate-email').then(res => {
+      this.form.get(`/api/user/validate-email/${this.form.email}`).then(res => {
         if (res.data.data !== null) {
           this.step++
           this.status = ''
@@ -172,7 +172,7 @@ export default {
     async send () {
       // check the selected option
       if (this.step === 2) {
-        this.form.post('/api/user/validate-username').then(res => {
+        this.form.get(`api/user/validate-username/${this.form.username}`).then(res => {
           if (res.data.data !== null) {
             this.status = ''
             this.sendEmail()
