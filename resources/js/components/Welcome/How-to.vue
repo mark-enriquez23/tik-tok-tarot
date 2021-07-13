@@ -2,7 +2,7 @@
   <section v-if="howTo" id="why-us" class="why-us section-bg">
     <div class="container">
       <div class="row">
-        <div class="col-lg-4 d-flex align-items-stretch" data-aos="fade-right">
+        <div class="col d-flex align-items-stretch" data-aos="fade-right">
           <div class="content">
             <h3>{{ howTo.title }}</h3>
             <p>
@@ -13,6 +13,8 @@
             </div> -->
           </div>
         </div>
+      </div>
+      <div class="row">
         <div class="col">
           <div class="mt-5">
             <div class="row">
@@ -26,7 +28,7 @@
         </div>
       </div>
     </div>
-    <b-modal id="steps-modal" size="xl" centered hide-footer>
+    <b-modal id="steps-modal" centered hide-footer>
       <template #modal-title>
         {{ dataItem.title }}
       </template>
