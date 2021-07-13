@@ -169,6 +169,7 @@
                   <h5 class="card-title">
                     {{ vlog.title }}
                   </h5>
+                  // eslint-disable-next-line vue/no-v-html
                   <p class="card-text text-muted" v-html="vlog.description" />
                   <p class="client-review-stars">
                     <fa v-for="index in vlog.rate" :key="index" :icon="['fas', 'star']" />

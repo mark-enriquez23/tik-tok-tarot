@@ -1,98 +1,103 @@
 <template>
-<!-- <div class="video-app"> -->
- <div class="wrapper" style="flex-direction: column;">
+  <!-- <div class="video-app"> -->
+  <div class="wrapper" style="flex-direction: column;">
     <header class="vlog-heading text-center mb-5">
       <h2>Our Vlogs</h2>
       <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
     </header>
-  <div class="main-container">
-    <div v-if="featuredVlogsList.total">
-    <div class="featured">
-      <h3>Featured Vlogs</h3>
-    </div>
-   <div class="videos">
-    <div v-for="featuredVlog in featuredVlogsList.data" :key="featuredVlog.id" class="video" id="feature-vlogs">
-     <!-- <div class="video-time">15.13</div> -->
-     <a :href="'view/'+featuredVlog.id">
-     <div class='thumbnail-container'>
-       <video :src="videoPath+featuredVlog.file_name"></video>
-       <!-- <img :src="imagePath+featuredVlog.thumbnail" alt=""> -->
-     </div>
-     </a>
-      <div class="mt-3">
-        <b-media>
-          <template #aside>
-            <img :src="featuredVlog.user.photo_url" alt="">
-            <!-- <b-img blank blank-color="#abc" width="64" alt="placeholder"></b-img> -->
-          </template>
-          <h6 class="mt-0 mb-1">{{ featuredVlog.title }}</h6>
-          <small class="vlog-author">{{ featuredVlog.user.firstName + featuredVlog.user.lastName }}</small>
-          <p class="mb-0 vlog-description" v-html="featuredVlog.description" />
-        </b-media>
+    <div class="main-container">
+      <div v-if="featuredVlogsList.total">
+        <div class="featured">
+          <h3>Featured Vlogs</h3>
+        </div>
+        <div class="videos">
+          <div v-for="featuredVlog in featuredVlogsList.data" id="feature-vlogs" :key="featuredVlog.id" class="video">
+            <!-- <div class="video-time">15.13</div> -->
+            <router-link :to="'view/'+featuredVlog.id">
+              <div class="thumbnail-container">
+                <video :src="videoPath+featuredVlog.file_name" />
+                <!-- <img :src="imagePath+featuredVlog.thumbnail" alt=""> -->
+              </div>
+            </router-link>
+            <div class="mt-3">
+              <b-media>
+                <template #aside>
+                  <img :src="featuredVlog.user.photo_url" alt="">
+                  <!-- <b-img blank blank-color="#abc" width="64" alt="placeholder"></b-img> -->
+                </template>
+                <h6 class="mt-0 mb-1">
+                  {{ featuredVlog.title }}
+                </h6>
+                <small class="vlog-author">{{ featuredVlog.user.firstName + featuredVlog.user.lastName }}</small>
+                <p class="mb-0 vlog-description" v-html="featuredVlog.description" />
+              </b-media>
+            </div>
+          </div>
+        </div>
+        <b-pagination
+          v-model="featuredVlogsList.current_page"
+          :total-rows="featuredVlogsList.total"
+          :per-page="featuredVlogsList.per_page"
+          align="center"
+          size="sm"
+          aria-controls="feature-vlogs"
+          @change="newVideoData"
+        />
       </div>
-    </div>
-   </div>
-   <b-pagination
-        v-model="featuredVlogsList.current_page"
-        :total-rows="featuredVlogsList.total"
-        :per-page="featuredVlogsList.per_page"
-        align="center"
-        size="sm"
-        aria-controls="feature-vlogs"
-        @change="newVideoData"
-    ></b-pagination>
-   </div>
 
-
-    <div v-if="allVlogs.total">
-    <div class="vlogs-list">
-      <h3 class="mt-5">All Vlogs</h3>
-    </div>
-    <div class="videos">
-    <div v-for="vlog in allVlogs.data" :key="vlog.id" class="video" id="all-vlogs">
-     <!-- <div class="video-time">15.13</div> -->
-     <a :href="'view/'+vlog.id">
-     <div class='thumbnail-container'>
-       <video :src="videoPath+vlog.file_name"></video>
-       <!-- <img class="w-100" :src="imagePath+vlog.thumbnail" alt=""> -->
-     </div>
-     </a>
-      <!-- <div class="video-content"></div> -->
-      <div class="mt-3">
-            <b-media>
-          <template #aside>
-            <img :src="vlog.user.photo_url" alt="">
-            <!-- <b-img blank blank-color="#abc" width="64" alt="placeholder"></b-img> -->
-          </template>
-          <h6 class="mt-0 mb-0">{{ vlog.title }}</h6>
-          <small class="vlog-author">{{ vlog.user.firstName + vlog.user.lastName }}</small>
-          <p class="mb-0 vlog-description" v-html="vlog.description" />
-        </b-media>
+      <div v-if="allVlogs.total">
+        <div class="vlogs-list">
+          <h3 class="mt-5">
+            All Vlogs
+          </h3>
+        </div>
+        <div class="videos">
+          <div v-for="vlog in allVlogs.data" id="all-vlogs" :key="vlog.id" class="video">
+            <!-- <div class="video-time">15.13</div> -->
+            <router-link :to="'view/'+vlog.id">
+              <div class="thumbnail-container">
+                <video :src="videoPath+vlog.file_name" />
+                <!-- <img class="w-100" :src="imagePath+vlog.thumbnail" alt=""> -->
+              </div>
+            </router-link>
+            <!-- <div class="video-content"></div> -->
+            <div class="mt-3">
+              <b-media>
+                <template #aside>
+                  <img :src="vlog.user.photo_url" alt="">
+                  <!-- <b-img blank blank-color="#abc" width="64" alt="placeholder"></b-img> -->
+                </template>
+                <h6 class="mt-0 mb-0">
+                  {{ vlog.title }}
+                </h6>
+                <small class="vlog-author">{{ vlog.user.firstName + vlog.user.lastName }}</small>
+                <p class="mb-0 vlog-description" v-html="vlog.description" />
+              </b-media>
+            </div>
+            <!-- <div class="view">15.4k views</div> -->
+          </div>
+        </div>
+        <b-pagination
+          v-model="allVlogs.current_page"
+          :total-rows="allVlogs.total"
+          :per-page="allVlogs.per_page"
+          align="center"
+          size="sm"
+          aria-controls="all-vlogs"
+          @change="newFeaturedData"
+        />
       </div>
-     <!-- <div class="view">15.4k views</div> -->
-    </div>
-   </div>
-    <b-pagination
-        v-model="allVlogs.current_page"
-        :total-rows="allVlogs.total"
-        :per-page="allVlogs.per_page"
-        align="center"
-        size="sm"
-        aria-controls="all-vlogs"
-        @change="newFeaturedData"
-    ></b-pagination>
-    </div>
-    <div v-if="!featuredVlogsList.total && !allVlogs.total">
-      <p> No videos to show </p>
+      <div v-if="!featuredVlogsList.total && !allVlogs.total">
+        <p> No videos to show </p>
+      </div>
     </div>
   </div>
- </div>
 <!-- </div> -->
 </template>
 
 <script>
 // import { mapGetters } from 'vuex'
-import axios from 'axios';
+import axios from 'axios'
 
 export default {
   layout: 'default',
@@ -118,32 +123,31 @@ export default {
     }]
   }),
 
-  methods: {
-    getFeaturedData(page){
-      axios.get(`/api/vlog/status/APPROVED/1?page=${page}`).then((response) => {
-            console.log("RESPONSE", response.data[0])
-            this.featuredVlogsList = response.data[0];
-      });
-    },
-    getVideoData(page){
-      axios.get(`/api/vlog/status/APPROVED/0?page=${page}`).then((response) => {
-            console.log("RESPONSE", response.data[0])
-            this.allVlogs = response.data[0];
-      });
-    },
-    newFeaturedData(page){
-      this.getFeaturedData(page);
-    },
-    newVideoData(page){
-      this.getVideoData(page);
-    }
-
+  created () {
+    this.getFeaturedData(1)
+    this.getVideoData(1)
   },
 
+  methods: {
+    getFeaturedData (page) {
+      axios.get(`/api/vlog/status/APPROVED/1?page=${page}`).then((response) => {
+        console.log('RESPONSE', response.data[0])
+        this.featuredVlogsList = response.data[0]
+      })
+    },
+    getVideoData (page) {
+      axios.get(`/api/vlog/status/APPROVED/0?page=${page}`).then((response) => {
+        console.log('RESPONSE', response.data[0])
+        this.allVlogs = response.data[0]
+      })
+    },
+    newFeaturedData (page) {
+      this.getFeaturedData(page)
+    },
+    newVideoData (page) {
+      this.getVideoData(page)
+    }
 
-  created(){
-    this.getFeaturedData(1);
-    this.getVideoData(1);
   }
 }
 </script>
@@ -678,7 +682,6 @@ body {
  grid-row-gap: 20px;
 }
 
-
 .video video {
  transition: .4s;
  max-width: 100%;
@@ -716,7 +719,6 @@ body {
  right: 6px;
  transition: .3s ease-in;
 }
-
 
 .video-content {
  width: 100%;
@@ -903,7 +905,6 @@ body {
  }
 }
 
-
 @media (max-width: 980px) {
  .videos {
   grid-template-columns: 1fr 1fr;
@@ -927,7 +928,7 @@ body {
  .header-menu {
   display: none;
  }
- .search-bar input {
+ .search-bar input{
   max-width: 140px;
  }
  .user-settings button {
@@ -957,7 +958,6 @@ body {
   grid-template-columns:1fr;
  }
 }
-
 
 .dark-light {
  position: fixed;

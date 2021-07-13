@@ -33,7 +33,7 @@ class HowToSeeder extends Seeder
                 ],
                 [
                     'type' => 'step',
-                    'icon' => 'video',
+                    'icon' => 'camera-reels-fill',
                     'title' => 'Third Step' ,
                     'content' => 'Aut suscipit aut cum nemo deleniti aut omnis. Doloribus ut maiores omnis facere'
                 ],

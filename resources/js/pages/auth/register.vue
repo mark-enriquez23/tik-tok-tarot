@@ -251,7 +251,7 @@ export default {
 
   methods: {
     getCode () {
-      this.referral_code = this.$route.query.referral_code
+      this.referral_code = this.$route.params.referral_code
       console.log(this.referral_code)
     },
 

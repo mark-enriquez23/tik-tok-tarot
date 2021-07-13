@@ -1,36 +1,34 @@
-import axios from "axios";
+import axios from 'axios'
 
-import * as types from "../mutation-types";
-
-import Form from "vform";
+import * as types from '../mutation-types'
 
 // state
 export const state = {
-  howTo: null,
-};
+  howTo: null
+}
 
 // getters
 export const getters = {
-  howTo: state => state.howTo,
-};
+  howTo: state => state.howTo
+}
 
 // mutations
 export const mutations = {
-  [types.FETCH_HOW_TO](state, { howToData }) {
-    state.howTo = howToData;
-  },
-};
+  [types.FETCH_HOW_TO] (state, { howToData }) {
+    state.howTo = howToData
+  }
+}
 
 // actions
 export const actions = {
-  async fetchHowToData({ commit }) {
+  async fetchHowToData ({ commit }) {
     try {
-      const { data } = await axios.get("/api/how-to");
+      const { data } = await axios.get('/api/how-to')
       console.log(data)
-      commit(types.FETCH_HOW_TO, { howToData: data.data });
+      commit(types.FETCH_HOW_TO, { howToData: data.data })
     } catch (e) {
-      return e;
+      return e
     }
-  },
+  }
 
-};
+}

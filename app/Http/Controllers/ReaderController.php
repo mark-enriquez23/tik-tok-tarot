@@ -149,6 +149,23 @@ class ReaderController extends Controller
     }
 
     /**
+     * Fetch Single Reader
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return json
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function fetchReaderByUsername($user)
+    {
+        $user = User::where('username', $user)->with('userDetails', 'vlogs' ,'ratings')->first();
+
+        return response()->json([
+            "success" => $user ? true : false,
+            "data" => $user
+        ]);
+    }
+
+    /**
      * Fetch Featured Readers
      *
      * @param  \Illuminate\Http\Request  $request

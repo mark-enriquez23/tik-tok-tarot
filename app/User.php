@@ -137,6 +137,10 @@ class User extends Authenticatable implements JWTSubject //, MustVerifyEmail
         return static::where('referral_code',$code)->get()->first();
     }
 
+    public function ratings() {
+        return $this->hasMany('App\Rating', 'reference_id', 'id');
+    }
+
     public function role()
     {
         return $this->belongsTo('App\Role');

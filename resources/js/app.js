@@ -6,15 +6,14 @@ import App from '~/components/App'
 import VModal from 'vue-js-modal'
 import CoolLightBox from 'vue-cool-lightbox'
 import ToggleButton from 'vue-js-toggle-button'
-import VuePhoneNumberInput from 'vue-phone-number-input';
-import moment from 'vue-moment';
-import birthDatepicker from 'vue-birth-datepicker';
+import VuePhoneNumberInput from 'vue-phone-number-input'
+import moment from 'vue-moment'
 import Clipboard from 'v-clipboard'
 import ImageUploader from 'vue-image-upload-resize'
-import { BootstrapVue, IconsPlugin } from 'bootstrap-vue';
+import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 
-import 'vue-birth-datepicker/dist/vueBirthDatepicker.css';
-import 'vue-phone-number-input/dist/vue-phone-number-input.css';
+import 'vue-birth-datepicker/dist/vueBirthDatepicker.css'
+import 'vue-phone-number-input/dist/vue-phone-number-input.css'
 
 import '~/plugins'
 import '~/components'
@@ -25,9 +24,9 @@ Vue.use(ToggleButton)
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
 Vue.use(Clipboard)
-Vue.use(moment);
-Vue.use(ImageUploader);
-Vue.component('vue-phone-number-input', VuePhoneNumberInput);
+Vue.use(moment)
+Vue.use(ImageUploader)
+Vue.component('vue-phone-number-input', VuePhoneNumberInput)
 
 Vue.config.productionTip = false
 

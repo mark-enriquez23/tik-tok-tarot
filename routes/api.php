@@ -262,6 +262,7 @@ Route::group(['prefix' => 'homepage'], function () {
 // Our Reader
 Route::group(['prefix' => 'reader'], function () {
     Route::post('/search', 'ReaderController@search');
+    Route::get('/{username}', 'ReaderController@fetchReaderByUsername');
     Route::get('/upload-with-reader-detail', 'OurReaderController@uploadWithReaderDetail');
 });
 
