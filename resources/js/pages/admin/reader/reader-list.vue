@@ -1,88 +1,120 @@
 <template>
   <card class="py-3 m-4">
-    <h4 class="mb-3">Readers List</h4>
-    <p class="mb-5">Necessitatibus eius consequatur ex aliquid fuga eum quidem.</p>
-   <!-- <table class="table">
-    <thead>
-        <tr>
-          <th scope="col">ID</th>
-          <td></td>
-          <th scope="col">Username</th>
-          <th scope="col">First Name</th>
-          <th scope="col">Last Name</th>
-          <th scope="col">Email</th>
-          <th scope="col">Visible?</th>
-          <th scope="col">Banned?</th>
-          <th scope="col">Status</th>
-          <th scope="col">Action</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr v-for="reader in readers" :key="reader.id">
-            <th scope="row">{{reader.id}}</th>
-            <td>
-              <img class="reader-img" :src="reader.user_details.profile_photo == ''? 'http://tik-tok-tarot-master.test/images/profile.jpg' : 'http://tik-tok-tarot-master.test/images/'+reader.user_details[0].profile_photo">
-            </td>
-            <td>{{ reader.username }}</td>
-            <td>{{ reader.firstName }}</td>
-            <td>{{ reader.lastName }}</td>
-            <td>{{ reader.email }}</td>
-            <td>{{ reader.visible ? 'Yes' : 'No' }}</td>
-            <td>{{ reader.is_banned == 0 ? 'No' : 'Yes' }}</td>
-            <td v-if='reader.is_approved == "PENDING"' class="text-warning">Pending</td>
-            <td v-else :class="reader.is_approved == 'APPROVED' ? 'text-success' : 'text-danger'">{{ reader.is_approved == 'APPROVED' ? 'Approved' : 'Rejected' }}</td>
-            <td><div class="cursor-pointer link" @click="view(reader.id)">Manage</div></td>
-        </tr>
-        <tr>
-          <td colspan="7" class="text-center" v-if="readers ? readers.length <= 0 : false">No Reader found</td>
-        </tr>
-    </tbody>
-    </table> -->
+    <h4 class="mb-3">
+      Readers List
+    </h4>
+    <p class="mb-5">
+      Necessitatibus eius consequatur ex aliquid fuga eum quidem.
+    </p>
+    <b-table :fields="fields" :items="readers.data" responsive>
+      <template #cell(created_at)="data">
+        {{ data.item.created_at | moment("MMMM D, YYYY") }}
+      </template>
+
+      <template #cell(is_banned)="data">
+        <b-form-checkbox v-model="data.value" switch />
+      </template>
+
+      <template #cell(is_verified)="data">
+        <b-icon v-if="data.value" icon="check2-circle" scale="1.5" variant="success" />
+        <b-icon v-if="!data.value" icon="x-circle" scale="1.5" variant="danger" />
+      </template>
+    </b-table>
   </card>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
+import axios from 'axios'
 
 export default {
   scrollToTop: false,
 
   metaInfo () {
-    return { title: this.$t('settings') }
+    return { title: this.$t('Admin | Readers') }
   },
 
-  components: {
-  },
+  data () {
+    return {
+      readers: {
+        data: [],
+        success: false
+      },
+      fields: [
+        {
+          key: 'id',
+          label: 'ID'
+        },
+        {
+          key: 'lastName',
+          label: 'Surname',
+          sortable: true
+        },
+        {
+          key: 'firstName',
+          label: 'Given Name',
+          sortable: true
+        },
+        {
+          key: 'username',
+          label: 'Username',
+          sortabel: true
+        },
+        {
+          key: 'email',
+          label: 'Email',
+          sortable: true
+        },
+        {
+          key: 'is_approved',
+          label: 'Approved?',
+          sortable: true
+        },
+        {
+          key: 'is_banned',
+          label: 'Banned?',
+          sortable: true
+        },
+        {
+          key: 'is_verified',
+          label: 'Verified?',
+          sortable: true,
+          class: 'text-center'
+        },
+        {
+          key: 'created_at',
+          label: 'Created',
+          sortable: true
+        }
+      ]
 
-  data: () => ({
-  }),
+    }
+  },
 
   computed: mapGetters({
-    user: 'auth/user',
-    readers: 'admin-reader/readers',
+    user: 'auth/user'
   }),
 
-  created () {
+  async beforeMount () {
+    await axios.get('/api/reader/fetch-readers').then((response) => {
+      console.log('RESPONSE:', response.data)
+      this.readers = response.data
+    })
+
+    if (!this.user) {
+      this.$router.push({ name: 'home' })
+    }
   },
 
   methods: {
-      view(id){
-        this.$router.push({
-            name: "admin.reader-form",
-            params: {
-                id: id
-            }
-        });
-      }
-  },
-
-  beforeMount(){
-      this.$store.dispatch("admin-reader/fetchReaders");
-      this.$store.dispatch('auth/fetchUser');
-
-      if (!this.user){
-        this.$router.push({ name: 'home' })
-      }
+    view (id) {
+      this.$router.push({
+        name: 'admin.reader-form',
+        params: {
+          id: id
+        }
+      })
+    }
   }
 }
 </script>

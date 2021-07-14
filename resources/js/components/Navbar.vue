@@ -1,12 +1,10 @@
 <template>
-<div>
-
-  <nav class="navbar navbar-expand-lg navbar-light bg-white bs-none">
-    <div class="container">
-
-      <router-link :to="'/landing'" class="navbar-brand">
-          <img :src="srcLogoOnly" style="mix-blend-mode: luminosity; width: 90px " srcset="" >
-      </router-link>
+  <div>
+    <nav class="navbar navbar-expand-lg navbar-light bg-white bs-none">
+      <div class="container">
+        <router-link :to="'/landing'" class="navbar-brand">
+          <img :src="srcLogoOnly" style="mix-blend-mode: luminosity; width: 90px " srcset="">
+        </router-link>
 
         <!-- <ul class="navbar-nav">
           <locale-dropdown />
@@ -14,11 +12,11 @@
 
         <ul class="navbar-nav ml-auto navbar-nav-auth">
           <!-- Authenticated -->
-           <li v-if="user" class="nav-item">
-             <router-link :to="{ name: 'client.notification' }" class="bell px-3">
-                <fa icon="bell"/>
-                <span class="badge badge-danger number-notif p-1" v-if="notif">{{notif}}</span>
-              </router-link>
+          <li v-if="user" class="nav-item">
+            <router-link :to="{ name: 'client.notification' }" class="bell px-3">
+              <fa icon="bell" />
+              <span v-if="notif" class="badge badge-danger number-notif p-1">{{ notif }}</span>
+            </router-link>
           </li>
 
           <li v-if="user" class="nav-item dropdown">
@@ -29,28 +27,27 @@
               <!-- {{ user.name }} -->
             </a>
             <div class="dropdown-menu">
-
               <router-link :to="{ name: 'settings.profile' }" class="dropdown-item pl-3">
                 <fa icon="cog" fixed-width />
                 Settings
               </router-link>
 
-              <router-link :to="{ name: 'client.history' }" class="dropdown-item pl-3" v-if="user && roleId == 3">
+              <router-link v-if="user && roleId == 3" :to="{ name: 'client.history' }" class="dropdown-item pl-3">
                 <fa icon="history" fixed-width />
                 History
               </router-link>
 
-              <router-link :to="{ name: 'client.referrals' }" class="dropdown-item pl-3" v-if="user && roleId == 3">
+              <router-link v-if="user && roleId == 3" :to="{ name: 'client.referrals' }" class="dropdown-item pl-3">
                 <fa icon="user-plus" fixed-width />
                 Referrals
               </router-link>
 
-              <router-link :to="{ name: 'reader.referrals' }" class="dropdown-item pl-3" v-if="user && roleId == 2">
+              <router-link v-if="user && roleId == 2" :to="{ name: 'reader.referrals' }" class="dropdown-item pl-3">
                 <fa icon="user-plus" fixed-width />
                 Referrals
               </router-link>
 
-              <router-link :to="{ name: 'reader.videos' }" class="dropdown-item pl-3" v-if="user && roleId == 2">
+              <router-link v-if="user && roleId == 2" :to="{ name: 'reader.videos' }" class="dropdown-item pl-3">
                 <fa icon="photo-video" fixed-width />
                 Videos
               </router-link>
@@ -76,24 +73,24 @@
             </li>
           </template>
         </ul>
-    </div>
+      </div>
+    </nav>
 
-  </nav>
+    <nav v-if="navIsHomePage()" class="navbar navbar-expand-lg navbar-light bg-white">
+      <div class="container">
+        <form class="form-inline col-8 col-md-4 px-0" action="" method="post" @submit.prevent="siteSearch">
+          <input v-model="searchForm['key']" class="form-control mr-sm-2 w-50" type="text" name="reader" placeholder="Search Site" aria-label="Search">
+          <v-button class="btn btn-danger" :disabled="!searchForm.key">
+            Search
+          </v-button>
+        </form>
 
-  <nav class="navbar navbar-expand-lg navbar-light bg-white" v-if="navIsHomePage()">
-    <div class="container">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false">
+          <span class="navbar-toggler-icon" />
+        </button>
 
-    <form class="form-inline col-8 col-md-4 px-0" action="" method="post" @submit.prevent="siteSearch">
-        <input v-model="searchForm['key']" class="form-control mr-sm-2 w-50" type="text" name="reader" placeholder="Search Site" aria-label="Search" >
-        <v-button class="btn btn-danger" :disabled="!searchForm.key">Search</v-button>
-    </form>
-
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false">
-        <span class="navbar-toggler-icon" />
-      </button>
-
-      <div id="navbarToggler" class="collapse navbar-collapse">
-        <ul class="navbar-nav ml-auto ">
+        <div id="navbarToggler" class="collapse navbar-collapse">
+          <ul class="navbar-nav ml-auto ">
             <li class="nav-item">
               <router-link :to="{ name: 'welcome' }" class="nav-link" active-class="active">
                 Home
@@ -115,24 +112,23 @@
               </router-link>
             </li>
             <li class="nav-item dropdown">
-               <a class="nav-link dropdown-toggle"
-               href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                >
-                   Vlogs
-                </a>
-                <div class="dropdown-menu">
-                  <router-link :to="{ name: 'vlogs.list' }" class="dropdown-item pl-3">
-                    All Vlogs
-                  </router-link>
-                  <!-- <router-link :to="{ name: 'vlogs.review' }" class="dropdown-item pl-3">
+              <a class="nav-link dropdown-toggle"
+                 href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+              >
+                Vlogs
+              </a>
+              <div class="dropdown-menu">
+                <router-link :to="{ name: 'vlogs.list' }" class="dropdown-item pl-3">
+                  All Vlogs
+                </router-link>
+                <!-- <router-link :to="{ name: 'vlogs.review' }" class="dropdown-item pl-3">
                     Vlog Review
                   </router-link> -->
-                </div>
-
+              </div>
             </li>
             <li class="nav-item">
               <router-link :to="{ name: 'about.us' }" class="nav-link" active-class="active">
-               About Us
+                About Us
               </router-link>
             </li>
             <li class="nav-item">
@@ -140,31 +136,31 @@
                 Contact Us
               </router-link>
             </li>
-        </ul>
+          </ul>
+        </div>
       </div>
-    </div>
-  </nav>
+    </nav>
 
-  <!-- Dashboard Navigation -->
-  <nav class="navbar navbar-expand-lg navbar-light bg-white" v-if="isLoggedIn && !navIsHomePage()">
-    <div class="container">
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false">
-        <span class="navbar-toggler-icon" />
-      </button>
+    <!-- Dashboard Navigation -->
+    <nav v-if="isLoggedIn && !navIsHomePage()" class="navbar navbar-expand-lg navbar-light bg-white">
+      <div class="container">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false">
+          <span class="navbar-toggler-icon" />
+        </button>
 
-      <!-- Admin Navbar -->
-      <div id="navbarToggler" class="collapse navbar-collapse" v-if="roleId == 1">
-        <ul class="navbar-nav ml-auto ">
+        <!-- Admin Navbar -->
+        <div v-if="roleId == 1" id="navbarToggler" class="collapse navbar-collapse">
+          <ul class="navbar-nav ml-auto ">
             <li class="nav-item">
               <router-link :to="{ name: 'admin.readers' }" class="nav-link" active-class="active">
                 Readers
               </router-link>
             </li>
-            <li class="nav-item">
+            <!-- <li class="nav-item">
               <router-link :to="{ name: 'admin.psychics' }" class="nav-link" active-class="active">
                 Psychics
               </router-link>
-            </li>
+            </li> -->
             <li class="nav-item">
               <router-link :to="{ name: 'admin.upload-approvals' }" class="nav-link" active-class="active">
                 Pending Uploads
@@ -180,12 +176,12 @@
                 Freebie Manager
               </router-link>
             </li>
-        </ul>
-      </div>
+          </ul>
+        </div>
 
-      <!-- Reader Navbar -->
-      <div id="navbarToggler" class="collapse navbar-collapse" v-if="roleId == 2">
-        <ul class="navbar-nav ml-auto ">
+        <!-- Reader Navbar -->
+        <div v-if="roleId == 2" id="navbarToggler" class="collapse navbar-collapse">
+          <ul class="navbar-nav ml-auto ">
             <li class="nav-item">
               <router-link :to="{ name: 'reader.videos' }" class="nav-link" active-class="active">
                 My Videos
@@ -206,22 +202,18 @@
                 Suggestions
               </router-link>
             </li>
-        </ul>
+          </ul>
+        </div>
       </div>
-    </div>
-  </nav>
-</div>
+    </nav>
+  </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
-import LocaleDropdown from './LocaleDropdown'
 import Form from 'vform'
 
 export default {
-  components: {
-    LocaleDropdown
-  },
 
   data: () => ({
     appName: window.config.appName,
@@ -229,9 +221,9 @@ export default {
     searchForm: new Form({
       key: null
     }),
-    results:[],
+    results: [],
     isLoggedIn: false,
-    roleId: null,
+    roleId: null
   }),
 
   computed: {
@@ -239,6 +231,15 @@ export default {
       user: 'auth/user',
       notif: 'notifications/notification'
     })
+  },
+
+  mounted () {
+    if (this.user) {
+      this.$store.dispatch('notifications/getNotification')
+      // check role of logged in user
+      this.isLoggedIn = true
+      this.roleId = this.user.role_id
+    }
   },
 
   methods: {
@@ -250,47 +251,34 @@ export default {
       this.$router.push({ name: 'login' })
     },
 
-    async siteSearch() {
-      this.$router.push({name: 'search', query: { key: this.searchForm.key } });
+    async siteSearch () {
+      this.$router.push({ name: 'search', query: { key: this.searchForm.key } })
     },
 
-    navIsHomePage(){
-      console.log(this.$route.path);
+    navIsHomePage () {
+      console.log(this.$route.path)
       switch (this.$route.path) {
-        case "/landing":
-        case "/prices":
-        case "/readers":
-        case "/search":
-        case "/sessions":
-        case "/vlogs/list":
-        case "/vlogs/view/:id":
-        case "/vlogs/review":
-        case "/testimonials":
-        case "/about-us":
-        case "/contact-us":
-        case "/login":
-        case "/password":
-        case "/email":
-        case "/password":
-          return true;
+        case '/landing':
+        case '/prices':
+        case '/readers':
+        case '/search':
+        case '/sessions':
+        case '/vlogs/list':
+        case '/vlogs/view/:id':
+        case '/vlogs/review':
+        case '/testimonials':
+        case '/about-us':
+        case '/contact-us':
+        case '/login':
+        case '/password':
+        case '/email':
+          return true
         default:
-          return false;
+          return false
       }
-
     }
 
-  },
-
-  mounted() {
-
-    if (this.user) {
-      this.$store.dispatch("notifications/getNotification");
-      // check role of logged in user
-      this.isLoggedIn = true
-      this.roleId = this.user.role_id
-    }
-  },
-
+  }
 
 }
 </script>
