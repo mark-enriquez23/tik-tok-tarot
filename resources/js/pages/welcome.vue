@@ -97,7 +97,7 @@
     <!-- End Testimonials Section -->
 
     <!-- ======= Live Session Section ======= -->
-    <b-container v-if="!sessions">
+    <b-container v-if="sessionCount > 0">
       <b-row class="py-5">
         <b-col class="d-flex flex-column">
           <h2 class="text-uppercase font-weight-bold">
@@ -363,7 +363,7 @@ export default {
     },
 
     async fetchSessions () {
-      var sessions = await axios.get('/api/video/fetch/ongoing')
+      let sessions = await axios.get('/api/video/fetch/ongoing')
       this.sessions = sessions.data
       // console.log("session",this.sessions);
       // if (!this.sessions.success) {

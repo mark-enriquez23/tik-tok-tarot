@@ -1,11 +1,9 @@
 <template>
   <div class="">
- 
     <!-- ======= Sessions Section ======= -->
     <section id="team" class="team">
       <div class="container">
         <div class="row">
-          
           <div class="col-lg-4">
             <div class="section-title" data-aos="fade-right">
               <h2>Active Sessions</h2>
@@ -13,22 +11,27 @@
             </div>
           </div>
 
-          <div class="col-lg-8" v-if="sessions.total != 0">
+          <div v-if="sessions.data" class="col-lg-8">
             <div class="row">
-              <div class="col-lg-6"  v-for="session in sessions.data" v-bind:key="session.id">
-                <div class="member" data-aos="zoom-in" data-aos-delay="100">
-                  <div class="pic"><img :src="testimonialImage4" class="img-fluid" alt=""></div>
-                  <div class="member-info">
-                    <h4>{{session.name}}</h4>
-                    <p class="text-success mb-0">{{ session.is_active == 1 ? 'Online' : 'Offline' }}</p>
-                    <p>{{session.description}}</p>
+              <div v-for="session in sessions.data" :key="session.id" class="col-lg-6">
+                <router-link :to="`/reader/go-live/${session.room_name}`" class="nav-link" active-class="active">
+                  <div class="member" data-aos="zoom-in" data-aos-delay="100">
+                    <div class="pic">
+                      <img :src="`/images/${session.user.user_details.profile_photo}`" class="img-fluid" alt="">
+                    </div>
+                    <div class="member-info">
+                      <h4 class="text-uppercase">
+                        {{ session.room_name }}
+                      </h4>
+                    <!-- <h5>{{ session.room_status === 'ON_GOING' ? 'ON GOING' : '' }}</h5> -->
+                    </div>
                   </div>
-                </div>
+                </router-link>
               </div>
             </div>
           </div>
 
-          <div class="col-lg-8" v-else>
+          <div v-else class="col-lg-8">
             <div class="row">
               <div class="col-lg-12 mt-4 mt-lg-0">
                 <div class="member" data-aos="zoom-in" data-aos-delay="100">
@@ -37,22 +40,20 @@
               </div>
             </div>
           </div>
-
         </div>
       </div>
     </section><!-- Sessions Section -->
 
     <!-- Footer Section -->
     <Footer />
-</div>
+  </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
 import Footer from '../components/Utilities/Footer.vue'
 import Form from 'vform'
-import Swal from 'sweetalert2';
-import axios from "axios"
+import axios from 'axios'
 
 export default {
   components: { Footer },
@@ -60,10 +61,6 @@ export default {
 
   metaInfo () {
     return { title: this.$t('home') }
-  },
-
-  created(){
-    this.fetchSessions()
   },
 
   data: () => ({
@@ -74,27 +71,24 @@ export default {
     testimonialImage4: window.config.assetURL + 'images/testimonials/testimonials-4.jpg',
     testimonialImage5: window.config.assetURL + 'images/testimonials/testimonials-5.jpg',
     srcLogoOnly: window.config.assetURL + 'images/sample-logo.png',
-    sessions:[],
+    sessions: [],
     form: new Form({
       email: null
-    }),
+    })
   }),
 
-  computed: mapGetters({authenticated: 'auth/check'}),
-  
+  computed: mapGetters({ authenticated: 'auth/check' }),
+
+  created () {
+    this.fetchSessions()
+  },
+
   methods: {
-    async fetchSessions() {
-        var sessions = await axios.get("/api/video/fetch/ongoing");
-        this.sessions = sessions.data;
-        console.log(this.sessions);
-        if (!this.sessions.success) {
-          Swal.fire({
-          title: 'Fetching Sessions Failed',
-          text: "An error has occurred. Please try again.",
-          type: 'error'
-        })
-      }
-    },
+    async fetchSessions () {
+      let sessions = await axios.get('/api/video/fetch/ON_GOING')
+      this.sessions = sessions.data
+      console.log(this.sessions)
+    }
   }
 }
 </script>
