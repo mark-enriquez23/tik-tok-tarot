@@ -11,6 +11,7 @@ import moment from 'vue-moment'
 import Clipboard from 'v-clipboard'
 import ImageUploader from 'vue-image-upload-resize'
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
+import VueCompositionAPI from '@vue/composition-api'
 
 import 'vue-birth-datepicker/dist/vueBirthDatepicker.css'
 import 'vue-phone-number-input/dist/vue-phone-number-input.css'
@@ -26,6 +27,8 @@ Vue.use(IconsPlugin)
 Vue.use(Clipboard)
 Vue.use(moment)
 Vue.use(ImageUploader)
+Vue.use(VueCompositionAPI)
+
 Vue.component('vue-phone-number-input', VuePhoneNumberInput)
 
 Vue.config.productionTip = false

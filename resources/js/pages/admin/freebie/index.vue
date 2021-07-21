@@ -59,6 +59,11 @@
         <b-row class="my-1">
           <b-col sm="6" class="py-3 mx-auto">
             <b-form-file v-model="createSubmit.file" accept="image/*" plain />
+            <div v-for="error of v$.createSubmit.file.$errors" :key="error.$uid" class="input-errors">
+              <div class="small text-danger">
+                {{ error.$message }}
+              </div>
+            </div>
           </b-col>
         </b-row>
 
@@ -68,6 +73,11 @@
           </b-col>
           <b-col sm="10">
             <b-form-input id="input-small" v-model="createSubmit.name" size="sm" />
+            <div v-for="error of v$.createSubmit.name.$errors" :key="error.$uid" class="input-errors">
+              <div class="small text-danger">
+                {{ error.$message }}
+              </div>
+            </div>
           </b-col>
         </b-row>
 
@@ -77,6 +87,11 @@
           </b-col>
           <b-col sm="10">
             <b-form-textarea id="textarea-small" v-model="createSubmit.description" size="sm" />
+            <div v-for="error of v$.createSubmit.description.$errors" :key="error.$uid" class="input-errors">
+              <div class="small text-danger">
+                {{ error.$message }}
+              </div>
+            </div>
           </b-col>
         </b-row>
 
@@ -86,6 +101,11 @@
           </b-col>
           <b-col sm="10">
             <b-form-input id="input-small" v-model="createSubmit.points" size="sm" />
+            <div v-for="error of v$.createSubmit.points.$errors" :key="error.$uid" class="input-errors">
+              <div class="small text-danger">
+                {{ error.$message }}
+              </div>
+            </div>
           </b-col>
         </b-row>
       </div>
@@ -97,7 +117,6 @@
             class="float-right"
             @click="()=>{
               handleCreateSubmit();
-              $bvModal.hide('create-modal');
             }"
           >
             Save
@@ -157,7 +176,7 @@
             variant="primary"
             size="sm"
             class="float-right"
-            @click="()=>{
+            @click.prevent="()=>{
               handleUpdateSubmit(updateModalData.id);
               $bvModal.hide('update-modal');
             }"
@@ -194,7 +213,7 @@
               class="float-right"
               @click="()=>{
                 handleDeleteSelected(updateModalData.id);
-                $bvModal.hide('update-modal');
+                $bvModal.hide('delete-modal');
               }"
             >
               Delete
@@ -209,8 +228,13 @@
 <script>
 import axios from 'axios'
 import { swalOops, swalSuccess } from '../../../helpers'
+import useVuelidate from '@vuelidate/core'
+import { required, numeric } from '@vuelidate/validators'
 
 export default {
+  setup () {
+    return { v$: useVuelidate() }
+  },
   data: () => ({
     items: [],
     fields: [
@@ -227,8 +251,20 @@ export default {
       name: '',
       description: '',
       points: ''
-    }
+    },
+    errors: []
   }),
+
+  validations () {
+    return {
+      createSubmit: {
+        file: { required, $lazy: true },
+        name: { required, $lazy: true },
+        description: { required, $lazy: true },
+        points: { required, numeric, $lazy: true }
+      }
+    }
+  },
 
   beforeMount () {
     this.getFreebie()
@@ -283,6 +319,9 @@ export default {
     },
 
     handleCreateSubmit () {
+      this.v$.$touch()
+      if (this.v$.$error) return
+
       const formData = new FormData()
       formData.append('freebie_name', this.createSubmit.name)
       formData.append('description', this.createSubmit.description)
@@ -292,9 +331,9 @@ export default {
       axios.post(`/api/freebie/create`, formData).then((response) => {
         this.getFreebie()
         swalSuccess('Created!')
-        this.$bvModal.show('create-modal')
-      }).catch(() => {
-        swalOops('Something went wrong...')
+        this.$bvModal.hide('create-modal')
+      }).catch((err) => {
+        swalOops(`Something went wrong... ${err}`)
       })
     },
 
