@@ -24,10 +24,11 @@
                   </div>
                 </div>
                 <div class="col-md-5">
-                  <div v-if="accessToken != ''" class="card">
+                  <div class="card">
                     <div class="viewer-header px-2 py-1">
                       <p class="m-0 px-2 viewers">
-                        <fa icon="eye" /> {{ viewerCount }}
+                        <span v-show="currentStatus ==='ON_GOING'"> <fa icon="eye" /> {{ viewerCount }} </span>
+                        <span v-show="currentStatus !=='ON_GOING'"> Offline </span>
                       </p>
                     </div>
                     <div class="card-body p-0">
@@ -59,7 +60,7 @@
                         </p>
                       </div>
                       <!-- <input v-if="userNotJoined" class="form-control" type="text" v-model="username" v-on:keyup.13="connectClientWithUsername" placeholder="Your username"> -->
-                      <input v-if="!userNotJoined" v-model="message" class="form-control" type="text" placeholder="Your message" @keyup.13="handleInputTextKeypress">
+                      <input v-if="!userNotJoined && currentStatus ==='ON_GOING'" v-model="message" class="form-control" type="text" placeholder="Your message" @keyup.13="handleInputTextKeypress">
                     </div>
                   </div>
                 </div>
@@ -69,20 +70,20 @@
         </div>
         <!-- <star-rating/> -->
         <div class="m-3">
-          <b-button v-if="!userNotJoined && (name !== username || name === tc.username) && currentStatus ==='ON_GOING'" variant="primary" @click="$bvModal.show('rate-modal');">
+          <b-button v-if="!userNotJoined && (loggedUser !== username) && currentStatus ==='ON_GOING'" variant="primary" @click="$bvModal.show('rate-modal');">
             <b-icon-star-fill /> Rate me
           </b-button>
         </div>
         <div>
           <button
-            v-show="currentStatus !=='ON_GOING' && (name === username || name === tc.username)"
+            v-show="currentStatus !=='ON_GOING' && (loggedUser === tc.username)"
             class="broadcast btn btn-danger btn-lg"
             @click="getVideoToken(); connectClientWithUsername();"
           >
             Start Broadcasting
           </button>
           <button
-            v-if="currentStatus ==='ON_GOING' && name === tc.username"
+            v-if="currentStatus ==='ON_GOING' && loggedUser === tc.username"
             class="btn btn-danger btn-lg"
             @click="stopBroadcasting();"
           >
@@ -161,7 +162,7 @@ export default {
         activeChannelIndex: null,
         messagesArray: []
       },
-      username: this.user?.username,
+      username: '',
       connected: false,
       selected: false,
       showMessages: false,
@@ -181,7 +182,8 @@ export default {
       viewerCount: 0,
       showRateModal: false,
       ratingCount: 0,
-      roomId: ''
+      roomId: '',
+      loggedUser: ''
     }
   },
 
@@ -190,20 +192,19 @@ export default {
   }),
 
   beforeMount: function () {
-    const _this = this
-
+    console.log('this.user.username', this.user)
     // ASSIGNING USERNAME
-    _this.username = _this.user?.username ? _this.user?.username : ''
-    _this.username !== '' ? this.connectClientWithUsername() : this.joinAsParticipant()
+    this.loggedUser = this.user?.username ? this.user?.username : ''
+    this.user ? this.connectClientWithUsername() : this.joinAsParticipant()
 
     // CHECKING IF BROADCAST IS ONGOING
 
-    axios.get('/api/video/' + _this.name)
+    axios.get('/api/video/' + this.name)
       .then((response) => {
         if (response.data.success) {
-          _this.roomId = response.data.data.id
-          _this.dataSid = response.data.data.room_sid
-          _this.currentStatus = response.data.data.room_status
+          this.roomId = response.data.data.id
+          this.dataSid = response.data.data.room_sid
+          this.currentStatus = response.data.data.room_status
           // _this.username !== _this.name ? this.joinAsParticipant() : this.joinAsParticipant();
         }
       })
@@ -218,7 +219,7 @@ export default {
     // MODAL METHODS
 
     resetRatingForms () {
-      vm = this
+      let vm = this
       vm.ratingCount = 0
     },
 
@@ -239,11 +240,10 @@ export default {
 
     // CHAT METHODS
     connectClientWithUsername () {
-      if (this.username !== undefined) {
-        this.tc.username = this.user?.username
-        this.username = this.user?.username
+      if (this.loggedUser) {
+        this.tc.username = this.loggedUser
         this.userNotJoined = false
-        var live = axios.get('/api/video/view/' + this.user?.username)
+        axios.get('/api/video/view/' + this.name)
 
         this.fetchAccessToken(this.tc.username, this.connectMessagingClient)
         console.log('USERNAME', this.tc.username)
@@ -252,14 +252,12 @@ export default {
       }
     },
     fetchAccessToken (username, handler) {
-      let vm = this
       axios.post('/api/video/chat', {
-        identity: this.tc.username,
+        identity: username,
         device: 'browser'
       })
         .then(function (response) {
           handler(response.data)
-          vm.username = ''
         })
         .catch(function (error) {
           console.log(error)
@@ -690,7 +688,6 @@ export default {
       vm.userNotJoined = true
       vm.showMessages = false
       vm.deleteChannel()
-      vm.username = vm.user?.username ? vm.user?.username : ''
       vm.tc.accessManager = null
       vm.tc.messagingClient = null
       vm.tc.channel = []
