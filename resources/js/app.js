@@ -31,7 +31,7 @@ Vue.use(VueCompositionAPI)
 
 Vue.component('vue-phone-number-input', VuePhoneNumberInput)
 
-Vue.config.productionTip = false
+Vue.config.productionTip = true
 
 /* eslint-disable no-new */
 new Vue({

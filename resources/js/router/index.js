@@ -49,9 +49,8 @@ function createRouter () {
  */
 async function beforeEach (to, from, next) {
   // check status of user
-  if(to.matched.some(record => record.meta.requiresAuth)) {
-
-    await store.dispatch("auth/fetchUser").then((data)=>{
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    await store.dispatch('auth/fetchUser').then((data) => {
       // if(to.matched.some(record => record.meta.is_active) && data.role_id === "3") {
 
       //   if(data.status === "active"){
@@ -64,8 +63,8 @@ async function beforeEach (to, from, next) {
       //   next()
       // }
 
-      var roles = [];
-      to.matched.some(record => roles = record.meta.role)
+      var roles = []
+      // to.matched.some(record => roles = record.meta.role)
 
       // check if route belongs to logged in user
       if (to.matched.some(record => record.meta.role)) {
@@ -75,34 +74,27 @@ async function beforeEach (to, from, next) {
           if (data.role_id === r) {
             isAuthenticated = true
           }
-        });
+        })
 
         if (isAuthenticated) {
           next()
-        }else{
+        } else {
           // check role to know where to redirect
           if (data.role_id == 1) {
-            next({ name: "admin.readers" })
-          }else if (data.role_id == 2) {
-            next({ name: "home" })
+            next({ name: 'admin.readers' })
+          } else if (data.role_id == 2) {
+            next({ name: 'home' })
           }
-
         }
-
       }
-
-    });
-
-
-
-  }else {
+    })
+  } else {
     next()
   }
 
-  if(store.state.auth.user){
-    await store.dispatch("notifications/getNotification");
+  if (store.state.auth.user) {
+    await store.dispatch('notifications/getNotification')
   }
-
 
   let components = []
 
@@ -124,7 +116,8 @@ async function beforeEach (to, from, next) {
 
   // Start the loading bar.
   if (components[components.length - 1].loading !== false) {
-    router.app.$nextTick(() => router.app.$loading.start())
+    router.app.$loading.start()
+    // router.app.$nextTick(() => router.app.$loading.start())
   }
 
   // Get the middleware for all the matched components.
