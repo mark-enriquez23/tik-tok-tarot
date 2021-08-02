@@ -33,7 +33,7 @@
                     </div>
                     <div class="card-body p-0">
                       <div class="message-box">
-                        <div v-show="showMessages" class="message-div p-4">
+                        <div v-show="showMessages && currentStatus === 'ON_GOING'" class="message-div p-4">
                           <div v-for="message in tc.messagesArray" :key="message.id" class="row msg">
                             <div v-if="message.author == user.username" class="media-body">
                               <p class="message-host-author">
@@ -70,20 +70,20 @@
         </div>
         <!-- <star-rating/> -->
         <div class="m-3">
-          <b-button v-if="!userNotJoined && (loggedUser !== username) && currentStatus ==='ON_GOING'" variant="primary" @click="$bvModal.show('rate-modal');">
+          <b-button v-if="!userNotJoined && (loggedUser !== name) && currentStatus ==='ON_GOING'" variant="primary" @click="$bvModal.show('rate-modal');">
             <b-icon-star-fill /> Rate me
           </b-button>
         </div>
         <div>
           <button
-            v-show="currentStatus !=='ON_GOING' && (loggedUser === tc.username)"
+            v-show="currentStatus !=='ON_GOING' && (loggedUser === name)"
             class="broadcast btn btn-danger btn-lg"
             @click="getVideoToken(); connectClientWithUsername();"
           >
             Start Broadcasting
           </button>
           <button
-            v-if="currentStatus ==='ON_GOING' && loggedUser === tc.username"
+            v-if="currentStatus ==='ON_GOING' && (loggedUser === name)"
             class="btn btn-danger btn-lg"
             @click="stopBroadcasting();"
           >
@@ -205,7 +205,7 @@ export default {
           this.roomId = response.data.data.id
           this.dataSid = response.data.data.room_sid
           this.currentStatus = response.data.data.room_status
-          // _this.username !== _this.name ? this.joinAsParticipant() : this.joinAsParticipant();
+          // vm.username !== vm.name ? this.joinAsParticipant() : this.joinAsParticipant();
         }
       })
       .catch((err) => {
@@ -226,6 +226,10 @@ export default {
     handleSubmitRating () {
       let vm = this
 
+      if (!this.user) {
+        swalOops('You have to login for you to rate the host.')
+      }
+
       let data = {
         'reference_id': vm.roomId,
         'category': 'LIVE',
@@ -241,6 +245,21 @@ export default {
     // CHAT METHODS
     connectClientWithUsername () {
       if (this.loggedUser) {
+        if (this.loggedUser !== this.name) {
+          let vm = this
+          axios.get(`/api/video/access_token/${vm.name}`)
+            .then(function (response) {
+              vm.accessToken = response.data
+            })
+            .catch(function (error) {
+              console.log(error)
+            })
+            .then(function () {
+              console.log('joining room as other user')
+              vm.joinToRoom()
+            })
+        }
+
         this.tc.username = this.loggedUser
         this.userNotJoined = false
         axios.get('/api/video/view/' + this.name)
@@ -267,7 +286,7 @@ export default {
       // Initialize the Chat messaging client
       let vm = this
 
-      this.tc.accessManager = new Twilio.AccessManager(token)
+      vm.tc.accessManager = new Twilio.AccessManager(token)
 
       Twilio.Chat.Client.create(token).then(function (client) {
         vm.tc.messagingClient = client
@@ -282,7 +301,7 @@ export default {
       this.connected = true
     },
     refreshToken () {
-      this.fetchAccessToken(this.tc.username, vm.setNewToken)
+      this.fetchAccessToken(this.tc.username, this.setNewToken)
     },
     setNewToken (tokenResponse) {
       this.tc.accessManager.updateToken(tokenResponse.token)
@@ -404,14 +423,13 @@ export default {
       console.log(member.identity + ' left the channel')
       // notify(member.identity + ' left the channel');
     },
-    notify (message) {
-      var row = $('<div>').addClass('col-md-12')
-      row.loadTemplate('#member-notification-template', {
-        status: message
-      })
-      tc.$messageList.append(row)
-      scrollToMessageListBottom()
-    },
+    // notify (message) {
+    //   var row = $('<div>').addClass('col-md-12')
+    //   row.loadTemplate('#member-notification-template', {
+    //     status: message
+    //   })
+    // this.tc.$messageList.append(row)
+    // },
     joinChannel (_channel) {
       let vm = this
       return _channel.join()
@@ -423,7 +441,7 @@ export default {
           return joinedChannel
         })
         .catch(function (err) {
-
+          console.warn('couldt join channel' + _channel.friendlyName + ' because ' + err)
           // alert("Couldn't join channel " + _channel.friendlyName + ' because ' + err);
         })
     },
@@ -450,7 +468,7 @@ export default {
         vm.showMessages = true
         vm.tc.messagesArray = messages.items
         vm.userNotJoined = false
-        // messages.items.forEach(vm.addMessageToList);
+        // messages.items.forEach(vm.addMessageToList)
       })
     },
     addMessageToList (message) {
@@ -458,12 +476,11 @@ export default {
       this.loadMessages()
     },
     handleInputTextKeypress () {
-      let vm = this
       this.tc.currentChannel.sendMessage(this.message)
       this.message = ''
-      // setTimeout(function(){
-      //    vm.loadMessages();
-      //  }, 3000);
+      // setTimeout(function () {
+      //   this.loadMessages()
+      // }, 3000)
     },
     handleNewChannelInputKeypress (event) {
       let vm = this
@@ -510,36 +527,39 @@ export default {
     getVideoToken: function () {
       console.log('Video chat room loading...')
 
-      const _this = this
+      const vm = this
 
       // Request a new token
       axios.get(`/api/video/access_token/${this.name}`)
         .then(function (response) {
-          _this.accessToken = response.data
-          _this.currentStatus = 'ON_GOING'
+          vm.accessToken = response.data
+          vm.currentStatus = 'ON_GOING'
         })
         .catch(function (error) {
           console.log(error)
         })
         .then(function () {
-          _this.connectToRoom()
+          vm.connectToRoom()
         })
     },
     joinAsParticipant: function () {
       console.log('Video chat room loading...')
 
-      const _this = this
+      const vm = this
+      vm.tc.username = vm.name
+      vm.fetchAccessToken('', vm.connectMessagingClient)
+      console.log('USERNAME', vm.name)
 
       // Request a new token
-      axios.get(`/api/video/access_token/${this.name}`)
+      axios.get(`/api/video/access_token/${vm.name}`)
         .then(function (response) {
-          _this.accessToken = response.data
+          vm.accessToken = response.data
         })
         .catch(function (error) {
           console.log(error)
         })
         .then(function () {
-          _this.joinToRoom()
+          vm.joinToRoom()
         })
     },
     connectToRoom: function () {
@@ -600,6 +620,7 @@ export default {
           console.log('Host disconnected')
           console.log('localParticipant', room.localParticipant)
           console.log('videoChatWindow', videoChatWindow.childNodes[0])
+          this.viewerCount = room.participants.size
           const child = videoChatWindow.lastElementChild
           videoChatWindow.removeChild(child)
           // videoChatWindow.innerHTML ="";
@@ -614,10 +635,11 @@ export default {
           // Detach the local media elements
           console.log('Someone disconnected')
           this.viewerCount = this.viewerCount - 1
-          room.localParticipant.tracks.forEach(publication => {
-            const attachedElements = publication.track.detach()
-            attachedElements.forEach(element => element.remove())
-          })
+          // this.viewerCount = room.participants.size
+          // room.localParticipant.tracks.forEach(publication => {
+          //   const attachedElements = publication.track.detach()
+          //   attachedElements.forEach(element => element.remove())
+          // })
         })
       }, error => {
         console.error(`Unable to connect to Room: ${error.message}`)
@@ -635,16 +657,29 @@ export default {
         this.dataSid = room.sid
 
         const videoChatWindow = document.getElementById('my-video-chat-window')
+        const child = videoChatWindow.lastElementChild
 
         const localParticipant = room.localParticipant
         console.log(`Connected to the Room as LocalParticipant "${localParticipant.identity}"`)
 
         room.participants.forEach(participant => {
-          console.log('existing')
           participant.tracks.forEach(publication => {
             if (publication.track) {
               videoChatWindow.appendChild(publication.track.attach())
             }
+          })
+
+          participant.on('trackSubscribed', track => {
+            // alert('live now')
+            videoChatWindow.appendChild(track.attach())
+            this.viewerCount = room.participants.size
+            this.currentStatus = 'ON_GOING'
+          })
+
+          participant.on('trackUnsubscribed', track => {
+            this.currentStatus = 'COMPLETED'
+            track.detach().forEach(element => element.remove())
+            videoChatWindow.removeChild(child)
           })
 
           this.viewerCount = room.participants.size
@@ -663,18 +698,23 @@ export default {
           })
 
           participant.on('trackSubscribed', track => {
+            // alert('live now')
             videoChatWindow.appendChild(track.attach())
+            this.viewerCount = room.participants.size
+            this.currentStatus = 'ON_GOING'
+          })
+
+          participant.on('trackUnsubscribed', track => {
+            this.currentStatus = 'COMPLETED'
+            track.detach().forEach(element => element.remove())
+            videoChatWindow.removeChild(child)
           })
         })
 
         room.on('participantDisconnected', room => {
           // Detach the local media elements
-          this.viewerCount = this.viewerCount - 1
           console.log('Someone disconnected')
-          room.participants.tracks.forEach(publication => {
-            const attachedElements = publication.track.detach()
-            attachedElements.forEach(element => element.remove())
-          })
+          this.viewerCount = this.viewerCount - 1
         })
       }, error => {
         console.error(`Unable to connect to Room: ${error.message}`)
@@ -683,11 +723,11 @@ export default {
 
     stopBroadcasting: function () {
       let vm = this
+      vm.deleteChannel()
       vm.accessToken = ''
       vm.currentStatus = 'COMPLETED'
       vm.userNotJoined = true
       vm.showMessages = false
-      vm.deleteChannel()
       vm.tc.accessManager = null
       vm.tc.messagingClient = null
       vm.tc.channel = []
@@ -709,7 +749,6 @@ export default {
           // vm.userNotJoined = true
           // vm.showMessages = false
           vm.videoRoom.disconnect()
-          // vm.deleteChannel()
           // vm.username = vm.user?.username ? vm.user?.username : ''
           // vm.tc.accessManager = null
           // vm.tc.messagingClient = null
