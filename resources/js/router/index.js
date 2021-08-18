@@ -64,7 +64,9 @@ async function beforeEach (to, from, next) {
       // }
 
       var roles = []
-      // to.matched.some(record => roles = record.meta.role)
+      to.matched.some((record) => {
+        roles = record.meta.role
+      })
 
       // check if route belongs to logged in user
       if (to.matched.some(record => record.meta.role)) {
@@ -80,9 +82,9 @@ async function beforeEach (to, from, next) {
           next()
         } else {
           // check role to know where to redirect
-          if (data.role_id == 1) {
+          if (data.role_id === 1) {
             next({ name: 'admin.readers' })
-          } else if (data.role_id == 2) {
+          } else if (data.role_id === 2) {
             next({ name: 'home' })
           }
         }
@@ -90,10 +92,6 @@ async function beforeEach (to, from, next) {
     })
   } else {
     next()
-  }
-
-  if (store.state.auth.user) {
-    await store.dispatch('notifications/getNotification')
   }
 
   let components = []
@@ -116,8 +114,7 @@ async function beforeEach (to, from, next) {
 
   // Start the loading bar.
   if (components[components.length - 1].loading !== false) {
-    router.app.$loading.start()
-    // router.app.$nextTick(() => router.app.$loading.start())
+    router.app.$nextTick(() => router.app.$loading.start())
   }
 
   // Get the middleware for all the matched components.
