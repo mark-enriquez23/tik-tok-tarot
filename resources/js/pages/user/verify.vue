@@ -69,7 +69,9 @@ export default {
     },
     async verifyCode () {
       const { data } = await this.form.post('/api/verification/verify-user')
-      console.log(data)
+      console.log('data', data)
+      console.log('user', this.user)
+
       if (!data.success) {
         Swal.fire({
           title: 'Incorrect Code',
@@ -82,8 +84,11 @@ export default {
           text: 'Congratulations your account has been verified!',
           type: 'success'
         }).then(() => {
-          // Redirect home.
-          this.$router.push({ name: 'home' })
+          if (this.user.role_id === 2) {
+            this.$router.push({ name: 'reader.videos' })
+          } else {
+            this.$router.push({ name: 'welcome' })
+          }
         })
       }
     }
