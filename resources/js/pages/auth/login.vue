@@ -10,7 +10,7 @@
         <form @submit.prevent="login" @keydown="form.onKeydown($event)">
           <!-- Email -->
           <div class="form-group col-md-7 mx-auto">
-            <label>Email</label>
+            <label>Username</label>
             <input v-model="form.email" :class="{ 'is-invalid': form.errors.has('email') }" class="form-control" type="text" name="email">
             <has-error :form="form" field="email" />
           </div>

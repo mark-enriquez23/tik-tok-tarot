@@ -3,8 +3,10 @@
     <div class="col-md-4">
       <card class="py-4">
         <div class="col-12 text-center">
-          <img  data-v-6dde423b="" src="https://www.gravatar.com/avatar/c220906e6e486ed4cd82625e3b80c14b.jpg?s=200&amp;d=mm" class="rounded-circle profile-photo mr-1">
-          <h5 class="mt-2">{{user.name}}</h5>
+          <img data-v-6dde423b="" src="https://www.gravatar.com/avatar/c220906e6e486ed4cd82625e3b80c14b.jpg?s=200&amp;d=mm" class="rounded-circle profile-photo mr-1">
+          <h5 class="mt-2">
+            {{ user.name }}
+          </h5>
         </div>
         <hr>
         <div class="col-12">
@@ -39,24 +41,24 @@ export default {
 
   data: () => ({
     tabs: [
-        {
-          icon: 'user',
-          name: 'Profile',
-          route: 'settings.profile'
-        },
-        {
-          icon: 'lock',
-          name: 'Security Question',
-          route: 'settings.security'
-        },
-        {
-          icon: 'lock',
-          name: 'Password',
-          route: 'settings.password'
-        }
-      ]
+      {
+        icon: 'user',
+        name: 'Profile',
+        route: 'settings.profile'
+      },
+      {
+        icon: 'lock',
+        name: 'Security Question',
+        route: 'settings.security'
+      },
+      {
+        icon: 'lock',
+        name: 'Password',
+        route: 'settings.password'
+      }
+    ]
   }),
-  beforeMount() {
+  beforeMount () {
     this.$store.dispatch('user-security-question/fetchDefaultAuthenticatedSecurityQuestions')
     this.$store.dispatch('user-security-question/fetchAuthenticatedUserSecurityQuestions')
   }

@@ -7,12 +7,14 @@
         <div class="col-12 col-lg-6 bg-main order-2 order-lg-1 p-5">
           <div class="row h-100">
             <div class="col-lg-12 my-auto text-white">
-             <h5>Welcome to Tik-Tok-Tarot</h5>
+              <h5>Welcome to Tik-Tok-Tarot</h5>
               <hr class="col-3 ml-lg-0">
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit
-                in voluptate velit esse cillum dolore eu fugiat nulla pariatur</p>
-          </div>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit
+                in voluptate velit esse cillum dolore eu fugiat nulla pariatur
+              </p>
+            </div>
           </div>
         </div>
         <div class="col-12 col-lg-6 form-main order-1 order-lg-2 py-5">

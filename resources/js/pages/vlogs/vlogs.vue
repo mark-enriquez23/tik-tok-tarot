@@ -78,6 +78,7 @@
           </div>
         </div>
         <b-pagination
+          v-if="allVlogs.total >= allVlogs.per_page"
           v-model="allVlogs.current_page"
           :total-rows="allVlogs.total"
           :per-page="allVlogs.per_page"
@@ -86,6 +87,9 @@
           aria-controls="all-vlogs"
           @change="newFeaturedData"
         />
+      </div>
+      <div v-if="isLoading">
+        <p> loading </p>
       </div>
       <div v-if="!featuredVlogsList.total && !allVlogs.total">
         <p> No videos to show </p>
@@ -112,6 +116,7 @@ export default {
     imagePath: window.config.assetURL + 'uploads/vlog/thumbnails/',
     videoPath: window.config.assetURL + 'uploads/vlog/',
     imageUrl: window.config.assetURL + 'images/',
+    isLoading: false,
     userImageeUrl: window.config.assetURL + 'images/testimonials/',
     srcLogoOnly: window.config.assetURL + 'images/sample-logo.png',
     vlogImage: window.config.assetURL + 'images/listing-tnumbnail-3.jpg',
@@ -136,10 +141,12 @@ export default {
       })
     },
     getVideoData (page) {
+      this.isLoading = true
       axios.get(`/api/vlog/status/APPROVED/0?page=${page}`).then((response) => {
         console.log('RESPONSE', response.data[0])
         this.allVlogs = response.data[0]
       })
+      this.isLoading = false
     },
     newFeaturedData (page) {
       this.getFeaturedData(page)

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Settings;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\User;
 
 class ProfileController extends Controller
 {
@@ -18,10 +19,12 @@ class ProfileController extends Controller
         $user = $request->user();
 
         $this->validate($request, [
-            'name' => 'required',
-            'email' => 'required|email|unique:users,email,'.$user->id,
+            'username' => 'required',
+            'firstName' => 'required',
+            'lastName' => 'required',
+            'email' => 'required|email'
         ]);
 
-        return tap($user)->update($request->only('username','name', 'phone_number', 'email'));
+        return tap($user)->update($request->only('username','firstName', 'lastName', 'phone_number', 'email'));
     }
 }

@@ -1,206 +1,180 @@
 <template>
   <div id="generic_price_table">
-<section class="container row mx-auto">
-        <div class="container col-md-3">
-            <div class="row">
-                <div class="col-md-12">
-                <div class="">
-                  <div class="section-title">
-                    <h2>TikTok-Tarot Pricing</h2>
-                    <p>Magnam dolores commodi suscipit uisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
+    <section class="container row mx-auto">
+      <div class="container col-md-3">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="">
+              <div class="section-title">
+                <h2>TikTok-Tarot Pricing</h2>
+                <p>Magnam dolores commodi suscipit uisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="container col-md-9">
+        <!--BLOCK ROW START-->
+        <div class="row">
+          <div class="col-md-4">
+            <!--PRICE CONTENT START-->
+            <div class="generic_content clearfix">
+              <!--HEAD PRICE DETAIL START-->
+              <div class="generic_head_price clearfix">
+                <!--HEAD CONTENT START-->
+                <div class="generic_head_content clearfix">
+                  <!--HEAD START-->
+                  <div class="head_bg" />
+                  <div class="head">
+                    <span>{{ price[2]['type'] }}</span>
                   </div>
+                  <!--//HEAD END-->
                 </div>
+                <!--//HEAD CONTENT END-->
+
+                <!--PRICE START-->
+                <div class="generic_price_tag clearfix">
+                  <span class="price">
+                    <span class="sign">{{ price[2].sign }}</span>
+                    <span class="currency">{{ price[2].currency }}</span>
+                    <span class="cent">{{ price[2].cent }}</span>
+                    <span class="month">/MON</span>
+                  </span>
                 </div>
+                <!--//PRICE END-->
+              </div>
+              <!--//HEAD PRICE DETAIL END-->
+
+              <!--FEATURE LIST START-->
+              <div class="generic_feature_list">
+                <ul>
+                  <li><span>{{ JSON.parse(price[2].feature)[0].total_card }}</span> Tarot Cards</li>
+                  <li><span>{{ JSON.parse(price[2].feature)[0].account }}</span> Accounts</li>
+                  <li><span>{{ JSON.parse(price[2].feature)[0].reading }}</span> Readings</li>
+                  <li><span>{{ JSON.parse(price[2].feature)[0].support }}</span> Support</li>
+                </ul>
+              </div>
+              <!--//FEATURE LIST END-->
+
+              <!--BUTTON START-->
+              <div class="generic_price_btn clearfix">
+                <a class="" href="">Sign up</a>
+              </div>
+              <!--//BUTTON END-->
             </div>
-        </div>
-        <div class="container col-md-9">
+            <!--//PRICE CONTENT END-->
+          </div>
 
-            <!--BLOCK ROW START-->
-            <div class="row">
-                <div class="col-md-4">
-
-                  <!--PRICE CONTENT START-->
-                    <div class="generic_content clearfix">
-
-                        <!--HEAD PRICE DETAIL START-->
-                        <div class="generic_head_price clearfix">
-
-                            <!--HEAD CONTENT START-->
-                            <div class="generic_head_content clearfix">
-
-                              <!--HEAD START-->
-                                <div class="head_bg"></div>
-                                <div class="head">
-                                    <span>{{ price.data.data[2].type }}</span>
-                                </div>
-                                <!--//HEAD END-->
-
-                            </div>
-                            <!--//HEAD CONTENT END-->
-
-                            <!--PRICE START-->
-                            <div class="generic_price_tag clearfix">
-                                <span class="price">
-                                    <span class="sign">{{ price.data.data[2].sign }}</span>
-                                    <span class="currency">{{ price.data.data[2].currency }}</span>
-                                    <span class="cent">{{ price.data.data[2].cent }}</span>
-                                    <span class="month">/MON</span>
-                                </span>
-                            </div>
-                            <!--//PRICE END-->
-
-                        </div>
-                        <!--//HEAD PRICE DETAIL END-->
-
-                        <!--FEATURE LIST START-->
-                        <div class="generic_feature_list">
-                          <ul>
-                                <li><span>{{JSON.parse(this.price.data.data[2].feature)[0].total_card}}</span> Tarot Cards</li>
-                                <li><span>{{JSON.parse(this.price.data.data[2].feature)[0].account}}</span> Accounts</li>
-                                <li><span>{{JSON.parse(this.price.data.data[2].feature)[0].reading}}</span> Readings</li>
-                                <li><span>{{JSON.parse(this.price.data.data[2].feature)[0].support}}</span> Support</li>
-                            </ul>
-                        </div>
-                        <!--//FEATURE LIST END-->
-
-                        <!--BUTTON START-->
-                        <div class="generic_price_btn clearfix">
-                          <a class="" href="">Sign up</a>
-                        </div>
-                        <!--//BUTTON END-->
-
-                    </div>
-                    <!--//PRICE CONTENT END-->
-
+          <div class="col-md-4">
+            <!--PRICE CONTENT START-->
+            <div class="generic_content active clearfix">
+              <!--HEAD PRICE DETAIL START-->
+              <div class="generic_head_price clearfix">
+                <!--HEAD CONTENT START-->
+                <div class="generic_head_content clearfix">
+                  <!--HEAD START-->
+                  <div class="head_bg" />
+                  <div class="head">
+                    <span>{{ price[0].type }}</span>
+                  </div>
+                  <!--//HEAD END-->
                 </div>
+                <!--//HEAD CONTENT END-->
 
-                <div class="col-md-4">
-
-                  <!--PRICE CONTENT START-->
-                    <div class="generic_content active clearfix">
-
-                        <!--HEAD PRICE DETAIL START-->
-                        <div class="generic_head_price clearfix">
-
-                            <!--HEAD CONTENT START-->
-                            <div class="generic_head_content clearfix">
-
-                              <!--HEAD START-->
-                                <div class="head_bg"></div>
-                                <div class="head">
-                                    <span>{{ price.data.data[0].type }}</span>
-                                </div>
-                                <!--//HEAD END-->
-
-                            </div>
-                            <!--//HEAD CONTENT END-->
-
-                            <!--PRICE START-->
-                            <div class="generic_price_tag clearfix">
-                                <span class="price">
-                                    <span class="sign">{{ price.data.data[0].sign }}</span>
-                                    <span class="currency">{{ price.data.data[0].currency }}</span>
-                                    <span class="cent">{{ price.data.data[0].cent }}</span>
-                                    <span class="month">/MON</span>
-                                </span>
-                            </div>
-                            <!--//PRICE END-->
-
-                        </div>
-                        <!--//HEAD PRICE DETAIL END-->
-
-                        <!--FEATURE LIST START-->
-                        <div class="generic_feature_list">
-                          <ul>
-                                <li><span>{{JSON.parse(this.price.data.data[0].feature)[0].total_card}}</span> Tarot Cards</li>
-                                <li><span>{{JSON.parse(this.price.data.data[0].feature)[0].account}}</span> Accounts</li>
-                                <li><span>{{JSON.parse(this.price.data.data[0].feature)[0].reading}}</span> Readings</li>
-                                <li><span>{{JSON.parse(this.price.data.data[0].feature)[0].support}}</span> Support</li>
-                            </ul>
-                        </div>
-                        <!--//FEATURE LIST END-->
-
-                        <!--BUTTON START-->
-                        <div class="generic_price_btn clearfix">
-                          <a class="" href="">Sign up</a>
-                        </div>
-                        <!--//BUTTON END-->
-
-                    </div>
-                    <!--//PRICE CONTENT END-->
-
+                <!--PRICE START-->
+                <div class="generic_price_tag clearfix">
+                  <span class="price">
+                    <span class="sign">{{ price[0].sign }}</span>
+                    <span class="currency">{{ price[0].currency }}</span>
+                    <span class="cent">{{ price[0].cent }}</span>
+                    <span class="month">/MON</span>
+                  </span>
                 </div>
-                <div class="col-md-4">
+                <!--//PRICE END-->
+              </div>
+              <!--//HEAD PRICE DETAIL END-->
 
-                  <!--PRICE CONTENT START-->
-                    <div class="generic_content clearfix">
+              <!--FEATURE LIST START-->
+              <div class="generic_feature_list">
+                <ul>
+                  <li><span>{{ JSON.parse(price[0].feature)[0].total_card }}</span> Tarot Cards</li>
+                  <li><span>{{ JSON.parse(price[0].feature)[0].account }}</span> Accounts</li>
+                  <li><span>{{ JSON.parse(price[0].feature)[0].reading }}</span> Readings</li>
+                  <li><span>{{ JSON.parse(price[0].feature)[0].support }}</span> Support</li>
+                </ul>
+              </div>
+              <!--//FEATURE LIST END-->
 
-                        <!--HEAD PRICE DETAIL START-->
-                        <div class="generic_head_price clearfix">
-
-                            <!--HEAD CONTENT START-->
-                            <div class="generic_head_content clearfix">
-
-                              <!--HEAD START-->
-                                <div class="head_bg"></div>
-                                <div class="head">
-                                    <span>{{ price.data.data[1].type }}</span>
-                                </div>
-                                <!--//HEAD END-->
-
-                            </div>
-                            <!--//HEAD CONTENT END-->
-
-                            <!--PRICE START-->
-
-                            <div class="generic_price_tag clearfix">
-                                <span class="price">
-                                    <span class="sign">{{ price.data.data[1].sign }}</span>
-                                    <span class="currency">{{ price.data.data[1].currency }}</span>
-                                    <span class="cent">{{ price.data.data[1].cent }}</span>
-                                    <span class="month">/MON</span>
-                                </span>
-                            </div>
-                            <!--//PRICE END-->
-
-                        </div>
-                        <!--//HEAD PRICE DETAIL END-->
-
-                        <!--FEATURE LIST START-->
-                        <div class="generic_feature_list">
-                          <ul>
-                                <li><span>{{JSON.parse(this.price.data.data[1].feature)[0].total_card}}</span> Tarot Cards</li>
-                                <li><span>{{JSON.parse(this.price.data.data[1].feature)[0].account}}</span> Accounts</li>
-                                <li><span>{{JSON.parse(this.price.data.data[1].feature)[0].reading}}</span> Readings</li>
-                                <li><span>{{JSON.parse(this.price.data.data[1].feature)[0].support}}</span> Support</li>
-                            </ul>
-                        </div>
-                        <!--//FEATURE LIST END-->
-
-                        <!--BUTTON START-->
-                        <div class="generic_price_btn clearfix">
-                          <a class="" href="">Sign up</a>
-                        </div>
-                        <!--//BUTTON END-->
-
-                    </div>
-                    <!--//PRICE CONTENT END-->
-
-                </div>
+              <!--BUTTON START-->
+              <div class="generic_price_btn clearfix">
+                <a class="" href="">Sign up</a>
+              </div>
+              <!--//BUTTON END-->
             </div>
-            <!--//BLOCK ROW END-->
+            <!--//PRICE CONTENT END-->
+          </div>
+          <div class="col-md-4">
+            <!--PRICE CONTENT START-->
+            <div class="generic_content clearfix">
+              <!--HEAD PRICE DETAIL START-->
+              <div class="generic_head_price clearfix">
+                <!--HEAD CONTENT START-->
+                <div class="generic_head_content clearfix">
+                  <!--HEAD START-->
+                  <div class="head_bg" />
+                  <div class="head">
+                    <span>{{ price[1].type }}</span>
+                  </div>
+                  <!--//HEAD END-->
+                </div>
+                <!--//HEAD CONTENT END-->
 
+                <!--PRICE START-->
+
+                <div class="generic_price_tag clearfix">
+                  <span class="price">
+                    <span class="sign">{{ price[1].sign }}</span>
+                    <span class="currency">{{ price[1].currency }}</span>
+                    <span class="cent">{{ price[1].cent }}</span>
+                    <span class="month">/MON</span>
+                  </span>
+                </div>
+                <!--//PRICE END-->
+              </div>
+              <!--//HEAD PRICE DETAIL END-->
+
+              <!--FEATURE LIST START-->
+              <div class="generic_feature_list">
+                <ul>
+                  <li><span>{{ JSON.parse(price[1].feature)[0].total_card }}</span> Tarot Cards</li>
+                  <li><span>{{ JSON.parse(price[1].feature)[0].account }}</span> Accounts</li>
+                  <li><span>{{ JSON.parse(price[1].feature)[0].reading }}</span> Readings</li>
+                  <li><span>{{ JSON.parse(price[1].feature)[0].support }}</span> Support</li>
+                </ul>
+              </div>
+              <!--//FEATURE LIST END-->
+
+              <!--BUTTON START-->
+              <div class="generic_price_btn clearfix">
+                <a class="" href="">Sign up</a>
+              </div>
+              <!--//BUTTON END-->
+            </div>
+            <!--//PRICE CONTENT END-->
+          </div>
         </div>
+        <!--//BLOCK ROW END-->
+      </div>
     </section>
     <Footer />
-</div>
+  </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
 import Footer from '../components/Utilities/Footer.vue'
-import axios from "axios"
-import Swal from 'sweetalert2';
+import axios from 'axios'
+import Swal from 'sweetalert2'
 
 export default {
   components: { Footer },
@@ -209,22 +183,22 @@ export default {
   metaInfo () {
     return { title: this.$t('home') }
   },
-  beforeCreate() {
-    this.$store.dispatch('about-us/fetchAboutUsData')
-  },
 
-  created(){
-    this.fetchPrices()
-  },
-    
   data: () => ({
     title: window.config.appName,
     imageUrl: window.config.assetURL + 'images/',
     userImageeUrl: window.config.assetURL + 'images/testimonials/',
     srcLogoOnly: window.config.assetURL + 'images/sample-logo.png',
-    price:[],
+    price: [],
     feature: []
   }),
+  beforeCreate () {
+    this.$store.dispatch('about-us/fetchAboutUsData')
+  },
+
+  created () {
+    this.fetchPrices()
+  },
 
   computed: mapGetters({
     authenticated: 'auth/check',
@@ -232,16 +206,18 @@ export default {
   }),
 
   methods: {
-      async fetchPrices() {
-        this.price = await axios.get("/api/price");
-        console.log(this.price);
-        console.log(JSON.parse(this.price.data.data[3].feature)[0].total_card);
-        if (!this.price.data.success) {
-          Swal.fire({
+    async fetchPrices () {
+      let response = await axios.get('/api/price')
+      console.log('response', response)
+
+      if (!response.data.success) {
+        Swal.fire({
           title: 'Fetching Prices Failed',
-          text: "An error has occurred. Please try again.",
+          text: 'An error has occurred. Please try again.',
           type: 'error'
         })
+      } else {
+        this.price = response?.data?.data
       }
     }
   }
