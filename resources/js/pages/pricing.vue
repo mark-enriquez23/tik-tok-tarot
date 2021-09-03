@@ -48,7 +48,7 @@
               <!--FEATURE LIST START-->
               <div class="generic_feature_list">
                 <ul>
-                  <li><span>{{ JSON.parse(price[2].feature)[0].total_card }}</span> Tarot Cards</li>
+                  <li><span>{{ JSON.parse(price[2].feature)[0].total_card  }}</span> Tarot Cards</li>
                   <li><span>{{ JSON.parse(price[2].feature)[0].account }}</span> Accounts</li>
                   <li><span>{{ JSON.parse(price[2].feature)[0].reading }}</span> Readings</li>
                   <li><span>{{ JSON.parse(price[2].feature)[0].support }}</span> Support</li>
@@ -189,7 +189,37 @@ export default {
     imageUrl: window.config.assetURL + 'images/',
     userImageeUrl: window.config.assetURL + 'images/testimonials/',
     srcLogoOnly: window.config.assetURL + 'images/sample-logo.png',
-    price: [],
+    price: [{
+      cent: "",
+      created_at: "",
+      currency: "",
+      feature:  "[{\"total_card\":\"7\",\"account\":\"12\",\"reading\":\"7\",\"support\":\"24\\/7\"}]",
+      id: null,
+      metadata: null,
+      sign: "",
+      type: "",
+      updated_at: ""},
+      {
+      cent: "",
+      created_at: "",
+      currency: "",
+      feature:  "[{\"total_card\":\"7\",\"account\":\"12\",\"reading\":\"7\",\"support\":\"24\\/7\"}]",
+      id: null,
+      metadata: null,
+      sign: "",
+      type: "",
+      updated_at: ""},
+      {
+      cent: "",
+      created_at: "",
+      currency: "",
+      feature: "[{\"total_card\":\"7\",\"account\":\"12\",\"reading\":\"7\",\"support\":\"24\\/7\"}]", 
+      id: null,
+      metadata: null,
+      sign: "",
+      type: "",
+      updated_at: ""},
+    ],
     feature: []
   }),
   beforeCreate () {
