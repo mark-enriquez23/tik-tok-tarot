@@ -1,7 +1,11 @@
 <template>
   <card>
-    <h4 class="mb-0">User Password</h4>
-    <p class="mb-0">Change your password here.</p>
+    <h4 class="mb-0">
+      User Password
+    </h4>
+    <p class="mb-0">
+      Change your password here.
+    </p>
     <hr>
     <form @submit.prevent="update" @keydown="form.onKeydown($event)">
       <alert-success :form="form" :message="$t('password_updated')" />
@@ -9,19 +13,19 @@
       <!-- Password -->
       <div class="form-group col-md-7 mx-auto">
         <label>{{ $t('new_password') }}</label>
-        <input  v-model="form.password" :class="{ 'is-invalid': form.errors.has('password') }" class="form-control" type="password" name="password">
+        <input v-model="form.password" :class="{ 'is-invalid': form.errors.has('password') }" class="form-control" type="password" name="password">
         <has-error :form="form" field="password" />
       </div>
 
       <!-- Password Confirmation -->
       <div class="form-group col-md-7 mx-auto">
         <label>{{ $t('confirm_password') }}</label>
-        <input  v-model="form.password_confirmation" :class="{ 'is-invalid': form.errors.has('password_confirmation') }" class="form-control" type="password" name="password_confirmation">
+        <input v-model="form.password_confirmation" :class="{ 'is-invalid': form.errors.has('password_confirmation') }" class="form-control" type="password" name="password_confirmation">
         <has-error :form="form" field="password_confirmation" />
       </div>
 
       <!-- Submit Button -->
-       <div class="form-group row col-md-7 mx-auto mt-3">
+      <div class="form-group row col-md-7 mx-auto mt-3">
         <div class="col-md-6 px-0 pl-lg-1 ml-md-auto">
           <!-- Update Button -->
           <v-button class="btn btn-primary w-100" :loading="form.busy">

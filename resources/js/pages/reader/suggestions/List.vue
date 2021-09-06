@@ -4,7 +4,9 @@
       <b-col>
         <b-card>
           <template #header>
-            <h4 class="m-0 text-center">Suggestions</h4>
+            <h4 class="m-0 text-center">
+              Suggestions
+            </h4>
           </template>
           <b-card-body v-if="tableData.data">
             <b-table
@@ -20,11 +22,13 @@
               </template>
 
               <template #cell(id)="data">
-                <b-button variant="primary" size="sm" @click="viewVlogs(data.value)"> View</b-button>
+                <b-button variant="primary" size="sm" @click="viewVlogs(data.value)">
+                  View
+                </b-button>
               </template>
-
             </b-table>
             <b-pagination
+              v-if="tableData.total > 5"
               v-model="tableData.currentPage"
               :total-rows="tableData.total"
               :per-page="tableData.per_page"
@@ -35,7 +39,7 @@
               align="center"
               aria-controls="suggestion_tbl"
               size="sm"
-            ></b-pagination>
+            />
           </b-card-body>
           <b-card-body v-if="!tableData.data">
             <h1> no suggestions to load </h1>
@@ -43,13 +47,13 @@
         </b-card>
       </b-col>
     </b-row>
-</b-container>
+  </b-container>
 </template>
 
 <script>
 
-import { mapGetters } from 'vuex';
-import axios from 'axios';
+import { mapGetters } from 'vuex'
+import axios from 'axios'
 
 export default {
   layout: 'default',
@@ -58,54 +62,53 @@ export default {
     return { title: this.$t('home') }
   },
 
-  data() {
+  data () {
     return {
       fields: [
-          {
-            key: 'video.title',
-            label: 'Vlog Title',
-            sortable: true
-          },
-          {
-            key: 'created_at',
-            label: 'Date',
-            sortable: true
-          },
-          {
-            key: 'message',
-            label: 'Message',
-          },
-          {
-            key: 'id',
-            label: 'Action'
-          }
-        ],
-      tableData: [],
+        {
+          key: 'video.title',
+          label: 'Vlog Title',
+          sortable: true
+        },
+        {
+          key: 'created_at',
+          label: 'Date',
+          sortable: true
+        },
+        {
+          key: 'message',
+          label: 'Message'
+        },
+        {
+          key: 'id',
+          label: 'Action'
+        }
+      ],
+      tableData: []
     }
   },
 
   computed: mapGetters({
-    auth: 'auth/user',
+    auth: 'auth/user'
   }),
 
-  methods: {
-    fetchSuggestions(){
-      axios.get(`/api/suggestions/user/${this.auth.id}`).then(response =>{
-        console.log("RESPONSE", response.data);
-
-        this.tableData = response.data[0];
-      });
-
-    },
-
-    viewVlogs(id){
-      this.$router.push(`/vlogs/view/${id}`)
-    },
-  },
-
-  beforeMount() {
+  beforeMount () {
     this.fetchSuggestions()
   },
+
+  methods: {
+    fetchSuggestions () {
+      axios.get(`/api/suggestions/user/${this.auth.id}`).then(response => {
+        console.log('RESPONSE', response.data)
+
+        this.tableData = response.data[0]
+      })
+    },
+
+    viewVlogs (id) {
+      this.$router.push(`/vlogs/view/${id}`)
+    }
+  }
 }
 
 </script>
