@@ -6,7 +6,7 @@
     <p class="mb-5">
       Necessitatibus eius consequatur ex aliquid fuga eum quidem.
     </p>
-    <b-table :fields="fields" :items="readers.data" responsive>
+    <b-table :fields="fields" :items="readers.data" :busy="readers.loading" responsive>
       <template #cell(created_at)="data">
         {{ data.item.created_at | moment("MMMM D, YYYY") }}
       </template>
@@ -38,7 +38,8 @@ export default {
     return {
       readers: {
         data: [],
-        success: false
+        success: false,
+        loading: false
       },
       fields: [
         {
@@ -96,14 +97,17 @@ export default {
   }),
 
   async beforeMount () {
+    this.readers.loading = true
     await axios.get('/api/reader/fetch-readers').then((response) => {
       console.log('RESPONSE:', response.data)
       this.readers = response.data
+      this.readers.loading = false
     })
 
     if (!this.user) {
       this.$router.push({ name: 'home' })
     }
+    this.readers.loading = false
   },
 
   methods: {
