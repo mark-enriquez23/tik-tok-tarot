@@ -2,13 +2,17 @@
   <b-container class="pt-5">
     <b-row>
       <b-col>
-        <b-card>
+        <div v-if="loading" class="text-center">
+          <b-spinner label="Loading..." />
+        </div>
+        
+        <b-card v-else>
           <template #header>
             <h4 class="m-0 text-center">
               Suggestions
             </h4>
           </template>
-          <b-card-body v-if="tableData.data">
+          <b-card-body>
             <b-table
               id="suggestion_tbl"
               :items="tableData.data"
@@ -27,6 +31,7 @@
                 </b-button>
               </template>
             </b-table>
+
             <b-pagination
               v-if="tableData.total > tableData.per_page"
               v-model="tableData.currentPage"
@@ -41,8 +46,9 @@
               size="sm"
             />
           </b-card-body>
-          <b-card-body v-if="!tableData.data">
-            <h1> no suggestions to load </h1>
+          
+          <b-card-body v-if="tableData.total == 0">
+            <h6> no suggestions to load </h6>
           </b-card-body>
         </b-card>
       </b-col>
@@ -84,7 +90,8 @@ export default {
           label: 'Action'
         }
       ],
-      tableData: []
+      tableData: [],
+      loading:true
     }
   },
 
@@ -98,10 +105,12 @@ export default {
 
   methods: {
     fetchSuggestions () {
+      this.loading = true
       axios.get(`/api/suggestions/user/${this.auth.id}`).then(response => {
         console.log('RESPONSE', response.data)
 
         this.tableData = response.data[0]
+        this.loading = false
       })
     },
 

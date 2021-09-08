@@ -60,7 +60,12 @@
             Magnam dolores commodi suscipit uisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.
           </p>
         </b-col>
-        <b-col sm="12" md="6" lg="4">
+
+        <b-col v-if="testimonialLoading"  sm="12" md="6" lg="4" class="text-center">
+          <b-spinner label="Loading..." />
+        </b-col>
+
+        <b-col v-else sm="12" md="6" lg="4">
           <b-carousel
             id="carousel-1"
             v-model="slide"
@@ -92,6 +97,7 @@
             </b-carousel-slide>
           </b-carousel>
         </b-col>
+
       </b-row>
     </b-container>
     <!-- End Testimonials Section -->
@@ -108,7 +114,12 @@
             Magnam dolores commodi suscipit uisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.
           </p>
         </b-col>
-        <b-col>
+
+        <b-col v-if="sessionLoading"  sm="12" md="6" lg="4" class="text-center">
+          <b-spinner label="Loading..." />
+        </b-col>
+
+        <b-col v-else>
           <b-row class="d-flex flex-row-reverse">
             <b-col v-for="session in sessions" :key="session.id">
               <router-link :to="`/reader/go-live/${session.room_name}`" class="nav-link" active-class="active">
@@ -160,7 +171,11 @@
       </div>
 
       <div class="mb-2">
-        <div class="row">
+        <div v-if="vlogLoading" class="row text-center">
+          <b-spinner label="Loading..." />
+        </div>
+        
+        <div v-else class="row">
           <div v-for="vlog in vlogs.data" :key="vlog.id" class="col-md-4 mb-4">
             <div class="card ">
               <a href="#">
@@ -179,14 +194,9 @@
             </div>
           </div>
         </div>
+
       </div>
-    <!-- <div class="mt-5 mx-auto col-md-3 mx-auto ">
-      <div class="btn btn-danger w-100">
-        <div class=" row no-gutters mx-auto justify-content-center">
-          <div class="my-auto mr-2">Show More</div> <fa :icon="['fas', 'chevron-right']" class="my-auto" />
-        </div>
-      </div>
-    </div> -->
+
     </section>
 
     <!-- Featured Reader -->
@@ -312,7 +322,10 @@ export default {
     totalVlogs: null,
     totalViewers: null,
     slide: 0,
-    sliding: null
+    sliding: null,
+    testimonialLoading:true,
+    sessionLoading:true,
+    vlogLoading:true
   }),
 
   computed: {
@@ -332,7 +345,6 @@ export default {
     this.fetchVlogs()
     this.fetchTestimonials()
     this.fetchReaders()
-    // this.fetchSessions()
     this.fetchTotalSessions()
     this.fetchTotalViewers()
     this.fetchTotalVlogs()
@@ -341,7 +353,6 @@ export default {
   methods: {
     async subscribe () {
       const { data } = await this.form.post('/api/mailchimp/subscribe')
-      // console.log(data);
       if (!data.success) {
         Swal.fire({
           title: 'Subscribing Failed',
@@ -358,26 +369,24 @@ export default {
     },
 
     async fetchVlogs () {
+      this.vlogLoading = true
       var vlogs = await axios.get('/api/vlog/status/APPROVED/1')
       this.vlogs = vlogs.data[0]
+      this.vlogLoading = false
     },
 
     async fetchSessions () {
+      this.sessionLoading = true
       let sessions = await axios.get('/api/video/fetch/ongoing')
       this.sessions = sessions.data
-      // console.log("session",this.sessions);
-      // if (!this.sessions.success) {
-      //   Swal.fire({
-      //   title: 'Fetching Sessions Failed',
-      //   text: "An error has occurred. Please try again.",
-      //   type: 'error'
-      // })
-      // }
+      this.sessionLoading = false
     },
 
     async fetchTestimonials () {
+      this.testimonialLoading = true
       let response = await axios.get('/api/testimonial')
       this.testimonials = response.data.data
+      this.testimonialLoading = false
     },
 
     async fetchReaders () {
