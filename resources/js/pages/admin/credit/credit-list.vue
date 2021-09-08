@@ -7,11 +7,11 @@
       Necessitatibus eius consequatur ex aliquid fua quidem.
     </p>
 
-    <div class="text-center" v-if="loading">
-      <b-spinner label="Loading..."></b-spinner>
+    <div v-if="loading" class="text-center">
+      <b-spinner label="Loading..." />
     </div>
 
-    <table class="table" v-else>
+    <table v-if="!loading" class="table">
       <thead>
         <tr>
           <th scope="col">
@@ -77,7 +77,7 @@ export default {
   },
 
   data: () => ({
-    loading:true
+    loading: true
   }),
 
   computed: mapGetters({
