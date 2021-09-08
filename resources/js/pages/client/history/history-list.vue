@@ -74,7 +74,6 @@ export default {
 
   beforeMount(){
       this.fetchHistory();
-
       if (!this.user){
         this.$router.push({ name: 'home' })
       }

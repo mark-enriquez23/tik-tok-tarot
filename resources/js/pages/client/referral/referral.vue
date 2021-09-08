@@ -64,7 +64,6 @@ export default {
 
   methods: {
       async refresh() {
-        console.log("button-called")
         var referral = await axios.get("/api/user/refresh-code/"+this.user.id);
         console.log(referral)
         this.referral_code = referral.data.data.referral_code;
@@ -83,9 +82,6 @@ export default {
   },
 
   beforeMount(){
-      this.$store.dispatch('auth/fetchUser');
-      console.log(this.user);
-      console.log(this.user.id);
       this.referral_code = this.user.referral_code;
       console.log(this.user.referral_code)
       if (!this.user){
