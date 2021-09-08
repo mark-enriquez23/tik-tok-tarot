@@ -4,7 +4,7 @@
       Credits
     </h4>
     <p class="mb-5">
-      Necessitatibus eius consequatur ex aliquid fuga eum quidem.
+      Necessitatibus eius consequatur ex aliquid fua quidem.
     </p>
 
     <div class="text-center" v-if="loading">

@@ -50,46 +50,6 @@ function createRouter () {
 async function beforeEach (to, from, next) {
   // check status of user
   if (to.matched.some(record => record.meta.requiresAuth)) {
-    await store.dispatch('auth/fetchUser').then((data) => {
-      // if(to.matched.some(record => record.meta.is_active) && data.role_id === "3") {
-
-      //   if(data.status === "active"){
-      //     next()
-      //   } else{
-      //     next({ name: "expired" })
-      //   }
-
-      // }else {
-      //   next()
-      // }
-
-      var roles = []
-      to.matched.some((record) => {
-        roles = record.meta.role
-      })
-
-      // check if route belongs to logged in user
-      if (to.matched.some(record => record.meta.role)) {
-        var isAuthenticated = false
-
-        roles.forEach(r => {
-          if (data.role_id === r) {
-            isAuthenticated = true
-          }
-        })
-
-        if (isAuthenticated) {
-          next()
-        } else {
-          // check role to know where to redirect
-          if (data.role_id === 1) {
-            next({ name: 'admin.readers' })
-          } else if (data.role_id === 2) {
-            next({ name: 'home' })
-          }
-        }
-      }
-    })
   } else {
     next()
   }
