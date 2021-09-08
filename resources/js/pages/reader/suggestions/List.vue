@@ -28,7 +28,7 @@
               </template>
             </b-table>
             <b-pagination
-              v-if="tableData.total > 5"
+              v-if="tableData.total > tableData.per_page"
               v-model="tableData.currentPage"
               :total-rows="tableData.total"
               :per-page="tableData.per_page"

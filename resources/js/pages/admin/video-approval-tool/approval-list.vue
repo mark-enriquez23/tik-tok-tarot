@@ -12,11 +12,11 @@
         <b-form-select v-model="selectedFilter" :options="selectOptions" size="sm" class="ml-3" @change="handleFilterVlogs" />
       </b-col>
       <b-col sm="12">
-        <div class="text-center" v-if="loading">
-          <b-spinner label="Loading..."></b-spinner>
+        <div v-if="loading" class="text-center">
+          <b-spinner label="Loading..." />
         </div>
 
-        <table class="table" v-else>
+        <table v-else class="table">
           <thead>
             <tr>
               <th scope="col">
@@ -76,6 +76,7 @@
           </tbody>
         </table>
         <b-pagination
+          v-if="data.total > data.per_page"
           v-model="data.current_page"
           :total-rows="data.total"
           :per-page="data.per_page"
@@ -147,7 +148,7 @@ export default {
       { value: 'REJECTED', text: 'REJECTED' },
       { value: 'PENDING', text: 'PENDING' }
     ],
-    loading:true
+    loading: true
   }),
 
   computed: mapGetters({

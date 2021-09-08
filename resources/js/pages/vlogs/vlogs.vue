@@ -35,6 +35,7 @@
           </div>
         </div>
         <b-pagination
+          v-if="featuredVlogsList.total > featuredVlogsList.per_page"
           v-model="featuredVlogsList.current_page"
           :total-rows="featuredVlogsList.total"
           :per-page="featuredVlogsList.per_page"
