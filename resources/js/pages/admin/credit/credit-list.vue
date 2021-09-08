@@ -7,11 +7,11 @@
       Necessitatibus eius consequatur ex aliquid fua quidem.
     </p>
 
-    <div v-if="loading" class="text-center">
+    <div v-if="credits.isLoading" class="text-center">
       <b-spinner label="Loading..." />
     </div>
 
-    <table v-if="!loading" class="table">
+    <table v-if="!credits.isLoading" class="table">
       <thead>
         <tr>
           <th scope="col">
@@ -38,7 +38,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="credit in credits" :key="credit.id">
+        <tr v-for="credit in credits.data" :key="credit.id">
           <th scope="row">
             {{ credit.id }}
           </th>
@@ -89,9 +89,7 @@ export default {
   },
 
   beforeMount () {
-    this.loading = true
     this.$store.dispatch('admin-credit/fetchUserCredits')
-    this.loading = false
   },
 
   methods: {
