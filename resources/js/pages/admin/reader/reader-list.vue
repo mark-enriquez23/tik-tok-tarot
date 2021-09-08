@@ -6,7 +6,12 @@
     <p class="mb-5">
       Necessitatibus eius consequatur ex aliquid fuga eum quidem.
     </p>
-    <b-table :fields="fields" :items="readers.data" :busy="readers.loading" responsive>
+
+    <div v-if="readers.loading" class="text-center">
+      <b-spinner label="Loading..." />
+    </div>
+
+    <b-table v-else :fields="fields" :items="readers.data" responsive>
       <template #cell(created_at)="data">
         {{ data.item.created_at | moment("MMMM D, YYYY") }}
       </template>
@@ -39,7 +44,7 @@ export default {
       readers: {
         data: [],
         success: false,
-        loading: false
+        loading: true
       },
       fields: [
         {

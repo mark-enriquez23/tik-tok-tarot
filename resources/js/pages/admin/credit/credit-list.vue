@@ -6,14 +6,19 @@
     <p class="mb-5">
       Necessitatibus eius consequatur ex aliquid fuga eum quidem.
     </p>
-    <table class="table">
+
+    <div class="text-center" v-if="loading">
+      <b-spinner label="Loading..."></b-spinner>
+    </div>
+
+    <table class="table" v-else>
       <thead>
         <tr>
           <th scope="col">
             ID
           </th>
           <th scope="col">
-            User Name
+            Username
           </th>
           <th scope="col">
             User Email
@@ -41,7 +46,7 @@
           <td>{{ credit.email }}</td>
           <td>{{ credit.credit.earned_points }}</td>
           <td>{{ credit.credit.goal_points }}</td>
-          <td>{{ credit.credit.updated_at }}</td>
+          <td>{{ credit.credit.updated_at | moment("MMMM D, YYYY") }}</td>
           <td>
             <div class="cursor-pointer link" @click="view(credit.id)">
               Manage
@@ -72,6 +77,7 @@ export default {
   },
 
   data: () => ({
+    loading:true
   }),
 
   computed: mapGetters({
@@ -83,7 +89,9 @@ export default {
   },
 
   beforeMount () {
+    this.loading = true
     this.$store.dispatch('admin-credit/fetchUserCredits')
+    this.loading = false
   },
 
   methods: {

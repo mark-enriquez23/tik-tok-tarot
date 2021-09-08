@@ -12,7 +12,11 @@
         <b-form-select v-model="selectedFilter" :options="selectOptions" size="sm" class="ml-3" @change="handleFilterVlogs" />
       </b-col>
       <b-col sm="12">
-        <table class="table">
+        <div class="text-center" v-if="loading">
+          <b-spinner label="Loading..."></b-spinner>
+        </div>
+
+        <table class="table" v-else>
           <thead>
             <tr>
               <th scope="col">
@@ -142,7 +146,8 @@ export default {
       { value: 'APPROVED', text: 'APPROVED' },
       { value: 'REJECTED', text: 'REJECTED' },
       { value: 'PENDING', text: 'PENDING' }
-    ]
+    ],
+    loading:true
   }),
 
   computed: mapGetters({
@@ -198,9 +203,11 @@ export default {
     },
 
     async handleFetchAllVlogs (page) {
+      this.loading = true
       await axios.get(`/api/vlog/?page=${page}`).then((response) => {
         console.log('RESPONSE', response)
         this.data = response.data[0]
+        this.loading = false
       })
     },
 

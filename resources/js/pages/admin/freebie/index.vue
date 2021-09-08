@@ -15,7 +15,11 @@
               </b-button>
             </b-col>
           </b-row>
-          <b-table hover :items="items" :fields="fields" responsive>
+          <div class="text-center" v-if="loading">
+            <b-spinner label="Loading..."></b-spinner>
+          </div>
+
+          <b-table hover :items="items" :fields="fields" responsive v-else>
             <template #cell(id)="data">
               <b-dropdown variant="link" no-caret>
                 <template #button-content>
@@ -252,7 +256,8 @@ export default {
       description: '',
       points: ''
     },
-    errors: []
+    errors: [],
+    loading:true
   }),
 
   validations () {
@@ -272,8 +277,10 @@ export default {
 
   methods: {
     getFreebie () {
+      this.loading = true;
       axios.get('/api/freebie/').then((response) => {
         this.items = response.data.data
+        this.loading = false
       })
     },
 
