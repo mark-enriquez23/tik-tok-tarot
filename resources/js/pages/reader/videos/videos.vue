@@ -12,10 +12,14 @@
       </div>
     </div>
 
-    <div class="mb-2">
+    <div v-if="loading" class="mb-2 text-center">
+      <b-spinner label="Loading..." />
+    </div>
+
+    <div v-else class="mb-2">
       <!-- if video exist here -->
-      <div class="row" v-if="videos">
-        <div class="col-md-4 my-2" v-for="video in videos"  :key="video.id">
+      <div class="row" v-if="videos.length != 0">
+        <div class="col-md-4 my-2" v-for="video in videos" :key="video.id">
           <div>
             <div>
             <img class="img-thumbnail p-0" :src="`/uploads/vlog/thumbnails/${video.thumbnail}`">
@@ -30,11 +34,12 @@
       <div class="row" v-else>
         <div class="col-lg-12 mt-4 mt-lg-0">
           <div data-aos="zoom-in" data-aos-delay="100">
-            <h5> You have no videos.</h5>
+            <h6> You have no videos.</h6>
           </div>
         </div>
       </div>
     </div>
+
   </card>
 </template>
 
@@ -58,17 +63,20 @@ export default {
   }),
 
   data: () => ({
-    videos:[]
+    videos:[],
+    loading:true
   }),
 
   methods: {
 
     fetchVideos(){
+        this.loading = true;
         console.log(this.user.id);
         axios.get('/api/vlog/user/' + this.user.id + '/APPROVED').then(res=>{
-        this.videos = res.data.data;
-
+          this.videos = res.data.data;
+          this.loading = false;
       }).catch((e)=>{
+        this.loading = false;
         swalOops('A problem occurred');
       })
     },
