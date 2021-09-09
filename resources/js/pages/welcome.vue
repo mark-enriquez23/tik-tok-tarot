@@ -61,7 +61,7 @@
           </p>
         </b-col>
 
-        <b-col v-if="testimonialLoading"  sm="12" md="6" lg="4" class="text-center">
+        <b-col v-if="testimonialLoading" sm="12" md="6" lg="4" class="text-center">
           <b-spinner label="Loading..." />
         </b-col>
 
@@ -97,7 +97,6 @@
             </b-carousel-slide>
           </b-carousel>
         </b-col>
-
       </b-row>
     </b-container>
     <!-- End Testimonials Section -->
@@ -115,7 +114,7 @@
           </p>
         </b-col>
 
-        <b-col v-if="sessionLoading"  sm="12" md="6" lg="4" class="text-center">
+        <b-col v-if="sessionLoading" sm="12" md="6" lg="4" class="text-center">
           <b-spinner label="Loading..." />
         </b-col>
 
@@ -174,7 +173,7 @@
         <div v-if="vlogLoading" class="row text-center">
           <b-spinner label="Loading..." />
         </div>
-        
+
         <div v-else class="row">
           <div v-for="vlog in vlogs.data" :key="vlog.id" class="col-md-4 mb-4">
             <div class="card ">
@@ -194,9 +193,7 @@
             </div>
           </div>
         </div>
-
       </div>
-
     </section>
 
     <!-- Featured Reader -->
@@ -299,10 +296,6 @@ export default {
   components: { Footer, HowTo, Faq, GeneralInfo, StarRating },
   layout: 'default',
 
-  metaInfo () {
-    return { title: this.$t('home') }
-  },
-
   data: () => ({
     title: window.config.appName,
     testimonialImage1: window.config.assetURL + 'images/testimonials/testimonials-1.jpg',
@@ -323,9 +316,9 @@ export default {
     totalViewers: null,
     slide: 0,
     sliding: null,
-    testimonialLoading:true,
-    sessionLoading:true,
-    vlogLoading:true
+    testimonialLoading: true,
+    sessionLoading: true,
+    vlogLoading: true
   }),
 
   computed: {

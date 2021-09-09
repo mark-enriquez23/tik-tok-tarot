@@ -79,7 +79,7 @@
           </div>
         </div>
         <b-pagination
-          v-if="allVlogs.total >= allVlogs.per_page"
+          v-if="allVlogs.total > allVlogs.per_page"
           v-model="allVlogs.current_page"
           :total-rows="allVlogs.total"
           :per-page="allVlogs.per_page"
@@ -92,7 +92,7 @@
       <div v-if="isLoading">
         <p> loading </p>
       </div>
-      <div v-if="!featuredVlogsList.total && !allVlogs.total">
+      <div v-if="!featuredVlogsList.total && !allVlogs.total && !isLoading">
         <p> No videos to show </p>
       </div>
     </div>

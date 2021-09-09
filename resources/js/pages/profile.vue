@@ -20,32 +20,32 @@
       </b-col>
       <b-col cols="8">
         <b-row>
-          <b-col>
+          <b-col cols="2">
             <span>
               Biography:
             </span>
           </b-col>
-          <b-col>
+          <b-col cols="10">
             <span>
               {{ userData.user_details.reader_bio }}
             </span>
           </b-col>
         </b-row>
         <b-row class="mt-3">
-          <b-col>
+          <b-col cols="2">
             Expertise:
           </b-col>
-          <b-col>
+          <b-col cols="10">
             <b-badge variant="danger">
               {{ userData.user_details.expertise }}
             </b-badge>
           </b-col>
         </b-row>
         <b-row class="mt-3">
-          <b-col>
+          <b-col cols="2">
             Rating:
           </b-col>
-          <b-col>
+          <b-col cols="10">
             <star-rating :rating="5" :max-rating="5" :star-size="20" :show-rating="false" rounded-corners read-only />
           </b-col>
         </b-row>
