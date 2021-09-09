@@ -35,10 +35,6 @@ import axios from 'axios'
 export default {
   scrollToTop: false,
 
-  metaInfo () {
-    return { title: this.$t('Admin | Readers') }
-  },
-
   data () {
     return {
       readers: {
@@ -104,7 +100,6 @@ export default {
   async beforeMount () {
     this.readers.loading = true
     await axios.get('/api/reader/fetch-readers').then((response) => {
-      console.log('RESPONSE:', response.data)
       this.readers = response.data
       this.readers.loading = false
     })

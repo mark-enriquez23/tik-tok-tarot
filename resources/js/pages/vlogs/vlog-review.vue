@@ -129,10 +129,6 @@ export default {
   components: { },
   layout: 'default',
 
-  metaInfo () {
-    return { title: this.$t('home') }
-  },
-
   filters: {
     truncate: function (text, length, suffix) {
       if (text.length > length) {
@@ -164,7 +160,6 @@ export default {
   methods: {
     getReviews () {
       axios.get(`/api/reviews/all?page=1`).then((response) => {
-        console.log('RESPONSE', response.data[0])
         this.vlog_reviews = response.data[0]
       })
     },

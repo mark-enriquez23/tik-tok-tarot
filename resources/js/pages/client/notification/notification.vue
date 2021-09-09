@@ -1,19 +1,23 @@
 <template>
   <card class="py-3 m-4">
-    <h4 class="mb-3">Notifications</h4>
+    <h4 class="mb-3">
+      Notifications
+    </h4>
     <div class="mb-2">
       <div class="row">
         <div class="mb-2">
-          <div v-if="!notifications.length" class="pl-3"><p> No notifications for now </p></div>
-          <table class="table table-responsive" >
+          <div v-if="!notifications.length" class="pl-3">
+            <p> No notifications for now </p>
+          </div>
+          <table class="table table-responsive">
             <tbody>
-              <tr class="mb-2" v-for="notification in notifications" :key="notification.id">
+              <tr v-for="notification in notifications" :key="notification.id" class="mb-2">
                 <td v-if="notification.data.type === 'VLOG'">
                   <div>
                     <img class="img-thumbnail p-0 mr-5" align="left" :src="`/uploads/vlog/thumbnails/${notification.data.video.thumbnail}`">
                   </div>
                   <div>
-                    <h3>{{capitalizeFirstLetter(notification.data.user.username)}} uploaded: {{notification.data.video.title}}</h3>
+                    <h3>{{ capitalizeFirstLetter(notification.data.user.username) }} uploaded: {{ notification.data.video.title }}</h3>
                   </div>
                 </td>
               </tr>
@@ -27,50 +31,47 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import axios from 'axios';
+import axios from 'axios'
 
 export default {
   scrollToTop: false,
-
-  metaInfo () {
-    return { title: this.$t('settings') }
-  },
 
   components: {
   },
 
   data: () => ({
-    notifications : []
+    notifications: []
   }),
 
   computed: mapGetters({
     user: 'auth/user',
-    readers: 'admin-reader/readers',
+    readers: 'admin-reader/readers'
   }),
 
+  beforeMount () {
+    axios.get('/api/user/notifications/unread').then((response) => {
+      this.notifications = response?.data?.notifications
+    })
 
-  methods: {
-      view(id){
-        this.$router.push({
-            name: "admin.reader-form",
-            params: {
-                id: id
-            }
-        });
-      },
-      capitalizeFirstLetter(string) {
-          return string.charAt(0).toUpperCase() + string.slice(1);
-      }
+    this.$store.dispatch('notifications/readNotification')
+
+    if (!this.user) {
+      this.$router.push({ name: 'home' })
+    }
   },
 
-  beforeMount(){
-    axios.get('/api/user/notifications/unread').then((response) => this.notifications = response?.data?.notifications);
-
-    this.$store.dispatch("notifications/readNotification");
-
-      if (!this.user){
-        this.$router.push({ name: 'home' })
-      }
+  methods: {
+    view (id) {
+      this.$router.push({
+        name: 'admin.reader-form',
+        params: {
+          id: id
+        }
+      })
+    },
+    capitalizeFirstLetter (string) {
+      return string.charAt(0).toUpperCase() + string.slice(1)
+    }
   }
 }
 </script>

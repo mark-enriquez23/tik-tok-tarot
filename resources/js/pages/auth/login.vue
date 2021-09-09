@@ -92,20 +92,12 @@ export default {
     user: 'auth/user'
   }),
 
-  metaInfo () {
-    return { title: this.$t('login') }
-  },
-
   methods: {
     async login () {
-      console.log('test')
       // Submit the form.
-      console.log(this.form)
       await this.form.post('/api/login').then(res => {
-        console.log(res)
         this.token = res.data.token
       }).catch((e) => {
-        console.log()
         switch (e.response.status) {
           case 429:
             this.captchaDisabled = false
@@ -126,32 +118,24 @@ export default {
 
       // Fetch the user.
       await this.$store.dispatch('auth/fetchUser')
+      if (this.user) {
+        switch (this.user.role_id) {
+          case 1:
+            this.$router.push({ name: 'admin.readers' })
+            break
 
-      console.log(this.user)
-      switch (this.user.role_id) {
-        case 1:
-          this.$router.push({ name: 'admin.readers' })
-          break
+          case 2:
+            this.$router.push({ name: 'reader.videos' })
+            break
 
-        case 2:
-          this.$router.push({ name: 'reader.videos' })
-          break
-
-        case 3:
-          this.$router.push({ name: 'welcome' })
-          break
+          case 3:
+            this.$router.push({ name: 'welcome' })
+            break
+        }
       }
-      // if (this.user) {
-      //   if (this.user.role_id == '1') {
-      //     this.$router.push({ name: 'admin.readers' });
-      //   }else if(this.user.role_id == '2'){
-      //     this.$router.push({ name: 'home' })
-      //   }
-      // }
     },
     redirect () {
       const intendedUrl = Cookies.get('intended_url')
-      console.log(intendedUrl)
       if (intendedUrl) {
         Cookies.remove('intended_url')
         this.$router.push({ path: intendedUrl })

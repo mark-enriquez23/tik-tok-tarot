@@ -1,27 +1,27 @@
-import axios from "axios";
+import axios from 'axios'
 
-import * as types from "../mutation-types";
+import * as types from '../mutation-types'
 
-import Form from "vform";
+import Form from 'vform'
 
 // state
 export const state = {
 
-    forgotPassSecurityQuestions: [],
+  forgotPassSecurityQuestions: [],
 
-    forgotPassSecurityQuestionForm: new Form({
+  forgotPassSecurityQuestionForm: new Form({
 
-        email: "",
+    email: '',
 
-        question_id: "",
+    question_id: '',
 
-        answer: ""
+    answer: ''
 
-    }),
+  }),
 
-    loading: false
+  loading: false
 
-};
+}
 
 // getters
 export const getters = {
@@ -30,89 +30,56 @@ export const getters = {
 
   forgotPassSecurityQuestionForm: state => state.forgotPassSecurityQuestionForm
 
-};
+}
 
 // mutations
 export const mutations = {
 
-  [types.FETCH_USER_SECURITY_QUESTION](state, { userSecurityQuestions }) {
-    console.log(userSecurityQuestions)
-    state.forgotPassSecurityQuestions = userSecurityQuestions ? userSecurityQuestions : [];
-
+  [types.FETCH_USER_SECURITY_QUESTION] (state, { userSecurityQuestions }) {
+    state.forgotPassSecurityQuestions = userSecurityQuestions || []
   },
 
-  [types.SAVE_USER_SECURITY_QUESTION](state) {
-
-    state.forgotPassSecurityQuestionForm.reset();
-
+  [types.SAVE_USER_SECURITY_QUESTION] (state) {
+    state.forgotPassSecurityQuestionForm.reset()
   },
 
-  [types.SET_LOADING](state, status) {
-
-    state.loading = status;
-
+  [types.SET_LOADING] (state, status) {
+    state.loading = status
   }
 
-};
+}
 
 // actions
 export const actions = {
 
-  async fetchUserSecurityQuestions({ commit }) {
-
+  async fetchUserSecurityQuestions ({ commit }) {
     try {
+      const request = {
 
-        const request = {
+        email: state.forgotPassSecurityQuestionForm.email
 
-            email: state.forgotPassSecurityQuestionForm.email
+      }
 
-        }
+      const { data } = await axios.post('/api/forgot-password/user-security-questions', request)
 
-        const { data } = await axios.post("/api/forgot-password/user-security-questions", request );
-
-        console.log(data)
-        commit(types.FETCH_USER_SECURITY_QUESTION, { userSecurityQuestions: data.data.user_security_questions });
-
+      commit(types.FETCH_USER_SECURITY_QUESTION, { userSecurityQuestions: data.data.user_security_questions })
     } catch (e) {
-
-      return e;
-
+      return e
     }
-
   },
 
-  async checkUserSecurityQuestion({ commit }) {
-
+  async checkUserSecurityQuestion ({ commit }) {
     try {
+      state.loading = true
 
-        const questionData = {
+      const { data } = await state.forgotPassSecurityQuestionForm.post('/api/forgot-password/check-security-question')
 
-            email: state.forgotPassSecurityQuestionForm.email,
-
-            question_id: state.forgotPassSecurityQuestionForm.question_id,
-
-            answer: state.forgotPassSecurityQuestionForm.answer
-
-        }
-
-        console.log(questionData)
-
-        state.loading = true;
-
-        const { data } = await state.forgotPassSecurityQuestionForm.post("/api/forgot-password/check-security-question");
-
-        return data;
-
+      return data
     } catch (e) {
-
-      return e;
-
+      return e
     } finally {
-
-      commit(types.SET_LOADING, false);
-
+      commit(types.SET_LOADING, false)
     }
-
   }
-  
-};
+
+}

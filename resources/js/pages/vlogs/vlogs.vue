@@ -107,10 +107,6 @@ import axios from 'axios'
 export default {
   layout: 'default',
 
-  metaInfo () {
-    return { title: this.$t('home') }
-  },
-
   data: () => ({
     title: window.config.appName,
     index: null,
@@ -139,7 +135,6 @@ export default {
       this.isLoading = true
 
       axios.get(`/api/vlog/status/APPROVED/1?page=${page}`).then((response) => {
-        console.log('RESPONSE', response.data[0])
         this.featuredVlogsList = response.data[0]
       }).finally(() => {
         this.isLoading = false
@@ -149,7 +144,6 @@ export default {
       this.isLoading = true
 
       axios.get(`/api/vlog/status/APPROVED/0?page=${page}`).then((response) => {
-        console.log('RESPONSE', response.data[0])
         this.allVlogs = response.data[0]
       }).finally(() => {
         this.isLoading = false

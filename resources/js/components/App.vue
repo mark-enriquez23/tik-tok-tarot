@@ -40,7 +40,7 @@ export default {
 
     return {
       title: appName,
-      titleTemplate: `%s · ${appName}`
+      titleTemplate: `${this.$route.meta.title ? this.$route.meta.title : ''} · ${appName}`
     }
   },
 

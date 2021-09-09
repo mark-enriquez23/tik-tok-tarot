@@ -133,10 +133,6 @@ import axios from 'axios'
 export default {
   scrollToTop: false,
 
-  metaInfo () {
-    return { title: this.$t('settings') }
-  },
-
   data: () => ({
     decision: '',
     selectedId: '',
@@ -206,14 +202,12 @@ export default {
     async handleFetchAllVlogs (page) {
       this.loading = true
       await axios.get(`/api/vlog/?page=${page}`).then((response) => {
-        console.log('RESPONSE', response)
         this.data = response.data[0]
         this.loading = false
       })
     },
 
     async handleFilterVlogs (filter) {
-      console.log(filter)
 
       if (filter === 'ALL') {
         await this.handleFetchAllVlogs(1)

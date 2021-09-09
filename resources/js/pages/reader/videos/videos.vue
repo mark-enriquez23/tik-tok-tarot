@@ -2,13 +2,19 @@
   <card class="p-6 m-4">
     <div class="row">
       <div class="col-lg-8">
-        <h4 class="mb-3">My Videos</h4>
-      </div>
-       <div class="col-md-2 text-right">
-        <button class="btn btn-danger btn-lg" @click="goLive"> <fa icon="podcast" fixed-width />Go Live</button>
+        <h4 class="mb-3">
+          My Videos
+        </h4>
       </div>
       <div class="col-md-2 text-right">
-        <button class="btn btn-danger btn-lg" @click="uploadVideo"> <fa icon="plus-circle" fixed-width />Upload Video</button>
+        <button class="btn btn-danger btn-lg" @click="goLive">
+          <fa icon="podcast" fixed-width />Go Live
+        </button>
+      </div>
+      <div class="col-md-2 text-right">
+        <button class="btn btn-danger btn-lg" @click="uploadVideo">
+          <fa icon="plus-circle" fixed-width />Upload Video
+        </button>
       </div>
     </div>
 
@@ -18,20 +24,24 @@
 
     <div v-else class="mb-2">
       <!-- if video exist here -->
-      <div class="row" v-if="videos.length != 0">
-        <div class="col-md-4 my-2" v-for="video in videos" :key="video.id">
+      <div v-if="videos.length != 0" class="row">
+        <div v-for="video in videos" :key="video.id" class="col-md-4 my-2">
           <div>
             <div>
-            <img class="img-thumbnail p-0" :src="`/uploads/vlog/thumbnails/${video.thumbnail}`">
+              <img class="img-thumbnail p-0" :src="`/uploads/vlog/thumbnails/${video.thumbnail}`">
             </div>
             <img class="reader-img m-3" align="left" :src="`/images/${video.user.user_details.profile_photo}`">
-            <h6 class="mt-3"><b>{{video.title}}</b></h6>
-            <p class="uploader-name mt-1">{{video.user.username}}</p>
+            <h6 class="mt-3">
+              <b>{{ video.title }}</b>
+            </h6>
+            <p class="uploader-name mt-1">
+              {{ video.user.username }}
+            </p>
           </div>
         </div>
       </div>
       <!-- if not, show this message -->
-      <div class="row" v-else>
+      <div v-else class="row">
         <div class="col-lg-12 mt-4 mt-lg-0">
           <div data-aos="zoom-in" data-aos-delay="100">
             <h6> You have no videos.</h6>
@@ -39,69 +49,62 @@
         </div>
       </div>
     </div>
-
   </card>
 </template>
 
 <script>
-import Form from 'vform'
 import { mapGetters } from 'vuex'
 import axios from 'axios'
-import { swalOops, swalSuccess } from "~/helpers"
+import { swalOops } from '~/helpers'
 
 export default {
   scrollToTop: false,
 
-  metaInfo () {
-    return { title: this.$t('settings') }
-  },
-
-  components: {  },
-
-   computed: mapGetters({
-    user: 'auth/user',
-  }),
+  components: { },
 
   data: () => ({
-    videos:[],
-    loading:true
+    videos: [],
+    loading: true
   }),
+
+  computed: mapGetters({
+    user: 'auth/user'
+  }),
+
+  beforeMount () {
+    if (!this.user) {
+      this.$router.push({ name: 'home' })
+    }
+    this.fetchVideos()
+  },
 
   methods: {
 
-    fetchVideos(){
-        this.loading = true;
-        console.log(this.user.id);
-        axios.get('/api/vlog/user/' + this.user.id + '/APPROVED').then(res=>{
-          this.videos = res.data.data;
-          this.loading = false;
-      }).catch((e)=>{
-        this.loading = false;
-        swalOops('A problem occurred');
+    fetchVideos () {
+      this.loading = true
+      axios.get('/api/vlog/user/' + this.user.id + '/APPROVED').then(res => {
+        this.videos = res.data.data
+        this.loading = false
+      }).catch((e) => {
+        this.loading = false
+        swalOops('A problem occurred')
       })
     },
 
-    uploadVideo(){
+    uploadVideo () {
       this.$router.push({
-        name: "reader.upload-video",
-      });
+        name: 'reader.upload-video'
+      })
     },
 
-    goLive(){
+    goLive () {
       this.$router.push({
-        name: "reader.go-live",
+        name: 'reader.go-live',
         params: {
-          roomName:this.user.username
+          roomName: this.user.username
         }
-      });
-    },
-  },
-
-  beforeMount(){
-      if (!this.user){
-        this.$router.push({ name: 'home' })
-      }
-      this.fetchVideos();
+      })
+    }
   }
 }
 </script>

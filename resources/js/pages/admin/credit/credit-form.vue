@@ -108,10 +108,6 @@ import Swal from 'sweetalert2'
 export default {
   scrollToTop: false,
 
-  metaInfo () {
-    return { title: this.$t('settings') }
-  },
-
   components: {},
 
   data: () => ({
@@ -125,7 +121,6 @@ export default {
   }),
 
   async beforeMount () {
-    console.log('form???', this.creditForm)
     let id = this.$route.params.id
     await this.$store.dispatch('admin-credit/viewUserCredit', id)
   },
@@ -143,7 +138,6 @@ export default {
 
     async save () {
       let id = this.$route.params.id
-      console.log(id)
       Swal.fire({
         title: 'Are you sure?',
         text: 'You are about to update the points.',

@@ -124,10 +124,6 @@ export default {
   layout: 'auth',
   middleware: 'guest',
 
-  metaInfo () {
-    return { title: this.$t('reset_password') }
-  },
-
   components: {
     SecurityQuestion
   },

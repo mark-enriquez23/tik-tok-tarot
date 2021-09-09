@@ -102,10 +102,6 @@ import { swalSuccess } from '~/helpers'
 export default {
   scrollToTop: false,
 
-  metaInfo () {
-    return { title: this.$t('settings') }
-  },
-
   data: () => ({
     form: new Form({
       username: '',
@@ -127,7 +123,6 @@ export default {
     this.form.keys().forEach(key => {
       this.form[key] = this.user[key]
     })
-    console.log(this.form)
   },
   beforeMount () {
     for (let index = 0; index < this.secQs.length; index++) {

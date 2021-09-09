@@ -256,7 +256,6 @@ export default {
     },
 
     navIsHomePage () {
-      console.log(this.$route.path)
       switch (this.$route.path) {
         case '/landing':
         case '/prices':

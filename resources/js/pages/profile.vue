@@ -113,15 +113,9 @@ export default {
   },
   methods: {
     async getReader () {
-      console.log(this.$route.params.reader)
-
       await axios.get(`/api/reader/${this.$route.params.reader}`)
         .then((response) => {
-          console.log('RESPONSE::', response)
           this.userData = response.data.data
-        })
-        .catch((err) => {
-          console.warn('warning', err)
         })
     }
   }

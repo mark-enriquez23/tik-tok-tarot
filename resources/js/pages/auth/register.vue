@@ -232,10 +232,6 @@ export default {
     VuePhoneNumberInput
   },
 
-  metaInfo () {
-    return { title: 'Register' }
-  },
-
   data: () => {
     return initializeData()
   },
@@ -252,11 +248,9 @@ export default {
   methods: {
     getCode () {
       this.referral_code = this.$route.params.referral_code
-      console.log(this.referral_code)
     },
 
     updatePhoneNumber (e) {
-      console.log(e)
       this.form.phone_number = e.e164
       if (e.isValid) { this.validPhoneNumber = true }
     },
@@ -295,7 +289,6 @@ export default {
     },
     async register () {
       this.form.referral_code = this.referral_code
-      console.log(this.form)
       // Register the user.
       const { data } = await this.form.post('/api/register').catch((err) => {
         const size = Object.keys(err.response.data.errors).length
@@ -317,7 +310,6 @@ export default {
           this.onSecurity = true
 
           this.form.validate = true
-          // console.log(err.response.data.errors.validate)
         }
       })
 
@@ -342,7 +334,6 @@ export default {
 
         // uncomment this if going to push on production
         axios.post('api/email/send-email', emailData)
-        // console.log(emailRes)
 
         // Log in the user.
         const { data: { token } } = await this.form.post('/api/login')

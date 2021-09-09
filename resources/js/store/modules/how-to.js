@@ -24,7 +24,6 @@ export const actions = {
   async fetchHowToData ({ commit }) {
     try {
       const { data } = await axios.get('/api/how-to')
-      console.log(data)
       commit(types.FETCH_HOW_TO, { howToData: data.data })
     } catch (e) {
       return e

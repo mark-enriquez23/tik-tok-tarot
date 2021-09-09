@@ -64,10 +64,6 @@ export default {
   layout: 'auth',
   middleware: 'guest',
 
-  metaInfo () {
-    return { title: this.$t('reset_password') }
-  },
-
   data: () => {
     return initializeData()
   },
@@ -87,8 +83,7 @@ export default {
 
         this.form.reset()
       } else {
-        const { data } = await this.form.post('/api/password/custom-reset')
-        console.log(data)
+        await this.form.post('/api/password/custom-reset')
       }
     }
   }

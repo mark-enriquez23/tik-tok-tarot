@@ -80,10 +80,6 @@ export default {
   components: { Footer, StarRating },
   layout: 'default',
 
-  metaInfo () {
-    return { title: this.$t('home') }
-  },
-
   data: () => ({
     title: window.config.appName,
     testimonialImage1: window.config.assetURL + 'images/testimonials/testimonials-1.jpg',

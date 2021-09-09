@@ -192,7 +192,6 @@ export default {
   }),
 
   beforeMount: function () {
-    console.log('this.user.username', this.user)
     // ASSIGNING USERNAME
     this.loggedUser = this.user?.username ? this.user?.username : ''
     this.user ? this.connectClientWithUsername() : this.joinAsParticipant()
@@ -208,10 +207,6 @@ export default {
           // vm.username !== vm.name ? this.joinAsParticipant() : this.joinAsParticipant();
         }
       })
-      .catch((err) => {
-        console.log(err.response)
-      })
-      // this.connectClientWithUsername();
   },
 
   methods: {
@@ -251,11 +246,7 @@ export default {
             .then(function (response) {
               vm.accessToken = response.data
             })
-            .catch(function (error) {
-              console.log(error)
-            })
-            .then(function () {
-              console.log('joining room as other user')
+            .finally(function () {
               vm.joinToRoom()
             })
         }
@@ -265,7 +256,6 @@ export default {
         axios.get('/api/video/view/' + this.name)
 
         this.fetchAccessToken(this.tc.username, this.connectMessagingClient)
-        console.log('USERNAME', this.tc.username)
       } else {
         alert('NOT LOGGED IN')
       }
@@ -277,9 +267,6 @@ export default {
       })
         .then(function (response) {
           handler(response.data)
-        })
-        .catch(function (error) {
-          console.log(error)
         })
     },
     connectMessagingClient (token) {
@@ -308,7 +295,6 @@ export default {
     },
     loadChannelList (handler) {
       if (this.tc.messagingClient === undefined) {
-        console.log('Client is not initialized')
         return
       }
       this.getVisibleChannels(this.tc.messagingClient, handler)
@@ -340,7 +326,6 @@ export default {
     },
     joinGeneralChannel () {
       let vm = this
-      console.log('Attempting to join "general" chat channel...', vm.name)
       if (vm.tc.generalChannel === null) {
         // If it doesn't exist, let's create it
         vm.tc.messagingClient.createChannel({
@@ -351,7 +336,6 @@ export default {
           vm.loadChannelList(vm.joinGeneralChannel)
         })
       } else {
-        console.log('Found general channel:', vm.tc.generalChannel)
         vm.setupChannel(vm.tc.generalChannel)
       }
     },
@@ -378,7 +362,6 @@ export default {
       let vm = this
       if (this.tc.currentChannel) {
         return this.tc.currentChannel.leave().then(function (leftChannel) {
-          console.log('left ' + leftChannel.friendlyName)
           leftChannel.removeListener('messageAdded', vm.addMessageToList)
           leftChannel.removeListener('typingStarted', vm.showTypingStarted)
           leftChannel.removeListener('typingEnded', vm.hideTypingStarted)
@@ -386,16 +369,13 @@ export default {
           leftChannel.removeListener('memberLeft', vm.notifyMemberLeft)
         })
       } else {
-        console.log('resolving')
         return Promise.resolve()
       }
     },
     initChannel (channel) {
-      console.log('Initialized channel ' + channel.friendlyName)
       return this.tc.messagingClient.getChannelBySid(channel.sid)
     },
     initChannelEvents () {
-      console.log(this.tc.currentChannel.friendlyName + ' ready.')
       this.tc.currentChannel.on('messageAdded', this.addMessageToList)
       this.tc.currentChannel.on('typingStarted', this.showTypingStarted)
       this.tc.currentChannel.on('typingEnded', this.hideTypingStarted)
@@ -404,7 +384,6 @@ export default {
       // $inputText.prop('disabled', false).focus();
     },
     showTypingStarted (member) {
-      console.log(member.identity + ' is typing...')
       this.notificationMsg = member.identity + ' is typing...'
       this.notification = true
     },
@@ -413,14 +392,9 @@ export default {
       this.notification = false
     },
     notifyMemberJoined (member) {
-      console.log('joining')
-      console.log(member.identity + ' joined the channel')
       // notify(member.identity + ' joined the channel')
     },
     notifyMemberLeft (member) {
-      console.log('leaving')
-      console.log(member)
-      console.log(member.identity + ' left the channel')
       // notify(member.identity + ' left the channel');
     },
     // notify (message) {
@@ -434,7 +408,6 @@ export default {
       let vm = this
       return _channel.join()
         .then(function (joinedChannel) {
-          console.log('Joined channel ' + joinedChannel.friendlyName)
           // vm.updateChannelUI(_channel);
           vm.tc.currentChannel = _channel
           vm.loadMessages()
@@ -472,7 +445,6 @@ export default {
       })
     },
     addMessageToList (message) {
-      console.log(message)
       this.loadMessages()
     },
     handleInputTextKeypress () {
@@ -484,14 +456,13 @@ export default {
     },
     handleNewChannelInputKeypress (event) {
       let vm = this
-      if (this.newChannel == '') {
+      if (this.newChannel === '') {
         alert('Channel name cannot be empty')
         return
       }
       this.tc.messagingClient.createChannel({
         friendlyName: this.newChannel
       }).then(function (channel) {
-        console.log('Created channel')
         vm.loadChannelList(channel)
       }).then(this.hideAddChannelInput)
       this.newChannel = ''
@@ -518,15 +489,12 @@ export default {
       //     return;
       // }
       this.tc.currentChannel.delete().then(function (channel) {
-        console.log('channel: ' + channel.friendlyName + ' deleted')
         // setupChannel(this.tc.generalChannel);
       })
     },
 
     // VIDEO METHODS
     getVideoToken: function () {
-      console.log('Video chat room loading...')
-
       const vm = this
 
       // Request a new token
@@ -535,30 +503,21 @@ export default {
           vm.accessToken = response.data
           vm.currentStatus = 'ON_GOING'
         })
-        .catch(function (error) {
-          console.log(error)
-        })
-        .then(function () {
+        .finally(function () {
           vm.connectToRoom()
         })
     },
     joinAsParticipant: function () {
-      console.log('Video chat room loading...')
-
       const vm = this
       vm.tc.username = vm.name
       vm.fetchAccessToken('', vm.connectMessagingClient)
-      console.log('USERNAME', vm.name)
 
       // Request a new token
       axios.get(`/api/video/access_token/${vm.name}`)
         .then(function (response) {
           vm.accessToken = response.data
         })
-        .catch(function (error) {
-          console.log(error)
-        })
-        .then(function () {
+        .finally(function () {
           vm.joinToRoom()
         })
     },
@@ -568,8 +527,6 @@ export default {
       const { connect, createLocalTracks } = require('twilio-video')
 
       connect(this.accessToken, { name: this.name }).then(room => {
-        console.log(`Successfully joined a Room: ${room}`)
-        console.log('Data::', room.sid)
         this.dataSid = room.sid
         this.videoRoom = room
 
@@ -580,19 +537,12 @@ export default {
         }
 
         axios.post(`/api/video/history/save`, request)
-          .then((response) => {
-            console.log(response)
-          })
-          .catch((err) => {
-            console.log(err)
-          })
 
         const videoChatWindow = document.getElementById('my-video-chat-window')
         this.viewerCount = room.participants.size
 
         let localTrack
         createLocalTracks().then(track => {
-          console.log(track)
           localTrack = track
           track.forEach((media) => {
             videoChatWindow.appendChild(media.attach())
@@ -600,7 +550,6 @@ export default {
         })
 
         room.on('participantConnected', participant => {
-          console.log(`Participant "${participant.identity}" connected`)
           this.viewerCount = room.participants.size
 
           // participant.tracks.forEach(publication => {
@@ -617,14 +566,10 @@ export default {
 
         room.on('disconnected', room => {
           // Detach the local media elements
-          console.log('Host disconnected')
-          console.log('localParticipant', room.localParticipant)
-          console.log('videoChatWindow', videoChatWindow.childNodes[0])
           this.viewerCount = room.participants.size
           const child = videoChatWindow.lastElementChild
           videoChatWindow.removeChild(child)
           // videoChatWindow.innerHTML ="";
-          console.log('DC TRACKS', localTrack)
           localTrack.forEach(track => {
             track.stop()
             track.detach()
@@ -633,7 +578,6 @@ export default {
 
         room.on('participantDisconnected', room => {
           // Detach the local media elements
-          console.log('Someone disconnected')
           this.viewerCount = this.viewerCount - 1
           // this.viewerCount = room.participants.size
           // room.localParticipant.tracks.forEach(publication => {
@@ -652,15 +596,10 @@ export default {
       const { connect } = require('twilio-video')
 
       connect(this.accessToken, { name: this.name, video: false, audio: false }).then(room => {
-        console.log(`Successfully joined a Room: ${room}`)
-        console.log('Data::', room.sid)
         this.dataSid = room.sid
 
         const videoChatWindow = document.getElementById('my-video-chat-window')
         const child = videoChatWindow.lastElementChild
-
-        const localParticipant = room.localParticipant
-        console.log(`Connected to the Room as LocalParticipant "${localParticipant.identity}"`)
 
         room.participants.forEach(participant => {
           participant.tracks.forEach(publication => {
@@ -686,9 +625,7 @@ export default {
         })
 
         room.on('participantConnected', participant => {
-          console.log('new')
           this.viewerCount = room.participants.size
-          console.log(`Participant "${participant.identity}" connected`)
 
           participant.tracks.forEach(publication => {
             if (publication.isSubscribed) {
@@ -713,7 +650,6 @@ export default {
 
         room.on('participantDisconnected', room => {
           // Detach the local media elements
-          console.log('Someone disconnected')
           this.viewerCount = this.viewerCount - 1
         })
       }, error => {
@@ -743,27 +679,8 @@ export default {
       }
 
       axios.post(`/api/video/history/save`, request)
-        .then((response) => {
-          console.log(response)
-          // vm.currentStatus = 'COMPLETED'
-          // vm.userNotJoined = true
-          // vm.showMessages = false
+        .then(() => {
           vm.videoRoom.disconnect()
-          // vm.username = vm.user?.username ? vm.user?.username : ''
-          // vm.tc.accessManager = null
-          // vm.tc.messagingClient = null
-          // vm.tc.channel = []
-          // vm.tc.username = '';
-          // vm.tc.channelArray = null
-          // vm.tc.generalChannel = null
-          // vm.tc.activeChannelIndex = null
-          // vm.tc.messagesArray = []
-
-          // list.removeChild(list.childNodes);
-          // console.log("CONSOLE LIST", list.childNodes);
-        })
-        .catch((err) => {
-          console.log(err)
         })
     }
 

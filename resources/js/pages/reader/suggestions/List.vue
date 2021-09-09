@@ -64,10 +64,6 @@ import axios from 'axios'
 export default {
   layout: 'default',
 
-  metaInfo () {
-    return { title: this.$t('home') }
-  },
-
   data () {
     return {
       fields: [
@@ -107,8 +103,6 @@ export default {
     fetchSuggestions () {
       this.loading = true
       axios.get(`/api/suggestions/user/${this.auth.id}`).then(response => {
-        console.log('RESPONSE', response.data)
-
         this.tableData = response.data[0]
         this.loading = false
       })

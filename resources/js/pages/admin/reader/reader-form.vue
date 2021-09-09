@@ -313,26 +313,19 @@
 </template>
 
 <script>
-import Form from 'vform'
 import { mapGetters } from 'vuex'
 import { swalOops, swalSuccess } from '~/helpers'
 import Swal from 'sweetalert2'
 import InputSwitch from 'primevue/inputswitch'
 import birthDatepicker from 'vue-birth-datepicker/src/birth-datepicker'
-import myUpload from 'vue-image-crop-upload'
 import bcrypt from 'bcryptjs'
 
 export default {
   scrollToTop: false,
 
-  metaInfo () {
-    return { title: this.$t('settings') }
-  },
-
   components: {
     InputSwitch,
-    birthDatepicker,
-    'my-upload': myUpload
+    birthDatepicker
   },
 
   data: () => ({
@@ -408,14 +401,11 @@ export default {
   beforeMount () {
     let id = this.$route.params.id
     this.$store.dispatch('admin-reader/viewReader', id).then(() => {
-      console.log(this.readerForm.is_banned)
       this.sync_banned = this.readerForm.is_banned === 1
-      console.log(this.sync_banned)
       this.sync_visible = this.readerForm.visible === 1
       this.sync_approved = this.readerForm.is_approved === 'APPROVED'
     })
     this.$store.dispatch('admin-reader/viewAdditional', id).then(() => {
-      console.log(this.additionalForm)
       this.profile_photo = 'http://tik-tok-tarot-master.test/images/' + this.additionalForm.profile_photo
     })
   },
@@ -431,15 +421,12 @@ export default {
         cancelButtonColor: '#d33',
         confirmButtonText: 'Confirm'
       }).then((result) => {
-        console.log(result.value)
         if (result.value) {
-          console.log(this.sync_banned)
-          if (this.sync_banned == 0 || this.sync_banned == false) { this.readerForm.is_banned = 0 } else if (this.sync_banned == 1 || this.sync_banned == true) { this.readerForm.is_banned = 1 }
+          if (this.sync_banned === 0 || this.sync_banned === false) { this.readerForm.is_banned = 0 } else if (this.sync_banned === 1 || this.sync_banned === true) { this.readerForm.is_banned = 1 }
 
-          console.log(this.visible)
-          if (this.sync_visible == 1 || this.sync_visible == true) { this.readerForm.visible = 1 } else if (this.sync_visible == 0 || this.sync_visible == false) { this.visible = 0 }
+          if (this.sync_visible === 1 || this.sync_visible === true) { this.readerForm.visible = 1 } else if (this.sync_visible === 0 || this.sync_visible === false) { this.visible = 0 }
 
-          if (this.sync_approved == 0 || this.sync_approved == false) { this.readerForm.is_approved = 'REJECTED' } else if (this.sync_approved == 1 || this.sync_approved == true) { this.readerForm.is_approved = 'APPROVED' }
+          if (this.sync_approved === 0 || this.sync_approved === false) { this.readerForm.is_approved = 'REJECTED' } else if (this.sync_approved === 1 || this.sync_approved === true) { this.readerForm.is_approved = 'APPROVED' }
 
           this.$store.dispatch('admin-reader/editReader', this.readerForm).then(({ success, message }) => {
             if (success) {
@@ -462,10 +449,8 @@ export default {
         cancelButtonColor: '#d33',
         confirmButtonText: 'Confirm'
       }).then((result) => {
-        console.log(result.value)
         if (result.value) {
           this.$store.dispatch('admin-reader/editAdditional', this.additionalForm).then(res => {
-            // console.log(res);
             swalSuccess('Reader Updated').then(() => {
               this.isAdditionalUpdating = false
             })
@@ -484,11 +469,8 @@ export default {
         cancelButtonColor: '#d33',
         confirmButtonText: 'Confirm'
       }).then((result) => {
-        console.log(result.value)
-        console.log(this.additionalForm)
         if (result.value) {
           this.$store.dispatch('admin-reader/editProfilePic', this.additionalForm).then(res => {
-            // console.log(res);
             swalSuccess('Reader Updated').then(() => {
               this.isProfileUpdating = false
             })
@@ -508,13 +490,10 @@ export default {
           cancelButtonColor: '#d33',
           confirmButtonText: 'Confirm'
         }).then((result) => {
-          console.log(result.value)
           if (result.value) {
-            console.log(this.additionalForm)
             const salt = bcrypt.genSaltSync(10)
             this.additionalForm.password = bcrypt(this.password)
             this.$store.dispatch('admin-reader/editAdditional', this.additionalForm).then(res => {
-              // console.log(res);
               swalSuccess('Reader Updated').then(() => {
                 this.isPasswordUpdating = false
               })
@@ -561,7 +540,6 @@ export default {
         cancelButtonColor: '#d33',
         confirmButtonText: 'Yes, delete it!'
       }).then((result) => {
-        console.log(result)
         if (result.value) {
           this.$store.dispatch('admin-reader/removeReader', this.readerForm.id).then(({ success, message }) => {
             if (success) {
@@ -587,15 +565,9 @@ export default {
     previewFile (event) {
       this.additionalForm.profile_photo = event.target.files[0]
       this.profile_photo = URL.createObjectURL(this.additionalForm.profile_photo)
-      // var reader = new FileReader();
-      // reader.addEventListener('load', readFile);
-      // reader.readAsText(file);
-      // console.log(this.additionalForm.profile_photo)
-      // reader.readAsText(this.additionalForm.profile_photo);
     },
 
     readFile (event) {
-      console.log(event.target.result)
     }
   }
 }

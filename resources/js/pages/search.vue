@@ -49,10 +49,6 @@ export default {
   components: { Footer },
   layout: 'default',
 
-  metaInfo () {
-    return { title: this.$t('home') }
-  },
-
   data: () => ({
     title: window.config.appName,
     testimonialImage1: window.config.assetURL + 'images/testimonials/testimonials-1.jpg',
@@ -80,20 +76,7 @@ export default {
   methods: {
     getKey () {
       this.key = this.$route.query.key
-      // axios.post("/api/homepage/search-tool",{'key':this.key}).then(res=>{
-      //   console.log(res);
-      //   this.results = res.data;
-      //   if (!this.results.success) {
-      //     Swal.fire({
-      //       title: 'Search Failed',
-      //       text: "An error has occurred. Please try again.",
-      //       type: 'error'
-      //     })
-      //   }
-      // });
-
       axios.post('/api/reader/search', { 'search': this.key }).then(res => {
-        console.log(res)
         this.results = res.data
         if (!this.results.success) {
           Swal.fire({
@@ -104,18 +87,6 @@ export default {
         }
       })
     }
-
-    // async siteSearch() {
-    //     var results = await this.searchForm.post("/api/homepage/search-tool");
-    //     this.results = results.data;
-    //     if (!this.results.success) {
-    //       Swal.fire({
-    //         title: 'Search Failed',
-    //         text: "An error has occurred. Please try again.",
-    //         type: 'error'
-    //       })
-    //     }
-    //   }
   }
 }
 </script>

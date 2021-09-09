@@ -73,7 +73,6 @@ export default {
   },
   methods: {
     showModal (item) {
-      console.log('ITEM REGISTER HERE:::', item)
       this.dataItem = item
       this.$bvModal.show('steps-modal')
     }

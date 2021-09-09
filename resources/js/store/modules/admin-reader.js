@@ -1,6 +1,6 @@
-import axios from "axios";
-import * as types from "../mutation-types";
-import Form from "vform";
+import axios from 'axios'
+import * as types from '../mutation-types'
+import Form from 'vform'
 
 // state
 export const state = {
@@ -19,23 +19,23 @@ export const state = {
     is_banned: 0,
     is_active: 0,
     visible: 0,
-    is_approved: "PENDING",
-    gender:''
+    is_approved: 'PENDING',
+    gender: ''
   }),
   additionalForm: new Form({
     id: '',
     user_id: '',
-    reader_bio:'',
-    expertise:'',
+    reader_bio: '',
+    expertise: '',
     address1: '',
     state: '',
     zip: '',
     country: '',
     birthdate: '',
-    password:'',
-    profile_photo:'',
-  }),
-};
+    password: '',
+    profile_photo: ''
+  })
+}
 
 // getters
 export const getters = {
@@ -44,16 +44,16 @@ export const getters = {
   additionalForm: state => state.additionalForm,
   is_banned: state => state.is_banned,
   visible: state => state.visible,
-  uploads: state => state.uploads,
-};
+  uploads: state => state.uploads
+}
 
 // mutations
 export const mutations = {
-  [types.FETCH_READER](state, { readers }) {
-    state.readers = readers;
+  [types.FETCH_READER] (state, { readers }) {
+    state.readers = readers
   },
 
-  [types.EDIT_READER](state, { reader }) {
+  [types.EDIT_READER] (state, { reader }) {
     state.readerForm.fill(reader)
     state.readerForm.is_banned = reader.is_banned
     state.readerForm.visible = reader.visible
@@ -62,91 +62,88 @@ export const mutations = {
     state.uploads = reader.uploads
   },
 
-  [types.FETCH_ADDITIONAL](state, { reader }) {
+  [types.FETCH_ADDITIONAL] (state, { reader }) {
     state.additionalForm.fill(reader)
-  },
-};
+  }
+}
 
 // actions
 export const actions = {
 
-  async fetchReaders({ commit }) {
+  async fetchReaders ({ commit }) {
     try {
-      const { data } = await axios.get("/api/reader/fetch-readers");
-      
-      commit(types.FETCH_READER, { readers: data.data });
+      const { data } = await axios.get('/api/reader/fetch-readers')
+
+      commit(types.FETCH_READER, { readers: data.data })
     } catch (e) {
-      return e;
+      return e
     }
   },
 
-  async viewReader({ commit }, id) {
+  async viewReader ({ commit }, id) {
     try {
-      const { data } = await axios.get(`/api/auth-reader/fetch-reader-by-id/${id}`);
-      console.log(data.data)
+      const { data } = await axios.get(`/api/auth-reader/fetch-reader-by-id/${id}`)
 
-      commit(types.EDIT_READER, { reader: data.data[0] });
+      commit(types.EDIT_READER, { reader: data.data[0] })
     } catch (e) {
-      return e;
+      return e
     }
   },
 
-  async viewAdditional({ commit }, id) {
+  async viewAdditional ({ commit }, id) {
     try {
-      const { data } = await axios.get(`/api/user/details/${id}`);
-      console.log(data.data[0])
+      const { data } = await axios.get(`/api/user/details/${id}`)
 
-      commit(types.FETCH_ADDITIONAL, { reader: data.data[0] });
+      commit(types.FETCH_ADDITIONAL, { reader: data.data[0] })
     } catch (e) {
-      return e;
+      return e
     }
   },
 
-  async editReader({ commit }, reader) {
+  async editReader ({ commit }, reader) {
     try {
-      const { data } = await axios.post('/api/auth-reader/update-reader',reader)
+      const { data } = await axios.post('/api/auth-reader/update-reader', reader)
 
-      commit(types.EDIT_READER, { reader: data.data });
-      return data;
+      commit(types.EDIT_READER, { reader: data.data })
+      return data
     } catch (e) {
-      return e;
+      return e
     }
   },
 
-  async editAdditional({ commit }, reader) {
+  async editAdditional ({ commit }, reader) {
     try {
-      const { data } = await axios.patch('/api/user/details/update?_method=PATCH',reader)
+      const { data } = await axios.patch('/api/user/details/update?_method=PATCH', reader)
 
-      commit(types.FETCH_ADDITIONAL, { reader: data.data[0] });
-      return data;
+      commit(types.FETCH_ADDITIONAL, { reader: data.data[0] })
+      return data
     } catch (e) {
-      return e;
+      return e
     }
   },
 
-  async editProfilePic({ commit }, reader) {
-    var formData = new FormData;
-    formData.append("profile_photo", reader.profile_photo)
-    formData.append("user_id", reader.user_id)
-    formData.append("id", reader.id)
-    console.log(formData)
+  async editProfilePic ({ commit }, reader) {
+    var formData = new FormData()
+    formData.append('profile_photo', reader.profile_photo)
+    formData.append('user_id', reader.user_id)
+    formData.append('id', reader.id)
     try {
-      const { data } = await axios.post('/api/user/details/update?_method=PATCH',formData)
+      const { data } = await axios.post('/api/user/details/update?_method=PATCH', formData)
 
-      commit(types.FETCH_ADDITIONAL, { reader: data.data[0] });
-      return data;
+      commit(types.FETCH_ADDITIONAL, { reader: data.data[0] })
+      return data
     } catch (e) {
-      return e;
+      return e
     }
   },
-  
-  async removeReader({ commit }, id) {
+
+  async removeReader ({ commit }, id) {
     try {
-      const { data } = await axios.delete(`/api/auth-reader/remove/${id}`);
+      const { data } = await axios.delete(`/api/auth-reader/remove/${id}`)
 
       return data
     } catch (e) {
-      return e;
+      return e
     }
-  },
-};
+  }
+}

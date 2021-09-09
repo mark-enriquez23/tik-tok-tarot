@@ -48,7 +48,7 @@
               <!--FEATURE LIST START-->
               <div class="generic_feature_list">
                 <ul>
-                  <li><span>{{ JSON.parse(price[2].feature)[0].total_card  }}</span> Tarot Cards</li>
+                  <li><span>{{ JSON.parse(price[2].feature)[0].total_card }}</span> Tarot Cards</li>
                   <li><span>{{ JSON.parse(price[2].feature)[0].account }}</span> Accounts</li>
                   <li><span>{{ JSON.parse(price[2].feature)[0].reading }}</span> Readings</li>
                   <li><span>{{ JSON.parse(price[2].feature)[0].support }}</span> Support</li>
@@ -180,45 +180,41 @@ export default {
   components: { Footer },
   layout: 'default',
 
-  metaInfo () {
-    return { title: this.$t('home') }
-  },
-
   data: () => ({
     title: window.config.appName,
     imageUrl: window.config.assetURL + 'images/',
     userImageeUrl: window.config.assetURL + 'images/testimonials/',
     srcLogoOnly: window.config.assetURL + 'images/sample-logo.png',
     price: [{
-      cent: "",
-      created_at: "",
-      currency: "",
-      feature:  "[{\"total_card\":\"7\",\"account\":\"12\",\"reading\":\"7\",\"support\":\"24\\/7\"}]",
+      cent: '',
+      created_at: '',
+      currency: '',
+      feature: '[{"total_card":"7","account":"12","reading":"7","support":"24\\/7"}]',
       id: null,
       metadata: null,
-      sign: "",
-      type: "",
-      updated_at: ""},
-      {
-      cent: "",
-      created_at: "",
-      currency: "",
-      feature:  "[{\"total_card\":\"7\",\"account\":\"12\",\"reading\":\"7\",\"support\":\"24\\/7\"}]",
+      sign: '',
+      type: '',
+      updated_at: '' },
+    {
+      cent: '',
+      created_at: '',
+      currency: '',
+      feature: '[{"total_card":"7","account":"12","reading":"7","support":"24\\/7"}]',
       id: null,
       metadata: null,
-      sign: "",
-      type: "",
-      updated_at: ""},
-      {
-      cent: "",
-      created_at: "",
-      currency: "",
-      feature: "[{\"total_card\":\"7\",\"account\":\"12\",\"reading\":\"7\",\"support\":\"24\\/7\"}]", 
+      sign: '',
+      type: '',
+      updated_at: '' },
+    {
+      cent: '',
+      created_at: '',
+      currency: '',
+      feature: '[{"total_card":"7","account":"12","reading":"7","support":"24\\/7"}]',
       id: null,
       metadata: null,
-      sign: "",
-      type: "",
-      updated_at: ""},
+      sign: '',
+      type: '',
+      updated_at: '' }
     ],
     feature: []
   }),
@@ -238,8 +234,6 @@ export default {
   methods: {
     async fetchPrices () {
       let response = await axios.get('/api/price')
-      console.log('response', response)
-
       if (!response.data.success) {
         Swal.fire({
           title: 'Fetching Prices Failed',

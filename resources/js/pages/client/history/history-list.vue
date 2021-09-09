@@ -1,8 +1,10 @@
 <template>
   <card class="py-3 m-4">
-     <div class="row">
+    <div class="row">
       <div class="col-lg-8">
-        <h4 class="mb-3">Watch History</h4>
+        <h4 class="mb-3">
+          Watch History
+        </h4>
       </div>
     </div>
 
@@ -14,19 +16,23 @@
           </div>
           <table class="table">
             <tbody>
-              <tr class="mb-2" v-for="history in histories" :key="history.id">
+              <tr v-for="history in histories" :key="history.id" class="mb-2">
                 <td>
                   <div>
                     <img class="img-thumbnail p-0 mr-5" align="left" :src="'/uploads/vlog/thumbnails/'+history.video.thumbnail">
                   </div>
                   <div>
-                    <h4>{{history.video.title}}</h4>
+                    <h4>{{ history.video.title }}</h4>
                     <div>
                       <img class="reader-img mx-2" align="left" src="/images/profile.jpg">
-                      <p class="mt-3">{{history.user.username}}</p>
+                      <p class="mt-3">
+                        {{ history.user.username }}
+                      </p>
                     </div>
-                    </br>
-                    <p class="mt-4">{{history.video.description}}</p>
+                    <br/>
+                    <p class="mt-4">
+                      {{ history.video.description }}
+                    </p>
                   </div>
                 </td>
               </tr>
@@ -34,49 +40,42 @@
           </table>
         </div>
       </div>
-    </div> 
+    </div>
   </card>
 </template>
 
 <script>
-import Form from 'vform'
 import { mapGetters } from 'vuex'
 import axios from 'axios'
-import { swalOops, swalSuccess } from "~/helpers"
 
 export default {
   scrollToTop: false,
-
-  metaInfo () {
-    return { title: this.$t('settings') }
-  },
 
   components: {
   },
 
   data: () => ({
-    histories:[]
+    histories: []
   }),
 
   computed: mapGetters({
     user: 'auth/user',
-    readers: 'admin-reader/readers',
+    readers: 'admin-reader/readers'
   }),
 
-  methods: {
-      fetchHistory(){
-        axios.get('/api/user-history/me').then((res)=>{
-        // console.log(res.data.data);
-        this.histories = res.data.data;
-      });
-    },
+  beforeMount () {
+    this.fetchHistory()
+    if (!this.user) {
+      this.$router.push({ name: 'home' })
+    }
   },
 
-  beforeMount(){
-      this.fetchHistory();
-      if (!this.user){
-        this.$router.push({ name: 'home' })
-      }
+  methods: {
+    fetchHistory () {
+      axios.get('/api/user-history/me').then((res) => {
+        this.histories = res.data.data
+      })
+    }
   }
 }
 </script>

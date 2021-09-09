@@ -4,24 +4,96 @@ function page(path) {
 
 export default [
   { path: '/', redirect: 'landing' },
-  { path: '/landing', name: 'welcome', component: page('welcome.vue') },
-  { path: '/prices', name: 'prices', component: page('pricing.vue') },
-  { path: '/readers', name: 'readers', component: page('readers.vue') },
-  { path: '/search', name: 'search', component: page('search.vue') },
-  { path: '/sessions', name: 'sessions', component: page('sessions.vue') },
-  { path: '/vlogs/list', name: 'vlogs.list', component: page('vlogs/vlogs.vue') },
-  { path: '/vlogs/view/:id', name: 'vlog.view', component: page('vlogs/vlog-post.vue') },
-  { path: '/vlogs/review', name: 'vlogs.review', component: page('vlogs/vlog-review.vue') },
-  { path: '/testimonials', name: 'testimonials', component: page('welcome.vue') },
-  { path: '/about-us', name: 'about.us', component: page('about-us.vue') },
-  { path: '/contact-us', name: 'contact.us', component: page('contact-us.vue') },
-  { path: '/login', name: 'login', component: page('auth/login.vue') },
-  { path: '/register/:referral?', name: 'register', component: page('auth/register.vue') },
-  { path: '/password/reset', name: 'password.request', component: page('auth/password/email.vue') },
-  { path: '/password/reset/:token', name: 'password.reset', component: page('auth/password/reset.vue') },
-  { path: '/email/verify/:id', name: 'verification.verify', component: page('auth/verification/verify.vue') },
-  { path: '/email/resend', name: 'verification.resend', component: page('auth/verification/resend.vue') },
-  { path: '/profile/:reader', name: 'profile', component: page('profile.vue') },
+  { path: '/landing', name: 'welcome', component: page('welcome.vue'),
+    meta          : {
+      title       : 'Home'
+    }
+  },
+  { path: '/prices', name: 'prices', component: page('pricing.vue'),
+    meta          : {
+      title       : 'Prices'
+    }
+  },
+  { path: '/readers', name: 'readers', component: page('readers.vue'),
+    meta          : {
+      title       : 'Readers'
+    }
+  },
+  { path: '/search', name: 'search', component: page('search.vue'),
+    meta          : {
+      title       : 'Search'
+    }
+  },
+  { path: '/sessions', name: 'sessions', component: page('sessions.vue'),
+    meta          : {
+      title       : 'Sessions'
+    }
+  },
+  { path: '/vlogs/list', name: 'vlogs.list', component: page('vlogs/vlogs.vue'),
+    meta          : {
+      title       : 'Vlogs'
+    }
+  },
+  { path: '/vlogs/view/:id', name: 'vlog.view', component: page('vlogs/vlog-post.vue'),
+    meta          : {
+      title       : 'View Vlog'
+    }
+  },
+  { path: '/vlogs/review', name: 'vlogs.review', component: page('vlogs/vlog-review.vue'),
+    meta          : {
+      title       : 'Vlog Review'
+    }
+  },
+  { path: '/testimonials', name: 'testimonials', component: page('welcome.vue'),
+    meta          : {
+      title       : 'Testimonials'
+    }
+  },
+  { path: '/about-us', name: 'about.us', component: page('about-us.vue'),
+    meta          : {
+      title       : 'About us'
+    }
+  },
+  { path: '/contact-us', name: 'contact.us', component: page('contact-us.vue'),
+    meta          : {
+      title       : 'Contact us'
+    }
+  },
+  { path: '/login', name: 'login', component: page('auth/login.vue'),
+    meta          : {
+      title       : 'Login'
+    }
+  },
+  { path: '/register/:referral?', name: 'register', component: page('auth/register.vue'),
+    meta          : {
+      title       : 'Register'
+    }
+  },
+  { path: '/password/reset', name: 'password.request', component: page('auth/password/email.vue'),
+    meta          : {
+      title       : 'Reset Password'
+    }
+  },
+  { path: '/password/reset/:token', name: 'password.reset', component: page('auth/password/reset.vue'),
+    meta          : {
+      title       : 'Reset Password'
+    }
+  },
+  { path: '/email/verify/:id', name: 'verification.verify', component: page('auth/verification/verify.vue'),
+    meta          : {
+      title       : 'Verify Email'
+    }
+  },
+  { path: '/email/resend', name: 'verification.resend', component: page('auth/verification/resend.vue'),
+    meta          : {
+      title       : 'Resend'
+    }
+  },
+  { path: '/profile/:reader', name: 'profile', component: page('profile.vue'), 
+    meta          : {
+      title       : 'Profile'
+    }
+  },
   { path: '/reader/home', name: 'home', component: page('reader/home.vue'),
     meta          : {
       requiresAuth: true,
@@ -30,15 +102,31 @@ export default [
       title       : 'Home'
     }
   },
-  { path: '/user/verify', name: 'user.verify', component: page('user/verify.vue') },
+  { path: '/user/verify', name: 'user.verify', component: page('user/verify.vue'),
+    meta          : {
+      title       : 'Verification'
+    }
+  },
   {
     path: '/settings',
     component: page('settings/index.vue'),
     children: [
       { path: '**', redirect: { name: 'settings.profile' } },
-      { path: 'profile', name: 'settings.profile', component: page('settings/profile.vue') },
-      { path: 'security', name: 'settings.security', component: page('settings/security-question.vue') },
-      { path: 'password', name: 'settings.password', component: page('settings/password.vue') }
+      { path: 'profile', name: 'settings.profile', component: page('settings/profile.vue'),
+        meta          : {
+          title       : 'Profile'
+        }
+      },
+      { path: 'security', name: 'settings.security', component: page('settings/security-question.vue'),
+        meta          : {
+          title       : 'Security Questions'
+        }
+      },
+      { path: 'password', name: 'settings.password', component: page('settings/password.vue'),
+        meta          : {
+          title       : 'Change Password'
+        }
+      }
     ],
     meta          : {
       requiresAuth: true,
@@ -153,7 +241,7 @@ export default [
       requiresAuth: true,
       requiresVerification: true,
       role        : 3,
-      title       : 'Clients'
+      title       : 'Notification'
     }
   },
   {
@@ -162,7 +250,7 @@ export default [
       requiresAuth: true,
       requiresVerification: true,
       role        : 3,
-      title       : 'Clients'
+      title       : 'Referrals'
     }
   },
   {
@@ -171,7 +259,7 @@ export default [
       requiresAuth: true,
       requiresVerification: true,
       role        : 2,
-      title       : 'Readers'
+      title       : 'Referrals'
     }
   },
   {
@@ -180,7 +268,7 @@ export default [
       requiresAuth: true,
       requiresVerification: true,
       role        : 2,
-      title       : 'Readers'
+      title       : 'Vlogs'
     }
   },
   {
@@ -189,7 +277,7 @@ export default [
       requiresAuth: true,
       requiresVerification: true,
       role        : 2,
-      title       : 'Readers'
+      title       : 'Pending Vlogs'
     }
   },
   {
@@ -198,7 +286,7 @@ export default [
       requiresAuth: true,
       requiresVerification: true,
       role        : 2,
-      title       : 'Readers'
+      title       : 'Rejected Vlogs'
     }
   },
   {
@@ -207,7 +295,7 @@ export default [
       requiresAuth: true,
       requiresVerification: true,
       role        : 2,
-      title       : 'Readers'
+      title       : 'Suggestions'
     }
   },
   {
@@ -216,7 +304,7 @@ export default [
       requiresAuth: true,
       requiresVerification: true,
       role        : 2,
-      title       : 'Readers'
+      title       : 'Upload Vlog'
     }
   },
   {

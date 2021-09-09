@@ -37,9 +37,7 @@ export default {
   components: {
     CodeInput
   },
-  metaInfo () {
-    return { title: this.$t('verify_email') }
-  },
+
   data: () => ({
     error: '',
     success: '',
@@ -61,16 +59,12 @@ export default {
 
   methods: {
     onChange (v) {
-      console.log('onChange ', v)
     },
     onComplete (v) {
-      console.log('onComplete ', v)
       this.form.code = v
     },
     async verifyCode () {
       const { data } = await this.form.post('/api/verification/verify-user')
-      console.log('data', data)
-      console.log('user', this.user)
 
       if (!data.success) {
         Swal.fire({

@@ -46,7 +46,6 @@
               </div>
             </div>
           </div>
-          
         </div>
       </div>
     </section><!-- Sessions Section -->
@@ -66,10 +65,6 @@ export default {
   components: { Footer },
   layout: 'default',
 
-  metaInfo () {
-    return { title: this.$t('home') }
-  },
-
   data: () => ({
     title: window.config.appName,
     testimonialImage1: window.config.assetURL + 'images/testimonials/testimonials-1.jpg',
@@ -82,7 +77,7 @@ export default {
     form: new Form({
       email: null
     }),
-    loading:true
+    loading: true
   }),
 
   computed: mapGetters({ authenticated: 'auth/check' }),
@@ -94,16 +89,7 @@ export default {
   methods: {
     async fetchSessions () {
       this.loading = true
-      // let sessions = await axios.get('/api/video/fetch/ON_GOING')
-      //  if (!this.sessions.success) {
-      //   Swal.fire({
-      //     title: 'Fetching Sessions Failed',
-      //     text: 'An error has occurred. Please try again.',
-      //     type: 'error'
-      //   })
-      // }
       await axios.get('/api/video/fetch/ON_GOING').then((response) => {
-        console.log('RESPONSE:', response.data)
         this.sessions = response.data
         this.loading = false
       })

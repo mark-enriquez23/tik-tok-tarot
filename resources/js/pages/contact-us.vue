@@ -90,10 +90,6 @@ export default {
   components: { Footer },
   layout: 'default',
 
-  metaInfo () {
-    return { title: this.$t('home') }
-  },
-
   data: () => ({
     title: window.config.appName,
     imageUrl: window.config.assetURL + 'images/',
