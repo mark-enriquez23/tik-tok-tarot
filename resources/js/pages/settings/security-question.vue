@@ -97,7 +97,7 @@
 <script>
 import Form from 'vform'
 import { mapGetters } from 'vuex'
-import { swalOops, swalSuccess } from '~/helpers'
+import { swalSuccess } from '~/helpers'
 
 export default {
   scrollToTop: false,

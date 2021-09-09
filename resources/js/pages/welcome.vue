@@ -30,19 +30,19 @@
         <b-col class="d-flex flex-column justify-content-center align-items-center">
           <router-link :to="{ name: 'readers' }" class="nav-link d-flex flex-column justify-content-center align-items-center" active-class="active">
             <span class="h5 font-weight-bold text-muted"> VIEWER </span>
-            <b-avatar variant="danger" :text="viewerCount" size="6rem" />
+            <b-avatar variant="danger" :text="viewerCount.toString()" size="6rem" />
           </router-link>
         </b-col>
         <b-col class="d-flex flex-column justify-content-center align-items-center">
           <router-link :to="{ name: 'vlogs.list' }" class="nav-link d-flex flex-column justify-content-center align-items-center" active-class="active">
             <span class="h5 font-weight-bold text-muted"> VLOGS </span>
-            <b-avatar variant="danger" :text="vlogCount" size="6rem" />
+            <b-avatar variant="danger" :text="vlogCount.toString() " size="6rem" />
           </router-link>
         </b-col>
         <b-col class="d-flex flex-column justify-content-center align-items-center">
           <router-link :to="{ name: 'sessions' }" class="nav-link d-flex flex-column justify-content-center align-items-center" active-class="active">
             <span class="h5 font-weight-bold text-muted"> SESSIONS </span>
-            <b-avatar variant="danger" :text="sessionCount" size="6rem" />
+            <b-avatar variant="danger" :text="sessionCount.toString() " size="6rem" />
           </router-link>
         </b-col>
       </b-row>

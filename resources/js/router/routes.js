@@ -5,7 +5,6 @@ function page(path) {
 export default [
   { path: '/', redirect: 'landing' },
   { path: '/landing', name: 'welcome', component: page('welcome.vue') },
-  { path: '/test-video/:roomName', name: 'video-room', component: page('video/VideoChat.vue') },
   { path: '/prices', name: 'prices', component: page('pricing.vue') },
   { path: '/readers', name: 'readers', component: page('readers.vue') },
   { path: '/search', name: 'search', component: page('search.vue') },
@@ -26,7 +25,8 @@ export default [
   { path: '/reader/home', name: 'home', component: page('reader/home.vue'),
     meta          : {
       requiresAuth: true,
-      role        : [2],
+      requiresVerification: true,
+      role        : 2,
       title       : 'Home'
     }
   },
@@ -39,7 +39,13 @@ export default [
       { path: 'profile', name: 'settings.profile', component: page('settings/profile.vue') },
       { path: 'security', name: 'settings.security', component: page('settings/security-question.vue') },
       { path: 'password', name: 'settings.password', component: page('settings/password.vue') }
-    ]
+    ],
+    meta          : {
+      requiresAuth: true,
+      requiresVerification: true,
+      title       : 'Settings'
+    }
+
   },
 
   // Reader
@@ -50,7 +56,7 @@ export default [
     path: '/admin/readers', name: 'admin.readers', component: page('admin/reader/reader-list.vue'),
     meta          : {
       requiresAuth: true,
-      role        : [1],
+      role        : 1,
       title       : 'Readers'
     }
   },
@@ -59,7 +65,7 @@ export default [
     path: '/admin/freebie', name: 'admin.freebie', component: page('admin/freebie/'),
     meta          : {
       requiresAuth: true,
-      role        : [1],
+      role        : 1,
       title       : 'Freebie'
     }
   },
@@ -68,7 +74,7 @@ export default [
     path: '/admin/reader-form/:id', name: 'admin.reader-form', component: page('admin/reader/reader-form.vue'),
     meta          : {
       requiresAuth: true,
-      role        : [1],
+      role        : 1,
       title       : 'Reader'
     }
   },
@@ -78,7 +84,7 @@ export default [
     path: '/admin/upload-approvals', name: 'admin.upload-approvals', component: page('admin/video-approval-tool/approval-list.vue'),
     meta          : {
       requiresAuth: true,
-      role        : [1],
+      role        : 1,
       title       : 'Vlog Approvals'
     }
   },
@@ -86,7 +92,7 @@ export default [
     path: '/admin/upload-approval/:id', name: 'admin.upload-approval', component: page('admin/video-approval-tool/approval-form.vue'),
     meta          : {
       requiresAuth: true,
-      role        : [1],
+      role        : 1,
       title       : 'Vlog Approval'
     }
   },
@@ -94,7 +100,7 @@ export default [
     path: '/admin/user-credits', name: 'admin.user-credits', component: page('admin/credit/credit-list.vue'),
     meta          : {
       requiresAuth: true,
-      role        : [1],
+      role        : 1,
       title       : 'Credits'
     }
   },
@@ -102,7 +108,7 @@ export default [
     path: '/admin/user-credit/:id', name: 'admin.user-credit', component: page('admin/credit/credit-form.vue'),
     meta          : {
       requiresAuth: true,
-      role        : [1],
+      role        : 1,
       title       : 'Credit'
     }
   },
@@ -110,7 +116,7 @@ export default [
     path: '/admin/psychics', name: 'admin.psychics', component: page('admin/psychic/psychic-list.vue'),
     meta          : {
       requiresAuth: true,
-      role        : [1],
+      role        : 1,
       title       : 'Psychic'
     }
   },
@@ -119,7 +125,7 @@ export default [
     path: '/admin/psychic-profile/:id', name: 'admin.psychic-profile', component: page('admin/psychic/psychic-profile.vue'),
     meta          : {
       requiresAuth: true,
-      role        : [1],
+      role        : 1,
       title       : 'Psychic Profile'
     }
   },
@@ -127,7 +133,8 @@ export default [
     path: '/client/history', name: 'client.history', component: page('client/history/history-list.vue'),
     meta          : {
       requiresAuth: true,
-      role        : [3],
+      requiresVerification: true,
+      role        : 3,
       title       : 'Clients'
     }
   },
@@ -135,7 +142,8 @@ export default [
     path: '/client/credit', name: 'client.credit', component: page('client/credit/'),
     meta          : {
       requiresAuth: true,
-      role        : [3],
+      requiresVerification: true,
+      role        : 3,
       title       : 'Clients'
     }
   },
@@ -143,7 +151,8 @@ export default [
     path: '/client/notification', name: 'client.notification', component: page('client/notification/notification.vue'),
     meta          : {
       requiresAuth: true,
-      role        : [3],
+      requiresVerification: true,
+      role        : 3,
       title       : 'Clients'
     }
   },
@@ -151,7 +160,8 @@ export default [
     path: '/client/referrals', name: 'client.referrals', component: page('client/referral/referral.vue'),
     meta          : {
       requiresAuth: true,
-      role        : [3],
+      requiresVerification: true,
+      role        : 3,
       title       : 'Clients'
     }
   },
@@ -159,7 +169,8 @@ export default [
     path: '/reader/referrals', name: 'reader.referrals', component: page('reader/referral/referral.vue'),
     meta          : {
       requiresAuth: true,
-      role        : [2],
+      requiresVerification: true,
+      role        : 2,
       title       : 'Readers'
     }
   },
@@ -167,7 +178,8 @@ export default [
     path: '/reader/videos', name: 'reader.videos', component: page('reader/videos/videos.vue'),
     meta          : {
       requiresAuth: true,
-      role        : [2],
+      requiresVerification: true,
+      role        : 2,
       title       : 'Readers'
     }
   },
@@ -175,7 +187,8 @@ export default [
     path: '/reader/pending', name: 'reader.pending', component: page('reader/videos/pending.vue'),
     meta          : {
       requiresAuth: true,
-      role        : [2],
+      requiresVerification: true,
+      role        : 2,
       title       : 'Readers'
     }
   },
@@ -183,7 +196,8 @@ export default [
     path: '/reader/rejected', name: 'reader.rejected', component: page('reader/videos/rejected.vue'),
     meta          : {
       requiresAuth: true,
-      role        : [2],
+      requiresVerification: true,
+      role        : 2,
       title       : 'Readers'
     }
   },
@@ -191,7 +205,8 @@ export default [
     path: '/reader/suggestions', name: 'reader.suggestions', component: page('reader/suggestions/List.vue'),
     meta          : {
       requiresAuth: true,
-      role        : [2],
+      requiresVerification: true,
+      role        : 2,
       title       : 'Readers'
     }
   },
@@ -199,7 +214,8 @@ export default [
     path: '/reader/upload-video', name: 'reader.upload-video', component: page('reader/videos/upload-video.vue'),
     meta          : {
       requiresAuth: true,
-      role        : [2],
+      requiresVerification: true,
+      role        : 2,
       title       : 'Readers'
     }
   },
