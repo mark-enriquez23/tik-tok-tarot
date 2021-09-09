@@ -89,8 +89,8 @@
           @change="newFeaturedData"
         />
       </div>
-      <div v-if="isLoading">
-        <p> loading </p>
+      <div v-if="isLoading" class="text-center">
+        <b-spinner label="Loading..." />
       </div>
       <div v-if="!featuredVlogsList.data.length && !allVlogs.data.length && !isLoading">
         <p> No videos to show </p>
