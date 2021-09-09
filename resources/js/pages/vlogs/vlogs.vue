@@ -92,7 +92,7 @@
       <div v-if="isLoading">
         <p> loading </p>
       </div>
-      <div v-if="!featuredVlogsList.total && !allVlogs.total && !isLoading">
+      <div v-if="!featuredVlogsList.data.length && !allVlogs.data.length && !isLoading">
         <p> No videos to show </p>
       </div>
     </div>
@@ -121,32 +121,38 @@ export default {
     userImageeUrl: window.config.assetURL + 'images/testimonials/',
     srcLogoOnly: window.config.assetURL + 'images/sample-logo.png',
     vlogImage: window.config.assetURL + 'images/listing-tnumbnail-3.jpg',
-    allVlogs: [{
+    allVlogs: {
       data: []
-    }],
-    featuredVlogsList: [{
+    },
+    featuredVlogsList: {
       data: []
-    }]
+    }
   }),
 
   created () {
-    this.isLoading = true
     this.getFeaturedData(1)
     this.getVideoData(1)
-    this.isLoading = false
   },
 
   methods: {
     getFeaturedData (page) {
+      this.isLoading = true
+
       axios.get(`/api/vlog/status/APPROVED/1?page=${page}`).then((response) => {
         console.log('RESPONSE', response.data[0])
         this.featuredVlogsList = response.data[0]
+      }).finally(() => {
+        this.isLoading = false
       })
     },
     getVideoData (page) {
+      this.isLoading = true
+
       axios.get(`/api/vlog/status/APPROVED/0?page=${page}`).then((response) => {
         console.log('RESPONSE', response.data[0])
         this.allVlogs = response.data[0]
+      }).finally(() => {
+        this.isLoading = false
       })
     },
     newFeaturedData (page) {
