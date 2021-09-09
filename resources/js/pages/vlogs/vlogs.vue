@@ -130,8 +130,10 @@ export default {
   }),
 
   created () {
+    this.isLoading = true
     this.getFeaturedData(1)
     this.getVideoData(1)
+    this.isLoading = false
   },
 
   methods: {
@@ -142,12 +144,10 @@ export default {
       })
     },
     getVideoData (page) {
-      this.isLoading = true
       axios.get(`/api/vlog/status/APPROVED/0?page=${page}`).then((response) => {
         console.log('RESPONSE', response.data[0])
         this.allVlogs = response.data[0]
       })
-      this.isLoading = false
     },
     newFeaturedData (page) {
       this.getFeaturedData(page)
