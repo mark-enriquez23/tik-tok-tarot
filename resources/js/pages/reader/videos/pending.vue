@@ -91,7 +91,7 @@ export default {
   },
 
   beforeMount(){
-      this.$store.dispatch('auth/fetchUser');
+      // this.$store.dispatch('auth/fetchUser');
       if (!this.user){
         this.$router.push({ name: 'home' })
       }
