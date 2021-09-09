@@ -17,41 +17,48 @@
             </div>
           </div>
 
-          <div v-if="readers.data ? readers.data.length != 0 : false" class="col-lg-8">
-            <div class="row">
-              <div v-for="reader in readers.data" :key="reader.id" class="col-lg-6 mt-4 mt-lg-0">
-                <router-link :to="`/profile/${reader.username}`" class="card-link">
-                  <div class="member" data-aos="zoom-in" data-aos-delay="100">
-                    <div class="pic">
-                      <img :src="testimonialImage5" class="img-fluid" alt="">
-                    </div>
-                    <div class="member-info">
-                      <h4>{{ reader.username }}</h4>
-
-                      <p class="text-success mb-0">
-                        {{ reader.is_active == 1 ? 'Online' : 'Offline' }}
-                      </p>
-                      <p>{{ reader.description }}</p>
-                      <span class="mt-3">Health</span>
-                      <div class="col-md-6 mx-auto mt-3">
-                        <star-rating :star-size="20" />
-                      </div>
-                    </div>
-                  </div>
-                </router-link>
-              </div>
-            </div>
+          <div v-if="loading" class="text-center col-lg-8">
+            <b-spinner label="Loading..." />
           </div>
 
           <div v-else class="col-lg-8">
-            <div class="row">
-              <div class="col-lg-12 mt-4 mt-lg-0">
-                <div class="member" data-aos="zoom-in" data-aos-delay="100">
-                  <h3>No Readers found</h3>
+            <div v-if="readers.data ? readers.data.length != 0 : false" >
+              <div class="row">
+                <div v-for="reader in readers.data" :key="reader.id" class="col-lg-6 mt-4 mt-lg-0">
+                  <router-link :to="`/profile/${reader.username}`" class="card-link">
+                    <div class="member" data-aos="zoom-in" data-aos-delay="100">
+                      <div class="pic">
+                        <img :src="testimonialImage5" class="img-fluid" alt="">
+                      </div>
+                      <div class="member-info">
+                        <h4>{{ reader.username }}</h4>
+
+                        <p class="text-success mb-0">
+                          {{ reader.is_active == 1 ? 'Online' : 'Offline' }}
+                        </p>
+                        <p>{{ reader.description }}</p>
+                        <span class="mt-3">Health</span>
+                        <div class="col-md-6 mx-auto mt-3">
+                          <star-rating :star-size="20" />
+                        </div>
+                      </div>
+                    </div>
+                  </router-link>
+                </div>
+              </div>
+            </div>
+
+            <div v-else>
+              <div class="row">
+                <div class="col-lg-12 mt-4 mt-lg-0">
+                  <div class="member" data-aos="zoom-in" data-aos-delay="100">
+                    <h3>No Readers found</h3>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
+
         </div>
       </div>
     </section><!-- Readers Section -->
@@ -88,7 +95,8 @@ export default {
     readers: [],
     form: new Form({
       search: null
-    })
+    }),
+    loading:true
   }),
 
   created () {
@@ -99,6 +107,7 @@ export default {
 
   methods: {
     async fetchReaders () {
+      this.loading = true
       var readers = await axios.get('/api/reader/fetch-visible-readers')
       this.readers = readers.data
       if (!this.readers.success) {
@@ -108,9 +117,11 @@ export default {
           type: 'error'
         })
       }
+      this.loading = false
     },
 
     async search () {
+      this.loading = true
       var readers = await this.form.post('/api/reader/search')
       this.readers = readers.data
       if (!this.readers.success) {
@@ -120,6 +131,7 @@ export default {
           type: 'error'
         })
       }
+      this.loading = false
     }
   }
 }

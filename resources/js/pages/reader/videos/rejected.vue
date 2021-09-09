@@ -13,9 +13,13 @@
       </div>
     </div>
 
-    <div class="mb-2">
+    <div v-if="loading" class="mb-2 text-center">
+      <b-spinner label="Loading..." />
+    </div>
+
+    <div v-else class="mb-2">
       <!-- if video exist here -->
-      <div class="row" v-if="videos">
+      <div class="row" v-if="videos.length != 0">
         <div class="col-md-4 my-2" v-for="video in videos"  :key="video.id">
           <div>
             <div>
@@ -31,7 +35,7 @@
       <div class="row" v-else>
         <div class="col-lg-12 mt-4 mt-lg-0">
           <div data-aos="zoom-in" data-aos-delay="100">
-            <h5> You have no rejected videos.</h5>
+            <h6> You have no rejected videos.</h6>
           </div>
         </div>
       </div>
@@ -59,7 +63,8 @@ export default {
   }),
 
   data: () => ({
-    videos:[]
+    videos:[],
+    loading:true
   }),
 
   beforeMount () {
@@ -68,11 +73,13 @@ export default {
   methods: {
 
     fetchVideos(){
-        console.log(this.user.id);
-        axios.get('/api/vlog/user/' + this.user.id +'/REJECTED').then(res=>{
+      this.loading = true;
+      console.log(this.user.id);
+      axios.get('/api/vlog/user/' + this.user.id +'/REJECTED').then(res=>{
         this.videos = res.data.data;
-
+        this.loading = false;
       }).catch((e)=>{
+        this.loading = false;
         swalOops('A problem occurred');
       })
     },
@@ -94,7 +101,7 @@ export default {
   },
 
   beforeMount(){
-      this.$store.dispatch('auth/fetchUser');
+      // this.$store.dispatch('auth/fetchUser');
       if (!this.user){
         this.$router.push({ name: 'home' })
       }
