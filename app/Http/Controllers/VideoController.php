@@ -82,7 +82,6 @@ class VideoController extends Controller
         // Validations
         $data = $request->validate([
             'title' => 'required',
-            'description' => 'required',
             'file' => 'required|mimes:mp4,mov,ogg,qt'
             ]);
 
@@ -113,22 +112,18 @@ class VideoController extends Controller
         // Save to db first
         $video->user_id         = $user;
         $video->title           = $data['title'];
-        $video->description     = $data['description'];
+        $video->description     = $data['description'] ?? '';
         $video->file_name       = $fileName;
         $video->thumbnail       = $thumbnailName;
 
 
         // If details was save
         if($video->save()){
-            $users = User::where('role_id', 3)->where('is_active', 1)->get();
 
             $original_file->move(public_path().$basePath, $fileName);
 
             VideoThumbnail::createThumbnail(public_path($basePath . $fileName) , public_path($thumbnails), $thumbnailName, 2);
 
-            foreach($users as $user){
-                $user->notify(new NewVlog($request->user(), $video));
-             }
         }else{
             //return 500 error if did not save
             return response()->json([
@@ -164,6 +159,12 @@ class VideoController extends Controller
 
         // Fire update
         if($video->update($form)){
+            $users = User::where('role_id', 3)->where('is_active', 1)->get();
+
+            foreach($users as $user){
+                $user->notify(new NewVlog($request->user(), $video));
+            }
+
             return response()->json([
                 'success'   => true,
                 'data'      => $video
