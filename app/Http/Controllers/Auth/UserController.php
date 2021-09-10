@@ -140,4 +140,14 @@ class UserController extends Controller
             'data'      => $user
         ]);
     }
+
+    public function banUser(Request $request)
+    {
+        $user = User::findOrFail($request->id);
+
+        $user->is_banned = $request->is_banned;
+        $user->save();
+
+        return response()->json([]);
+    }
 }

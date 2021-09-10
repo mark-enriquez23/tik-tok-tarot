@@ -160,9 +160,10 @@ class VideoController extends Controller
         // Fire update
         if($video->update($form)){
             $users = User::where('role_id', 3)->where('is_active', 1)->get();
+            $user = User::find($video->user_id);
 
             foreach($users as $user){
-                $user->notify(new NewVlog($request->user(), $video));
+                $user->notify(new NewVlog($user, $video));
             }
 
             return response()->json([

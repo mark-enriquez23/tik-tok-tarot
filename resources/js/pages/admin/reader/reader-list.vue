@@ -17,7 +17,7 @@
       </template>
 
       <template #cell(is_banned)="data">
-        <b-form-checkbox v-model="data.value" switch />
+        <b-form-checkbox v-model="data.value ? true : false" switch @input="handleActiveStatus(data)" />
       </template>
 
       <template #cell(is_verified)="data">
@@ -118,6 +118,16 @@ export default {
           id: id
         }
       })
+    },
+
+    async handleActiveStatus (data) {
+      console.log(data)
+      let form = {
+        'is_banned': data.value ? 0 : 1,
+        'id': data.item.id
+      }
+
+      await axios.patch('/api/user/ban', form)
     }
   }
 }

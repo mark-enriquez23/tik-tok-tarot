@@ -13,6 +13,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::post('/user/details', 'UserDetailController@store');
     Route::get('/user/details/{id}', 'UserDetailController@show');
     Route::patch('/user/details/update', 'UserDetailController@update');
+    Route::patch('/user/ban', 'Auth\UserController@banUser');
 
     //notifications
     Route::get('/user/notifications', 'Auth\UserController@getAllNotifications');
