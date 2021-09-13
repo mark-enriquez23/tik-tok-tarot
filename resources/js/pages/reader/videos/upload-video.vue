@@ -54,7 +54,10 @@
         </div>
 
         <div class="form-group row col-md-2 mx-auto mt-3">
-          <v-button class="btn btn-primary w-100">
+          <v-button v-if="submitting" class="btn btn-primary w-100" disabled>
+            <b-spinner />
+          </v-button>
+          <v-button v-if="!submitting" class="btn btn-primary w-100">
             Upload
           </v-button>
         </div>
@@ -82,7 +85,8 @@ export default {
       description: '',
       file: ''
     }),
-    filename: ''
+    filename: '',
+    submitting: false
   }),
 
   computed: mapGetters({
@@ -111,23 +115,26 @@ export default {
       // this.profile_photo = URL.createObjectURL( this.additionalForm.profile_photo);
     },
 
-    uploadVideo () {
+    async uploadVideo () {
       if (!this.videoForm.file) {
         swalOops('Please select a video file.')
       } else {
+        this.submitting = true
         var formData = new FormData()
         formData.append('file', this.videoForm.file)
         formData.append('user_id', this.user.id)
-        formData.append('description', this.videoForm.description)
         formData.append('title', this.videoForm.title)
-        const { data } = axios.post('/api/vlog/upload', formData).then(res => {
+        formData.append('description', this.videoForm.description)
+        await axios.post('/api/vlog/upload', formData).then(res => {
           if (res.data.success) {
-            swalSuccess('Video successfully updated').then(() => {
-              this.$router.push({ name: 'vlogs.list' })
+            swalSuccess('Vlog has been uploaded').then(() => {
+              this.$router.push({ name: 'reader.pending' })
             })
+            this.submitting = false
           }
         }).catch((e) => {
           swalOops('A problem occurred')
+          this.submitting = false
         })
       }
     },
