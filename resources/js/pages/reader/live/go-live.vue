@@ -294,10 +294,10 @@ export default {
       this.tc.accessManager.updateToken(tokenResponse.token)
     },
     loadChannelList (handler) {
-      if (this.tc.messagingClient === undefined) {
-        return
-      }
-      this.getVisibleChannels(this.tc.messagingClient, handler)
+      // if (this.tc.messagingClient === undefined) {
+      //   return
+      // }
+      // this.getVisibleChannels(this.tc.messagingClient, handler)
     },
     getVisibleChannels (messagingClient, handler) {
       // let vm = this
