@@ -300,16 +300,16 @@ export default {
       this.getVisibleChannels(this.tc.messagingClient, handler)
     },
     getVisibleChannels (messagingClient, handler) {
-      let vm = this
+      // let vm = this
 
-      messagingClient.getPublicChannelDescriptors().then(function (channels) {
-        vm.tc.channelArray = vm.sortChannelsByName(channels.items)
+      // messagingClient.getPublicChannelDescriptors().then(function (channels) {
+      //   vm.tc.channelArray = vm.sortChannelsByName(channels.items)
 
-        vm.tc.channelArray.forEach(vm.addChannel)
-        if (typeof handler === 'function') {
-          handler()
-        }
-      })
+      //   vm.tc.channelArray.forEach(vm.addChannel)
+      //   if (typeof handler === 'function') {
+      //     handler()
+      //   }
+      // })
     },
     sortChannelsByName (channels) {
       let vm = this
