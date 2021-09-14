@@ -269,6 +269,7 @@ export default {
         case '/about-us':
         case '/contact-us':
         case '/login':
+        case '/register':
         case '/password':
         case '/email':
           return true

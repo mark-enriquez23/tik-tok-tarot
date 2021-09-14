@@ -28,10 +28,11 @@
       <div v-if="videos.length != 0" class="row">
         <div v-for="video in videos" :key="video.id" class="col-md-4 my-2">
           <div>
-            <div v-if="video.thumbnail">
+            <!-- <div v-if="video.thumbnail">
               <img class="img-thumbnail p-0" :src="`/uploads/vlog/thumbnails/${video.thumbnail}`">
             </div>
-            <div v-else>
+            <div v-else> -->
+            <div>
               <img class="img-thumbnail p-0" :src="`/images/placeholder-thumbnail.jpg`">
             </div>
             <img class="reader-img m-3" align="left" :src="`/images/${video.user.user_details.profile_photo}`">
