@@ -8,7 +8,7 @@ use App\Mailchimp as MC;
 
 class MailchimpController extends Controller
 {
-    public $listId = 'b38dfba26f';
+    public $listId = '899a41cfe5';
 
     /**
      * Fetch mailchimp list
