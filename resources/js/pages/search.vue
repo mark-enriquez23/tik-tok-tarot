@@ -11,8 +11,12 @@
             </div>
           </div>
 
-          <div class="col-lg-8">
-            <div class="row">
+          <div v-if="loading" class="text-center col-lg-8">
+            <b-spinner label="Loading..." />
+          </div>
+
+          <div v-else class="col-lg-8">
+            <div v-if="results.data ? results.data.length != 0 : false" class="row">
               <div v-for="result in results.data" :key="result.id" class="col-lg-6 mt-4 mt-lg-0">
                 <div class="member" data-aos="zoom-in" data-aos-delay="100">
                   <div class="pic">
@@ -25,6 +29,16 @@
                     </p>
                     <!-- <p>{{reader.description}}</p>
                     <span class="mt-3" >Health</span> -->
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div v-else>
+              <div class="row">
+                <div class="col-lg-12 mt-4 mt-lg-0">
+                  <div class="member" data-aos="zoom-in" data-aos-delay="100">
+                    <h3>No Results found</h3>
                   </div>
                 </div>
               </div>
@@ -58,7 +72,8 @@ export default {
     testimonialImage5: window.config.assetURL + 'images/testimonials/testimonials-5.jpg',
     srcLogoOnly: window.config.assetURL + 'images/sample-logo.png',
     key: String,
-    results: []
+    results: [],
+    loading:true
   }),
 
   computed: mapGetters({ authenticated: 'auth/check' }),
@@ -75,6 +90,7 @@ export default {
 
   methods: {
     getKey () {
+      this.loading = true
       this.key = this.$route.query.key
       axios.post('/api/reader/search', { 'search': this.key }).then(res => {
         this.results = res.data
@@ -85,6 +101,7 @@ export default {
             type: 'error'
           })
         }
+        this.loading = false
       })
     }
   }

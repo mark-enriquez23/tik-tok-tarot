@@ -21,7 +21,7 @@
       </div>
     </div>
 
-    <div class="mb-2">
+    <div v-if="referral_code" class="mb-2" >
       <div class="row">
         <div class="col-lg-5 mb-2">
           <input id="referral-code" :value="'https://testsite.tiktok-tarot.live/register?referral_code=' + referral_code" class="form-control w-20" disabled>
@@ -34,6 +34,14 @@
       </div>
       <div>
         <a class="refresh" @click.prevent="refresh()">Refresh Referral Code</a>
+      </div>
+    </div>
+
+    <div v-else class="mb-2">
+      <div class="row">
+        <div class="col-lg-12 mb-2">
+          <h6>This is an account used for testing purposes. Please create a new account to get a referral code.</h6>
+        </div>
       </div>
     </div>
   </card>
